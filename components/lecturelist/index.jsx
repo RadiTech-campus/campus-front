@@ -34,13 +34,15 @@ const ClassCardsContainer = styled.div`
   padding: 30px 0px;
   display: flex;
   justify-content: space-evenly;
+  a {
+    text-decoration: none;
+    flex: 0.23;
+    border: 0.1rem solid #e6e8eb;
+    border-radius: 10px;
+    padding: 10px;
+  }
 `;
-const ClassCard = styled.div`
-  flex: 0.23;
-  border: 0.1rem solid #e6e8eb;
-  border-radius: 10px;
-  padding: 10px;
-`;
+const ClassCard = styled.div``;
 const ClassImage = styled.div`
   height: 150px;
   position: relative;
@@ -53,9 +55,11 @@ const ClassTitle = styled.div`
   font-size: 16px;
   font-weight: bold;
   padding: 10px 0px 0px;
+  color: black;
 `;
 const ClassContent = styled.div`
   font-size: 16px;
+  color: black;
 `;
 
 export default function LectureList({
@@ -75,24 +79,24 @@ export default function LectureList({
 
       <ClassCardsContainer>
         {classData?.map((li) => (
-          // <Link href={"/lecturelist/12"}>
-          <ClassCard>
-            <ClassImage>
-              <Image
-                src={li.thumbnail}
-                alt="메인 배경 이미지"
-                // width={30}
-                // height={30}
-                style={{ objectFit: "cover" }}
-                fill
-                //   style={{ borderRadius: "50%", marginRight: "5px" }}
-              />
-              {/* {li.thumbnail} */}
-            </ClassImage>
-            <ClassTitle>{li.title}</ClassTitle>
-            <ClassContent>{li.content}</ClassContent>
-          </ClassCard>
-          // </Link>
+          <Link href={"/lecture/12"}>
+            <ClassCard>
+              <ClassImage>
+                <Image
+                  src={li.thumbnail}
+                  alt="메인 배경 이미지"
+                  // width={30}
+                  // height={30}
+                  style={{ objectFit: "cover" }}
+                  fill
+                  //   style={{ borderRadius: "50%", marginRight: "5px" }}
+                />
+                {/* {li.thumbnail} */}
+              </ClassImage>
+              <ClassTitle>{li.title}</ClassTitle>
+              <ClassContent>{li.content}</ClassContent>
+            </ClassCard>
+          </Link>
         ))}
       </ClassCardsContainer>
     </LectureListContainer>
