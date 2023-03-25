@@ -10,7 +10,6 @@ const LectureChapter = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  /* align-items: center; */
   /* padding: 10px 10px; */
   border: 1px solid rgba(10, 10, 10, 0.1);
   border-radius: 5px;

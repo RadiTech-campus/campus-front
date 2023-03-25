@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/router";
 import styled from "@emotion/styled";
 import Image from "next/image";
-import ChevronUpIcon from "../../components/icons/ChevronUpIcon";
-import Lectures from "../../components/Lectures";
+import Lectures from "../../components/lectures";
 
 const LectureDetailContainer = styled.div`
   /* display: flex;
