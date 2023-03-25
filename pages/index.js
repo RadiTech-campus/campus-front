@@ -1,3 +1,3 @@
 export default function Index() {
-  return <div></div>;
+  return <div>배포테스트</div>;
 }
