@@ -30,13 +30,13 @@ export default function Header() {
     <HeaderContainer>
       <LogoContainer>
         <Image
-          src="https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fb0gIl9%2FbtqIRObxP4N%2FFNVnXFNEjttEnlXesSGe90%2Fimg.png"
+          src="/titlelogo.png"
           alt="메인 배경 이미지"
-          width={30}
+          width={160}
           height={30}
-          style={{ borderRadius: "50%", marginRight: "5px" }}
+          style={{ marginRight: "5px" }}
         />
-        <InfoContainer> RadiTech-campus</InfoContainer>
+        {/* <InfoContainer> RadiTech-campus</InfoContainer> */}
       </LogoContainer>
       {/* <AuthContainer>
         <div style={{ marginRight: "10px" }}>로그인</div>

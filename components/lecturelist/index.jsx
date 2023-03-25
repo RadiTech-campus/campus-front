@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import Image from "next/image";
 import React from "react";
-import Header from "../../components/header";
+import Link from "next/link";
 
 const LectureListContainer = styled.div`
   margin: 15px auto;
@@ -75,6 +75,7 @@ export default function LectureList({
 
       <ClassCardsContainer>
         {classData?.map((li) => (
+          // <Link href={"/lecturelist/12"}>
           <ClassCard>
             <ClassImage>
               <Image
@@ -91,6 +92,7 @@ export default function LectureList({
             <ClassTitle>{li.title}</ClassTitle>
             <ClassContent>{li.content}</ClassContent>
           </ClassCard>
+          // </Link>
         ))}
       </ClassCardsContainer>
     </LectureListContainer>

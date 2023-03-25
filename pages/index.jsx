@@ -47,31 +47,41 @@ export default function Index() {
         onSwiper={(swiper) => console.log(swiper)}
         onSlideChange={() => console.log("slide change")}
       >
-        <SwiperSlide
-          style={{ width: "100%", backgroundColor: "red", height: "350px" }}
-        >
+        <SwiperSlide style={{ width: "100%", height: "350px" }}>
           <Image
-            src="https://cdn.news.unn.net/news/photo/202301/540181_346310_728.jpg"
+            src="/swi.png"
             alt="메인 배경 이미지"
-            style={{ objectFit: "contain" }}
+            style={{ objectFit: "fill" }}
             fill
           />
         </SwiperSlide>
-        <SwiperSlide
-          style={{ width: "100%", backgroundColor: "blue", height: "350px" }}
-        >
+        <SwiperSlide style={{ width: "100%", height: "350px" }}>
           <Image
-            src="https://cdn.news.unn.net/news/photo/202301/540181_346310_728.jpg"
+            src="/swi.png"
             alt="메인 배경 이미지"
-            style={{ objectFit: "contain" }}
+            style={{ objectFit: "fill" }}
             fill
           />
         </SwiperSlide>
-        <SwiperSlide
-          style={{ width: "100%", backgroundColor: "green", height: "350px" }}
-        >
+        <SwiperSlide style={{ width: "100%", height: "350px" }}>
           <Image
-            src="https://cdn.news.unn.net/news/photo/202301/540181_346310_728.jpg"
+            src="/swi.png"
+            alt="메인 배경 이미지"
+            style={{ objectFit: "fill" }}
+            fill
+          />
+        </SwiperSlide>
+        <SwiperSlide style={{ width: "100%", height: "350px" }}>
+          <Image
+            src="/swi.png"
+            alt="메인 배경 이미지"
+            style={{ objectFit: "fill" }}
+            fill
+          />
+        </SwiperSlide>
+        <SwiperSlide style={{ width: "100%", height: "350px" }}>
+          <Image
+            src="/swi.png"
             alt="메인 배경 이미지"
             style={{ objectFit: "contain" }}
             fill
