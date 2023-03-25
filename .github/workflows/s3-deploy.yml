@@ -33,4 +33,4 @@ jobs:
           AWS_DEFAULT_REGION: ap-northeast-2
 
         run: |
-          aws s3 sync ./out s3://sim-project-staticInfo
+          aws s3 sync ./out s3://sim-project-static
