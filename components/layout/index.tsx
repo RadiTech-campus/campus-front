@@ -1,5 +1,7 @@
 import styled from "@emotion/styled";
 import React from "react";
+import Header from "../header";
+import TopNav from "../topnav";
 
 const LayoutContainer = styled.div`
   /* display: flex;
@@ -22,7 +24,8 @@ export default function Layout({ children }: any) {
     <LayoutContainer>
       {/* <LeftContainer></LeftContainer> */}
       {/* <RightContainer></RightContainer> */}
-
+      <Header />
+      {/* <TopNav /> */}
       {children}
     </LayoutContainer>
   );
