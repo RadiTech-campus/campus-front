@@ -19,16 +19,18 @@ const useProvideAuth = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [username, setUsername] = useState("");
-
+  const [useremail, setUseremail] = useState("");
   useEffect(() => {
     Auth.currentAuthenticatedUser()
       .then((result) => {
         setUsername(result.username);
+        setUseremail(result.attributes.email);
         setIsAuthenticated(true);
         setIsLoading(false);
       })
       .catch(() => {
         setUsername("");
+        setUseremail("");
         setIsAuthenticated(false);
         setIsLoading(false);
       });
@@ -47,7 +49,6 @@ const useProvideAuth = () => {
           enabled: true,
         },
       });
-      alert("인증 메일을 발송 했습니다.");
       return result;
     } catch (error) {
       // console.log("회원가입 에러", error);
@@ -59,8 +60,6 @@ const useProvideAuth = () => {
   const confirmSignUp = async (username, code) => {
     try {
       const result = await Auth.confirmSignUp(username, code);
-      alert("회원가입을 성공 했습니다.");
-
       return result;
     } catch (error) {
       // console.log("메일 인증 컨펌 에러", error);
@@ -73,6 +72,7 @@ const useProvideAuth = () => {
     try {
       const result = await Auth.signIn(username, password);
       setUsername(result.username);
+      setUseremail(result.attributes.email);
       setIsAuthenticated(true);
       return result;
     } catch (error) {
@@ -86,6 +86,7 @@ const useProvideAuth = () => {
     try {
       const result = await Auth.signOut();
       setUsername("");
+      setUseremail("");
       setIsAuthenticated(false);
       return result;
     } catch (error) {
@@ -98,6 +99,7 @@ const useProvideAuth = () => {
     isLoading,
     isAuthenticated,
     username,
+    useremail,
     signUp,
     confirmSignUp,
     signIn,

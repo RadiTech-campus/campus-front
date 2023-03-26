@@ -30,7 +30,7 @@ export default function Lecture() {
   // }, []);
   return (
     <div style={{ width: "640px", height: "390px", backgroundColor: "red" }}>
-      <div
+      {/* <div
         style={{
           position: "absolute",
           backgroundColor: "transparent",
@@ -45,7 +45,7 @@ export default function Lecture() {
         videoId="9diMiLy2pSo"
         opts={opts}
         // onReady={onPlayerReady}
-      />
+      /> */}
     </div>
   );
 }

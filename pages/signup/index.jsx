@@ -2,6 +2,9 @@ import styled from "@emotion/styled";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import JoinPresenter from "../../components/\bjoinpresenter";
+import Modal from "../../components/modal/Modal";
+import SignUpModal from "../../components/modal/SignUpModal";
 import { useAuth } from "../../hooks/useAuth";
 
 const SignUpContainer = styled.div`
@@ -76,9 +79,9 @@ const SignUpButton1 = styled.button`
   margin-bottom: 20px;
   padding: 15px;
   font-size: 16px;
-  background-color: #a603a6;
+  background-color: ${(props) => (props.disabled ? "#898989" : "#a603a6")};
   color: white;
-  cursor: pointer;
+  cursor: ${(props) => (props.disabled ? "default" : "pointer")};
 `;
 
 const MailAuthContainer = styled.div`
@@ -108,9 +111,30 @@ const Divider = styled.div`
   width: 100%;
 `;
 
+const Button = styled.button`
+  font-size: 14px;
+  padding: 10px 20px;
+  border: none;
+  background-color: #fa9f98;
+  border-radius: 10px;
+  color: white;
+  font-style: italic;
+  font-weight: 200;
+  cursor: pointer;
+  &:hover {
+    background-color: #fac2be;
+  }
+`;
+
+const AppWrap = styled.div`
+  text-align: center;
+  margin: 50px auto;
+`;
+
 export default function SignUp() {
   const auth = useAuth();
   const router = useRouter();
+  const [allCheck, setAllCheck] = useState(false);
 
   const [passwordCheck, setPasswordCheck] = useState(false);
 
@@ -159,12 +183,13 @@ export default function SignUp() {
   const confirmUser = async (e) => {
     e.preventDefault();
     if (email.length < 5) {
-      alert("잘못된 이메일 입니다");
+      handleOpenModal();
       return;
     }
     try {
       const result = await auth.signUp(userId, password, email);
       // console.log("result", result);
+      handleOpenModal();
     } catch (error) {
       // console.log("error", error);
       alert("메일인증 요청 실패");
@@ -177,8 +202,8 @@ export default function SignUp() {
     try {
       const result = await auth.confirmSignUp(userId, code);
       // console.log("Confirm 성공", result);
-      onReset();
-      router.push("/");
+
+      confirmSignUp();
     } catch (error) {
       // console.log("Confirm 실패", error);
     }
@@ -195,9 +220,41 @@ export default function SignUp() {
   }, [password, confirmPassword]);
 
   // useEffect(() => {}, []);
+  const [isOpenConfirmSignUp, setIsOpenConfirmSignUp] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const confirmSignUp = () => {
+    setIsOpenConfirmSignUp(true);
+  };
+  const handleOpenModal = () => {
+    setIsOpen(true);
+  };
 
   return (
     <SignUpContainer>
+      {isOpenConfirmSignUp && (
+        <SignUpModal
+          open={isOpenConfirmSignUp}
+          userId={userId}
+          onClose={() => {
+            setIsOpenConfirmSignUp(false);
+            onReset();
+            router.push("/signin");
+          }}
+        />
+      )}
+      {isOpen && (
+        <Modal
+          open={isOpen}
+          onClose={() => {
+            setIsOpen(false);
+          }}
+        >
+          {email.length < 5
+            ? "잘못된 이메일입니다."
+            : "인증 메일을 발송했습니다."}
+        </Modal>
+      )}
       <SignUpBox>
         <form noValidate onSubmit={executeConfirm}>
           <LogoContainer>
@@ -291,8 +348,10 @@ export default function SignUp() {
               value={phoneNumber}
               onChange={onChange}
             />
-
-            <SignUpButton1 type="submit">회원가입</SignUpButton1>
+            <JoinPresenter allCheck={allCheck} setAllCheck={setAllCheck} />
+            <SignUpButton1 disabled={!allCheck} type="submit">
+              회원가입
+            </SignUpButton1>
           </InputsContainer>
         </form>
       </SignUpBox>

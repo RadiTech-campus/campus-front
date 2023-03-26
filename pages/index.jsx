@@ -9,6 +9,9 @@ import "swiper/css/scrollbar";
 import LectureList from "../components/lecturelist";
 import styled from "@emotion/styled";
 import Image from "next/image";
+import { useState } from "react";
+import Modal from "../components/modal/Modal";
+import SignUpModal from "../components/modal/SignUpModal";
 
 const IndexContainer = styled.div``;
 // const SwiperPagiContainer = styled.div`
@@ -45,6 +48,7 @@ export default function Index() {
       content: "강의 내용 요약",
     },
   ];
+
   return (
     <IndexContainer>
       <Swiper

@@ -1,8 +1,170 @@
+import { useEffect, useState } from "react";
+import { useAuth } from "../../hooks/useAuth";
+import { useRouter } from "next/navigation";
 import styled from "@emotion/styled";
-import React from "react";
+import Image from "next/image";
 
-const MyPageContainer = styled.div``;
+const SignInContainer = styled.div`
+  margin: 15px auto;
+  width: 1160px;
+`;
+const SignInBox = styled.div`
+  width: 360px;
+  margin: 50px auto;
+  border: 0.1rem solid #e6e8eb;
+  border-radius: 5px;
+  padding: 60px 40px;
+`;
+const LogoContainer = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const TitleContainer = styled.div`
+  font-size: 16px;
+  font-weight: bold;
+  padding: 10px 0px;
+`;
+
+const InputsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+`;
+
+const LoginText = styled.div`
+  position: absolute;
+  margin: 11px 0px;
+  padding: 0px 15px;
+  font-size: 14px;
+  background-color: white;
+  color: #595959;
+`;
+
+const SignInInput = styled.input`
+  width: 20%;
+  border: none;
+  border-bottom: 1px solid #cbcaca;
+  height: 40px;
+  outline: none;
+  margin-bottom: 40px;
+  font-size: 14px;
+`;
+
+const SignInLabel = styled.label`
+  width: 100%;
+  font-size: 12px;
+  font-weight: bold;
+`;
+const SignInButton1 = styled.button`
+  width: 100%;
+  border: none;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  padding: 15px;
+  font-size: 16px;
+  background-color: #a603a6;
+  color: white;
+  border-radius: 5px;
+  font-weight: bold;
+`;
+const SignInButton2 = styled.button`
+  width: 100%;
+  border: none;
+  margin-bottom: 20px;
+  padding: 15px;
+  font-size: 16px;
+  border-radius: 5px;
+  font-weight: bold;
+`;
+
+const Divider = styled.div`
+  border-bottom: 0.1rem solid #424242;
+  margin: 0px 0px 30px;
+  width: 100%;
+`;
 
 export default function MyPage() {
-  return <MyPageContainer>MyPage</MyPageContainer>;
+  const auth = useAuth();
+  const router = useRouter();
+
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("구현예정");
+
+  const executeSignIn = async (event) => {
+    event.preventDefault();
+    // console.log("로그인 실행");
+    const result = await auth.signIn(username, password);
+    // console.log("result", result);
+    // if (result.success) {
+    //   // router.push("/");
+    //   alert(result.message);
+    // } else {
+    //   alert(result.message);
+    // }
+  };
+  // console.log("auth", auth);
+
+  useEffect(() => {
+    if (auth.isAuthenticated) {
+      setUsername(auth.username);
+      setEmail(auth.useremail);
+    } else {
+      router.push("/signin");
+    }
+  }, [auth]);
+
+  return (
+    <SignInContainer>
+      {/* <SignInBox> */}
+      <form noValidate onSubmit={executeSignIn}>
+        {/* <LogoContainer>
+          <Image
+            src="/titlelogo.png"
+            alt="메인 배경 이미지"
+            width={160}
+            height={30}
+            style={{ marginRight: "5px" }}
+          />
+        </LogoContainer> */}
+        <div>My Page</div>
+        <TitleContainer>기본 정보</TitleContainer>
+        <InputsContainer>
+          {/* <LoginText>로그인</LoginText> */}
+          <Divider />
+          <SignInLabel>아이디</SignInLabel>
+          <SignInInput
+            type="text"
+            // placeholder="이름"
+            disabled
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <SignInLabel>이메일</SignInLabel>
+          <SignInInput
+            type="text"
+            // placeholder="아이디"
+            disabled
+            value={email}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <SignInLabel>휴대폰 번호</SignInLabel>
+          <SignInInput
+            type="text"
+            disabled
+            // placeholder="비밀번호"
+            value={phoneNumber}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          {/* <SignInButton1 type="submit">로그인</SignInButton1>
+          <SignInButton2 type="button">이메일로 회원가입</SignInButton2>
+          <SignInButton2 type="button">비밀번호 재설정</SignInButton2> */}
+        </InputsContainer>
+        <TitleContainer>수강 신청 정보</TitleContainer>
+        <Divider />
+      </form>
+      {/* </SignInBox> */}
+    </SignInContainer>
+  );
 }
