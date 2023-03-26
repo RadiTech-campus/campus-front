@@ -1,7 +1,9 @@
 import styled from "@emotion/styled";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React from "react";
+import { useAuth } from "../../hooks/useAuth";
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -20,16 +22,18 @@ const LogoContainer = styled.div`
   align-items: center;
 `;
 
-const InfoContainer = styled.div`
-  font-size: 18px;
-  font-weight: bold;
-`;
-
 const AuthContainer = styled.div`
   font-size: 13px;
   display: flex;
 `;
+
+const AuthButton = styled.div`
+  margin-right: 20px;
+  cursor: pointer;
+`;
 export default function Header() {
+  const router = useRouter();
+  const auth = useAuth();
   return (
     <>
       <HeaderContainer>
@@ -43,17 +47,22 @@ export default function Header() {
               style={{ marginRight: "5px" }}
             />
           </Link>
-          {/* <InfoContainer> RadiTech-campus</InfoContainer> */}
         </LogoContainer>
-        {/* <AuthContainer>
-        <div style={{ marginRight: "10px" }}>로그인</div>
-        <div>회원가입</div>
-      </AuthContainer> */}
+        <AuthContainer>
+          <AuthButton onClick={() => router.push("/signin")}>로그인</AuthButton>
+          <AuthButton onClick={() => router.push("/signup")}>
+            회원가입
+          </AuthButton>
+        </AuthContainer>
 
         <AuthContainer>
-          <div style={{ marginRight: "10px" }}>안녕하세요 아현님</div>
-          <div style={{ marginRight: "10px" }}>마이페이지</div>
-          <div>로그아웃</div>
+          <AuthButton onClick={() => router.push("/mypage")}>
+            안녕하세요 아현님
+          </AuthButton>
+          <AuthButton onClick={() => router.push("/mypage")}>
+            마이페이지
+          </AuthButton>
+          <AuthButton onClick={() => auth.signOut()}>로그아웃</AuthButton>
         </AuthContainer>
       </HeaderContainer>
       <BorderLine />
