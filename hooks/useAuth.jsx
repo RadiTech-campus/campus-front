@@ -42,30 +42,30 @@ const useProvideAuth = () => {
         attributes: {
           email,
         },
+
         autoSignIn: {
           enabled: true,
         },
       });
+      alert("인증 메일을 발송 했습니다.");
       return result;
     } catch (error) {
-      console.log("회원가입 에러", error);
-      return {
-        success: false,
-        message: "SIGNUP FAIL",
-      };
+      // console.log("회원가입 에러", error);
+      alert("인증 메일 발송을 실패 했습니다.", error);
+      return error;
     }
   };
 
   const confirmSignUp = async (username, code) => {
     try {
       const result = await Auth.confirmSignUp(username, code);
+      alert("회원가입을 성공 했습니다.");
+
       return result;
     } catch (error) {
-      console.log("error confirming sign up", error);
-      return {
-        success: false,
-        message: "CONFIRM FAIL",
-      };
+      // console.log("메일 인증 컨펌 에러", error);
+      alert("회원가입을 실패 했습니다.", error);
+      return error;
     }
   };
 
@@ -74,27 +74,23 @@ const useProvideAuth = () => {
       const result = await Auth.signIn(username, password);
       setUsername(result.username);
       setIsAuthenticated(true);
-      return { success: true, message: "" };
+      return result;
     } catch (error) {
-      console.log("로그인 에러", error);
-      return {
-        success: false,
-        message: "LOGIN FAIL",
-      };
+      // console.log("로그인 에러", error);
+      alert("로그인을 실패 했습니다.", error);
+      return error;
     }
   };
 
   const signOut = async () => {
     try {
-      await Auth.signOut();
+      const result = await Auth.signOut();
       setUsername("");
       setIsAuthenticated(false);
-      return { success: true, message: "" };
+      return result;
     } catch (error) {
-      return {
-        success: false,
-        message: "LOGOUT FAIL",
-      };
+      alert("로그아웃을 실패 했습니다.", error);
+      return error;
     }
   };
 

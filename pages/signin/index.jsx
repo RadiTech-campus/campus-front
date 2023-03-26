@@ -1,14 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import { useRouter } from "next/navigation";
 import styled from "@emotion/styled";
 import Image from "next/image";
 
-const SignUpContainer = styled.div`
+const SignInContainer = styled.div`
   display: flex;
   justify-content: center;
 `;
-const SignUpBox = styled.div`
+const SignInBox = styled.div`
   width: 360px;
   margin: 50px auto;
   border: 0.1rem solid #e6e8eb;
@@ -40,7 +40,7 @@ const LoginText = styled.div`
   color: #595959;
 `;
 
-const SignUpInput = styled.input`
+const SignInInput = styled.input`
   width: 100%;
   border: none;
   border-bottom: 1px solid #cbcaca;
@@ -49,11 +49,11 @@ const SignUpInput = styled.input`
   margin-bottom: 40px;
 `;
 
-const SignUpLabel = styled.label`
+const SignInLabel = styled.label`
   width: 100%;
   font-size: 14px;
 `;
-const SignUpButton1 = styled.button`
+const SignInButton1 = styled.button`
   width: 100%;
   border: none;
   margin-top: 10px;
@@ -62,13 +62,17 @@ const SignUpButton1 = styled.button`
   font-size: 16px;
   background-color: #a603a6;
   color: white;
+  border-radius: 5px;
+  font-weight: bold;
 `;
-const SignUpButton2 = styled.button`
+const SignInButton2 = styled.button`
   width: 100%;
   border: none;
   margin-bottom: 20px;
   padding: 15px;
   font-size: 16px;
+  border-radius: 5px;
+  font-weight: bold;
 `;
 
 const Divider = styled.div`
@@ -86,18 +90,27 @@ export default function SignIn() {
 
   const executeSignIn = async (event) => {
     event.preventDefault();
-    console.log("로그인 실행");
+    // console.log("로그인 실행");
     const result = await auth.signIn(username, password);
-    if (result.success) {
-      // router.push("/");
-      alert(result.message);
-    } else {
-      alert(result.message);
-    }
+    // console.log("result", result);
+    // if (result.success) {
+    //   // router.push("/");
+    //   alert(result.message);
+    // } else {
+    //   alert(result.message);
+    // }
   };
+  // console.log("auth", auth);
+
+  useEffect(() => {
+    if (auth.isAuthenticated) {
+      router.push("/");
+    }
+  }, [auth]);
+
   return (
-    <SignUpContainer>
-      <SignUpBox>
+    <SignInContainer>
+      <SignInBox>
         <form noValidate onSubmit={executeSignIn}>
           <LogoContainer>
             <Image
@@ -115,26 +128,26 @@ export default function SignIn() {
           <InputsContainer>
             <LoginText>로그인</LoginText>
             <Divider />
-            <SignUpLabel>아이디</SignUpLabel>
-            <SignUpInput
+            <SignInLabel>아이디</SignInLabel>
+            <SignInInput
               type="text"
               placeholder="아이디"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
             />
-            <SignUpLabel>비밀번호</SignUpLabel>
-            <SignUpInput
+            <SignInLabel>비밀번호</SignInLabel>
+            <SignInInput
               type="password"
               placeholder="비밀번호"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <SignUpButton1 type="submit">로그인</SignUpButton1>
-            <SignUpButton2 type="button">이메일로 회원가입</SignUpButton2>
-            <SignUpButton2 type="button">비밀번호 재설정</SignUpButton2>
+            <SignInButton1 type="submit">로그인</SignInButton1>
+            <SignInButton2 type="button">이메일로 회원가입</SignInButton2>
+            <SignInButton2 type="button">비밀번호 재설정</SignInButton2>
           </InputsContainer>
         </form>
-      </SignUpBox>
-    </SignUpContainer>
+      </SignInBox>
+    </SignInContainer>
   );
 }

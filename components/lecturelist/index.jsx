@@ -78,8 +78,8 @@ export default function LectureList({
       </TitleContainer>
 
       <ClassCardsContainer>
-        {classData?.map((li) => (
-          <Link href={"/lecture/12"}>
+        {classData?.map((li, i) => (
+          <Link href={"/lecture/12"} key={i}>
             <ClassCard>
               <ClassImage>
                 <Image

@@ -9,6 +9,7 @@ const LecturesContainer = styled.div`
 const LectureChapter = styled.div`
   display: flex;
   flex-direction: column;
+  z-index: 0;
   justify-content: space-between;
   /* padding: 10px 10px; */
   border: 1px solid rgba(10, 10, 10, 0.1);
@@ -28,14 +29,16 @@ export default function Lectures({ chapter, hiddenAll }) {
 
   return (
     <LecturesContainer>
-      <LectureChapter onClick={handleArrow}>
+      <LectureChapter>
         <div
           style={{
             display: "flex",
             justifyContent: "space-between",
             padding: "15px",
             fontWeight: "bold",
+            cursor: "pointer",
           }}
+          onClick={handleArrow}
         >
           {chapter}{" "}
           {arrow && !hiddenAll ? (
@@ -71,6 +74,8 @@ export default function Lectures({ chapter, hiddenAll }) {
                     fontWeight: "bold",
                     borderRadius: "5px",
                     border: "none",
+                    cursor: "pointer",
+                    zIndex: 1,
                   }}
                 >
                   강연자료
@@ -84,6 +89,7 @@ export default function Lectures({ chapter, hiddenAll }) {
                     fontWeight: "bold",
                     borderRadius: "5px",
                     border: "none",
+                    cursor: "pointer",
                   }}
                 >
                   강의보기
@@ -111,6 +117,7 @@ export default function Lectures({ chapter, hiddenAll }) {
                     fontWeight: "bold",
                     borderRadius: "5px",
                     border: "none",
+                    cursor: "pointer",
                   }}
                 >
                   강연자료
@@ -124,6 +131,7 @@ export default function Lectures({ chapter, hiddenAll }) {
                     fontWeight: "bold",
                     borderRadius: "5px",
                     border: "none",
+                    cursor: "pointer",
                   }}
                 >
                   강의보기
@@ -151,6 +159,7 @@ export default function Lectures({ chapter, hiddenAll }) {
                     fontWeight: "bold",
                     borderRadius: "5px",
                     border: "none",
+                    cursor: "pointer",
                   }}
                 >
                   강연자료
@@ -164,6 +173,7 @@ export default function Lectures({ chapter, hiddenAll }) {
                     fontWeight: "bold",
                     borderRadius: "5px",
                     border: "none",
+                    cursor: "pointer",
                   }}
                 >
                   강의보기

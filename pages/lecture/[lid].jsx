@@ -117,6 +117,7 @@ const InfoRightLectureButton = styled.button`
   border: 1px solid #4a63ff;
   color: #4a63ff;
   border-radius: 20px;
+  cursor: pointer;
 `;
 
 export default function Lecture() {
@@ -125,7 +126,6 @@ export default function Lecture() {
   const [hiddenAll, setHiddenAll] = useState(true);
   const handelHiddenAll = () => {
     setHiddenAll(!hiddenAll);
-    console.log("hiddenAll", hiddenAll);
   };
   return (
     <LectureDetailContainer>

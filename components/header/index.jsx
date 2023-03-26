@@ -48,22 +48,33 @@ export default function Header() {
             />
           </Link>
         </LogoContainer>
-        <AuthContainer>
-          <AuthButton onClick={() => router.push("/signin")}>로그인</AuthButton>
-          <AuthButton onClick={() => router.push("/signup")}>
-            회원가입
-          </AuthButton>
-        </AuthContainer>
-
-        <AuthContainer>
-          <AuthButton onClick={() => router.push("/mypage")}>
-            안녕하세요 아현님
-          </AuthButton>
-          <AuthButton onClick={() => router.push("/mypage")}>
-            마이페이지
-          </AuthButton>
-          <AuthButton onClick={() => auth.signOut()}>로그아웃</AuthButton>
-        </AuthContainer>
+        {auth.isAuthenticated ? (
+          <AuthContainer>
+            <AuthButton onClick={() => router.push("/mypage")}>
+              안녕하세요 {auth.username} 님
+            </AuthButton>
+            <AuthButton onClick={() => router.push("/mypage")}>
+              마이페이지
+            </AuthButton>
+            <AuthButton
+              onClick={() => {
+                auth.signOut();
+                router.push("/");
+              }}
+            >
+              로그아웃
+            </AuthButton>
+          </AuthContainer>
+        ) : (
+          <AuthContainer>
+            <AuthButton onClick={() => router.push("/signin")}>
+              로그인
+            </AuthButton>
+            <AuthButton onClick={() => router.push("/signup")}>
+              회원가입
+            </AuthButton>
+          </AuthContainer>
+        )}
       </HeaderContainer>
       <BorderLine />
     </>

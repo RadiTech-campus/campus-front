@@ -2,11 +2,21 @@ import { Navigation, Pagination, Scrollbar, A11y } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import "swiper/css";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/scrollbar";
 import LectureList from "../components/lecturelist";
 import styled from "@emotion/styled";
 import Image from "next/image";
 
 const IndexContainer = styled.div``;
+// const SwiperPagiContainer = styled.div`
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   margin-top: 5px;
+// `;
 
 export default function Index() {
   const data = [
@@ -39,19 +49,23 @@ export default function Index() {
     <IndexContainer>
       <Swiper
         modules={[Navigation, Pagination, Scrollbar, A11y]}
-        spaceBetween={50}
+        // spaceBetween={50}
         slidesPerView={1}
         navigation
         pagination={{ clickable: true }}
-        scrollbar={{ draggable: true }}
-        onSwiper={(swiper) => console.log(swiper)}
-        onSlideChange={() => console.log("slide change")}
+        // pagination={{
+        //   el: ".swiper-custom-pagination",
+        //   clickable: true,
+        // }}
+        // scrollbar={{ draggable: true }}
+        // onSwiper={(swiper) => console.log(swiper)}
+        // onSlideChange={() => console.log("slide change")}
       >
         <SwiperSlide style={{ width: "100%", height: "350px" }}>
           <Image
             src="/swi.png"
             alt="메인 배경 이미지"
-            style={{ objectFit: "fill" }}
+            style={{ objectFit: "contain" }}
             fill
           />
         </SwiperSlide>
@@ -59,7 +73,7 @@ export default function Index() {
           <Image
             src="/swi.png"
             alt="메인 배경 이미지"
-            style={{ objectFit: "fill" }}
+            style={{ objectFit: "contain" }}
             fill
           />
         </SwiperSlide>
@@ -67,7 +81,7 @@ export default function Index() {
           <Image
             src="/swi.png"
             alt="메인 배경 이미지"
-            style={{ objectFit: "fill" }}
+            style={{ objectFit: "contain" }}
             fill
           />
         </SwiperSlide>
@@ -75,7 +89,7 @@ export default function Index() {
           <Image
             src="/swi.png"
             alt="메인 배경 이미지"
-            style={{ objectFit: "fill" }}
+            style={{ objectFit: "contain" }}
             fill
           />
         </SwiperSlide>
@@ -88,6 +102,16 @@ export default function Index() {
           />
         </SwiperSlide>
       </Swiper>
+      {/* <div
+        className="swiper-custom-pagination"
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          marginTop: "5px",
+        }}
+      /> */}
+
       <LectureList
         category="Free"
         mainTitle="*아현*님을 위한 Course"
