@@ -79,9 +79,9 @@ const SignUpButton1 = styled.button`
   margin-bottom: 20px;
   padding: 15px;
   font-size: 16px;
-  background-color: ${(props) => (props.disabled ? "#898989" : "#a603a6")};
+  background-color: ${(props) => (props.allCheck ? "#898989" : "#a603a6")};
   color: white;
-  cursor: ${(props) => (props.disabled ? "default" : "pointer")};
+  cursor: ${(props) => (props.allCheck ? "default" : "pointer")};
 `;
 
 const MailAuthContainer = styled.div`
@@ -135,6 +135,7 @@ export default function SignUp() {
   const auth = useAuth();
   const router = useRouter();
   const [allCheck, setAllCheck] = useState(false);
+  const [mailConfirmed, setMailConfirmed] = useState(false);
 
   const [passwordCheck, setPasswordCheck] = useState(false);
 
@@ -188,7 +189,8 @@ export default function SignUp() {
     }
     try {
       const result = await auth.signUp(userId, password, email);
-      // console.log("result", result);
+      console.log("result", result);
+      setMailConfirmed(true);
       handleOpenModal();
     } catch (error) {
       // console.log("error", error);
@@ -199,11 +201,20 @@ export default function SignUp() {
 
   const executeConfirm = async (event) => {
     event.preventDefault();
+
+    if (!mailConfirmed) {
+      alert("메일 인증을 해주세요");
+      return;
+    }
+    if (!allCheck) {
+      alert("모든 항목을 입력해 주세요");
+      return;
+    }
     try {
       const result = await auth.confirmSignUp(userId, code);
       // console.log("Confirm 성공", result);
 
-      confirmSignUp();
+      setConfirmSignUp();
     } catch (error) {
       // console.log("Confirm 실패", error);
     }
@@ -223,7 +234,7 @@ export default function SignUp() {
   const [isOpenConfirmSignUp, setIsOpenConfirmSignUp] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
-  const confirmSignUp = () => {
+  const setConfirmSignUp = () => {
     setIsOpenConfirmSignUp(true);
   };
   const handleOpenModal = () => {
@@ -277,7 +288,7 @@ export default function SignUp() {
             <SignUpLabel>아이디</SignUpLabel>
             <SignUpInput
               type="text"
-              placeholder="아이디"
+              placeholder="영문 아이디"
               name="userId"
               value={userId}
               onChange={onChange}
@@ -285,7 +296,7 @@ export default function SignUp() {
             <SignUpLabel>비밀번호</SignUpLabel>
             <SignUpInput
               type="password"
-              placeholder="영문, 대문자, 특수문자, 8자 이상 필수"
+              placeholder="영문, 6자 이상 필수"
               name="password"
               value={password}
               onChange={onChange}
@@ -294,12 +305,13 @@ export default function SignUp() {
             <SignUpLabel>비밀번호 확인</SignUpLabel>
             <SignUpInput
               type="password"
-              placeholder="영문, 대문자, 특수문자, 8자 이상 필수"
+              placeholder="영문, 6자 이상 필수"
               name="confirmPassword"
               value={confirmPassword}
               onChange={onChange}
             />
-            {password.length > 0 &&
+            {password.length > 5 &&
+              confirmPassword.length > 5 &&
               (passwordCheck ? (
                 <ConfirmedPassword>
                   비밀번호와 비밀번호 확인이 일치합니다.
@@ -349,7 +361,7 @@ export default function SignUp() {
               onChange={onChange}
             />
             <JoinPresenter allCheck={allCheck} setAllCheck={setAllCheck} />
-            <SignUpButton1 disabled={!allCheck} type="submit">
+            <SignUpButton1 allCheck={!allCheck} type="submit">
               회원가입
             </SignUpButton1>
           </InputsContainer>
