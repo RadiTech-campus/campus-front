@@ -33,13 +33,15 @@ const Description = styled.div`
 const ClassCardsContainer = styled.div`
   padding: 30px 0px;
   display: flex;
-  justify-content: space-evenly;
+  flex-wrap: wrap;
+  /* justify-content: space-evenly; */
   a {
     text-decoration: none;
-    flex: 0.23;
-    border: 0.1rem solid #e6e8eb;
+    border: 0.1rem solid #e6e8ebc2;
     border-radius: 10px;
     padding: 10px;
+    margin: 10px;
+    width: 27%;
   }
 `;
 const ClassCard = styled.div``;
@@ -68,6 +70,7 @@ export default function LectureList({
   description,
   classData,
 }) {
+  console.log("classData", classData);
   return (
     <LectureListContainer>
       {/* <UserContent> */}
@@ -79,24 +82,46 @@ export default function LectureList({
 
       <ClassCardsContainer>
         {classData?.map((li, i) => (
-          <Link href={"/lecture/12"} key={i}>
-            <ClassCard>
-              <ClassImage>
-                <Image
-                  src={li.thumbnail}
-                  alt="메인 배경 이미지"
-                  // width={30}
-                  // height={30}
-                  style={{ objectFit: "cover" }}
-                  fill
-                  //   style={{ borderRadius: "50%", marginRight: "5px" }}
-                />
-                {/* {li.thumbnail} */}
-              </ClassImage>
-              <ClassTitle>{li.title}</ClassTitle>
-              <ClassContent>{li.content}</ClassContent>
-            </ClassCard>
-          </Link>
+          <>
+            <Link href={"/lecture/12"} key={i}>
+              <ClassCard>
+                <ClassImage>
+                  <Image
+                    src="https://cdn.news.unn.net/news/photo/202301/540181_346310_728.jpg"
+                    alt="메인 배경 이미지"
+                    // width={30}
+                    // height={30}
+                    style={{ objectFit: "cover" }}
+                    fill
+                    //   style={{ borderRadius: "50%", marginRight: "5px" }}
+                  />
+                  {/* {li.thumbnail} */}
+                </ClassImage>
+                <ClassTitle>{li.secondCat}</ClassTitle>
+                {/* <ClassContent>{li.content}</ClassContent> */}
+              </ClassCard>
+            </Link>
+            {li.secondCat === "일촬" ? (
+              <Link href={"/lecture/12"} key={i}>
+                <ClassCard>
+                  <ClassImage>
+                    <Image
+                      src="https://cdn.news.unn.net/news/photo/202301/540181_346310_728.jpg"
+                      alt="메인 배경 이미지"
+                      // width={30}
+                      // height={30}
+                      style={{ objectFit: "cover" }}
+                      fill
+                      //   style={{ borderRadius: "50%", marginRight: "5px" }}
+                    />
+                    {/* {li.thumbnail} */}
+                  </ClassImage>
+                  <ClassTitle>{li.secondCat}-기출</ClassTitle>
+                  {/* <ClassContent>{li.content}</ClassContent> */}
+                </ClassCard>
+              </Link>
+            ) : null}
+          </>
         ))}
       </ClassCardsContainer>
     </LectureListContainer>

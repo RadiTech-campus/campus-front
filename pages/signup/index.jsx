@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import JoinPresenter from "../../components/\bjoinpresenter";
+import JoinPresenter from "../../components/joinpresenter";
 import Modal from "../../components/modal/Modal";
 import SignUpModal from "../../components/modal/SignUpModal";
 import { useAuth } from "../../hooks/useAuth";

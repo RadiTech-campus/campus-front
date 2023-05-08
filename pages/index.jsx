@@ -9,9 +9,10 @@ import "swiper/css/scrollbar";
 import LectureList from "../components/lecturelist";
 import styled from "@emotion/styled";
 import Image from "next/image";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Modal from "../components/modal/Modal";
 import SignUpModal from "../components/modal/SignUpModal";
+import { useGetContents } from "../query/contents";
 
 const IndexContainer = styled.div``;
 // const SwiperPagiContainer = styled.div`
@@ -22,32 +23,35 @@ const IndexContainer = styled.div``;
 // `;
 
 export default function Index() {
-  const data = [
-    {
-      thumbnail:
-        "https://cdn.news.unn.net/news/photo/202301/540181_346310_728.jpg",
-      title: "심혈관 중재술",
-      content: "강의 내용 요약",
-    },
-    {
-      thumbnail:
-        "https://image.newsis.com/2011/01/13/NISI20110113_0003923500_web.jpg",
-      title: "투시",
-      content: "강의 내용 요약",
-    },
-    {
-      thumbnail:
-        "http://www.dailydgnews.com/data/photos/20211146/art_16371432800126_dc33b6.jpg",
-      title: "초음파",
-      content: "강의 내용 요약",
-    },
-    {
-      thumbnail:
-        "http://www.dailydgnews.com/data/photos/20211146/art_16371432800126_dc33b6.jpg",
-      title: "초음파",
-      content: "강의 내용 요약",
-    },
-  ];
+  const { data: contentData } = useGetContents();
+  const data = useMemo(() => contentData?.Items || [], [contentData]);
+  console.log("data", data);
+  // const data = [
+  //   {
+  //     thumbnail:
+  //       "https://cdn.news.unn.net/news/photo/202301/540181_346310_728.jpg",
+  //     title: "심혈관 중재술",
+  //     content: "강의 내용 요약",
+  //   },
+  //   {
+  //     thumbnail:
+  //       "https://image.newsis.com/2011/01/13/NISI20110113_0003923500_web.jpg",
+  //     title: "투시",
+  //     content: "강의 내용 요약",
+  //   },
+  //   {
+  //     thumbnail:
+  //       "http://www.dailydgnews.com/data/photos/20211146/art_16371432800126_dc33b6.jpg",
+  //     title: "초음파",
+  //     content: "강의 내용 요약",
+  //   },
+  //   {
+  //     thumbnail:
+  //       "http://www.dailydgnews.com/data/photos/20211146/art_16371432800126_dc33b6.jpg",
+  //     title: "초음파",
+  //     content: "강의 내용 요약",
+  //   },
+  // ];
 
   return (
     <IndexContainer>
@@ -120,13 +124,17 @@ export default function Index() {
         category="Free"
         mainTitle="*아현*님을 위한 Course"
         description="국시 합격과 취업을 심지나쌤이 응원하겠습니다!"
-        classData={data}
+        classData={data
+          ?.filter((li) => li.pay === "무료")
+          .sort((a, b) => (a.code > b.code ? 1 : -1))}
       />
       <LectureList
         category="Best Seller"
         mainTitle="실기 ALL Course"
         description="어려운 실기를 가장 효과적으로 공부하기 !"
-        classData={data}
+        classData={data
+          ?.filter((li) => li.pay === "유료")
+          .sort((a, b) => (a.code > b.code ? 1 : -1))}
       />
     </IndexContainer>
   );

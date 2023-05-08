@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import React, { useEffect, useState } from "react";
+import Link from "next/link";
 import ChevronDownIcon from "../icons/ChevronDownIcon";
 import ChevronUpIcon from "../icons/ChevronUpIcon";
 
@@ -32,156 +33,87 @@ export default function Lectures({ chapter, hiddenAll }) {
       <LectureChapter>
         <div
           style={{
+            padding: "15px 25px",
+            fontSize: "16px",
+            borderTop: "1px solid lightgray",
             display: "flex",
-            justifyContent: "space-between",
-            padding: "15px",
             fontWeight: "bold",
-            cursor: "pointer",
+            justifyContent: "space-between",
+            alignItems: "center",
           }}
-          onClick={handleArrow}
         >
-          {chapter}{" "}
-          {arrow && !hiddenAll ? (
-            ""
-          ) : arrow && hiddenAll ? (
-            <ChevronUpIcon />
-          ) : (
-            <ChevronDownIcon />
-          )}
+          # 1. 초음파 1
+          <button
+            style={{
+              marginRight: "10px",
+              padding: "10px 20px",
+              backgroundColor: "#7100a6",
+              color: "white",
+              fontWeight: "bold",
+              borderRadius: "5px",
+              border: "none",
+              cursor: "pointer",
+            }}
+          >
+            강의보기
+          </button>
         </div>
-        {arrow && hiddenAll ? (
-          ""
-        ) : (
-          <>
-            <div
+        <div
+          style={{
+            padding: "15px 25px",
+            fontSize: "16px",
+            borderTop: "1px solid lightgray",
+            display: "flex",
+            fontWeight: "bold",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          # 1. 초음파 2
+          <button
+            style={{
+              marginRight: "10px",
+              padding: "10px 20px",
+              backgroundColor: "#7100a6",
+              color: "white",
+              fontWeight: "bold",
+              borderRadius: "5px",
+              border: "none",
+              cursor: "pointer",
+            }}
+          >
+            강의보기
+          </button>
+        </div>
+        <Link href={"/lecture/lecturedetail/12"}>
+          <div
+            style={{
+              padding: "15px 25px",
+              fontSize: "16px",
+              borderTop: "1px solid lightgray",
+              display: "flex",
+              fontWeight: "bold",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            # 2. 초음파 3
+            <button
               style={{
-                padding: "15px 25px",
-                fontSize: "14px",
-                borderTop: "1px solid lightgray",
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
+                marginRight: "10px",
+                padding: "10px 20px",
+                backgroundColor: "#7100a6",
+                color: "white",
+                fontWeight: "bold",
+                borderRadius: "5px",
+                border: "none",
+                cursor: "pointer",
               }}
             >
-              # 1.1 초초초초초
-              <div>
-                <button
-                  style={{
-                    marginRight: "10px",
-                    padding: "10px 20px",
-                    backgroundColor: "#7100a6",
-                    color: "white",
-                    fontWeight: "bold",
-                    borderRadius: "5px",
-                    border: "none",
-                    cursor: "pointer",
-                    zIndex: 1,
-                  }}
-                >
-                  강연자료
-                </button>
-                <button
-                  style={{
-                    marginRight: "10px",
-                    padding: "10px 20px",
-                    backgroundColor: "#7100a6",
-                    color: "white",
-                    fontWeight: "bold",
-                    borderRadius: "5px",
-                    border: "none",
-                    cursor: "pointer",
-                  }}
-                >
-                  강의보기
-                </button>
-              </div>
-            </div>
-            <div
-              style={{
-                padding: "15px 25px",
-                fontSize: "14px",
-                borderTop: "1px solid lightgray",
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              # 1.2 음음음음음
-              <div>
-                <button
-                  style={{
-                    marginRight: "10px",
-                    padding: "10px 20px",
-                    backgroundColor: "#7100a6",
-                    color: "white",
-                    fontWeight: "bold",
-                    borderRadius: "5px",
-                    border: "none",
-                    cursor: "pointer",
-                  }}
-                >
-                  강연자료
-                </button>
-                <button
-                  style={{
-                    marginRight: "10px",
-                    padding: "10px 20px",
-                    backgroundColor: "#7100a6",
-                    color: "white",
-                    fontWeight: "bold",
-                    borderRadius: "5px",
-                    border: "none",
-                    cursor: "pointer",
-                  }}
-                >
-                  강의보기
-                </button>
-              </div>
-            </div>
-            <div
-              style={{
-                padding: "15px 25px",
-                fontSize: "14px",
-                borderTop: "1px solid lightgray",
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              # 1.3 파파파파파
-              <div>
-                <button
-                  style={{
-                    marginRight: "10px",
-                    padding: "10px 20px",
-                    backgroundColor: "#7100a6",
-                    color: "white",
-                    fontWeight: "bold",
-                    borderRadius: "5px",
-                    border: "none",
-                    cursor: "pointer",
-                  }}
-                >
-                  강연자료
-                </button>
-                <button
-                  style={{
-                    marginRight: "10px",
-                    padding: "10px 20px",
-                    backgroundColor: "#7100a6",
-                    color: "white",
-                    fontWeight: "bold",
-                    borderRadius: "5px",
-                    border: "none",
-                    cursor: "pointer",
-                  }}
-                >
-                  강의보기
-                </button>
-              </div>
-            </div>
-          </>
-        )}
+              강의보기
+            </button>
+          </div>
+        </Link>
       </LectureChapter>
     </LecturesContainer>
   );
