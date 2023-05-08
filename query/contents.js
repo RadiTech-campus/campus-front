@@ -10,7 +10,7 @@ export const useGetContents = () => {
   return useQuery({
     queryKey: ["contents"],
     queryFn: async () => {
-      const data = await getContents()
+      const data = await getContents();
       return data;
     },
     onError: (e) => {
@@ -19,11 +19,11 @@ export const useGetContents = () => {
   });
 };
 
-export const useGetContentDetails = () => {
+export const useGetContentDetails = (contentCode) => {
   return useQuery({
-    queryKey: ["contentdetails"],
+    queryKey: [contentCode],
     queryFn: async () => {
-      const data = await getContentDetail()
+      const data = await getContentDetail(contentCode);
       return data;
     },
     onError: (e) => {

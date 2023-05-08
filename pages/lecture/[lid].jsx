@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { useRouter } from "next/router";
 import styled from "@emotion/styled";
 import Image from "next/image";
 import Lectures from "../../components/lectures";
+import { useGetContentDetails } from "../../query/contents";
 
 const LectureDetailContainer = styled.div`
   /* display: flex;
@@ -122,18 +123,23 @@ const InfoRightLectureButton = styled.button`
 
 export default function Lecture() {
   const router = useRouter();
-  const { lid } = router.query;
-  const [hiddenAll, setHiddenAll] = useState(true);
-  const handelHiddenAll = () => {
-    setHiddenAll(!hiddenAll);
-  };
+  const { lid, classtype, title } = router.query;
+
+  const { data: contentDetailData } = useGetContentDetails(lid);
+  const data = useMemo(
+    () => contentDetailData?.Items || [],
+    [contentDetailData, lid],
+  );
+
+  console.log("data", data);
+
   return (
     <LectureDetailContainer>
       <TopDetail>
         <TopLeftDetail>
           <ClassImage>
             <Image
-              src="https://cdn.news.unn.net/news/photo/202301/540181_346310_728.jpg"
+              src={`https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/contents/${lid}.jpeg`}
               alt="메인 배경 이미지"
               style={{ objectFit: "cover" }}
               fill
@@ -141,17 +147,18 @@ export default function Lecture() {
           </ClassImage>
         </TopLeftDetail>
         <TopRightDetail>
-          <ClassMainTitle># 초음파</ClassMainTitle>
-          <ClassSubTitle>
-            초음파 : 영상 확인 부터 파악하기 메인타이틀메인타타이틀
-          </ClassSubTitle>
+          <ClassMainTitle>
+            {lid?.slice(-1) === "F" && "#무료공개"} {`#${classtype}`}{" "}
+            {`#${title}`}
+          </ClassMainTitle>
+          <ClassSubTitle>{`# ${title}`}</ClassSubTitle>
           <ClassContent>
             <ClassLeftContent>이용 기간</ClassLeftContent>
             <ClassRightContent>~2023.03.15</ClassRightContent>
           </ClassContent>
           <ClassContent>
             <ClassLeftContent>강의 분량</ClassLeftContent>
-            <ClassRightContent>강의 3개</ClassRightContent>
+            <ClassRightContent>{data?.length} 개</ClassRightContent>
           </ClassContent>
           <ClassContent>
             <ClassLeftContent>강의 시간</ClassLeftContent>
@@ -185,7 +192,7 @@ export default function Lecture() {
       </InfoLecturer>
       <Divider />
       <InfoTitle>강의 목록</InfoTitle>
-      <InfoLectureContainer>
+      {/* <InfoLectureContainer>
         <InfoLeftLecture>
           <InfoTime>동영상 174개</InfoTime>
           <InfoTime>총 28시간</InfoTime>
@@ -195,10 +202,9 @@ export default function Lecture() {
             강의 자료
           </InfoRightLectureButton>
         </InfoRightLecture>
-      </InfoLectureContainer>
-      <Lectures chapter={"#1 초음파란?"} hiddenAll={hiddenAll} />
-      {/* <Lectures chapter={"#2 음파음파"} hiddenAll={hiddenAll} />
-      <Lectures chapter={"#3 파덕파덕"} hiddenAll={hiddenAll} /> */}
+      </InfoLectureContainer> */}
+      <Lectures classData={data} classtype={classtype} />
+
       <Divider />
     </LectureDetailContainer>
   );

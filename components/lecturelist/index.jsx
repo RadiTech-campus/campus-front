@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import Image from "next/image";
-import React from "react";
+import React, { Fragment } from "react";
 import Link from "next/link";
 
 const LectureListContainer = styled.div`
@@ -82,13 +82,18 @@ export default function LectureList({
 
       <ClassCardsContainer>
         {classData?.map((li, i) => (
-          <>
-            <Link href={"/lecture/12"} key={i}>
+          <Fragment key={i}>
+            <Link
+              href={{
+                pathname: `/lecture/${li.code}`,
+                query: { classtype: "강의", title: li.secondCat },
+              }}
+            >
               <ClassCard>
                 <ClassImage>
                   <Image
-                    src="https://cdn.news.unn.net/news/photo/202301/540181_346310_728.jpg"
-                    alt="메인 배경 이미지"
+                    src={`https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/contents/${li.code}.jpeg`}
+                    alt={li.secondCat}
                     // width={30}
                     // height={30}
                     style={{ objectFit: "cover" }}
@@ -101,12 +106,17 @@ export default function LectureList({
                 {/* <ClassContent>{li.content}</ClassContent> */}
               </ClassCard>
             </Link>
-            {li.secondCat === "일촬" ? (
-              <Link href={"/lecture/12"} key={i}>
+            {li.secondCat === "일촬" || li.secondCat === "투시" ? (
+              <Link
+                href={{
+                  pathname: `/lecture/${li.code}`,
+                  query: { classtype: "기출", title: li.secondCat },
+                }}
+              >
                 <ClassCard>
                   <ClassImage>
                     <Image
-                      src="https://cdn.news.unn.net/news/photo/202301/540181_346310_728.jpg"
+                      src={`https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/contents/${li.code}.jpeg`}
                       alt="메인 배경 이미지"
                       // width={30}
                       // height={30}
@@ -121,7 +131,7 @@ export default function LectureList({
                 </ClassCard>
               </Link>
             ) : null}
-          </>
+          </Fragment>
         ))}
       </ClassCardsContainer>
     </LectureListContainer>

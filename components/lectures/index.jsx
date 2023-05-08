@@ -7,6 +7,7 @@ import ChevronUpIcon from "../icons/ChevronUpIcon";
 const LecturesContainer = styled.div`
   padding: 10px 40px;
 `;
+
 const LectureChapter = styled.div`
   display: flex;
   flex-direction: column;
@@ -22,99 +23,74 @@ const LectureChapter = styled.div`
   } */
 `;
 
-export default function Lectures({ chapter, hiddenAll }) {
+export default function Lectures({ classData, classtype }) {
   const [arrow, setArrow] = useState(true);
   const handleArrow = () => {
     setArrow(!arrow);
   };
 
+  console.log("classData", classData);
   return (
     <LecturesContainer>
-      <LectureChapter>
-        <div
-          style={{
-            padding: "15px 25px",
-            fontSize: "16px",
-            borderTop: "1px solid lightgray",
-            display: "flex",
-            fontWeight: "bold",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          # 1. 초음파 1
-          <button
-            style={{
-              marginRight: "10px",
-              padding: "10px 20px",
-              backgroundColor: "#7100a6",
-              color: "white",
-              fontWeight: "bold",
-              borderRadius: "5px",
-              border: "none",
-              cursor: "pointer",
-            }}
-          >
-            강의보기
-          </button>
-        </div>
-        <div
-          style={{
-            padding: "15px 25px",
-            fontSize: "16px",
-            borderTop: "1px solid lightgray",
-            display: "flex",
-            fontWeight: "bold",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          # 1. 초음파 2
-          <button
-            style={{
-              marginRight: "10px",
-              padding: "10px 20px",
-              backgroundColor: "#7100a6",
-              color: "white",
-              fontWeight: "bold",
-              borderRadius: "5px",
-              border: "none",
-              cursor: "pointer",
-            }}
-          >
-            강의보기
-          </button>
-        </div>
-        <Link href={"/lecture/lecturedetail/12"}>
-          <div
-            style={{
-              padding: "15px 25px",
-              fontSize: "16px",
-              borderTop: "1px solid lightgray",
-              display: "flex",
-              fontWeight: "bold",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            # 2. 초음파 3
-            <button
-              style={{
-                marginRight: "10px",
-                padding: "10px 20px",
-                backgroundColor: "#7100a6",
-                color: "white",
-                fontWeight: "bold",
-                borderRadius: "5px",
-                border: "none",
-                cursor: "pointer",
-              }}
-            >
-              강의보기
-            </button>
-          </div>
-        </Link>
-      </LectureChapter>
+      {classData.length > 0 ? (
+        <LectureChapter>
+          {classData
+            ?.filter((li) => li.contentDetailSubTitle === classtype)
+            .map((li, i) => (
+              <div
+                key={i}
+                style={{
+                  padding: "15px 25px",
+                  fontSize: "16px",
+                  borderTop: "1px solid lightgray",
+                  display: "flex",
+                  fontWeight: "bold",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                {`# ${i + 1}. ${li.contentDetailTitle}`}
+                <div>
+                  <button
+                    style={{
+                      marginRight: "10px",
+                      padding: "10px 20px",
+                      backgroundColor: "#7100a6",
+                      color: "white",
+                      fontWeight: "bold",
+                      borderRadius: "5px",
+                      border: "none",
+                      cursor: "pointer",
+                    }}
+                  >
+                    강의자료
+                  </button>
+                  <Link
+                    href={`/lecture/lecturedetail/${li.contentDetailCode}`}
+                    key={i}
+                  >
+                    <button
+                      style={{
+                        marginRight: "10px",
+                        padding: "10px 20px",
+                        backgroundColor: "#7100a6",
+                        color: "white",
+                        fontWeight: "bold",
+                        borderRadius: "5px",
+                        border: "none",
+                        cursor: "pointer",
+                      }}
+                    >
+                      강의보기
+                    </button>
+                  </Link>
+                </div>
+              </div>
+            ))}
+        </LectureChapter>
+      ) : (
+        "강의가 준비중 입니다"
+      )}
     </LecturesContainer>
   );
 }

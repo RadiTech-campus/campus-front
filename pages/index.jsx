@@ -25,33 +25,6 @@ const IndexContainer = styled.div``;
 export default function Index() {
   const { data: contentData } = useGetContents();
   const data = useMemo(() => contentData?.Items || [], [contentData]);
-  console.log("data", data);
-  // const data = [
-  //   {
-  //     thumbnail:
-  //       "https://cdn.news.unn.net/news/photo/202301/540181_346310_728.jpg",
-  //     title: "심혈관 중재술",
-  //     content: "강의 내용 요약",
-  //   },
-  //   {
-  //     thumbnail:
-  //       "https://image.newsis.com/2011/01/13/NISI20110113_0003923500_web.jpg",
-  //     title: "투시",
-  //     content: "강의 내용 요약",
-  //   },
-  //   {
-  //     thumbnail:
-  //       "http://www.dailydgnews.com/data/photos/20211146/art_16371432800126_dc33b6.jpg",
-  //     title: "초음파",
-  //     content: "강의 내용 요약",
-  //   },
-  //   {
-  //     thumbnail:
-  //       "http://www.dailydgnews.com/data/photos/20211146/art_16371432800126_dc33b6.jpg",
-  //     title: "초음파",
-  //     content: "강의 내용 요약",
-  //   },
-  // ];
 
   return (
     <IndexContainer>
@@ -122,7 +95,7 @@ export default function Index() {
 
       <LectureList
         category="Free"
-        mainTitle="*아현*님을 위한 Course"
+        mainTitle="무료 공개 강의"
         description="국시 합격과 취업을 심지나쌤이 응원하겠습니다!"
         classData={data
           ?.filter((li) => li.pay === "무료")

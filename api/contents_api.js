@@ -7,9 +7,9 @@ export async function getContents() {
   return data;
 }
 
-export async function getContentDetail() {
+export async function getContentDetail(contentCode) {
   const { data } = await axios(
-    `${process.env.NEXT_PUBLIC_REACT_APP_API_END_POINT}/content/detail`,
+    `${process.env.NEXT_PUBLIC_REACT_APP_API_END_POINT}/content/detail?contentCode=${contentCode}`,
   );
   return data;
 }
