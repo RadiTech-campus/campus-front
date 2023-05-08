@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/router";
 import styled from "@emotion/styled";
 import Image from "next/image";
-import Lectures from "../../../components/lectures";
+import Lectures from "../../components/lectures";
 
 const LectureDetailContainer = styled.div`
   /* display: flex;
