@@ -29,10 +29,9 @@ export default function Lectures({ classData, classtype }) {
     setArrow(!arrow);
   };
 
-  console.log("classData", classData);
   return (
     <LecturesContainer>
-      {classData.length > 0 ? (
+      {classData && classData.length > 0 ? (
         <LectureChapter>
           {classData
             ?.filter((li) => li.contentDetailSubTitle === classtype)
