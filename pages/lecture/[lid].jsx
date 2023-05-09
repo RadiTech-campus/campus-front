@@ -203,7 +203,7 @@ export default function Lecture() {
           </InfoRightLectureButton>
         </InfoRightLecture>
       </InfoLectureContainer> */}
-      <Lectures classData={data} classtype={classtype} />
+      <Lectures classData={data} classtype={classtype} title={title} />
 
       <Divider />
     </LectureDetailContainer>
