@@ -1,8 +1,6 @@
 import styled from "@emotion/styled";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import ChevronDownIcon from "../icons/ChevronDownIcon";
-import ChevronUpIcon from "../icons/ChevronUpIcon";
 
 const LecturesContainer = styled.div`
   padding: 10px 40px;
@@ -23,12 +21,7 @@ const LectureChapter = styled.div`
   } */
 `;
 
-export default function Lectures({ classData, classtype }) {
-  const [arrow, setArrow] = useState(true);
-  const handleArrow = () => {
-    setArrow(!arrow);
-  };
-
+export default function Lectures({ classData, classtype, title }) {
   return (
     <LecturesContainer>
       {classData && classData.length > 0 ? (
@@ -50,23 +43,37 @@ export default function Lectures({ classData, classtype }) {
               >
                 {`# ${i + 1}. ${li.contentDetailTitle}`}
                 <div>
-                  <button
-                    style={{
-                      marginRight: "10px",
-                      padding: "10px 20px",
-                      backgroundColor: "#7100a6",
-                      color: "white",
-                      fontWeight: "bold",
-                      borderRadius: "5px",
-                      border: "none",
-                      cursor: "pointer",
-                    }}
-                  >
-                    강의자료
-                  </button>
                   <Link
-                    href={`/lecture/lecturedetail/${li.contentDetailCode}`}
-                    key={i}
+                    href={{
+                      pathname: `https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/content-data/ccc.pdf`,
+                    }}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <button
+                      style={{
+                        marginRight: "10px",
+                        padding: "10px 20px",
+                        backgroundColor: "#7100a6",
+                        color: "white",
+                        fontWeight: "bold",
+                        borderRadius: "5px",
+                        border: "none",
+                        cursor: "pointer",
+                      }}
+                    >
+                      강의자료
+                    </button>
+                  </Link>
+                  <Link
+                    href={{
+                      pathname: `/lecture/lecturedetail/${li.contentCode}`,
+                      query: {
+                        detailCode: li.contentDetailCode,
+                        classtype,
+                        title,
+                      },
+                    }}
                   >
                     <button
                       style={{

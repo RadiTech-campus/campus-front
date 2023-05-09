@@ -70,7 +70,6 @@ export default function LectureList({
   description,
   classData,
 }) {
-  console.log("classData", classData);
   return (
     <LectureListContainer>
       {/* <UserContent> */}
