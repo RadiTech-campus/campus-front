@@ -51,9 +51,16 @@ export default function Index() {
         pagination={{ clickable: true }}
         autoplay={{
           delay: 2000,
-          // disableOnInteraction: false,
+          disableOnInteraction: false,
         }}
         effect={"fade"}
+        style={{
+          "--swiper-pagination-color": "#0422627d",
+          "--swiper-pagination-bullet-inactive-color": "#9999998d",
+          "--swiper-pagination-bullet-inactive-opacity": "1",
+          "--swiper-pagination-bullet-size": "12px",
+          "--swiper-pagination-bullet-horizontal-gap": "10px",
+        }}
 
         // pagination={{
         //   el: ".swiper-custom-pagination",
@@ -63,11 +70,35 @@ export default function Index() {
         // onSwiper={(swiper) => console.log(swiper)}
         // onSlideChange={() => console.log("slide change")}
       >
-        <SwiperSlide style={{ width: "100%", height: "350px" }}>
+        <SwiperSlide style={{ width: "100%", height: "450px" }}>
+          <Image
+            src="/1.png"
+            alt="메인 배경 이미지"
+            style={{ objectFit: "fill" }}
+            fill
+          />
+        </SwiperSlide>
+        <SwiperSlide style={{ width: "100%", height: "450px" }}>
+          <Image
+            src="/2.png"
+            alt="메인 배경 이미지"
+            style={{ objectFit: "fill" }}
+            fill
+          />
+        </SwiperSlide>
+        <SwiperSlide style={{ width: "100%", height: "450px" }}>
+          <Image
+            src="/3.png"
+            alt="메인 배경 이미지"
+            style={{ objectFit: "fill" }}
+            fill
+          />
+        </SwiperSlide>
+        {/* <SwiperSlide style={{ width: "100%", height: "450px" }}>
           <Image
             src="/swi.png"
             alt="메인 배경 이미지"
-            style={{ objectFit: "contain" }}
+            style={{ objectFit: "fill" }}
             fill
           />
         </SwiperSlide>
@@ -94,7 +125,7 @@ export default function Index() {
             style={{ objectFit: "contain" }}
             fill
           />
-        </SwiperSlide>
+        </SwiperSlide> */}
         {/* <SwiperSlide style={{ width: "100%", height: "350px" }}>
           <Image
             src="/swi.png"
