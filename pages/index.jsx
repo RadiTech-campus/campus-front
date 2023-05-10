@@ -1,4 +1,11 @@
-import { Navigation, Pagination, Scrollbar, A11y } from "swiper";
+import {
+  Navigation,
+  Pagination,
+  Scrollbar,
+  A11y,
+  EffectFade,
+  Autoplay,
+} from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import "swiper/css";
@@ -6,6 +13,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
+import "swiper/css/effect-fade";
 import LectureList from "../components/lecturelist";
 import styled from "@emotion/styled";
 import Image from "next/image";
@@ -29,11 +37,24 @@ export default function Index() {
   return (
     <IndexContainer>
       <Swiper
-        modules={[Navigation, Pagination, Scrollbar, A11y]}
+        modules={[
+          Navigation,
+          Pagination,
+          Scrollbar,
+          A11y,
+          EffectFade,
+          Autoplay,
+        ]}
         // spaceBetween={50}
         slidesPerView={1}
-        navigation
+        // navigation
         pagination={{ clickable: true }}
+        autoplay={{
+          delay: 2000,
+          // disableOnInteraction: false,
+        }}
+        effect={"fade"}
+
         // pagination={{
         //   el: ".swiper-custom-pagination",
         //   clickable: true,
@@ -52,7 +73,15 @@ export default function Index() {
         </SwiperSlide>
         <SwiperSlide style={{ width: "100%", height: "350px" }}>
           <Image
-            src="/swi.png"
+            src="/swi2.png"
+            alt="메인 배경 이미지"
+            style={{ objectFit: "contain" }}
+            fill
+          />
+        </SwiperSlide>
+        <SwiperSlide style={{ width: "100%", height: "350px" }}>
+          <Image
+            src="/swi3.png"
             alt="메인 배경 이미지"
             style={{ objectFit: "contain" }}
             fill
@@ -66,22 +95,14 @@ export default function Index() {
             fill
           />
         </SwiperSlide>
-        <SwiperSlide style={{ width: "100%", height: "350px" }}>
+        {/* <SwiperSlide style={{ width: "100%", height: "350px" }}>
           <Image
             src="/swi.png"
             alt="메인 배경 이미지"
             style={{ objectFit: "contain" }}
             fill
           />
-        </SwiperSlide>
-        <SwiperSlide style={{ width: "100%", height: "350px" }}>
-          <Image
-            src="/swi.png"
-            alt="메인 배경 이미지"
-            style={{ objectFit: "contain" }}
-            fill
-          />
-        </SwiperSlide>
+        </SwiperSlide> */}
       </Swiper>
       {/* <div
         className="swiper-custom-pagination"
