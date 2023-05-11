@@ -20,10 +20,16 @@ const LectureChapter = styled.div`
     box-shadow: 0 7px 14px rgba(0, 0, 0, 0.25), 0 5px 5px rgba(0, 0, 0, 0.22);
   } */
 `;
-
+const InfoTitle = styled.div`
+  font-size: 24px;
+  font-weight: bold;
+  padding: 10px 0px;
+`;
 export default function Lectures({ classData, classtype, title }) {
   return (
     <LecturesContainer>
+      <InfoTitle>강의 목록</InfoTitle>
+
       {classData && classData.length > 0 ? (
         <LectureChapter>
           {classData
