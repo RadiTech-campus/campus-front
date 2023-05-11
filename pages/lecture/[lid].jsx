@@ -7,12 +7,10 @@ import { useGetContentDetails } from "../../query/contents";
 import Lecturer from "../../components/lecturer";
 import LectureInfo from "../../components/lectureinfo";
 import LectureWarn from "../../components/lecturewarn";
+import { useAuth } from "../../hooks/useAuth";
+import Modal from "../../components/modal/Modal";
 
 const LectureDetailContainer = styled.div`
-  /* display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 20px; */
   margin: 0px auto;
   width: 1160px;
 `;
@@ -49,7 +47,6 @@ const ClassMainTitle = styled.div`
   font-size: 16px;
 `;
 const ClassSubTitle = styled.div`
-  /* margin: 15px 0px; */
   font-size: 20px;
   font-weight: bold;
 `;
@@ -114,75 +111,28 @@ const ClassRightContent = styled.div`
   font-size: 14px;
 `;
 
-const InfoTitle = styled.div`
-  font-size: 24px;
-  font-weight: bold;
-  padding: 10px 40px;
-`;
-
-const InfoLecturer = styled.div`
-  display: flex;
-`;
-const InfoLeftLecturer = styled.div`
-  padding: 20px 40px;
-`;
-
-const InfoImage = styled.div`
-  height: 200px;
-  width: 200px;
-  position: relative;
-  > img {
-    border-radius: 50%;
-  }
-`;
-const InfoRightLecturer = styled.div`
-  padding: 20px 40px;
-`;
-
-const InfoRightTitle = styled.div`
-  font-size: 20px;
-  font-weight: bold;
-  margin: 10px 0px;
-`;
-const InfoRightContent = styled.div`
+const ModalTitle = styled.div`
   font-size: 16px;
-  margin-bottom: 3px;
-`;
-
-const InfoLectureContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 40px;
-`;
-const InfoLeftLecture = styled.div`
-  display: flex;
-`;
-const InfoTime = styled.div`
   font-weight: bold;
-  margin-right: 10px;
+  text-align: center;
+  margin-bottom: 10px;
 `;
-
-const InfoRightLecture = styled.div``;
-
-const InfoRightLectureButton = styled.button`
-  padding: 10px 20px;
-  font-weight: bolder;
-  background-color: white;
-  border: 1px solid #4a63ff;
-  color: #4a63ff;
-  border-radius: 20px;
-  cursor: pointer;
+const ModalContent = styled.div`
+  font-size: 15px;
+  text-align: center;
+  margin-bottom: 10px;
 `;
-
 const tabs = ["강의소개", "커리큘럼", "강사소개", "주의사항"];
 
 export default function Lecture() {
   const router = useRouter();
+  const auth = useAuth();
   const { lid, classtype, title } = router.query;
   const [selectedTab, setSelectedTab] = useState("강의소개");
-  console.log("selectedTab", selectedTab);
-
+  const [isOpen, setIsOpen] = useState(false);
+  const handleOpenModal = () => {
+    auth.isAuthenticated ? router.push("/regist") : setIsOpen(true);
+  };
   const { data: contentDetailData } = useGetContentDetails(lid);
   const data = useMemo(
     () => contentDetailData?.Items || [],
@@ -191,6 +141,20 @@ export default function Lecture() {
 
   return (
     <LectureDetailContainer>
+      {isOpen && (
+        <Modal
+          open={isOpen}
+          onClose={() => {
+            setIsOpen(false);
+            router.push(`/signin?returnpath=${router.asPath}`);
+          }}
+        >
+          <>
+            <ModalTitle>수강 신청</ModalTitle>
+            <ModalContent>{"로그인이 필요한 서비스 입니다."}</ModalContent>
+          </>
+        </Modal>
+      )}
       <TopDetail>
         <TopLeftDetail>
           <ClassImage>
@@ -216,10 +180,6 @@ export default function Lecture() {
             <ClassPriceInfo>
               모든 강연 + 기출 + 강연자료 모두 무제한으로 수강
             </ClassPriceInfo>
-            {/* <ClassContent>
-              <ClassLeftContent>이용 기간</ClassLeftContent>
-              <ClassRightContent>~2023.03.15</ClassRightContent>
-            </ClassContent> */}
             <ClassContent>
               <ClassLeftContent>강의 분량</ClassLeftContent>
               <ClassRightContent>{data?.length} 개</ClassRightContent>
@@ -229,7 +189,7 @@ export default function Lecture() {
               <ClassRightContent>4시간 +</ClassRightContent>
             </ClassContent>
           </div>
-          <ClassButton>수강신청</ClassButton>
+          <ClassButton onClick={() => handleOpenModal()}>수강신청</ClassButton>
         </TopRightDetail>
       </TopDetail>
       <ClassTapContainer>
@@ -250,21 +210,6 @@ export default function Lecture() {
       )}
       {selectedTab === "강사소개" && <Lecturer />}
       {selectedTab === "주의사항" && <LectureWarn />}
-
-      {/* <Divider /> */}
-      {/* <InfoLectureContainer>
-        <InfoLeftLecture>
-          <InfoTime>동영상 174개</InfoTime>
-          <InfoTime>총 28시간</InfoTime>
-        </InfoLeftLecture>
-        <InfoRightLecture>
-          <InfoRightLectureButton onClick={handelHiddenAll}>
-            강의 자료
-          </InfoRightLectureButton>
-        </InfoRightLecture>
-      </InfoLectureContainer> */}
-
-      {/* <Divider /> */}
     </LectureDetailContainer>
   );
 }
