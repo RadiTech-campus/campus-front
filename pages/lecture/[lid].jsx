@@ -4,6 +4,9 @@ import styled from "@emotion/styled";
 import Image from "next/image";
 import Lectures from "../../components/lectures";
 import { useGetContentDetails } from "../../query/contents";
+import Lecturer from "../../components/lecturer";
+import LectureInfo from "../../components/lectureinfo";
+import LectureWarn from "../../components/lecturewarn";
 
 const LectureDetailContainer = styled.div`
   /* display: flex;
@@ -24,29 +27,80 @@ const TopDetail = styled.div`
 `;
 
 const TopLeftDetail = styled.div`
-  flex: 0.5;
+  flex: 0.45;
   padding: 40px;
 `;
 
 const ClassImage = styled.div`
-  height: 300px;
+  height: 250px;
   position: relative;
   /* > img {
     border-radius: 10px;
   } */
 `;
 const TopRightDetail = styled.div`
-  flex: 0.5;
+  flex: 0.55;
   padding: 40px 0px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;
 const ClassMainTitle = styled.div`
   font-size: 16px;
 `;
 const ClassSubTitle = styled.div`
-  margin: 15px 0px;
+  /* margin: 15px 0px; */
   font-size: 20px;
   font-weight: bold;
 `;
+
+const ClassPriceContainer = styled.div`
+  display: flex;
+  align-items: end;
+  margin: 10px 0px 5px 0px;
+`;
+
+const ClassPriceLeft = styled.div`
+  font-size: 22px;
+  font-weight: bold;
+`;
+const ClassPriceRight = styled.div`
+  font-size: 18px;
+`;
+const ClassPriceInfo = styled.div`
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 15px;
+`;
+
+const ClassButton = styled.button`
+  width: 100%;
+  margin-right: 10px;
+  padding: 10px 20px;
+  background-color: #7100a6;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+`;
+
+const ClassTapContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  border-bottom: 1px solid gray;
+  margin: 20px 0px;
+`;
+const ClassTap = styled.div`
+  padding: 5px 30px;
+  margin: 0px 50px;
+  font-size: 20px;
+  font-weight: ${(props) => (props.selected ? "bold" : "normal")};
+  border-bottom: ${(props) => (props.selected ? "2px" : "0px")} solid black;
+  cursor: pointer;
+`;
+
 const ClassContent = styled.div`
   display: flex;
   margin-top: 5px;
@@ -121,17 +175,19 @@ const InfoRightLectureButton = styled.button`
   cursor: pointer;
 `;
 
+const tabs = ["강의소개", "커리큘럼", "강사소개", "주의사항"];
+
 export default function Lecture() {
   const router = useRouter();
   const { lid, classtype, title } = router.query;
+  const [selectedTab, setSelectedTab] = useState("강의소개");
+  console.log("selectedTab", selectedTab);
 
   const { data: contentDetailData } = useGetContentDetails(lid);
   const data = useMemo(
     () => contentDetailData?.Items || [],
     [contentDetailData, lid],
   );
-
-  console.log("data", data);
 
   return (
     <LectureDetailContainer>
@@ -147,51 +203,55 @@ export default function Lecture() {
           </ClassImage>
         </TopLeftDetail>
         <TopRightDetail>
-          <ClassMainTitle>
-            {lid?.slice(-1) === "F" && "#무료공개"} {`#${classtype}`}{" "}
-            {`#${title}`}
-          </ClassMainTitle>
-          <ClassSubTitle>{`# ${title}`}</ClassSubTitle>
-          <ClassContent>
-            <ClassLeftContent>이용 기간</ClassLeftContent>
-            <ClassRightContent>~2023.03.15</ClassRightContent>
-          </ClassContent>
-          <ClassContent>
-            <ClassLeftContent>강의 분량</ClassLeftContent>
-            <ClassRightContent>{data?.length} 개</ClassRightContent>
-          </ClassContent>
-          <ClassContent>
-            <ClassLeftContent>강의 시간</ClassLeftContent>
-            <ClassRightContent>4시간 +</ClassRightContent>
-          </ClassContent>
+          <div>
+            <ClassMainTitle>
+              {lid?.slice(-1) === "F" && "#무료공개"} {`#${classtype}`}{" "}
+              {`#${title}`}
+            </ClassMainTitle>
+            <ClassSubTitle>{`${title}`}</ClassSubTitle>
+            <ClassPriceContainer>
+              <ClassPriceLeft>월 20,000원 / 6개월 120,000원</ClassPriceLeft>
+              <ClassPriceRight>(ALLPASS 기준)</ClassPriceRight>
+            </ClassPriceContainer>
+            <ClassPriceInfo>
+              모든 강연 + 기출 + 강연자료 모두 무제한으로 수강
+            </ClassPriceInfo>
+            {/* <ClassContent>
+              <ClassLeftContent>이용 기간</ClassLeftContent>
+              <ClassRightContent>~2023.03.15</ClassRightContent>
+            </ClassContent> */}
+            <ClassContent>
+              <ClassLeftContent>강의 분량</ClassLeftContent>
+              <ClassRightContent>{data?.length} 개</ClassRightContent>
+            </ClassContent>
+            <ClassContent>
+              <ClassLeftContent>강의 시간</ClassLeftContent>
+              <ClassRightContent>4시간 +</ClassRightContent>
+            </ClassContent>
+          </div>
+          <ClassButton>수강신청</ClassButton>
         </TopRightDetail>
       </TopDetail>
-      <Divider />
-      <InfoTitle>강사 소개</InfoTitle>
-      <InfoLecturer>
-        <InfoLeftLecturer>
-          <InfoImage>
-            <Image
-              src="https://cdn.news.unn.net/news/photo/202301/540181_346310_728.jpg"
-              alt="메인 배경 이미지"
-              style={{ objectFit: "cover" }}
-              fill
-            />
-          </InfoImage>
-        </InfoLeftLecturer>
-        <InfoRightLecturer>
-          <InfoRightTitle>RadiTech심 선생님</InfoRightTitle>
-          <InfoRightContent>엑셀 활용 & 데이터 분석 강사</InfoRightContent>
-          <InfoRightContent>현) IGM 세계경영연구원 겸임교수</InfoRightContent>
-          <InfoRightContent>현) TNF컨설팅 책임연구위원</InfoRightContent>
-          <InfoRightContent>
-            기타활동 : · 이마트, 삼성전기, KOTRA, 현대자동차 외 기업, 공공기관
-            엑셀 강의
-          </InfoRightContent>
-        </InfoRightLecturer>
-      </InfoLecturer>
-      <Divider />
-      <InfoTitle>강의 목록</InfoTitle>
+      <ClassTapContainer>
+        {tabs.map((tab, i) => (
+          <ClassTap
+            key={i}
+            id={tab}
+            onClick={(e) => setSelectedTab(e.target.id)}
+            selected={tab === selectedTab ? true : false}
+          >
+            {tab}
+          </ClassTap>
+        ))}
+      </ClassTapContainer>
+      {selectedTab === "강의소개" && <LectureInfo />}
+      {selectedTab === "커리큘럼" && (
+        <Lectures classData={data} classtype={classtype} title={title} />
+      )}
+      {selectedTab === "강사소개" && <Lecturer />}
+      {selectedTab === "주의사항" && <LectureWarn />}
+
+      {/* <Divider /> */}
       {/* <InfoLectureContainer>
         <InfoLeftLecture>
           <InfoTime>동영상 174개</InfoTime>
@@ -203,9 +263,8 @@ export default function Lecture() {
           </InfoRightLectureButton>
         </InfoRightLecture>
       </InfoLectureContainer> */}
-      <Lectures classData={data} classtype={classtype} title={title} />
 
-      <Divider />
+      {/* <Divider /> */}
     </LectureDetailContainer>
   );
 }
