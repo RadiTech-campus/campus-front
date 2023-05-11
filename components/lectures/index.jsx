@@ -6,6 +6,11 @@ const LecturesContainer = styled.div`
   padding: 10px 40px;
 `;
 
+const InfoTitle = styled.div`
+  font-size: 24px;
+  font-weight: bold;
+  padding: 10px 0px;
+`;
 const LectureChapter = styled.div`
   display: flex;
   flex-direction: column;
@@ -19,11 +24,6 @@ const LectureChapter = styled.div`
   /* :hover {
     box-shadow: 0 7px 14px rgba(0, 0, 0, 0.25), 0 5px 5px rgba(0, 0, 0, 0.22);
   } */
-`;
-const InfoTitle = styled.div`
-  font-size: 24px;
-  font-weight: bold;
-  padding: 10px 0px;
 `;
 export default function Lectures({ classData, classtype, title }) {
   return (
