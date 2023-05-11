@@ -4,22 +4,47 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 import { useAuth } from "../../hooks/useAuth";
+import Search from "../icons/Search";
 
 const HeaderContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 20px;
+  padding: 15px 20px;
   margin: 0px auto;
   width: 1160px;
 `;
 
 const BorderLine = styled.div`
-  border-bottom: 0.1rem solid #e6e8eb;
+  border-bottom: 0.1px solid #e6e8eb;
 `;
 const LogoContainer = styled.div`
   display: flex;
   align-items: center;
+`;
+
+const SearchContainer = styled.div`
+  margin-left: 10px;
+  background-color: #ededed74;
+  border: 1px solid #dbdbdb9b;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  > svg {
+    color: #d3d3d3;
+    height: 24px;
+    padding-left: 15px;
+  }
+`;
+
+const SearchInput = styled.input`
+  background-color: transparent;
+  border: none;
+  height: 34px;
+  width: 400px;
+  font-size: 20px;
+  border-radius: 20px;
+  outline: none;
 `;
 
 const AuthContainer = styled.div`
@@ -35,7 +60,14 @@ export default function Header() {
   const router = useRouter();
   const auth = useAuth();
   return (
-    <>
+    <div
+      style={{
+        position: "sticky",
+        top: 0,
+        zIndex: 10,
+        backgroundColor: "white",
+      }}
+    >
       <HeaderContainer>
         <LogoContainer>
           <Link href={"/"}>
@@ -47,6 +79,10 @@ export default function Header() {
               style={{ marginRight: "5px" }}
             />
           </Link>
+          <SearchContainer>
+            <Search />
+            <SearchInput disabled />
+          </SearchContainer>
         </LogoContainer>
         {auth.isAuthenticated ? (
           <AuthContainer>
@@ -77,6 +113,6 @@ export default function Header() {
         )}
       </HeaderContainer>
       <BorderLine />
-    </>
+    </div>
   );
 }

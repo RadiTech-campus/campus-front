@@ -8,39 +8,36 @@ const SignInContainer = styled.div`
   margin: 15px auto;
   width: 1160px;
 `;
-const SignInBox = styled.div`
-  width: 360px;
-  margin: 50px auto;
-  border: 0.1rem solid #e6e8eb;
-  border-radius: 5px;
-  padding: 60px 40px;
-`;
-const LogoContainer = styled.div`
-  display: flex;
-  align-items: center;
-`;
 
 const TitleContainer = styled.div`
   font-size: 16px;
   font-weight: bold;
   padding: 10px 0px;
 `;
-
+const RegistLabel = styled.label`
+  width: 100%;
+  font-size: 12px;
+`;
+const RegistInput = styled.input`
+  width: 100%;
+  border: none;
+  /* border-bottom: 1px solid #cbcaca; */
+  height: 40px;
+  outline: none;
+  margin-bottom: 20px;
+`;
 const InputsContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
 `;
-
-const LoginText = styled.div`
-  position: absolute;
-  margin: 11px 0px;
-  padding: 0px 15px;
-  font-size: 14px;
-  background-color: white;
-  color: #595959;
+const PriceContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  margin-top: 5px;
 `;
-
 const SignInInput = styled.input`
   width: 20%;
   border: none;
@@ -117,54 +114,79 @@ export default function MyPage() {
 
   return (
     <SignInContainer>
-      {/* <SignInBox> */}
-      <form noValidate onSubmit={executeSignIn}>
-        {/* <LogoContainer>
-          <Image
-            src="/titlelogo.png"
-            alt="메인 배경 이미지"
-            width={160}
-            height={30}
-            style={{ marginRight: "5px" }}
-          />
-        </LogoContainer> */}
-        <div>My Page</div>
-        <TitleContainer>기본 정보</TitleContainer>
-        <InputsContainer>
-          {/* <LoginText>로그인</LoginText> */}
-          <Divider />
-          <SignInLabel>아이디</SignInLabel>
-          <SignInInput
-            type="text"
-            // placeholder="이름"
-            disabled
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-          <SignInLabel>이메일</SignInLabel>
-          <SignInInput
-            type="text"
-            // placeholder="아이디"
-            disabled
-            value={email}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <SignInLabel>휴대폰 번호</SignInLabel>
-          <SignInInput
-            type="text"
-            disabled
-            // placeholder="비밀번호"
-            value={phoneNumber}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          {/* <SignInButton1 type="submit">로그인</SignInButton1>
-          <SignInButton2 type="button">이메일로 회원가입</SignInButton2>
-          <SignInButton2 type="button">비밀번호 재설정</SignInButton2> */}
-        </InputsContainer>
-        <TitleContainer>수강 신청 정보</TitleContainer>
+      <div>My Page</div>
+      <TitleContainer>기본 정보</TitleContainer>
+      <InputsContainer>
+        {/* <LoginText>로그인</LoginText> */}
         <Divider />
-      </form>
-      {/* </SignInBox> */}
+        <SignInLabel>아이디</SignInLabel>
+        <SignInInput
+          type="text"
+          // placeholder="이름"
+          disabled
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+        <SignInLabel>이메일</SignInLabel>
+        <SignInInput
+          type="text"
+          // placeholder="아이디"
+          disabled
+          value={email}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <SignInLabel>휴대폰 번호</SignInLabel>
+        <SignInInput
+          type="text"
+          disabled
+          // placeholder="비밀번호"
+          value={phoneNumber}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+      </InputsContainer>
+      <TitleContainer>수강 신청 정보</TitleContainer>
+      <InputsContainer>
+        <Divider />
+
+        <RegistLabel>강의명</RegistLabel>
+        <RegistInput
+          type="text"
+          placeholder="심지나의 임상 합격 ALL PASS"
+          disabled
+        />
+        <RegistLabel>기간</RegistLabel>
+        <RegistInput type="text" placeholder="12개월" disabled />
+
+        <RegistLabel>결제 금액</RegistLabel>
+        <RegistInput type="text" placeholder="100,000원" disabled />
+
+        <RegistLabel>결제 방법</RegistLabel>
+        <RegistInput type="text" placeholder="무통장입금" disabled />
+        <RegistLabel>결제 상태</RegistLabel>
+        <RegistInput
+          type="text"
+          placeholder="입금 대기중: 우리은행 2222-2222-2222"
+          disabled
+        />
+
+        <TitleContainer>문의 사항</TitleContainer>
+        <Divider />
+
+        <PriceContainer>
+          <div>결제, 환불, 서비스 이용 관련해서는 메일로 문의 주세요.</div>
+          <div>kkhdevs@gmail.com</div>
+          {/* <div
+            style={{
+              color: "red",
+              fontSize: "14px",
+              fontWeight: "bold",
+              marginTop: "20px",
+            }}
+          >
+            *유료서비스를 이용하지 않았을 경우 환불 가능합니다.
+          </div> */}
+        </PriceContainer>
+      </InputsContainer>
     </SignInContainer>
   );
 }

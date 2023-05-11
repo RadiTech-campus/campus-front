@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import styled from "@emotion/styled";
 import Image from "next/image";
 
@@ -90,21 +90,16 @@ export default function SignIn() {
 
   const executeSignIn = async (event) => {
     event.preventDefault();
-    // console.log("로그인 실행");
     const result = await auth.signIn(username, password);
-    // console.log("result", result);
-    // if (result.success) {
-    //   // router.push("/");
-    //   alert(result.message);
-    // } else {
-    //   alert(result.message);
-    // }
   };
-  // console.log("auth", auth);
 
   useEffect(() => {
     if (auth.isAuthenticated) {
-      router.push("/");
+      if (router.query.returnpath && router.query.title) {
+        router.push(`${router.query.returnpath}?title${router.query.title}`);
+      } else {
+        router.push("/");
+      }
     }
   }, [auth]);
 
