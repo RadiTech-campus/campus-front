@@ -135,16 +135,6 @@ export default function Index() {
           />
         </SwiperSlide> */}
       </Swiper>
-      {/* <div
-        className="swiper-custom-pagination"
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          marginTop: "5px",
-        }}
-      /> */}
-
       <LectureList
         category="Free"
         mainTitle="무료 공개 강의"
