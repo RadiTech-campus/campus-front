@@ -21,7 +21,6 @@ const RegistLabel = styled.label`
 const RegistInput = styled.input`
   width: 100%;
   border: none;
-  /* border-bottom: 1px solid #cbcaca; */
   height: 40px;
   outline: none;
   margin-bottom: 20px;
@@ -87,7 +86,7 @@ export default function MyPage() {
 
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("구현예정");
+  const [phoneNumber, setPhoneNumber] = useState("");
 
   const executeSignIn = async (event) => {
     event.preventDefault();
@@ -107,6 +106,7 @@ export default function MyPage() {
     if (auth.isAuthenticated) {
       setUsername(auth.username);
       setEmail(auth.useremail);
+      setPhoneNumber(auth.userPhone);
     } else {
       router.push("/signin");
     }

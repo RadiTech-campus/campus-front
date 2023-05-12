@@ -188,7 +188,7 @@ export default function SignUp() {
       return;
     }
     try {
-      const result = await auth.signUp(userId, password, email);
+      const result = await auth.signUp(userId, password, email, phoneNumber);
       console.log("result", result);
       setMailConfirmed(true);
       handleOpenModal();
@@ -321,7 +321,14 @@ export default function SignUp() {
                   * 비밀번호와 비밀번호와 확인이 일치하지 않습니다.
                 </UnconfirmedPassword>
               ))}
-
+            <SignUpLabel>휴대폰 번호</SignUpLabel>
+            <SignUpInput
+              type="number"
+              placeholder="휴대폰 번호"
+              name="phoneNumber"
+              value={phoneNumber}
+              onChange={onChange}
+            />
             <SignUpLabel>메일</SignUpLabel>
             <MailAuthContainer>
               <SignUpMailInput
@@ -352,14 +359,7 @@ export default function SignUp() {
               value={userName}
               onChange={onChange}
             />
-            <SignUpLabel>휴대폰 번호</SignUpLabel>
-            <SignUpInput
-              type="text"
-              placeholder="휴대폰 번호"
-              name="phoneNumber"
-              value={phoneNumber}
-              onChange={onChange}
-            />
+
             <JoinPresenter allCheck={allCheck} setAllCheck={setAllCheck} />
             <SignUpButton1 allCheck={!allCheck} type="submit">
               회원가입

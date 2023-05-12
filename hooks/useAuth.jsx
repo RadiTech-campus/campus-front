@@ -20,31 +20,34 @@ const useProvideAuth = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [username, setUsername] = useState("");
   const [useremail, setUseremail] = useState("");
+  const [userPhone, setUserPhone] = useState("");
   useEffect(() => {
     Auth.currentAuthenticatedUser()
       .then((result) => {
         setUsername(result.username);
         setUseremail(result.attributes.email);
+        setUserPhone(result.attributes["custom:phone"]);
         setIsAuthenticated(true);
         setIsLoading(false);
       })
       .catch(() => {
         setUsername("");
         setUseremail("");
+        setUserPhone("");
         setIsAuthenticated(false);
         setIsLoading(false);
       });
   }, []);
 
-  const signUp = async (username, password, email) => {
+  const signUp = async (username, password, email, phone) => {
     try {
       const result = await Auth.signUp({
         username,
         password,
         attributes: {
           email,
+          "custom:phone": phone,
         },
-
         autoSignIn: {
           enabled: true,
         },
@@ -74,6 +77,7 @@ const useProvideAuth = () => {
       setUsername(result.username);
       setUseremail(result.attributes.email);
       setIsAuthenticated(true);
+      console.log("result", result);
       return result;
     } catch (error) {
       // console.log("로그인 에러", error);
@@ -100,6 +104,7 @@ const useProvideAuth = () => {
     isAuthenticated,
     username,
     useremail,
+    userPhone,
     signUp,
     confirmSignUp,
     signIn,

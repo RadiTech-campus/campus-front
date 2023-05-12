@@ -204,6 +204,19 @@ export default function SignUp() {
     });
   };
 
+  useEffect(() => {
+    if (auth.isAuthenticated) {
+      setInputs({
+        ...inputs,
+        userName: auth.username,
+        email: auth.useremail,
+        phoneNumber: auth.userPhone,
+      });
+    } else {
+      router.push("/signin");
+    }
+  }, [auth]);
+
   const [checked, setChecked] = useState(12);
   const handleChecked = (e) => {
     setChecked(Number(e.target.value));
@@ -267,28 +280,13 @@ export default function SignUp() {
           <UserText>구매자 정보</UserText>
           <Divider />
           <RegistLabel>이름</RegistLabel>
-          <RegistInput
-            type="text"
-            placeholder="심지나"
-            disabled
-            value={confirmPassword}
-          />
+          <RegistInput type="text" disabled value={userName} />
 
           <RegistLabel>메일</RegistLabel>
-          <RegistInput
-            type="email"
-            placeholder="eoeornfl1@jinhak.com"
-            disabled
-            value={email}
-          />
+          <RegistInput type="email" disabled value={email} />
 
           <RegistLabel>휴대번호</RegistLabel>
-          <RegistInput
-            type="email"
-            placeholder="010-4763-4695"
-            disabled
-            value={email}
-          />
+          <RegistInput type="number" disabled value={phoneNumber} />
 
           <PriceText>가격 정보</PriceText>
           <Divider />
