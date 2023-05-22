@@ -229,10 +229,7 @@ export default function SignUp() {
   const { data: aUnivData } = useGetAUniv(
     email.substring(email.indexOf("@") + 1),
   );
-  const data = useMemo(
-    () => aUnivData?.Items || [],
-    [email, aUnivData, inputs],
-  );
+  const data = useMemo(() => aUnivData?.Item || [], [email, aUnivData, inputs]);
   console.log("data", data);
   return (
     <SignUpContainer>
@@ -302,7 +299,9 @@ export default function SignUp() {
           <PriceContainer>
             <PriceTitle>할인율</PriceTitle>
             <PriceDetail>
-              <PriceContent>100% - 연세대학교 MOU</PriceContent>
+              <PriceContent>
+                {data?.discount} % {data?.name} MOU 채결
+              </PriceContent>
             </PriceDetail>
           </PriceContainer>
           <PriceContainer>
