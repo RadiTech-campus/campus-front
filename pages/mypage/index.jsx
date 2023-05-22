@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import { useRouter } from "next/navigation";
 import styled from "@emotion/styled";
 import Image from "next/image";
+import { useGetPayment } from "../../query/contents";
 
 const SignInContainer = styled.div`
   margin: 15px auto;
@@ -21,7 +22,6 @@ const RegistLabel = styled.label`
 const RegistInput = styled.input`
   width: 100%;
   border: none;
-  /* border-bottom: 1px solid #cbcaca; */
   height: 40px;
   outline: none;
   margin-bottom: 20px;
@@ -87,7 +87,7 @@ export default function MyPage() {
 
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("구현예정");
+  const [phoneNumber, setPhoneNumber] = useState("");
 
   const executeSignIn = async (event) => {
     event.preventDefault();
@@ -103,14 +103,35 @@ export default function MyPage() {
   };
   // console.log("auth", auth);
 
+  const { data: paymentData } = useGetPayment(username);
+  const data = useMemo(() => paymentData?.Items || [], [username]);
+  console.log("data", data);
+
   useEffect(() => {
     if (auth.isAuthenticated) {
       setUsername(auth.username);
       setEmail(auth.useremail);
+      setPhoneNumber(auth.userPhone);
     } else {
       router.push("/signin");
     }
   }, [auth]);
+
+  function AddDays(date, days) {
+    // date는 문자열로 받는다 ex, '2020-10-15'
+    var result = new Date(date);
+    result.setDate(result.getDate() + days);
+    return result;
+  }
+
+  const getDateDiff = (d1, d2) => {
+    const date1 = new Date(d1);
+    const date2 = new Date(d2);
+
+    const diffDate = date1.getTime() - date2.getTime();
+
+    return diffDate / (1000 * 60 * 60 * 24); // 밀리세컨 * 초 * 분 * 시 = 일
+  };
 
   return (
     <SignInContainer>
@@ -122,52 +143,80 @@ export default function MyPage() {
         <SignInLabel>아이디</SignInLabel>
         <SignInInput
           type="text"
-          // placeholder="이름"
+          placeholder={username}
           disabled
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          // value={username}
+          // onChange={(e) => setUsername(e.target.value)}
         />
         <SignInLabel>이메일</SignInLabel>
         <SignInInput
           type="text"
-          // placeholder="아이디"
+          placeholder={email}
           disabled
-          value={email}
-          onChange={(e) => setPassword(e.target.value)}
+          // value={email}
+          // onChange={(e) => setPassword(e.target.value)}
         />
         <SignInLabel>휴대폰 번호</SignInLabel>
         <SignInInput
           type="text"
           disabled
-          // placeholder="비밀번호"
-          value={phoneNumber}
-          onChange={(e) => setPassword(e.target.value)}
+          placeholder={phoneNumber}
+          // value={phoneNumber}
+          // onChange={(e) => setPassword(e.target.value)}
         />
       </InputsContainer>
       <TitleContainer>수강 신청 정보</TitleContainer>
       <InputsContainer>
-        <Divider />
+        {data.map((li, i) => (
+          <Fragment key={i}>
+            <Divider />
+            <RegistLabel>강의명</RegistLabel>
+            <RegistInput type="text" placeholder={li.firstCat} disabled />
+            <RegistLabel>기간</RegistLabel>
+            <RegistInput type="text" placeholder={li.period} disabled />
 
-        <RegistLabel>강의명</RegistLabel>
-        <RegistInput
-          type="text"
-          placeholder="심지나의 임상 합격 ALL PASS"
-          disabled
-        />
-        <RegistLabel>기간</RegistLabel>
-        <RegistInput type="text" placeholder="12개월" disabled />
+            <RegistLabel>결제 금액</RegistLabel>
+            <RegistInput type="text" placeholder={`${li.price} 원`} disabled />
 
-        <RegistLabel>결제 금액</RegistLabel>
-        <RegistInput type="text" placeholder="100,000원" disabled />
-
-        <RegistLabel>결제 방법</RegistLabel>
-        <RegistInput type="text" placeholder="무통장입금" disabled />
-        <RegistLabel>결제 상태</RegistLabel>
-        <RegistInput
-          type="text"
-          placeholder="입금 대기중: 우리은행 2222-2222-2222"
-          disabled
-        />
+            <RegistLabel>결제 방법</RegistLabel>
+            <RegistInput type="text" placeholder="무통장입금" disabled />
+            <RegistLabel>
+              결제 상태{" "}
+              {getDateDiff(
+                new Date(li.date).toISOString().substring(0, 10),
+                new Date().toISOString().substring(0, 10),
+              ) < 0 ? (
+                ""
+              ) : (
+                <span>
+                  {AddDays(new Date(li.date).toISOString().substring(0, 10), 7)
+                    .toISOString()
+                    .substring(0, 10)}{" "}
+                  까지 입금이 확인 되지 않는 경우 자동 취소됩니다.
+                </span>
+              )}
+            </RegistLabel>
+            <RegistInput
+              type="text"
+              placeholder={`${
+                getDateDiff(
+                  new Date(li.date).toISOString().substring(0, 10),
+                  new Date().toISOString().substring(0, 10),
+                ) < 0
+                  ? "결제 취소"
+                  : li.status
+              }: 우리은행 2222-2222-2222`}
+              disabled
+            />
+            {console.log(
+              getDateDiff(
+                new Date(li.date).toISOString().substring(0, 10),
+                new Date().toISOString().substring(0, 10),
+              ),
+              AddDays(new Date(li.date).toISOString().substring(0, 10), 7),
+            )}
+          </Fragment>
+        ))}
 
         <TitleContainer>문의 사항</TitleContainer>
         <Divider />

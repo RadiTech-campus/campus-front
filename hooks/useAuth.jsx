@@ -20,31 +20,34 @@ const useProvideAuth = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [username, setUsername] = useState("");
   const [useremail, setUseremail] = useState("");
+  const [userPhone, setUserPhone] = useState("");
   useEffect(() => {
     Auth.currentAuthenticatedUser()
       .then((result) => {
         setUsername(result.username);
         setUseremail(result.attributes.email);
+        setUserPhone(result.attributes["custom:phone"]);
         setIsAuthenticated(true);
         setIsLoading(false);
       })
       .catch(() => {
         setUsername("");
         setUseremail("");
+        setUserPhone("");
         setIsAuthenticated(false);
         setIsLoading(false);
       });
   }, []);
 
-  const signUp = async (username, password, email) => {
+  const signUp = async (username, password, email, phone) => {
     try {
       const result = await Auth.signUp({
         username,
         password,
         attributes: {
           email,
+          "custom:phone": phone,
         },
-
         autoSignIn: {
           enabled: true,
         },
@@ -53,7 +56,7 @@ const useProvideAuth = () => {
     } catch (error) {
       // console.log("회원가입 에러", error);
       alert("인증 메일 발송을 실패 했습니다.", error);
-      return error;
+      return "인증 메일 발송을 실패 했습니다.";
     }
   };
 
@@ -76,8 +79,7 @@ const useProvideAuth = () => {
       setIsAuthenticated(true);
       return result;
     } catch (error) {
-      // console.log("로그인 에러", error);
-      alert("로그인을 실패 했습니다.", error);
+      alert("아이디와 비밀번호를 확인해 주세요.", error);
       return error;
     }
   };
@@ -95,14 +97,39 @@ const useProvideAuth = () => {
     }
   };
 
+  const forgotPassword = async (userId) => {
+    try {
+      const result = await Auth.forgotPassword(userId);
+      return result;
+    } catch (error) {
+      return error;
+    }
+  };
+
+  const confirmForgotPassword = async (userId, code, new_password) => {
+    try {
+      const result = await Auth.forgotPasswordSubmit(
+        userId,
+        code,
+        new_password,
+      );
+      return result;
+    } catch (error) {
+      return error;
+    }
+  };
+
   return {
     isLoading,
     isAuthenticated,
     username,
     useremail,
+    userPhone,
     signUp,
     confirmSignUp,
     signIn,
     signOut,
+    forgotPassword,
+    confirmForgotPassword,
   };
 };

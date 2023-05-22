@@ -21,6 +21,7 @@ import { useMemo, useState } from "react";
 import Modal from "../components/modal/Modal";
 import SignUpModal from "../components/modal/SignUpModal";
 import { useGetContents } from "../query/contents";
+import { useAuth } from "../hooks/useAuth";
 
 const IndexContainer = styled.div``;
 // const SwiperPagiContainer = styled.div`

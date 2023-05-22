@@ -64,6 +64,7 @@ const SignInButton1 = styled.button`
   color: white;
   border-radius: 5px;
   font-weight: bold;
+  cursor: pointer;
 `;
 const SignInButton2 = styled.button`
   width: 100%;
@@ -73,6 +74,7 @@ const SignInButton2 = styled.button`
   font-size: 16px;
   border-radius: 5px;
   font-weight: bold;
+  cursor: pointer;
 `;
 
 const Divider = styled.div`
@@ -138,8 +140,16 @@ export default function SignIn() {
               onChange={(e) => setPassword(e.target.value)}
             />
             <SignInButton1 type="submit">로그인</SignInButton1>
-            <SignInButton2 type="button">이메일로 회원가입</SignInButton2>
-            <SignInButton2 type="button">비밀번호 재설정</SignInButton2>
+            <SignInButton2 type="button" onClick={() => router.push("/signup")}>
+              이메일로 회원가입
+            </SignInButton2>
+            <SignInButton2
+              type="button"
+              onClick={() => router.push("/forgotpassword")}
+            >
+              비밀번호 재설정
+            </SignInButton2>
+            {/* <SignInButton2 type="button">인증메일 보내기</SignInButton2> */}
           </InputsContainer>
         </form>
       </SignInBox>
