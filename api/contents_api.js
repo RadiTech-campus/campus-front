@@ -14,6 +14,21 @@ export async function getContentDetail(contentCode) {
   return data;
 }
 
+export async function getPayment(userId) {
+  const { data } = await axios(
+    `${process.env.NEXT_PUBLIC_REACT_APP_API_END_POINT}/payment?userId=${userId}`,
+  );
+  return data;
+}
+
+export async function getAUniv(domain) {
+  console.log("api", `${process.env.NEXT_PUBLIC_REACT_APP_API_END_POINT}/auniv?domain=${domain}`)
+  const { data } = await axios(
+    `${process.env.NEXT_PUBLIC_REACT_APP_API_END_POINT}/auniv?domain=${domain}`,
+  );
+  return data;
+}
+
 // export async function CreateBulkProduct(
 //   companyId: any,
 //   productsdata: any,

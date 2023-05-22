@@ -1,11 +1,10 @@
 import styled from "@emotion/styled";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import JoinPresenter from "../../components/joinpresenter";
 import Modal from "../../components/modal/Modal";
 import SignUpModal from "../../components/modal/SignUpModal";
 import { useAuth } from "../../hooks/useAuth";
+import ForgotPasswordModal from "../../components/modal/ForgotPasswordModal";
 
 const SignUpContainer = styled.div`
   display: flex;
@@ -18,10 +17,6 @@ const SignUpBox = styled.div`
   border-radius: 5px;
   padding: 60px 40px;
 `;
-const LogoContainer = styled.div`
-  display: flex;
-  align-items: center;
-`;
 
 const TitleContainer = styled.div`
   font-size: 24px;
@@ -32,15 +27,6 @@ const InputsContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-`;
-
-const LoginText = styled.div`
-  position: absolute;
-  margin: 11px 0px;
-  padding: 0px 15px;
-  font-size: 14px;
-  background-color: white;
-  color: #595959;
 `;
 
 const SignUpInput = styled.input`
@@ -79,24 +65,11 @@ const SignUpButton1 = styled.button`
   margin-bottom: 20px;
   padding: 15px;
   font-size: 16px;
-  background-color: ${(props) => (props.allCheck ? "#898989" : "#a603a6")};
+  background-color: ${(props) => (props.mailConfirmed ? "#898989" : "#a603a6")};
   color: white;
-  cursor: ${(props) => (props.allCheck ? "default" : "pointer")};
+  cursor: ${(props) => (props.mailConfirmed ? "default" : "pointer")};
 `;
 
-const MailAuthContainer = styled.div`
-  display: flex;
-  width: 100%;
-  margin-bottom: 20px;
-`;
-const SignUpMailInput = styled.input`
-  width: 90%;
-  border: none;
-  border-bottom: 1px solid #cbcaca;
-  margin-right: 5px;
-  height: 40px;
-  outline: none;
-`;
 const SignUpButton2 = styled.button`
   width: 50%;
   border: none;
@@ -111,30 +84,9 @@ const Divider = styled.div`
   width: 100%;
 `;
 
-const Button = styled.button`
-  font-size: 14px;
-  padding: 10px 20px;
-  border: none;
-  background-color: #fa9f98;
-  border-radius: 10px;
-  color: white;
-  font-style: italic;
-  font-weight: 200;
-  cursor: pointer;
-  &:hover {
-    background-color: #fac2be;
-  }
-`;
-
-const AppWrap = styled.div`
-  text-align: center;
-  margin: 50px auto;
-`;
-
-export default function SignUp() {
+export default function ForgotPassword() {
   const auth = useAuth();
   const router = useRouter();
-  const [allCheck, setAllCheck] = useState(false);
   const [mailConfirmed, setMailConfirmed] = useState(false);
 
   const [passwordCheck, setPasswordCheck] = useState(false);
@@ -143,21 +95,10 @@ export default function SignUp() {
     userId: "",
     password: "",
     confirmPassword: "",
-    email: "",
     code: "",
-    userName: "",
-    phoneNumber: "",
   });
 
-  const {
-    userId,
-    password,
-    confirmPassword,
-    email,
-    code,
-    userName,
-    phoneNumber,
-  } = inputs;
+  const { userId, password, confirmPassword, code } = inputs;
 
   const onChange = (e) => {
     const { name, value } = e.target;
@@ -174,26 +115,17 @@ export default function SignUp() {
       userId: "",
       password: "",
       confirmPassword: "",
-      email: "",
       code: "",
-      userName: "",
-      phoneNumber: "",
     });
   };
 
   const confirmUser = async (e) => {
     e.preventDefault();
-    if (email.length < 1) {
-      handleOpenModal();
-      return;
-    }
     try {
-      const result = await auth.signUp(userId, password, email, phoneNumber);
-      console.log("result", result);
+      const result = await auth.forgotPassword(userId);
       setMailConfirmed(true);
       handleOpenModal();
     } catch (error) {
-      // console.log("error", error);
       alert("메일인증 요청 실패");
       alert(error);
     }
@@ -206,21 +138,14 @@ export default function SignUp() {
       alert("메일 인증을 해주세요");
       return;
     }
-    if (!allCheck) {
-      alert("모든 항목을 입력해 주세요");
-      return;
-    }
     try {
-      const result = await auth.confirmSignUp(userId, code);
-      // console.log("Confirm 성공", result);
-
-      setConfirmSignUp();
+      const result = await auth.confirmForgotPassword(userId, code, password);
+      console.log("result", result);
+      setConfirmSignUp("result", result);
     } catch (error) {
-      // console.log("Confirm 실패", error);
+      console.log("Confirm 실패", error);
     }
   };
-
-  // console.log("auth", auth);
 
   useEffect(() => {
     if (password === confirmPassword) {
@@ -230,7 +155,6 @@ export default function SignUp() {
     }
   }, [password, confirmPassword]);
 
-  // useEffect(() => {}, []);
   const [isOpenConfirmSignUp, setIsOpenConfirmSignUp] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -244,7 +168,7 @@ export default function SignUp() {
   return (
     <SignUpContainer>
       {isOpenConfirmSignUp && (
-        <SignUpModal
+        <ForgotPasswordModal
           open={isOpenConfirmSignUp}
           userId={userId}
           onClose={() => {
@@ -261,28 +185,15 @@ export default function SignUp() {
             setIsOpen(false);
           }}
         >
-          {email.length < 1
-            ? "메일 주소를 입력해주세요."
-            : "인증 메일을 발송했습니다."}
+          {"인증 메일을 발송했습니다."}
         </Modal>
       )}
       <SignUpBox>
         <form noValidate onSubmit={executeConfirm}>
-          <LogoContainer>
-            <Image
-              src="/titlelogo.png"
-              alt="메인 배경 이미지"
-              width={160}
-              height={30}
-              style={{ marginRight: "5px" }}
-            />
-          </LogoContainer>
           <TitleContainer>
-            <div>국시부터 BIG5 취업까지</div>
-            <div>심지나 특강</div>
+            <div>비밀번호 재설정</div>
           </TitleContainer>
           <InputsContainer>
-            <LoginText>회원가입</LoginText>
             <Divider />
 
             <SignUpLabel>아이디</SignUpLabel>
@@ -293,7 +204,18 @@ export default function SignUp() {
               value={userId}
               onChange={onChange}
             />
-            <SignUpLabel>비밀번호</SignUpLabel>
+            <SignUpButton2 type="button" onClick={(e) => confirmUser(e)}>
+              메일인증 발송
+            </SignUpButton2>
+            <SignUpLabel>메일 인증 코드</SignUpLabel>
+            <SignUpInput
+              type="text"
+              placeholder="인증코드"
+              name="code"
+              value={code}
+              onChange={onChange}
+            />
+            <SignUpLabel>새 비밀번호</SignUpLabel>
             <SignUpInput
               type="password"
               placeholder="영문, 6자 이상 필수"
@@ -321,48 +243,9 @@ export default function SignUp() {
                   * 비밀번호와 비밀번호와 확인이 일치하지 않습니다.
                 </UnconfirmedPassword>
               ))}
-            <SignUpLabel>휴대폰 번호</SignUpLabel>
-            <SignUpInput
-              type="number"
-              placeholder="휴대폰 번호"
-              name="phoneNumber"
-              value={phoneNumber}
-              onChange={onChange}
-            />
-            <SignUpLabel>메일</SignUpLabel>
-            <MailAuthContainer>
-              <SignUpMailInput
-                type="email"
-                placeholder="이메일"
-                name="email"
-                value={email}
-                onChange={onChange}
-              />
-              <SignUpButton2 type="button" onClick={(e) => confirmUser(e)}>
-                메일인증 발송
-              </SignUpButton2>
-            </MailAuthContainer>
-            <SignUpLabel>메일 인증 코드</SignUpLabel>
-            <SignUpInput
-              type="text"
-              placeholder="인증코드"
-              name="code"
-              value={code}
-              onChange={onChange}
-            />
 
-            <SignUpLabel>이름</SignUpLabel>
-            <SignUpInput
-              type="text"
-              placeholder="이름"
-              name="userName"
-              value={userName}
-              onChange={onChange}
-            />
-
-            <JoinPresenter allCheck={allCheck} setAllCheck={setAllCheck} />
-            <SignUpButton1 allCheck={!allCheck} type="submit">
-              회원가입
+            <SignUpButton1 mailConfirmed={!mailConfirmed} type="submit">
+              비밀번호 변경
             </SignUpButton1>
           </InputsContainer>
         </form>

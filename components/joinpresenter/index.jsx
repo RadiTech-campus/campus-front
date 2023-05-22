@@ -1,5 +1,8 @@
 import styled from "@emotion/styled";
 import React, { useState, useEffect } from "react";
+import SignUpModal from "../modal/SignUpModal";
+import ServiceModal from "../modal/ServiceModal";
+import PrivacyModal from "../modal/PrivacyModal";
 
 const JoinPresenterContainer = styled.div`
   width: 100%;
@@ -57,9 +60,34 @@ function JoinPresenter({ allCheck, setAllCheck }) {
       setAllCheck(false);
     }
   }, [ageCheck, useCheck, marketingCheck]);
+  //
+  const [isOpenConfirmSignUp, setIsOpenConfirmSignUp] = useState(false);
+  const [isOpenConfirmSignUp2, setIsOpenConfirmSignUp2] = useState(false);
 
+  const setConfirmSignUp = () => {
+    setIsOpenConfirmSignUp(true);
+  };
+  const setConfirmSignUp2 = () => {
+    setIsOpenConfirmSignUp2(true);
+  };
   return (
     <JoinPresenterContainer>
+      {isOpenConfirmSignUp && (
+        <ServiceModal
+          open={isOpenConfirmSignUp}
+          onClose={() => {
+            setIsOpenConfirmSignUp(false);
+          }}
+        />
+      )}
+      {isOpenConfirmSignUp2 && (
+        <PrivacyModal
+          open={isOpenConfirmSignUp2}
+          onClose={() => {
+            setIsOpenConfirmSignUp2(false);
+          }}
+        />
+      )}
       <label>약관동의</label>
       <div>
         <div>
@@ -79,8 +107,9 @@ function JoinPresenter({ allCheck, setAllCheck }) {
             onChange={useBtnEvent}
           />
           <label for="check2">
-            서비스 이용약관 동의 <span>(필수)</span>
+            서비스 이용약관 동의 <span>(필수)</span>{" "}
           </label>
+          <span onClick={() => setConfirmSignUp()}>보기</span>
         </div>
         <div>
           <input
@@ -90,8 +119,9 @@ function JoinPresenter({ allCheck, setAllCheck }) {
             onChange={marketingBtnEvent}
           />
           <label for="check3">
-            개인정보 수집 및 이용 동의 <span>(선택)</span>
+            개인정보 수집 및 이용 동의 <span>(선택)</span>{" "}
           </label>
+          <span onClick={() => setConfirmSignUp2()}>보기</span>
         </div>
         <div>
           <input

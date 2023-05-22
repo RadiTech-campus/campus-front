@@ -1,8 +1,9 @@
 import styled from "@emotion/styled";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import Modal from "../../components/modal/Modal";
+import { useGetAUniv } from "../../query/contents";
 
 const ClassText = styled.div`
   position: absolute;
@@ -203,7 +204,7 @@ export default function SignUp() {
       phoneNumber: "",
     });
   };
-
+  console.log("email", email.substring(email.indexOf("@") + 1));
   useEffect(() => {
     if (auth.isAuthenticated) {
       setInputs({
@@ -225,6 +226,11 @@ export default function SignUp() {
   const handleOpenModal = () => {
     setIsOpen(true);
   };
+  const { data: aUnivData } = useGetAUniv(
+    email.substring(email.indexOf("@") + 1),
+  );
+  const data = useMemo(() => aUnivData?.Items || [], [email]);
+
   return (
     <SignUpContainer>
       {isOpen && (
@@ -264,8 +270,8 @@ export default function SignUp() {
           </RegistSelect>
           <RegistLabel>기간</RegistLabel>
           <PeriodContainer>
-            {periods.map((period) => (
-              <PeriodLabel>
+            {periods.map((period, i) => (
+              <PeriodLabel key={i}>
                 <input
                   type="radio"
                   value={period}
@@ -323,7 +329,7 @@ export default function SignUp() {
             <PriceTitle>결제방법</PriceTitle>
             <div style={{ display: "flex", flexDirection: "column" }}>
               <label style={{ margin: "5px 0px 0px" }}>
-                <input type="radio" checked />
+                <input type="radio" defaultChecked />
                 계좌이체: 우리은행 22222-2222-2222
                 <button disabled>계좌 복사</button>
               </label>

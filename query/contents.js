@@ -4,7 +4,7 @@ import {
   useQuery,
   useQueryClient,
 } from "@tanstack/react-query";
-import { getContentDetail, getContents } from "../api/contents_api";
+import { getAUniv, getContentDetail, getContents, getPayment } from "../api/contents_api";
 
 export const useGetContents = () => {
   return useQuery({
@@ -24,6 +24,33 @@ export const useGetContentDetails = (contentCode) => {
     queryKey: [contentCode],
     queryFn: async () => {
       const data = await getContentDetail(contentCode);
+      return data;
+    },
+    onError: (e) => {
+      console.log("e", e);
+    },
+  });
+};
+
+export const useGetPayment = (userId) => {
+  return useQuery({
+    queryKey: [userId],
+    queryFn: async () => {
+      const data = await getPayment(userId);
+      return data;
+    },
+    onError: (e) => {
+      console.log("e", e);
+    },
+  });
+};
+
+export const useGetAUniv = (domain) => {
+  console.log("q")
+  return useQuery({
+    queryKey: [domain],
+    queryFn: async () => {
+      const data = await getAUniv(domain)
       return data;
     },
     onError: (e) => {

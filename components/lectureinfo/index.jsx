@@ -53,9 +53,9 @@ export default function LectureInfo() {
           src="https://player.vimeo.com/video/825159712?h=c877949dd3"
           width="840"
           height="564"
-          frameborder="0"
+          frameBorder="0"
           allow="autoplay; fullscreen"
-          allowfullscreen
+          allowFullScreen
         ></iframe>
       </PreviewContainer>
       <ClassImage2>
