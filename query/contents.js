@@ -48,7 +48,7 @@ export const useGetPayment = (userId) => {
 export const useGetAUniv = (domain) => {
   console.log("q")
   return useQuery({
-    queryKey: [domain],
+    queryKey: [`${domain}`],
     queryFn: async () => {
       const data = await getAUniv(domain)
       return data;

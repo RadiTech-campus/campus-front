@@ -104,7 +104,7 @@ export default function MyPage() {
   // console.log("auth", auth);
 
   const { data: paymentData } = useGetPayment(username);
-  const data = useMemo(() => paymentData?.Items || [], [username]);
+  const data = useMemo(() => paymentData?.Items || [], [username, paymentData]);
   console.log("data", data);
 
   useEffect(() => {

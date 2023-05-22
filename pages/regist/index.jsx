@@ -229,8 +229,11 @@ export default function SignUp() {
   const { data: aUnivData } = useGetAUniv(
     email.substring(email.indexOf("@") + 1),
   );
-  const data = useMemo(() => aUnivData?.Items || [], [email]);
-
+  const data = useMemo(
+    () => aUnivData?.Items || [],
+    [email, aUnivData, inputs],
+  );
+  console.log("data", data);
   return (
     <SignUpContainer>
       {isOpen && (
