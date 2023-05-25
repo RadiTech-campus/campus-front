@@ -22,9 +22,15 @@ export async function getPayment(userId) {
 }
 
 export async function getAUniv(domain) {
-  console.log("api", `${process.env.NEXT_PUBLIC_REACT_APP_API_END_POINT}/auniv?domain=${domain}`)
   const { data } = await axios(
     `${process.env.NEXT_PUBLIC_REACT_APP_API_END_POINT}/auniv?domain=${domain}`,
+  );
+  return data;
+}
+
+export async function getProduct(productCode) {
+  const { data } = await axios(
+    `${process.env.NEXT_PUBLIC_REACT_APP_API_END_POINT}/product?productCode=${productCode}`,
   );
   return data;
 }

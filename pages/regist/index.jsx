@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import Modal from "../../components/modal/Modal";
-import { useGetAUniv } from "../../query/contents";
+import { useGetAUniv, useGetProduct } from "../../query/contents";
 
 const ClassText = styled.div`
   position: absolute;
@@ -158,7 +158,7 @@ const ModalContent = styled.div`
   margin-bottom: 10px;
 `;
 
-const periods = [1, 3, 6, 9, 12];
+const periods = ["01", "03", "06", "09", "12"];
 export default function SignUp() {
   const auth = useAuth();
   const router = useRouter();
@@ -218,10 +218,11 @@ export default function SignUp() {
     }
   }, [auth]);
 
-  const [checked, setChecked] = useState(12);
+  const [checked, setChecked] = useState("12");
   const handleChecked = (e) => {
-    setChecked(Number(e.target.value));
+    setChecked(e.target.value);
   };
+  console.log("checked", checked);
   const [isOpen, setIsOpen] = useState(false);
   const handleOpenModal = () => {
     setIsOpen(true);
@@ -230,6 +231,10 @@ export default function SignUp() {
     email.substring(email.indexOf("@") + 1),
   );
   const data = useMemo(() => aUnivData?.Item || [], [email, aUnivData, inputs]);
+
+  const { data: productData } = useGetProduct(`A_A01_${checked}`);
+  const data2 = useMemo(() => productData?.Item || [], [checked]);
+  console.log("data2", data2);
   console.log("data", data);
   return (
     <SignUpContainer>
@@ -278,7 +283,7 @@ export default function SignUp() {
                   checked={checked === period}
                   onChange={(e) => handleChecked(e)}
                 />
-                {`${period}개월`}
+                {`${period.replace("0", "")} 개월`}
               </PeriodLabel>
             ))}
           </PeriodContainer>
@@ -307,10 +312,13 @@ export default function SignUp() {
           <PriceContainer>
             <PriceTitle>가격</PriceTitle>
             <PriceDetail>
-              <PriceContent canceled>400,000 원</PriceContent>
+              <PriceContent canceled>{data2?.price} 원</PriceContent>
               <PriceContent>{"->"}</PriceContent>
               <PriceContent bolded finalPrice>
-                0 원
+                {data &&
+                  data2 &&
+                  data2.price - data2.price * (data.discount / 100)}{" "}
+                원
               </PriceContent>
             </PriceDetail>
           </PriceContainer>
