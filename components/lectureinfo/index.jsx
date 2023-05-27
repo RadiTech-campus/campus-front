@@ -38,6 +38,7 @@ const ClassImage3 = styled.div`
   /* height: 250px; */
   width: 100%;
   height: 1008px;
+  margin-top: 80px;
   position: relative;
   /* > img {
     border-radius: 10px;
@@ -47,7 +48,7 @@ const ClassImage3 = styled.div`
 export default function LectureInfo({ lid }) {
   return (
     <LectureInfoContainer>
-      <InfoTitle>강의소개</InfoTitle>
+      {/* <InfoTitle>강의소개</InfoTitle> */}
       <ClassImage1>
         <Image
           //   src={`/${lid}.jpeg`}

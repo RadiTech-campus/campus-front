@@ -28,7 +28,7 @@ const LectureChapter = styled.div`
 export default function Lectures({ classData, classtype, title }) {
   return (
     <LecturesContainer>
-      <InfoTitle>강의 목록</InfoTitle>
+      {/* <InfoTitle>강의 목록</InfoTitle> */}
 
       {classData && classData.length > 0 ? (
         <LectureChapter>

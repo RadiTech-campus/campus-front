@@ -21,7 +21,7 @@ const InfoTitle = styled.div`
 export default function LectureWarn() {
   return (
     <WarnContainer>
-      <InfoTitle>주의사항</InfoTitle>
+      {/* <InfoTitle>주의사항</InfoTitle> */}
       <WarnTitle>환불 규정 안내</WarnTitle>
       <WarnContent>
         유료 결제하여도 강연 및 강연 자료 등 유료 서비스를 이용하지 않았다면

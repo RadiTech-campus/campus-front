@@ -1,35 +1,31 @@
 import styled from "@emotion/styled";
 import React from "react";
 import Modal from "./Modal";
-
-const Button = styled.button`
-  width: 100%;
-  font-size: 16px;
-  padding: 10px 20px;
-  border: none;
-  background-color: #c100d7;
-  /* border-radius: 10px; */
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-  &:hover {
-    background-color: #c100d7;
-  }
-  margin-top: 30px;
-`;
+import Image from "next/image";
 
 const SignUpModalTitle = styled.div`
   width: 100%;
   text-align: center;
   font-size: 16px;
   font-weight: bold;
-  margin: 20px 0px;
+  margin: 0px 0px;
 `;
 const SignUpModalContent = styled.div`
   font-size: 14px;
   width: 100%;
   text-align: center;
   margin: 5px 0px;
+`;
+
+const ClassImage = styled.div`
+  /* height: 250px; */
+  width: 100%;
+  height: 160px;
+  position: relative;
+  > img {
+    /* border-radius: 10px; */
+    margin: 10px 0px 0px;
+  }
 `;
 function PrivacyModal({ onClose }) {
   return (
@@ -40,6 +36,17 @@ function PrivacyModal({ onClose }) {
       </SignUpModalContent>
       <SignUpModalContent>국시 합격까지 RadiTech-Campus가</SignUpModalContent>
       <SignUpModalContent>함께하겠습니다.</SignUpModalContent> */}
+      <SignUpModalContent>
+        <ClassImage>
+          <Image
+            //   src={`/${lid}.jpeg`}
+            src={`/privacy.png`}
+            alt="메인 배경 이미지"
+            style={{ objectFit: "cover" }}
+            fill
+          />
+        </ClassImage>
+      </SignUpModalContent>
     </Modal>
   );
 }

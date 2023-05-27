@@ -100,28 +100,46 @@ function JoinPresenter({ allCheck, setAllCheck }) {
           <label for="all-check">전체동의</label>
         </div>
         <div>
-          <input
-            type="checkbox"
-            id="check2"
-            checked={useCheck}
-            onChange={useBtnEvent}
-          />
-          <label for="check2">
-            서비스 이용약관 동의 <span>(필수)</span>{" "}
-          </label>
-          <span onClick={() => setConfirmSignUp()}>보기</span>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <div>
+              <input
+                type="checkbox"
+                id="check2"
+                checked={useCheck}
+                onChange={useBtnEvent}
+              />
+              <label for="check2">
+                서비스 이용약관 동의 <span>(필수)</span>{" "}
+              </label>
+            </div>
+            <span
+              style={{ textDecoration: "underline", cursor: "pointer" }}
+              onClick={() => setConfirmSignUp()}
+            >
+              보기
+            </span>
+          </div>
         </div>
         <div>
-          <input
-            type="checkbox"
-            id="check3"
-            checked={marketingCheck}
-            onChange={marketingBtnEvent}
-          />
-          <label for="check3">
-            개인정보 수집 및 이용 동의 <span>(선택)</span>{" "}
-          </label>
-          <span onClick={() => setConfirmSignUp2()}>보기</span>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <div>
+              <input
+                type="checkbox"
+                id="check3"
+                checked={marketingCheck}
+                onChange={marketingBtnEvent}
+              />
+              <label for="check3">
+                개인정보 수집 및 이용 동의 <span>(선택)</span>{" "}
+              </label>
+            </div>
+            <span
+              style={{ textDecoration: "underline", cursor: "pointer" }}
+              onClick={() => setConfirmSignUp2()}
+            >
+              보기
+            </span>
+          </div>
         </div>
         <div>
           <input
