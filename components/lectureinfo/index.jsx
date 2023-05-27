@@ -57,6 +57,15 @@ export default function LectureInfo({ lid }) {
           fill
         />
       </ClassImage1>
+      <ClassImage2>
+        <Image
+          //   src={`/${lid}.jpeg`}
+          src={`/detail/eye.png`}
+          alt="메인 배경 이미지"
+          style={{ objectFit: "cover" }}
+          fill
+        />
+      </ClassImage2>
       <PreviewContainer>
         <iframe
           src="https://player.vimeo.com/video/825159712?h=c877949dd3"
@@ -67,15 +76,6 @@ export default function LectureInfo({ lid }) {
           allowFullScreen
         ></iframe>
       </PreviewContainer>
-      <ClassImage2>
-        <Image
-          //   src={`/${lid}.jpeg`}
-          src={`/detail/eye.png`}
-          alt="메인 배경 이미지"
-          style={{ objectFit: "cover" }}
-          fill
-        />
-      </ClassImage2>
       <ClassImage3>
         <Image
           //   src={`/${lid}.jpeg`}
