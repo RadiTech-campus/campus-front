@@ -105,7 +105,10 @@ export default function LectureList({
                 {/* <ClassContent>{li.content}</ClassContent> */}
               </ClassCard>
             </Link>
-            {li.secondCat === "일촬" || li.secondCat === "투시" ? (
+            {li.code === "C_B01_P" ||
+            li.code === "C_B02_P" ||
+            li.code === "C_B03_P" ||
+            li.code === "C_B04_P" ? (
               <Link
                 href={{
                   pathname: `/lecture/${li.code}`,
@@ -115,7 +118,7 @@ export default function LectureList({
                 <ClassCard>
                   <ClassImage>
                     <Image
-                      src={`https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/contents/${li.code}.jpeg`}
+                      src={`https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/contents/${li.code}_G.jpeg`}
                       alt="메인 배경 이미지"
                       // width={30}
                       // height={30}

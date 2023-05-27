@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import styled from "@emotion/styled";
 import Image from "next/image";
 import Lectures from "../../components/lectures";
-import { useGetContentDetails } from "../../query/contents";
+import { useGetContentDetails, useGetContents } from "../../query/contents";
 import Lecturer from "../../components/lecturer";
 import LectureInfo from "../../components/lectureinfo";
 import LectureWarn from "../../components/lecturewarn";
@@ -138,7 +138,14 @@ export default function Lecture() {
     () => contentDetailData?.Items || [],
     [contentDetailData, lid],
   );
-
+  //
+  const { data: contentData } = useGetContents();
+  const data2 = useMemo(() => contentData?.Items || [], [contentData]);
+  console.log(
+    "data2",
+    data2.find((li) => li.code === data[0]?.contentCode)?.subTitle,
+  );
+  console.log("data", data[0]?.contentCode);
   return (
     <LectureDetailContainer>
       {isOpen && (
@@ -168,11 +175,15 @@ export default function Lecture() {
         </TopLeftDetail>
         <TopRightDetail>
           <div>
-            <ClassMainTitle>
+            {/* <ClassMainTitle>
               {lid?.slice(-1) === "F" && "#무료공개"} {`#${classtype}`}{" "}
               {`#${title}`}
+            </ClassMainTitle> */}
+            <ClassMainTitle>
+              {data2.find((li) => li.code === data[0]?.contentCode)?.subTitle}
             </ClassMainTitle>
             <ClassSubTitle>{`${title}`}</ClassSubTitle>
+
             <ClassPriceContainer>
               <ClassPriceLeft>월 20,000원 / 6개월 120,000원</ClassPriceLeft>
               <ClassPriceRight>(ALLPASS 기준)</ClassPriceRight>
