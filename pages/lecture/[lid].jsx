@@ -141,11 +141,6 @@ export default function Lecture() {
   //
   const { data: contentData } = useGetContents();
   const data2 = useMemo(() => contentData?.Items || [], [contentData]);
-  console.log(
-    "data2",
-    data2.find((li) => li.code === data[0]?.contentCode)?.subTitle,
-  );
-  console.log("data", data[0]?.contentCode);
   return (
     <LectureDetailContainer>
       {isOpen && (
@@ -166,7 +161,9 @@ export default function Lecture() {
         <TopLeftDetail>
           <ClassImage>
             <Image
-              src={`https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/contents/${lid}.jpeg`}
+              src={`https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/contents/${lid}${
+                classtype === "기출" ? "_G" : ""
+              }.jpeg`}
               alt="메인 배경 이미지"
               style={{ objectFit: "cover" }}
               fill
@@ -182,7 +179,9 @@ export default function Lecture() {
             <ClassMainTitle>
               {data2.find((li) => li.code === data[0]?.contentCode)?.subTitle}
             </ClassMainTitle>
-            <ClassSubTitle>{`${title}`}</ClassSubTitle>
+            <ClassSubTitle>
+              {`${title}`} {classtype === "기출" ? " - 기출" : ""}
+            </ClassSubTitle>
 
             <ClassPriceContainer>
               <ClassPriceLeft>월 20,000원 / 6개월 120,000원</ClassPriceLeft>
