@@ -141,17 +141,17 @@ export default function Index() {
           .sort((a, b) => (a.code > b.code ? 1 : -1))}
       /> */}
       <LectureList
-        category="Best Seller"
-        mainTitle="실기 ALL Course"
-        description="어려운 실기를 가장 효과적으로 공부하기 !"
+        category="방사선사 국가고시"
+        mainTitle="어려운 임상도 한번에 합격하기"
+        // description="어려운 실기를 가장 효과적으로 공부하기 !"
         classData={data
           ?.filter((li) => li.firstCat === "일반강의" && li.pay === "유료")
           .sort((a, b) => (a.code > b.code ? 1 : -1))}
       />
       <LectureList
-        category="면접"
-        mainTitle="자소서"
-        description="취업 가즈아 !"
+        category="Big5 자소서 및 면접"
+        mainTitle="Big5 취업까지 한번에 합격하기"
+        // description="취업 가즈아 !"
         classData={data
           ?.filter((li) => li.firstCat === "취업" && li.pay === "유료")
           .sort((a, b) => (a.code > b.code ? 1 : -1))}

@@ -138,6 +138,7 @@ export default function Lecture() {
     () => contentDetailData?.Items || [],
     [contentDetailData, lid],
   );
+  console.log("lid", lid);
   //
   const { data: contentData } = useGetContents();
   const data2 = useMemo(() => contentData?.Items || [], [contentData]);
@@ -192,12 +193,10 @@ export default function Lecture() {
             </ClassSubTitle>
 
             <ClassPriceContainer>
-              <ClassPriceLeft>월 20,000원 / 6개월 120,000원</ClassPriceLeft>
-              <ClassPriceRight>(ALLPASS 기준)</ClassPriceRight>
+              <ClassPriceLeft>월 8,250원 / 1년 99,000원</ClassPriceLeft>
+              {/* <ClassPriceRight>(ALLPASS 기준)</ClassPriceRight> */}
             </ClassPriceContainer>
-            <ClassPriceInfo>
-              모든 강연 + 기출 + 강연자료 모두 무제한으로 수강
-            </ClassPriceInfo>
+            <ClassPriceInfo>강연 + 기출 + 자료 무제한으로 수강</ClassPriceInfo>
             <ClassContent>
               <ClassLeftContent>강의 분량</ClassLeftContent>
               <ClassRightContent>{data?.length} 개</ClassRightContent>
@@ -222,7 +221,7 @@ export default function Lecture() {
           </ClassTap>
         ))}
       </ClassTapContainer>
-      {selectedTab === "강의소개" && <LectureInfo />}
+      {selectedTab === "강의소개" && <LectureInfo lid={lid} />}
       {selectedTab === "커리큘럼" && (
         <Lectures classData={data} classtype={classtype} title={title} />
       )}

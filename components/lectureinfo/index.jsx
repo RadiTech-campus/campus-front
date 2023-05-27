@@ -14,7 +14,7 @@ const InfoTitle = styled.div`
 const ClassImage1 = styled.div`
   /* height: 250px; */
   width: 100%;
-  height: 1178px;
+  height: 893px;
   position: relative;
   > img {
     /* padding: 20px; */
@@ -28,21 +28,30 @@ const PreviewContainer = styled.div`
 const ClassImage2 = styled.div`
   /* height: 250px; */
   width: 100%;
-  height: 906px;
+  height: 260px;
+  position: relative;
+  /* > img {
+    border-radius: 10px;
+  } */
+`;
+const ClassImage3 = styled.div`
+  /* height: 250px; */
+  width: 100%;
+  height: 1008px;
   position: relative;
   /* > img {
     border-radius: 10px;
   } */
 `;
 
-export default function LectureInfo() {
+export default function LectureInfo({ lid }) {
   return (
     <LectureInfoContainer>
       <InfoTitle>강의소개</InfoTitle>
       <ClassImage1>
         <Image
           //   src={`/${lid}.jpeg`}
-          src={`/info1.png`}
+          src={`/detail/${lid}.png`}
           alt="메인 배경 이미지"
           style={{ objectFit: "cover" }}
           fill
@@ -61,12 +70,21 @@ export default function LectureInfo() {
       <ClassImage2>
         <Image
           //   src={`/${lid}.jpeg`}
-          src={`/info2.png`}
+          src={`/detail/eye.png`}
           alt="메인 배경 이미지"
           style={{ objectFit: "cover" }}
           fill
         />
       </ClassImage2>
+      <ClassImage3>
+        <Image
+          //   src={`/${lid}.jpeg`}
+          src={`/detail/price.png`}
+          alt="메인 배경 이미지"
+          style={{ objectFit: "cover" }}
+          fill
+        />
+      </ClassImage3>
     </LectureInfoContainer>
   );
 }
