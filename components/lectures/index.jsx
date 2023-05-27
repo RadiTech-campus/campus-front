@@ -51,7 +51,7 @@ export default function Lectures({ classData, classtype, title }) {
                 <div>
                   <Link
                     href={{
-                      pathname: `https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/content-data/ccc.pdf`,
+                      pathname: `https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/content-data/${li.contentDetailCode}.pdf`,
                     }}
                     target="_blank"
                     rel="noopener noreferrer"
