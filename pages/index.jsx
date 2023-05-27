@@ -18,10 +18,7 @@ import LectureList from "../components/lecturelist";
 import styled from "@emotion/styled";
 import Image from "next/image";
 import { useMemo, useState } from "react";
-import Modal from "../components/modal/Modal";
-import SignUpModal from "../components/modal/SignUpModal";
 import { useGetContents } from "../query/contents";
-import { useAuth } from "../hooks/useAuth";
 
 const IndexContainer = styled.div``;
 // const SwiperPagiContainer = styled.div`
@@ -34,7 +31,6 @@ const IndexContainer = styled.div``;
 export default function Index() {
   const { data: contentData } = useGetContents();
   const data = useMemo(() => contentData?.Items || [], [contentData]);
-  console.log("data", data);
   return (
     <IndexContainer>
       <Swiper

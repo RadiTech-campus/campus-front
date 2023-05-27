@@ -266,7 +266,7 @@ export default function SignUp() {
 
           <PriceContainer>
             <div>결제, 환불, 서비스 이용 관련해서는 메일로 문의 주세요.</div>
-            <div>kkhdevs@gmail.com</div>
+            <div>raditech.campus@gmail.com </div>
             <div
               style={{
                 color: "red",

@@ -141,6 +141,12 @@ export default function Lecture() {
   //
   const { data: contentData } = useGetContents();
   const data2 = useMemo(() => contentData?.Items || [], [contentData]);
+  console.log("data", data);
+  console.log("data2", data2);
+  console.log(
+    "data2.find((li) => li.code === data[0]?.contentCode)",
+    data2.find((li) => li.code === data[0]?.contentCode)?.gTitle,
+  );
   return (
     <LectureDetailContainer>
       {isOpen && (
@@ -180,7 +186,9 @@ export default function Lecture() {
               {data2.find((li) => li.code === data[0]?.contentCode)?.subTitle}
             </ClassMainTitle>
             <ClassSubTitle>
-              {`${title}`} {classtype === "기출" ? " - 기출" : ""}
+              {classtype === "기출"
+                ? data2.find((li) => li.code === data[0]?.contentCode)?.gTitle
+                : title}
             </ClassSubTitle>
 
             <ClassPriceContainer>

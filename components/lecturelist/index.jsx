@@ -128,7 +128,7 @@ export default function LectureList({
                     />
                     {/* {li.thumbnail} */}
                   </ClassImage>
-                  <ClassTitle>{li.secondCat}-기출</ClassTitle>
+                  <ClassTitle>{li.gTitle}</ClassTitle>
                   {/* <ClassContent>{li.content}</ClassContent> */}
                 </ClassCard>
               </Link>

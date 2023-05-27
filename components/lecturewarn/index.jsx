@@ -32,6 +32,8 @@ export default function LectureWarn() {
         구매일로부터 90일까지 환불 신청이 가능합니다. 결제 취소 요청은 아래
         이메일로 요청 부탁드립니다.
       </WarnContent>
+      <WarnContent>고객센터 : raditech.campus@gmail.com</WarnContent>
+
       <WarnTitle>아이디 공유 금지 정책</WarnTitle>
 
       <WarnContent>
