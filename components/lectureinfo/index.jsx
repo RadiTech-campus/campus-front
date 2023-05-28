@@ -58,7 +58,7 @@ export default function LectureInfo({ lid, classData, classtype, preview }) {
       <ClassImage1>
         <Image
           //   src={`/${lid}.jpeg`}
-          src={`/detail/${lid}.png`}
+          src={`/detail/${lid}${classtype === "기출" ? "_G" : ""}.png`}
           alt="메인 배경 이미지"
           style={{ objectFit: "cover" }}
           fill
