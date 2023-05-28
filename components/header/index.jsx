@@ -80,8 +80,8 @@ export default function Header({ onMoveToForm }) {
             />
           </Link>
           <SearchContainer>
-            <Search />
-            <SearchInput disabled />
+            {/* <Search />
+            <SearchInput disabled /> */}
           </SearchContainer>
         </LogoContainer>
         {auth.isAuthenticated ? (
