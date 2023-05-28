@@ -38,9 +38,9 @@ const FooterTitle = styled.div`
 `;
 const FooterContent = styled.div``;
 
-export default function Footer() {
+export default function Footer({ footerRef }) {
   return (
-    <FooterContainer>
+    <FooterContainer ref={footerRef}>
       <Divider />
       <BottomContainer>
         <LeftContainer>

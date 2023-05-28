@@ -56,7 +56,7 @@ const AuthButton = styled.div`
   margin-right: 20px;
   cursor: pointer;
 `;
-export default function Header() {
+export default function Header({ onMoveToForm }) {
   const router = useRouter();
   const auth = useAuth();
   return (
@@ -102,8 +102,7 @@ export default function Header() {
             </AuthButton>
             <AuthButton
               onClick={() => {
-                auth.signOut();
-                router.push("/");
+                onMoveToForm();
               }}
             >
               고객센터
@@ -114,9 +113,7 @@ export default function Header() {
             <AuthButton onClick={() => router.push("/signin")}>
               로그인
             </AuthButton>
-            <AuthButton onClick={() => router.push("/signup")}>
-              고객센터
-            </AuthButton>
+            <AuthButton onClick={() => onMoveToForm()}>고객센터</AuthButton>
           </AuthContainer>
         )}
       </HeaderContainer>

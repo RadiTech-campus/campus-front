@@ -47,7 +47,7 @@ export default function Index() {
         // navigation
         pagination={{ clickable: true }}
         autoplay={{
-          delay: 2000,
+          delay: 4000,
           disableOnInteraction: false,
         }}
         effect={"fade"}

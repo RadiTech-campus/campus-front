@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import React from "react";
+import React, { useRef } from "react";
 import Header from "../header";
 import TopNav from "../topnav";
 import Footer from "../footer";
@@ -20,15 +20,19 @@ const RightContainer = styled.div`
   background-color: #e7f1fb;
 `;
 
-export default function Layout({ children }: any) {
+export default function Layout({ children }) {
+  const footerRef = useRef(); //특정 DOM을 가리킬 때 사용하는 Hook함수, SecondDiv에 적용
+  const onMoveToForm = () => {
+    footerRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
   return (
     <LayoutContainer>
       {/* <LeftContainer></LeftContainer> */}
       {/* <RightContainer></RightContainer> */}
-      <Header />
+      <Header onMoveToForm={onMoveToForm} />
       {/* <TopNav /> */}
       {children}
-      <Footer />
+      <Footer footerRef={footerRef} />
     </LayoutContainer>
   );
 }
