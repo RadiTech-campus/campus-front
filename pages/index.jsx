@@ -91,6 +91,14 @@ export default function Index() {
             fill
           />
         </SwiperSlide>
+        <SwiperSlide style={{ width: "100%", height: "450px" }}>
+          <Image
+            src="/4.png"
+            alt="메인 배경 이미지"
+            style={{ objectFit: "fill" }}
+            fill
+          />
+        </SwiperSlide>
         {/* <SwiperSlide style={{ width: "100%", height: "450px" }}>
           <Image
             src="/swi.png"
