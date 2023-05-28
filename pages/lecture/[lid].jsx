@@ -138,7 +138,6 @@ export default function Lecture() {
     () => contentDetailData?.Items || [],
     [contentDetailData, lid],
   );
-  console.log("lid", lid);
   //
   const { data: contentData } = useGetContents();
   const data2 = useMemo(() => contentData?.Items || [], [contentData]);
