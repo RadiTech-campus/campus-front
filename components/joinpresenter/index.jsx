@@ -54,7 +54,7 @@ function JoinPresenter({ allCheck, setAllCheck }) {
   };
 
   useEffect(() => {
-    if (ageCheck === true && useCheck === true && marketingCheck === true) {
+    if (ageCheck === true && useCheck === true) {
       setAllCheck(true);
     } else {
       setAllCheck(false);
