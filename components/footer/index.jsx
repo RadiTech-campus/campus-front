@@ -7,7 +7,7 @@ const FooterContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   /* padding: 15px 20px; */
-  margin: 0px auto;
+  margin: 0px auto 60px;
   width: 1160px;
 `;
 const Divider = styled.div`
@@ -19,7 +19,6 @@ const Divider = styled.div`
 const BottomContainer = styled.div`
   display: flex;
   width: 1160px;
-  background-color: aqua;
 `;
 
 const LeftContainer = styled.div`
@@ -35,8 +34,12 @@ const RightContainer = styled.div`
 const FooterTitle = styled.div`
   font-size: 12px;
   font-weight: bold;
+  margin-bottom: 20px;
 `;
-const FooterContent = styled.div``;
+const FooterContent = styled.div`
+  font-size: 12px;
+  margin-bottom: 3px;
+`;
 
 export default function Footer({ footerRef }) {
   return (
