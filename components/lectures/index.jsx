@@ -34,6 +34,7 @@ export default function Lectures({ classData, classtype, title }) {
         <LectureChapter>
           {classData
             ?.filter((li) => li.contentDetailSubTitle === classtype)
+            .sort((a, b) => (a.sorting > b.sorting ? 1 : -1))
             .map((li, i) => (
               <div
                 key={i}

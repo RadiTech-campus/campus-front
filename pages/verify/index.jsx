@@ -230,7 +230,7 @@ export default function SignUp() {
           <RegistLabel>결제 상태</RegistLabel>
           <RegistInput
             type="text"
-            placeholder="입금 대기중: 우리은행 2222-2222-2222"
+            placeholder="입금 대기중: 우리은행 예금주 이광자 124-233998-12-601"
             disabled
             value={confirmPassword}
           />
