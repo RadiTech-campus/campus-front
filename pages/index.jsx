@@ -67,15 +67,35 @@ export default function Index() {
         // onSwiper={(swiper) => console.log(swiper)}
         // onSlideChange={() => console.log("slide change")}
       >
-        <SwiperSlide style={{ width: "100%", height: "450px" }}>
+        <SwiperSlide
+          style={{
+            width: "1160px",
+            height: "450px",
+            backgroundColor: "#0B1019",
+          }}
+        >
           <Image
             src="/1.png"
             alt="메인 배경 이미지"
-            style={{ objectFit: "fill" }}
+            style={{ objectFit: "contain" }}
             fill
           />
         </SwiperSlide>
-        <SwiperSlide style={{ width: "100%", height: "450px" }}>
+        <SwiperSlide
+          style={{
+            width: "1160px",
+            height: "450px",
+            backgroundColor: "#0B1019",
+          }}
+        >
+          <Image
+            src="/1.png"
+            alt="메인 배경 이미지"
+            style={{ objectFit: "contain" }}
+            fill
+          />
+        </SwiperSlide>
+        {/* <SwiperSlide style={{ width: "100%", height: "450px" }}>
           <Image
             src="/2.png"
             alt="메인 배경 이미지"
@@ -98,7 +118,7 @@ export default function Index() {
             style={{ objectFit: "fill" }}
             fill
           />
-        </SwiperSlide>
+        </SwiperSlide> */}
         {/* <SwiperSlide style={{ width: "100%", height: "450px" }}>
           <Image
             src="/swi.png"
