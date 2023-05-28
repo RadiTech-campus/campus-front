@@ -163,7 +163,10 @@ export default function Lecture() {
   );
   const preview = useRef(); //특정 DOM을 가리킬 때 사용하는 Hook함수, SecondDiv에 적용
   const onMoveToForm = () => {
-    preview.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    setSelectedTab("강의소개");
+    setTimeout(() => {
+      preview.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 200);
   };
   return (
     <LectureDetailContainer>
