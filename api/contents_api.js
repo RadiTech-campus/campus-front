@@ -35,6 +35,13 @@ export async function getProduct(productCode) {
   return data;
 }
 
+export async function getProducts() {
+  const { data } = await axios(
+    `${process.env.NEXT_PUBLIC_REACT_APP_API_END_POINT}/products`,
+  );
+  return data;
+}
+
 // export async function CreateBulkProduct(
 //   companyId: any,
 //   productsdata: any,

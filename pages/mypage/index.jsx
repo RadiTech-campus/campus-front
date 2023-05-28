@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import styled from "@emotion/styled";
 import Image from "next/image";
 import { useGetPayment } from "../../query/contents";
+import { AddDays, getDateDiff } from "../../libs/date";
 
 const SignInContainer = styled.div`
   margin: 15px auto;
@@ -105,7 +106,6 @@ export default function MyPage() {
 
   const { data: paymentData } = useGetPayment(username);
   const data = useMemo(() => paymentData?.Items || [], [username, paymentData]);
-  console.log("data", data);
 
   useEffect(() => {
     if (auth.isAuthenticated) {
@@ -116,22 +116,6 @@ export default function MyPage() {
       router.push("/signin");
     }
   }, [auth]);
-
-  function AddDays(date, days) {
-    // date는 문자열로 받는다 ex, '2020-10-15'
-    var result = new Date(date);
-    result.setDate(result.getDate() + days);
-    return result;
-  }
-
-  const getDateDiff = (d1, d2) => {
-    const date1 = new Date(d1);
-    const date2 = new Date(d2);
-
-    const diffDate = date1.getTime() - date2.getTime();
-
-    return diffDate / (1000 * 60 * 60 * 24); // 밀리세컨 * 초 * 분 * 시 = 일
-  };
 
   return (
     <SignInContainer>
@@ -171,36 +155,45 @@ export default function MyPage() {
           <Fragment key={i}>
             <Divider />
             <RegistLabel>강의명</RegistLabel>
-            <RegistInput type="text" placeholder={li.firstCat} disabled />
-            <RegistLabel>기간</RegistLabel>
-            <RegistInput type="text" placeholder={li.period} disabled />
-
+            <RegistInput type="text" placeholder={li.productTitle} disabled />
+            {/* <RegistLabel>기간</RegistLabel>
+            <RegistInput type="text" placeholder={li.period} disabled /> */}
             <RegistLabel>결제 금액</RegistLabel>
             <RegistInput type="text" placeholder={`${li.price} 원`} disabled />
 
             <RegistLabel>결제 방법</RegistLabel>
             <RegistInput type="text" placeholder="무통장입금" disabled />
-            <RegistLabel>
-              결제 상태{" "}
-              {getDateDiff(
-                new Date(li.date).toISOString().substring(0, 10),
-                new Date().toISOString().substring(0, 10),
-              ) < 0 ? (
-                ""
-              ) : (
-                <span>
-                  {AddDays(new Date(li.date).toISOString().substring(0, 10), 7)
+            <RegistLabel>결제 상태 </RegistLabel>
+            {console.log(
+              "getDateDiff(new Date(li.applyDate).toISOString().substring(0, 10),new Date().toISOString().substring(0, 10),)",
+              getDateDiff(
+                new Date(
+                  AddDays(
+                    new Date(li.applyDate).toISOString().substring(0, 10),
+                    7,
+                  )
                     .toISOString()
-                    .substring(0, 10)}{" "}
-                  까지 입금이 확인 되지 않는 경우 자동 취소됩니다.
-                </span>
-              )}
-            </RegistLabel>
+                    .substring(0, 10),
+                )
+                  .toISOString()
+                  .substring(0, 10),
+                new Date().toISOString().substring(0, 10),
+              ),
+            )}
             <RegistInput
               type="text"
               placeholder={`${
                 getDateDiff(
-                  new Date(li.date).toISOString().substring(0, 10),
+                  new Date(
+                    AddDays(
+                      new Date(li.applyDate).toISOString().substring(0, 10),
+                      7,
+                    )
+                      .toISOString()
+                      .substring(0, 10),
+                  )
+                    .toISOString()
+                    .substring(0, 10),
                   new Date().toISOString().substring(0, 10),
                 ) < 0
                   ? "결제 취소"
@@ -208,12 +201,30 @@ export default function MyPage() {
               }: 우리은행 예금주 이광자 124-233998-12-601`}
               disabled
             />
-            {console.log(
-              getDateDiff(
-                new Date(li.date).toISOString().substring(0, 10),
-                new Date().toISOString().substring(0, 10),
-              ),
-              AddDays(new Date(li.date).toISOString().substring(0, 10), 7),
+            {getDateDiff(
+              new Date(
+                AddDays(
+                  new Date(li.applyDate).toISOString().substring(0, 10),
+                  7,
+                )
+                  .toISOString()
+                  .substring(0, 10),
+              )
+                .toISOString()
+                .substring(0, 10),
+              new Date().toISOString().substring(0, 10),
+            ) < 0 ? (
+              ""
+            ) : (
+              <span>
+                {AddDays(
+                  new Date(li.applyDate).toISOString().substring(0, 10),
+                  7,
+                )
+                  .toISOString()
+                  .substring(0, 10)}{" "}
+                까지 입금이 확인 되지 않는 경우 자동 취소됩니다.
+              </span>
             )}
           </Fragment>
         ))}

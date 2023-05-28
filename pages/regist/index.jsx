@@ -3,7 +3,11 @@ import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import Modal from "../../components/modal/Modal";
-import { useGetAUniv, useGetProduct } from "../../query/contents";
+import {
+  useGetAUniv,
+  useGetProduct,
+  useGetProducts,
+} from "../../query/contents";
 import { AddDays } from "../../libs/date";
 
 const ClassText = styled.div`
@@ -17,7 +21,7 @@ const ClassText = styled.div`
 `;
 const UserText = styled.div`
   position: absolute;
-  margin: 222px 0px;
+  margin: 127px 0px;
   padding: 0px 15px;
   background-color: white;
   color: #595959;
@@ -26,7 +30,7 @@ const UserText = styled.div`
 `;
 const PriceText = styled.div`
   position: absolute;
-  margin: 492px 0px;
+  margin: 398px 0px;
   padding: 0px 15px;
   background-color: white;
   color: #595959;
@@ -35,7 +39,7 @@ const PriceText = styled.div`
 `;
 const PayText = styled.div`
   position: absolute;
-  margin: 675px 0px;
+  margin: 580px 0px;
   padding: 0px 15px;
   background-color: white;
   color: #595959;
@@ -232,11 +236,15 @@ export default function SignUp() {
   );
   const data = useMemo(() => aUnivData?.Item || [], [email, aUnivData, inputs]);
 
-  const { data: productData } = useGetProduct(`A_A01_${checked}`);
-  const data2 = useMemo(() => productData?.Item || [], [checked, productData]);
+  const { data: productsData } = useGetProducts();
+  const data3 = useMemo(() => productsData?.Items || [], [checked]);
+  const [Selected, setSelected] = useState("A_A01_12");
 
-  console.log("data2", data2);
-  console.log("data", data);
+  const handleSelect = (e) => {
+    setSelected(e.target.value);
+  };
+  const { data: productData } = useGetProduct(Selected);
+  const data2 = useMemo(() => productData?.Item || [], [checked, productData]);
   return (
     <SignUpContainer>
       {isOpen && (
@@ -271,10 +279,18 @@ export default function SignUp() {
           <Divider />
 
           <RegistLabel>강의명</RegistLabel>
-          <RegistSelect value={userId} onChange={onChange}>
-            <option>심지나의 임상 합격 ALL PASS</option>
+          <RegistSelect onChange={handleSelect} value={Selected}>
+            {data3 &&
+              data3.length > 0 &&
+              data3
+                .sort((a, b) => (a.productCode > b.productCode ? 1 : -1))
+                .map((li, i) => (
+                  <option key={i} value={li.productCode}>
+                    {li.productTitle}
+                  </option>
+                ))}
           </RegistSelect>
-          <RegistLabel>기간</RegistLabel>
+          {/* <RegistLabel>기간</RegistLabel>
           <PeriodContainer>
             {periods.map((period, i) => (
               <PeriodLabel key={i}>
@@ -288,7 +304,7 @@ export default function SignUp() {
               </PeriodLabel>
             ))}
           </PeriodContainer>
-
+          {console.log("checked", checked)} */}
           <UserText>구매자 정보</UserText>
           <Divider />
           <RegistLabel>이름</RegistLabel>

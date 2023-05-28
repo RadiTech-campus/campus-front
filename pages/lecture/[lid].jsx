@@ -155,12 +155,6 @@ export default function Lecture() {
   //
   const { data: contentData } = useGetContents();
   const data2 = useMemo(() => contentData?.Items || [], [contentData]);
-  console.log("data", data);
-  console.log("data2", data2);
-  console.log(
-    "data2.find((li) => li.code === data[0]?.contentCode)",
-    data2.find((li) => li.code === data[0]?.contentCode)?.gTitle,
-  );
   const preview = useRef(); //특정 DOM을 가리킬 때 사용하는 Hook함수, SecondDiv에 적용
   const onMoveToForm = () => {
     setSelectedTab("강의소개");

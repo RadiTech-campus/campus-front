@@ -97,7 +97,7 @@ function JoinPresenter({ allCheck, setAllCheck }) {
             checked={allCheck}
             onChange={allBtnEvent}
           />
-          <label for="all-check">전체동의</label>
+          <label htmlFor="all-check">전체동의</label>
         </div>
         <div>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -108,7 +108,7 @@ function JoinPresenter({ allCheck, setAllCheck }) {
                 checked={useCheck}
                 onChange={useBtnEvent}
               />
-              <label for="check2">
+              <label htmlFor="check2">
                 서비스 이용약관 동의 <span>(필수)</span>{" "}
               </label>
             </div>
@@ -129,7 +129,7 @@ function JoinPresenter({ allCheck, setAllCheck }) {
                 checked={marketingCheck}
                 onChange={marketingBtnEvent}
               />
-              <label for="check3">
+              <label htmlFor="check3">
                 개인정보 수집 및 이용 동의 <span>(필수)</span>{" "}
               </label>
             </div>
@@ -148,7 +148,7 @@ function JoinPresenter({ allCheck, setAllCheck }) {
             checked={ageCheck}
             onChange={ageBtnEvent}
           />
-          <label for="check1">
+          <label htmlFor="check1">
             만 14세 이상입니다 <span>(필수)</span>
           </label>
         </div>

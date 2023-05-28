@@ -183,18 +183,44 @@ export default function SignUp() {
 
   const confirmUser = async (e) => {
     e.preventDefault();
+    if (userId.length < 5) {
+      alert("ID는 5자리 이상의 영문으로 입력해 주세요.");
+      return;
+    }
     if (email.length < 1) {
       handleOpenModal();
+      return;
+    }
+    if (password.length <= 6 || confirmPassword <= 6) {
+      alert("비밀번호와 비밀번호 확인을 6자리 이상으로 입력해 주세요.");
+      return;
+    }
+    if (!passwordCheck) {
+      alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
+      return;
+    }
+    if (phoneNumber.length < 10) {
+      alert("휴대폰 번호는 10자리 숫자로 입력해 주세요");
       return;
     }
     try {
       const result = await auth.signUp(userId, password, email, phoneNumber);
       console.log("result", result);
-      setMailConfirmed(true);
-      handleOpenModal();
+      if (typeof result === "string") {
+        if (result === "User already exists") {
+          alert("이미 존재하는 아이디 입니다.");
+        } else if (
+          result.trim() ===
+          "Attributes did not conform to the schema: custom:phone: String must be no shorter than 10 characters"
+        ) {
+          alert("휴대폰 번호는 10자리 숫자로 입력해주세요.");
+        }
+      } else {
+        setMailConfirmed(true);
+        handleOpenModal();
+      }
     } catch (error) {
-      // console.log("error", error);
-      alert("메일인증 요청 실패");
+      alert("메일인증 요청 실패 in signup");
       alert(error);
     }
   };
@@ -220,8 +246,6 @@ export default function SignUp() {
     }
   };
 
-  // console.log("auth", auth);
-
   useEffect(() => {
     if (password === confirmPassword) {
       setPasswordCheck(true);
@@ -230,7 +254,6 @@ export default function SignUp() {
     }
   }, [password, confirmPassword]);
 
-  // useEffect(() => {}, []);
   const [isOpenConfirmSignUp, setIsOpenConfirmSignUp] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -361,7 +384,11 @@ export default function SignUp() {
             />
 
             <JoinPresenter allCheck={allCheck} setAllCheck={setAllCheck} />
-            <SignUpButton1 allCheck={!allCheck} type="submit">
+            <SignUpButton1
+              allCheck={!allCheck}
+              mailConfirmed={!mailConfirmed}
+              type="submit"
+            >
               회원가입
             </SignUpButton1>
           </InputsContainer>

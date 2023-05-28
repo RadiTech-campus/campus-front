@@ -58,11 +58,6 @@ export default function Index() {
           "--swiper-pagination-bullet-size": "12px",
           "--swiper-pagination-bullet-horizontal-gap": "10px",
         }}
-
-        // pagination={{
-        //   el: ".swiper-custom-pagination",
-        //   clickable: true,
-        // }}
         // scrollbar={{ draggable: true }}
         // onSwiper={(swiper) => console.log(swiper)}
         // onSlideChange={() => console.log("slide change")}

@@ -55,10 +55,6 @@ export default function LectureDetail() {
     () => contentDetailData?.Items || [],
     [contentDetailData, lsid],
   );
-  console.log(
-    "data",
-    data.filter((li) => li.contentDetailCode === detailCode)[0],
-  );
   return (
     <LectureDetailContainer>
       <SidebarContainer>

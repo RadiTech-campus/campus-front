@@ -54,9 +54,9 @@ const useProvideAuth = () => {
       });
       return result;
     } catch (error) {
-      // console.log("회원가입 에러", error);
-      alert("인증 메일 발송을 실패 했습니다.", error);
-      return "인증 메일 발송을 실패 했습니다.";
+      console.log("error", error.message);
+      // alert("인증 메일 발송을 실패 했습니다.in useAuth", error);
+      return error.message;
     }
   };
 
@@ -65,7 +65,6 @@ const useProvideAuth = () => {
       const result = await Auth.confirmSignUp(username, code);
       return result;
     } catch (error) {
-      // console.log("메일 인증 컨펌 에러", error);
       alert("회원가입을 실패 했습니다.", error);
       return error;
     }
