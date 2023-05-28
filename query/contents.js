@@ -4,7 +4,13 @@ import {
   useQuery,
   useQueryClient,
 } from "@tanstack/react-query";
-import { getAUniv, getContentDetail, getContents, getPayment, getProduct } from "../api/contents_api";
+import {
+  getAUniv,
+  getContentDetail,
+  getContents,
+  getPayment,
+  getProduct,
+} from "../api/contents_api";
 
 export const useGetContents = () => {
   return useQuery({
@@ -49,7 +55,7 @@ export const useGetAUniv = (domain) => {
   return useQuery({
     queryKey: [`${domain}`],
     queryFn: async () => {
-      const data = await getAUniv(domain)
+      const data = await getAUniv(domain);
       return data;
     },
     onError: (e) => {
@@ -62,7 +68,7 @@ export const useGetProduct = (productCode) => {
   return useQuery({
     queryKey: [`${productCode}`],
     queryFn: async () => {
-      const data = await getProduct(productCode)
+      const data = await getProduct(productCode);
       return data;
     },
     onError: (e) => {

@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import Modal from "../../components/modal/Modal";
 import { useGetAUniv, useGetProduct } from "../../query/contents";
+import { AddDays } from "../../libs/date";
 
 const ClassText = styled.div`
   position: absolute;
@@ -16,7 +17,7 @@ const ClassText = styled.div`
 `;
 const UserText = styled.div`
   position: absolute;
-  margin: 248px 0px;
+  margin: 222px 0px;
   padding: 0px 15px;
   background-color: white;
   color: #595959;
@@ -25,7 +26,7 @@ const UserText = styled.div`
 `;
 const PriceText = styled.div`
   position: absolute;
-  margin: 520px 0px;
+  margin: 492px 0px;
   padding: 0px 15px;
   background-color: white;
   color: #595959;
@@ -34,7 +35,7 @@ const PriceText = styled.div`
 `;
 const PayText = styled.div`
   position: absolute;
-  margin: 705px 0px;
+  margin: 675px 0px;
   padding: 0px 15px;
   background-color: white;
   color: #595959;
@@ -158,7 +159,7 @@ const ModalContent = styled.div`
   margin-bottom: 10px;
 `;
 
-const periods = ["01", "03", "06", "09", "12"];
+const periods = ["03", "06", "12"];
 export default function SignUp() {
   const auth = useAuth();
   const router = useRouter();
@@ -204,7 +205,6 @@ export default function SignUp() {
       phoneNumber: "",
     });
   };
-  console.log("email", email.substring(email.indexOf("@") + 1));
   useEffect(() => {
     if (auth.isAuthenticated) {
       setInputs({
@@ -222,18 +222,19 @@ export default function SignUp() {
   const handleChecked = (e) => {
     setChecked(e.target.value);
   };
-  console.log("checked", checked);
   const [isOpen, setIsOpen] = useState(false);
   const handleOpenModal = () => {
     setIsOpen(true);
   };
+
   const { data: aUnivData } = useGetAUniv(
     email.substring(email.indexOf("@") + 1),
   );
   const data = useMemo(() => aUnivData?.Item || [], [email, aUnivData, inputs]);
 
   const { data: productData } = useGetProduct(`A_A01_${checked}`);
-  const data2 = useMemo(() => productData?.Item || [], [checked]);
+  const data2 = useMemo(() => productData?.Item || [], [checked, productData]);
+
   console.log("data2", data2);
   console.log("data", data);
   return (
@@ -328,7 +329,13 @@ export default function SignUp() {
           <PriceContainer>
             <PriceTitle>결제기한</PriceTitle>
             <PriceDetail>
-              <PriceContent>2023.2.2 까지</PriceContent>
+              {/* <PriceContent>2023.2.2 까지</PriceContent> */}
+              <PriceContent>
+                {AddDays(new Date().toISOString().substring(0, 10), 7)
+                  .toISOString()
+                  .substring(0, 10)}{" "}
+                까지
+              </PriceContent>
             </PriceDetail>
             <div style={{ color: "red", fontSize: "14px", fontWeight: "bold" }}>
               *기간내 미 결제시 수강신청이 취소됩니다
@@ -340,7 +347,7 @@ export default function SignUp() {
             <div style={{ display: "flex", flexDirection: "column" }}>
               <label style={{ margin: "5px 0px 0px" }}>
                 <input type="radio" defaultChecked />
-                계좌이체: 우리은행 22222-2222-2222
+                계좌이체: 우리은행 예금주 이광자 124-233998-12-601
                 <button disabled>계좌 복사</button>
               </label>
               <label style={{ margin: "5px 0px 10px" }}>

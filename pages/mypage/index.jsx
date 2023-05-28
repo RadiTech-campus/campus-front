@@ -205,7 +205,7 @@ export default function MyPage() {
                 ) < 0
                   ? "결제 취소"
                   : li.status
-              }: 우리은행 예금주 이광자 124-233998-12-601 ​`}
+              }: 우리은행 예금주 이광자 124-233998-12-601`}
               disabled
             />
             {console.log(

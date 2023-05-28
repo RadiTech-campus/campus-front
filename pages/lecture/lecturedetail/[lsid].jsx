@@ -11,23 +11,31 @@ const LectureDetailContainer = styled.div`
   padding: 10px 20px; */
   display: flex;
   margin: 0px auto;
-  width: 100%;
+  width: 1160px;
 `;
 
 const SidebarContainer = styled.div`
   width: 20%;
-  padding: 30px;
+  padding: 10px;
 `;
 
 const SidebarTitle = styled.div`
-  font-size: larger;
+  font-size: 16px;
   font-weight: 600;
   padding-bottom: 10px;
 `;
 
 const SidebarContent = styled.div`
   padding-bottom: 5px;
-  background-color: ${(props) => (props.selected ? "#898989" : "#a603a6")};
+  border-bottom: 1px solid lightgrey;
+  padding: 15px 0px;
+  /* background-color: ${(props) =>
+    props.selected ? "#898989" : "#a603a6"}; */
+  font-weight: ${(props) => (props.selected ? "" : "bold")};
+  a {
+    text-decoration: none;
+    color: ${(props) => (props.selected ? "#838383" : "black")};
+  }
 `;
 const ContentContainer = styled.div`
   width: 80%;
@@ -81,19 +89,19 @@ export default function LectureDetail() {
       <ContentContainer>
         {data && data.length > 0 ? (
           <>
-            <div>
+            {/* <div>
               {`${title} - ${
                 data.filter((li) => li.contentDetailCode === detailCode)[0]
                   .contentDetailTitle
               }`}
-            </div>
+            </div> */}
             <div>
               <iframe
                 src={`https://player.vimeo.com/video/${
                   data.filter((li) => li.contentDetailCode === detailCode)[0]
                     .contentURL
                 }`}
-                width="1000"
+                width="900"
                 height="564"
                 frameBorder="0"
                 allow="autoplay; fullscreen"
