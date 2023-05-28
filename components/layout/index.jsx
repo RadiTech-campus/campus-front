@@ -23,7 +23,7 @@ const RightContainer = styled.div`
 export default function Layout({ children }) {
   const footerRef = useRef(); //특정 DOM을 가리킬 때 사용하는 Hook함수, SecondDiv에 적용
   const onMoveToForm = () => {
-    footerRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    footerRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
   };
   return (
     <LayoutContainer>

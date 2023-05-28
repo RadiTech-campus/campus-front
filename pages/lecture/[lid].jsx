@@ -165,7 +165,7 @@ export default function Lecture() {
   const onMoveToForm = () => {
     setSelectedTab("강의소개");
     setTimeout(() => {
-      preview.current.scrollIntoView({ behavior: "smooth", block: "start" });
+      preview.current.scrollIntoView({ behavior: "smooth", block: "center" });
     }, 200);
   };
   return (
