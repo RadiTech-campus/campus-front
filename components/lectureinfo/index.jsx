@@ -45,7 +45,7 @@ const ClassImage3 = styled.div`
   } */
 `;
 
-export default function LectureInfo({ lid, classData, classtype }) {
+export default function LectureInfo({ lid, classData, classtype, preview }) {
   // console.log(
   //   "sad",
   //   classtype === "기출"
@@ -73,7 +73,7 @@ export default function LectureInfo({ lid, classData, classtype }) {
           fill
         />
       </ClassImage2>
-      <PreviewContainer>
+      <PreviewContainer ref={preview}>
         <iframe
           src={`https://player.vimeo.com/video/${
             classtype === "기출"

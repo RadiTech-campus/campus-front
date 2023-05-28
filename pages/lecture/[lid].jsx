@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import styled from "@emotion/styled";
 import Image from "next/image";
@@ -68,6 +68,10 @@ const ClassPriceInfo = styled.div`
   font-size: 18px;
   font-weight: bold;
   margin-bottom: 15px;
+`;
+
+const ClassButtonContainer = styled.div`
+  display: flex;
 `;
 
 const ClassButton = styled.button`
@@ -147,6 +151,10 @@ export default function Lecture() {
     "data2.find((li) => li.code === data[0]?.contentCode)",
     data2.find((li) => li.code === data[0]?.contentCode)?.gTitle,
   );
+  const preview = useRef(); //특정 DOM을 가리킬 때 사용하는 Hook함수, SecondDiv에 적용
+  const onMoveToForm = () => {
+    preview.current.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
   return (
     <LectureDetailContainer>
       {isOpen && (
@@ -205,7 +213,12 @@ export default function Lecture() {
               <ClassRightContent>4시간 +</ClassRightContent>
             </ClassContent>
           </div>
-          <ClassButton onClick={() => handleOpenModal()}>수강신청</ClassButton>
+          <ClassButtonContainer>
+            <ClassButton onClick={() => onMoveToForm()}>미리보기</ClassButton>
+            <ClassButton onClick={() => handleOpenModal()}>
+              수강신청
+            </ClassButton>
+          </ClassButtonContainer>
         </TopRightDetail>
       </TopDetail>
       <ClassTapContainer>
@@ -221,7 +234,12 @@ export default function Lecture() {
         ))}
       </ClassTapContainer>
       {selectedTab === "강의소개" && (
-        <LectureInfo lid={lid} classtype={classtype} classData={data2} />
+        <LectureInfo
+          lid={lid}
+          classtype={classtype}
+          classData={data2}
+          preview={preview}
+        />
       )}
       {selectedTab === "커리큘럼" && (
         <Lectures classData={data} classtype={classtype} title={title} />
