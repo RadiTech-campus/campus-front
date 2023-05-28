@@ -221,7 +221,9 @@ export default function Lecture() {
           </ClassTap>
         ))}
       </ClassTapContainer>
-      {selectedTab === "강의소개" && <LectureInfo lid={lid} />}
+      {selectedTab === "강의소개" && (
+        <LectureInfo lid={lid} classtype={classtype} classData={data2} />
+      )}
       {selectedTab === "커리큘럼" && (
         <Lectures classData={data} classtype={classtype} title={title} />
       )}

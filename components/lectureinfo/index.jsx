@@ -45,7 +45,13 @@ const ClassImage3 = styled.div`
   } */
 `;
 
-export default function LectureInfo({ lid }) {
+export default function LectureInfo({ lid, classData, classtype }) {
+  console.log(
+    "sad",
+    classtype === "기출"
+      ? classData.find((li) => li.code === lid).gPreview
+      : classData.find((li) => li.code === lid).lPreview,
+  );
   return (
     <LectureInfoContainer>
       {/* <InfoTitle>강의소개</InfoTitle> */}
@@ -69,7 +75,11 @@ export default function LectureInfo({ lid }) {
       </ClassImage2>
       <PreviewContainer>
         <iframe
-          src="https://player.vimeo.com/video/825159712?h=c877949dd3"
+          src={`https://player.vimeo.com/video/${
+            classtype === "기출"
+              ? classData.find((li) => li.code === lid).gPreview
+              : classData.find((li) => li.code === lid).lPreview
+          }`}
           width="840"
           height="564"
           frameBorder="0"
