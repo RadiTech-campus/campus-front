@@ -57,7 +57,8 @@ export default function LectureDetail() {
         <SidebarTitle>{title}</SidebarTitle>
         {data && data.length > 0
           ? data
-              .filter((arr) => arr.contentDetailSubTitle === classtype)
+              ?.filter((arr) => arr.contentDetailSubTitle === classtype)
+              ?.sort((a, b) => (a.sorting > b.sorting ? 1 : -1))
               .map((li, i) => (
                 <SidebarContent
                   key={i}
