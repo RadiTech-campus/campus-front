@@ -100,6 +100,14 @@ export default function Header() {
             >
               로그아웃
             </AuthButton>
+            <AuthButton
+              onClick={() => {
+                auth.signOut();
+                router.push("/");
+              }}
+            >
+              고객센터
+            </AuthButton>
           </AuthContainer>
         ) : (
           <AuthContainer>
@@ -107,7 +115,7 @@ export default function Header() {
               로그인
             </AuthButton>
             <AuthButton onClick={() => router.push("/signup")}>
-              회원가입
+              고객센터
             </AuthButton>
           </AuthContainer>
         )}

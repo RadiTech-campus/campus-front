@@ -78,7 +78,8 @@ const ClassButton = styled.button`
   width: 100%;
   margin-right: 10px;
   padding: 10px 20px;
-  background-color: #7100a6;
+  background-color: ${(props) => props.colorCode};
+  /* background-color: #7100a6; */
   color: white;
   font-weight: bold;
   font-size: 18px;
@@ -125,6 +126,15 @@ const ModalContent = styled.div`
   font-size: 15px;
   text-align: center;
   margin-bottom: 10px;
+`;
+const DetailBanner = styled.div`
+  /* height: 250px; */
+  width: 95%;
+  height: 100px;
+  position: relative;
+  margin: auto;
+  > img {
+  }
 `;
 const tabs = ["강의소개", "커리큘럼", "강사소개", "주의사항"];
 
@@ -214,13 +224,24 @@ export default function Lecture() {
             </ClassContent>
           </div>
           <ClassButtonContainer>
-            <ClassButton onClick={() => onMoveToForm()}>미리보기</ClassButton>
-            <ClassButton onClick={() => handleOpenModal()}>
+            <ClassButton colorCode="#000000" onClick={() => onMoveToForm()}>
+              미리보기
+            </ClassButton>
+            <ClassButton colorCode="#7100a6" onClick={() => handleOpenModal()}>
               수강신청
             </ClassButton>
           </ClassButtonContainer>
         </TopRightDetail>
       </TopDetail>
+      <DetailBanner>
+        <Image
+          src={`/detailbanner.png`}
+          alt="메인 배경 이미지"
+          style={{ objectFit: "cover" }}
+          fill
+        />
+      </DetailBanner>
+
       <ClassTapContainer>
         {tabs.map((tab, i) => (
           <ClassTap
