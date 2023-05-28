@@ -32,7 +32,10 @@ const RightContainer = styled.div`
   width: 33%;
 `;
 
-const FooterTitle = styled.div``;
+const FooterTitle = styled.div`
+  font-size: 12px;
+  font-weight: bold;
+`;
 const FooterContent = styled.div``;
 
 export default function Footer() {

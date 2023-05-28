@@ -71,7 +71,7 @@ export default function Index() {
           style={{
             width: "1160px",
             height: "450px",
-            backgroundColor: "#0B1019",
+            backgroundColor: "#030712",
           }}
         >
           <Image
@@ -85,7 +85,7 @@ export default function Index() {
           style={{
             width: "1160px",
             height: "450px",
-            backgroundColor: "#02162E",
+            backgroundColor: "#000F2A",
           }}
         >
           <Image
