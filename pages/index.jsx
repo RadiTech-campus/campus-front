@@ -85,11 +85,11 @@ export default function Index() {
           style={{
             width: "1160px",
             height: "450px",
-            backgroundColor: "#0B1019",
+            backgroundColor: "#02162E",
           }}
         >
           <Image
-            src="/1.png"
+            src="/2.png"
             alt="메인 배경 이미지"
             style={{ objectFit: "contain" }}
             fill

@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 import React from "react";
 import Header from "../header";
 import TopNav from "../topnav";
+import Footer from "../footer";
 
 const LayoutContainer = styled.div`
   /* display: flex;
@@ -27,6 +28,7 @@ export default function Layout({ children }: any) {
       <Header />
       {/* <TopNav /> */}
       {children}
+      <Footer />
     </LayoutContainer>
   );
 }
