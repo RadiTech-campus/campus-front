@@ -54,7 +54,7 @@ function JoinPresenter({ allCheck, setAllCheck }) {
   };
 
   useEffect(() => {
-    if (ageCheck === true && useCheck === true) {
+    if (ageCheck === true && useCheck === true && marketingCheck === true) {
       setAllCheck(true);
     } else {
       setAllCheck(false);
@@ -130,7 +130,7 @@ function JoinPresenter({ allCheck, setAllCheck }) {
                 onChange={marketingBtnEvent}
               />
               <label for="check3">
-                개인정보 수집 및 이용 동의 <span>(선택)</span>{" "}
+                개인정보 수집 및 이용 동의 <span>(필수)</span>{" "}
               </label>
             </div>
             <span
