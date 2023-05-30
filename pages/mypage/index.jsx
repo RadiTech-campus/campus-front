@@ -85,7 +85,6 @@ const Divider = styled.div`
 export default function MyPage() {
   const auth = useAuth();
   const router = useRouter();
-  console.log("auth", auth);
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -106,7 +105,7 @@ export default function MyPage() {
 
   const { data: paymentData } = useGetPayment(username);
   const data = useMemo(() => paymentData?.Items || [], [username, paymentData]);
-
+  console.log("data", data.length);
   useEffect(() => {
     if (auth.isAuthenticated) {
       setUsername(auth.username);
@@ -151,38 +150,43 @@ export default function MyPage() {
       </InputsContainer>
       <TitleContainer>수강 신청 정보</TitleContainer>
       <InputsContainer>
-        {data.map((li, i) => (
-          <Fragment key={i}>
+        {data.length < 1 ? (
+          <Fragment>
             <Divider />
+            {console.log("길이 0")}
             <RegistLabel>강의명</RegistLabel>
-            <RegistInput type="text" placeholder={li.productTitle} disabled />
-            {/* <RegistLabel>기간</RegistLabel>
-            <RegistInput type="text" placeholder={li.period} disabled /> */}
-            <RegistLabel>결제 금액</RegistLabel>
-            <RegistInput type="text" placeholder={`${li.price} 원`} disabled />
-
-            <RegistLabel>결제 방법</RegistLabel>
-            <RegistInput type="text" placeholder="무통장입금" disabled />
-            <RegistLabel>결제 상태 </RegistLabel>
-            {console.log(
-              "getDateDiff(new Date(li.applyDate).toISOString().substring(0, 10),new Date().toISOString().substring(0, 10),)",
-              getDateDiff(
-                new Date(
-                  AddDays(
-                    new Date(li.applyDate).toISOString().substring(0, 10),
-                    7,
-                  )
-                    .toISOString()
-                    .substring(0, 10),
-                )
-                  .toISOString()
-                  .substring(0, 10),
-                new Date().toISOString().substring(0, 10),
-              ),
-            )}
             <RegistInput
               type="text"
-              placeholder={`${
+              placeholder="수강 이력이 없습니다"
+              disabled
+            />
+
+            <RegistLabel>결제 방법</RegistLabel>
+            <RegistInput type="text" placeholder="" disabled />
+            <RegistLabel>결제 상태 </RegistLabel>
+
+            <RegistInput type="text" placeholder="" disabled />
+          </Fragment>
+        ) : (
+          data.map((li, i) => (
+            <Fragment key={i}>
+              <Divider />
+              <RegistLabel>강의명</RegistLabel>
+              <RegistInput type="text" placeholder={li.productTitle} disabled />
+              {/* <RegistLabel>기간</RegistLabel>
+            <RegistInput type="text" placeholder={li.period} disabled /> */}
+              <RegistLabel>결제 금액</RegistLabel>
+              <RegistInput
+                type="text"
+                placeholder={`${li.price} 원`}
+                disabled
+              />
+
+              <RegistLabel>결제 방법</RegistLabel>
+              <RegistInput type="text" placeholder="무통장입금" disabled />
+              <RegistLabel>결제 상태 </RegistLabel>
+              {console.log(
+                "getDateDiff(new Date(li.applyDate).toISOString().substring(0, 10),new Date().toISOString().substring(0, 10),)",
                 getDateDiff(
                   new Date(
                     AddDays(
@@ -195,39 +199,57 @@ export default function MyPage() {
                     .toISOString()
                     .substring(0, 10),
                   new Date().toISOString().substring(0, 10),
-                ) < 0
-                  ? "결제 취소"
-                  : li.status
-              }: 우리은행 예금주 이광자 124-233998-12-601`}
-              disabled
-            />
-            {getDateDiff(
-              new Date(
-                AddDays(
-                  new Date(li.applyDate).toISOString().substring(0, 10),
-                  7,
+                ),
+              )}
+              <RegistInput
+                type="text"
+                placeholder={`${
+                  getDateDiff(
+                    new Date(
+                      AddDays(
+                        new Date(li.applyDate).toISOString().substring(0, 10),
+                        7,
+                      )
+                        .toISOString()
+                        .substring(0, 10),
+                    )
+                      .toISOString()
+                      .substring(0, 10),
+                    new Date().toISOString().substring(0, 10),
+                  ) < 0
+                    ? "결제 취소"
+                    : li.status
+                }: 우리은행 예금주 이광자 124-233998-12-601`}
+                disabled
+              />
+              {getDateDiff(
+                new Date(
+                  AddDays(
+                    new Date(li.applyDate).toISOString().substring(0, 10),
+                    7,
+                  )
+                    .toISOString()
+                    .substring(0, 10),
                 )
                   .toISOString()
                   .substring(0, 10),
-              )
-                .toISOString()
-                .substring(0, 10),
-              new Date().toISOString().substring(0, 10),
-            ) < 0 ? (
-              ""
-            ) : (
-              <span>
-                {AddDays(
-                  new Date(li.applyDate).toISOString().substring(0, 10),
-                  7,
-                )
-                  .toISOString()
-                  .substring(0, 10)}{" "}
-                까지 입금이 확인 되지 않는 경우 자동 취소됩니다.
-              </span>
-            )}
-          </Fragment>
-        ))}
+                new Date().toISOString().substring(0, 10),
+              ) < 0 ? (
+                ""
+              ) : (
+                <span>
+                  {AddDays(
+                    new Date(li.applyDate).toISOString().substring(0, 10),
+                    7,
+                  )
+                    .toISOString()
+                    .substring(0, 10)}{" "}
+                  까지 입금이 확인 되지 않는 경우 자동 취소됩니다.
+                </span>
+              )}
+            </Fragment>
+          ))
+        )}
 
         <TitleContainer>문의 사항</TitleContainer>
         <Divider />

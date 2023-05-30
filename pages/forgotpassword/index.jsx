@@ -76,6 +76,7 @@ const SignUpButton2 = styled.button`
   padding: 5px;
   font-size: 14px;
   cursor: pointer;
+  margin-bottom: 20px;
 `;
 
 const Divider = styled.div`
@@ -84,6 +85,11 @@ const Divider = styled.div`
   width: 100%;
 `;
 
+const MailAuthContainer = styled.div`
+  display: flex;
+  width: 100%;
+  margin-bottom: 20px;
+`;
 export default function ForgotPassword() {
   const auth = useAuth();
   const router = useRouter();
@@ -197,16 +203,18 @@ export default function ForgotPassword() {
             <Divider />
 
             <SignUpLabel>아이디</SignUpLabel>
-            <SignUpInput
-              type="text"
-              placeholder="영문 아이디"
-              name="userId"
-              value={userId}
-              onChange={onChange}
-            />
-            <SignUpButton2 type="button" onClick={(e) => confirmUser(e)}>
-              메일인증 발송
-            </SignUpButton2>
+            <MailAuthContainer>
+              <SignUpInput
+                type="text"
+                placeholder="영문 아이디"
+                name="userId"
+                value={userId}
+                onChange={onChange}
+              />
+              <SignUpButton2 type="button" onClick={(e) => confirmUser(e)}>
+                메일인증 발송
+              </SignUpButton2>
+            </MailAuthContainer>
             <SignUpLabel>메일 인증 코드</SignUpLabel>
             <SignUpInput
               type="text"
