@@ -40,7 +40,7 @@ const useProvideAuth = () => {
         setIsAuthenticated(false);
         setIsLoading(false);
       });
-  }, []);
+  }, [Auth]);
 
   const signUp = async (username, password, email, phone, userName) => {
     try {

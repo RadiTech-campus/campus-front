@@ -20,11 +20,11 @@ const SignUpModalContent = styled.div`
 const ClassImage = styled.div`
   /* height: 250px; */
   width: 100%;
-  height: 160px;
+  height: 180px;
   position: relative;
   > img {
     /* border-radius: 10px; */
-    margin: 10px 0px 0px;
+    margin: 0px 0px 0px;
   }
 `;
 function PrivacyModal({ onClose }) {

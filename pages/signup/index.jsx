@@ -241,6 +241,11 @@ export default function SignUp() {
         } else if (result.includes("custom:phone")) {
           alert("휴대폰 번호는 10~11자리 숫자로 입력해주세요.");
           return;
+        } else if (
+          result.includes("Password") &&
+          result.includes("lowercase")
+        ) {
+          alert("비밀번호는 소문자를 포함해야 합니다.");
         }
       } else {
         setMailConfirmed(true);
@@ -256,7 +261,7 @@ export default function SignUp() {
   const executeConfirm = async (event) => {
     event.preventDefault();
     if (code.length !== 6) {
-      alert("6자리 인증코드를 입력해 주세요.");
+      alert("6자리 인증 코드를 다시 확인해주세요.");
       return;
     }
     if (!mailConfirmed) {
