@@ -1,8 +1,11 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/router";
 import styled from "@emotion/styled";
 import { useGetContentDetails } from "../../../query/contents";
 import Link from "next/link";
+import { useAuth } from "../../../hooks/useAuth";
+import Modal from "../../../components/modal/Modal";
+import { useGetPayment } from "../../../query/contents";
 
 const LectureDetailContainer = styled.div`
   /* display: flex;
@@ -46,7 +49,20 @@ const Divider = styled.div`
   margin: 20px 0px;
 `;
 
+const ModalTitle = styled.div`
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 10px;
+`;
+const ModalContent = styled.div`
+  font-size: 15px;
+  text-align: center;
+  margin-bottom: 10px;
+`;
+
 export default function LectureDetail() {
+  const auth = useAuth();
   const router = useRouter();
   const { lsid, detailCode, classtype, title } = router.query;
 
@@ -55,8 +71,45 @@ export default function LectureDetail() {
     () => contentDetailData?.Items || [],
     [contentDetailData, lsid],
   );
+
+  const { data: paymentData } = useGetPayment("rudghksldl");
+  const data2 = useMemo(() => paymentData?.Items || [], [paymentData]);
+
+  console.log(
+    "data2",
+    data2.filter(
+      (li) => li.status === "입금대기" && li.productCode.includes("A_A01"),
+    ),
+  );
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    if (!auth.isAuthenticated) {
+      setIsOpen(true);
+    } else {
+      // if (data2.find((li) => li.status === "결제완료").length < 1) {
+      //   router.push(`/signin?returnpath=${router.asPath}`);
+      // }
+    }
+  }, [auth]);
+
   return (
     <LectureDetailContainer>
+      {isOpen && (
+        <Modal
+          open={isOpen}
+          onClose={() => {
+            setIsOpen(false);
+            router.push(`/signin?returnpath=${router.asPath}`);
+          }}
+        >
+          <>
+            {/* <ModalTitle>{title}</ModalTitle> */}
+            <ModalTitle>{"로그인이 필요한 서비스 입니다."}</ModalTitle>
+          </>
+        </Modal>
+      )}
       <SidebarContainer>
         <SidebarTitle>{title}</SidebarTitle>
         {data && data.length > 0

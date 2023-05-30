@@ -1,9 +1,19 @@
 import styled from "@emotion/styled";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import { useAuth } from "../../hooks/useAuth";
+import Modal from "../modal/Modal";
+import { useRouter } from "next/router";
 
 const LecturesContainer = styled.div`
   padding: 10px 40px;
+`;
+
+const ModalTitle = styled.div`
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 10px;
 `;
 
 const InfoTitle = styled.div`
@@ -26,10 +36,26 @@ const LectureChapter = styled.div`
   } */
 `;
 export default function Lectures({ classData, classtype, title }) {
+  const auth = useAuth();
+  const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
+
   return (
     <LecturesContainer>
       {/* <InfoTitle>강의 목록</InfoTitle> */}
-
+      {isOpen && (
+        <Modal
+          open={isOpen}
+          onClose={() => {
+            setIsOpen(false);
+            router.push(`/signin?returnpath=${router.asPath}`);
+          }}
+        >
+          <>
+            <ModalTitle>로그인이 필요한 서비스 입니다.</ModalTitle>
+          </>
+        </Modal>
+      )}
       {classData && classData.length > 0 ? (
         <LectureChapter>
           {classData
@@ -49,14 +75,65 @@ export default function Lectures({ classData, classtype, title }) {
                 }}
               >
                 {`# ${i + 1}. ${li.contentDetailTitle}`}
-                <div>
-                  <Link
-                    href={{
-                      pathname: `https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/content-data/${li.contentDetailCode}.pdf`,
-                    }}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
+                {auth.isAuthenticated ? (
+                  <div>
+                    <Link
+                      href={{
+                        pathname: `https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/content-data/${li.contentDetailCode}.pdf`,
+                      }}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <button
+                        style={{
+                          marginRight: "10px",
+                          padding: "10px 20px",
+                          backgroundColor: "#7100a6",
+                          color: "white",
+                          fontWeight: "bold",
+                          borderRadius: "5px",
+                          border: "none",
+                          cursor: "pointer",
+                        }}
+                      >
+                        강의자료
+                      </button>
+                    </Link>
+                    <Link
+                      href={{
+                        pathname: `/lecture/lecturedetail/${li.contentCode}`,
+                        query: {
+                          detailCode: li.contentDetailCode,
+                          classtype,
+                          title,
+                        },
+                      }}
+                    >
+                      <button
+                        style={{
+                          marginRight: "10px",
+                          padding: "10px 20px",
+                          backgroundColor: "#7100a6",
+                          color: "white",
+                          fontWeight: "bold",
+                          borderRadius: "5px",
+                          border: "none",
+                          cursor: "pointer",
+                        }}
+                      >
+                        강의보기
+                      </button>
+                    </Link>
+                  </div>
+                ) : (
+                  <div>
+                    {/* <Link
+                      href={{
+                        pathname: `https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/content-data/${li.contentDetailCode}.pdf`,
+                      }}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    > */}
                     <button
                       style={{
                         marginRight: "10px",
@@ -68,20 +145,21 @@ export default function Lectures({ classData, classtype, title }) {
                         border: "none",
                         cursor: "pointer",
                       }}
+                      onClick={() => setIsOpen(true)}
                     >
                       강의자료
                     </button>
-                  </Link>
-                  <Link
-                    href={{
-                      pathname: `/lecture/lecturedetail/${li.contentCode}`,
-                      query: {
-                        detailCode: li.contentDetailCode,
-                        classtype,
-                        title,
-                      },
-                    }}
-                  >
+                    {/* </Link> */}
+                    {/* <Link
+                      href={{
+                        pathname: `/lecture/lecturedetail/${li.contentCode}`,
+                        query: {
+                          detailCode: li.contentDetailCode,
+                          classtype,
+                          title,
+                        },
+                      }}
+                    > */}
                     <button
                       style={{
                         marginRight: "10px",
@@ -93,11 +171,13 @@ export default function Lectures({ classData, classtype, title }) {
                         border: "none",
                         cursor: "pointer",
                       }}
+                      onClick={() => setIsOpen(true)}
                     >
                       강의보기
                     </button>
-                  </Link>
-                </div>
+                    {/* </Link> */}
+                  </div>
+                )}
               </div>
             ))}
         </LectureChapter>

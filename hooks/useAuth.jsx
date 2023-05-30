@@ -21,12 +21,15 @@ const useProvideAuth = () => {
   const [username, setUsername] = useState("");
   const [useremail, setUseremail] = useState("");
   const [userPhone, setUserPhone] = useState("");
+  const [userName, setUserName] = useState("");
   useEffect(() => {
     Auth.currentAuthenticatedUser()
       .then((result) => {
+        console.log("result", result);
         setUsername(result.username);
         setUseremail(result.attributes.email);
         setUserPhone(result.attributes["custom:phone"]);
+        setUserName(result.attributes["custom:userName"]);
         setIsAuthenticated(true);
         setIsLoading(false);
       })
@@ -39,7 +42,7 @@ const useProvideAuth = () => {
       });
   }, []);
 
-  const signUp = async (username, password, email, phone) => {
+  const signUp = async (username, password, email, phone, userName) => {
     try {
       const result = await Auth.signUp({
         username,
@@ -47,6 +50,7 @@ const useProvideAuth = () => {
         attributes: {
           email,
           "custom:phone": phone,
+          "custom:userName": userName,
         },
         autoSignIn: {
           enabled: true,
@@ -54,7 +58,7 @@ const useProvideAuth = () => {
       });
       return result;
     } catch (error) {
-      console.log("error", error.message);
+      console.log("signUp error", error.message);
       // alert("인증 메일 발송을 실패 했습니다.in useAuth", error);
       return error.message;
     }
@@ -65,8 +69,9 @@ const useProvideAuth = () => {
       const result = await Auth.confirmSignUp(username, code);
       return result;
     } catch (error) {
-      alert("회원가입을 실패 했습니다.", error);
-      return error;
+      console.log("confirmSignUp error", error);
+      // alert("회원가입을 실패 했습니다.", error);
+      return error.message;
     }
   };
 
@@ -124,6 +129,7 @@ const useProvideAuth = () => {
     username,
     useremail,
     userPhone,
+    userName,
     signUp,
     confirmSignUp,
     signIn,

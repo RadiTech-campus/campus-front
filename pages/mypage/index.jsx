@@ -85,7 +85,7 @@ const Divider = styled.div`
 export default function MyPage() {
   const auth = useAuth();
   const router = useRouter();
-
+  console.log("auth", auth);
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");

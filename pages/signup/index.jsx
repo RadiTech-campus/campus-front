@@ -50,6 +50,17 @@ const SignUpInput = styled.input`
   height: 40px;
   outline: none;
   margin-bottom: 20px;
+  ::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  ::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  ::-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px transparent inset;
+  }
 `;
 
 const SignUpLabel = styled.label`
@@ -79,9 +90,11 @@ const SignUpButton1 = styled.button`
   margin-bottom: 20px;
   padding: 15px;
   font-size: 16px;
-  background-color: ${(props) => (props.allCheck ? "#898989" : "#a603a6")};
+  background-color: ${(props) =>
+    props.allCheck && props.mailConfirmed ? "#a603a6" : "#898989"};
   color: white;
-  cursor: ${(props) => (props.allCheck ? "default" : "pointer")};
+  cursor: ${(props) =>
+    props.allCheck && props.mailConfirmed ? "pointer" : "default"};
 `;
 
 const MailAuthContainer = styled.div`
@@ -187,11 +200,7 @@ export default function SignUp() {
       alert("ID는 5자리 이상의 영문으로 입력해 주세요.");
       return;
     }
-    if (email.length < 1) {
-      handleOpenModal();
-      return;
-    }
-    if (password.length <= 6 || confirmPassword <= 6) {
+    if (password.length <= 6 || confirmPassword.length <= 6) {
       alert("비밀번호와 비밀번호 확인을 6자리 이상으로 입력해 주세요.");
       return;
     }
@@ -199,24 +208,43 @@ export default function SignUp() {
       alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
       return;
     }
-    if (phoneNumber.length < 10) {
-      alert("휴대폰 번호는 10자리 숫자로 입력해 주세요");
+    if (userName.length < 1) {
+      alert("이름을 입력해 주세요.");
       return;
     }
+    if (userName.length > 50) {
+      alert("이름은 50자 이내로 입력해 주세요.");
+      return;
+    }
+    if (phoneNumber.length < 10) {
+      alert("휴대폰 번호는 10~11자리 숫자로 입력해 주세요");
+      return;
+    }
+    if (email.length < 1) {
+      handleOpenModal();
+      return;
+    }
+
     try {
-      const result = await auth.signUp(userId, password, email, phoneNumber);
-      console.log("result", result);
+      const result = await auth.signUp(
+        userId,
+        password,
+        email,
+        phoneNumber,
+        userName,
+      );
+      console.log("confirmUser result", result);
       if (typeof result === "string") {
         if (result === "User already exists") {
           alert("이미 존재하는 아이디 입니다.");
-        } else if (
-          result.trim() ===
-          "Attributes did not conform to the schema: custom:phone: String must be no shorter than 10 characters"
-        ) {
-          alert("휴대폰 번호는 10자리 숫자로 입력해주세요.");
+          return;
+        } else if (result.includes("custom:phone")) {
+          alert("휴대폰 번호는 10~11자리 숫자로 입력해주세요.");
+          return;
         }
       } else {
         setMailConfirmed(true);
+        // 여기서 disable 시키면?
         handleOpenModal();
       }
     } catch (error) {
@@ -227,7 +255,10 @@ export default function SignUp() {
 
   const executeConfirm = async (event) => {
     event.preventDefault();
-
+    if (code.length !== 6) {
+      alert("6자리 인증코드를 입력해 주세요.");
+      return;
+    }
     if (!mailConfirmed) {
       alert("메일 인증을 해주세요");
       return;
@@ -238,9 +269,16 @@ export default function SignUp() {
     }
     try {
       const result = await auth.confirmSignUp(userId, code);
-      // console.log("Confirm 성공", result);
-
-      setConfirmSignUp();
+      console.log("executeConfirm result", result);
+      console.log("typeof result", typeof result);
+      if (typeof result === "string" && result !== "SUCCESS") {
+        if (result.includes("Invalid")) {
+          alert("메일 인증번호를 확인해 주세요.");
+          return;
+        }
+      } else {
+        setConfirmSignUp();
+      }
     } catch (error) {
       // console.log("Confirm 실패", error);
     }
@@ -344,6 +382,14 @@ export default function SignUp() {
                   * 비밀번호와 비밀번호와 확인이 일치하지 않습니다.
                 </UnconfirmedPassword>
               ))}
+            <SignUpLabel>이름</SignUpLabel>
+            <SignUpInput
+              type="text"
+              placeholder="이름"
+              name="userName"
+              value={userName}
+              onChange={onChange}
+            />
             <SignUpLabel>휴대폰 번호</SignUpLabel>
             <SignUpInput
               type="number"
@@ -374,19 +420,11 @@ export default function SignUp() {
               onChange={onChange}
             />
 
-            <SignUpLabel>이름</SignUpLabel>
-            <SignUpInput
-              type="text"
-              placeholder="이름"
-              name="userName"
-              value={userName}
-              onChange={onChange}
-            />
-
             <JoinPresenter allCheck={allCheck} setAllCheck={setAllCheck} />
             <SignUpButton1
-              allCheck={!allCheck}
-              mailConfirmed={!mailConfirmed}
+              allCheck={allCheck}
+              mailConfirmed={mailConfirmed}
+              disabled={!allCheck || !mailConfirmed}
               type="submit"
             >
               회원가입

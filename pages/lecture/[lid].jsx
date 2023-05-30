@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import styled from "@emotion/styled";
 import Image from "next/image";
@@ -162,6 +162,12 @@ export default function Lecture() {
       preview.current.scrollIntoView({ behavior: "smooth", block: "center" });
     }, 200);
   };
+
+  // useEffect(() => {
+  //   if (selectedTab === "커리큘럼" && !auth.isAuthenticated) {
+  //     setIsOpen(true);
+  //   }
+  // }, [selectedTab]);
   return (
     <LectureDetailContainer>
       {isOpen && (
@@ -173,7 +179,9 @@ export default function Lecture() {
           }}
         >
           <>
-            <ModalTitle>수강 신청</ModalTitle>
+            <ModalTitle>
+              {selectedTab === "커리큘럼" ? "커리큘럼" : "수강 신청"}
+            </ModalTitle>
             <ModalContent>{"로그인이 필요한 서비스 입니다."}</ModalContent>
           </>
         </Modal>

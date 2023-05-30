@@ -222,10 +222,6 @@ export default function SignUp() {
     }
   }, [auth]);
 
-  const [checked, setChecked] = useState("12");
-  const handleChecked = (e) => {
-    setChecked(e.target.value);
-  };
   const [isOpen, setIsOpen] = useState(false);
   const handleOpenModal = () => {
     setIsOpen(true);
@@ -237,14 +233,13 @@ export default function SignUp() {
   const data = useMemo(() => aUnivData?.Item || [], [email, aUnivData, inputs]);
 
   const { data: productsData } = useGetProducts();
-  const data3 = useMemo(() => productsData?.Items || [], [checked]);
+  const data3 = useMemo(() => productsData?.Items || [], [productsData]);
   const [Selected, setSelected] = useState("A_A01_12");
-
   const handleSelect = (e) => {
     setSelected(e.target.value);
   };
   const { data: productData } = useGetProduct(Selected);
-  const data2 = useMemo(() => productData?.Item || [], [checked, productData]);
+  const data2 = useMemo(() => productData?.Item || [], [Selected, productData]);
   return (
     <SignUpContainer>
       {isOpen && (
