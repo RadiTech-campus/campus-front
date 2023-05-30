@@ -129,8 +129,16 @@ export default function ForgotPassword() {
     e.preventDefault();
     try {
       const result = await auth.forgotPassword(userId);
-      setMailConfirmed(true);
-      handleOpenModal();
+      console.log("forgotPassword result", result);
+      if (typeof result === "string" && result !== "SUCCESS") {
+        if (result.includes("combination")) {
+          alert("존재하지 않는 아이디 입니다.");
+          return;
+        }
+      } else {
+        setMailConfirmed(true);
+        handleOpenModal();
+      }
     } catch (error) {
       alert("메일인증 요청 실패");
       alert(error);
@@ -139,15 +147,28 @@ export default function ForgotPassword() {
 
   const executeConfirm = async (event) => {
     event.preventDefault();
-
+    if (code.length !== 6) {
+      alert("6자리 인증 코드를 다시 확인해주세요.");
+      return;
+    }
     if (!mailConfirmed) {
       alert("메일 인증을 해주세요");
       return;
     }
     try {
       const result = await auth.confirmForgotPassword(userId, code, password);
-      console.log("result", result);
-      setConfirmSignUp("result", result);
+      console.log("confirmForgotPassword result", result);
+      if (typeof result === "string" && result !== "SUCCESS") {
+        if (result.includes("Password") && result.includes("lowercase")) {
+          alert("비밀번호는 소문자를 포함해야 합니다.");
+          return;
+        } else if (result.includes("Invalid")) {
+          alert("메일 인증번호를 확인해 주세요.");
+          return;
+        }
+      } else {
+        setConfirmSignUp();
+      }
     } catch (error) {
       console.log("Confirm 실패", error);
     }
@@ -231,7 +252,6 @@ export default function ForgotPassword() {
               value={password}
               onChange={onChange}
             />
-
             <SignUpLabel>비밀번호 확인</SignUpLabel>
             <SignUpInput
               type="password"

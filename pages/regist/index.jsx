@@ -39,7 +39,7 @@ const PriceText = styled.div`
 `;
 const PayText = styled.div`
   position: absolute;
-  margin: 580px 0px;
+  margin: ${(props) => (props.discount ? "582px 0px" : "512px 0px")};
   padding: 0px 15px;
   background-color: white;
   color: #595959;
@@ -211,9 +211,10 @@ export default function SignUp() {
   };
   useEffect(() => {
     if (auth.isAuthenticated) {
+      console.log("auth", auth);
       setInputs({
         ...inputs,
-        userName: auth.username,
+        userName: auth.userName,
         email: auth.useremail,
         phoneNumber: auth.userPhone,
       });
@@ -231,7 +232,7 @@ export default function SignUp() {
     email.substring(email.indexOf("@") + 1),
   );
   const data = useMemo(() => aUnivData?.Item || [], [email, aUnivData, inputs]);
-
+  console.log("data", data);
   const { data: productsData } = useGetProducts();
   const data3 = useMemo(() => productsData?.Items || [], [productsData]);
   const [Selected, setSelected] = useState("A_A01_12");
@@ -322,29 +323,41 @@ export default function SignUp() {
 
           <PriceText>가격 정보</PriceText>
           <Divider />
-          <PriceContainer>
-            <PriceTitle>할인율</PriceTitle>
-            <PriceDetail>
-              <PriceContent>
-                {data?.discount} % {data?.name} MOU 채결
-              </PriceContent>
-            </PriceDetail>
-          </PriceContainer>
-          <PriceContainer>
-            <PriceTitle>가격</PriceTitle>
-            <PriceDetail>
-              <PriceContent canceled>{data2?.price} 원</PriceContent>
-              <PriceContent>{"->"}</PriceContent>
-              <PriceContent bolded finalPrice>
-                {data &&
-                  data2 &&
-                  data2.price - data2.price * (data.discount / 100)}{" "}
-                원
-              </PriceContent>
-            </PriceDetail>
-          </PriceContainer>
+          {console.log("data le", data.length)}
+          {data && data.discount > 0 ? (
+            <>
+              <PriceContainer>
+                <PriceTitle>할인율</PriceTitle>
+                <PriceDetail>
+                  <PriceContent>
+                    {data?.discount} % {data?.name} MOU 채결
+                  </PriceContent>
+                </PriceDetail>
+              </PriceContainer>
+              <PriceContainer>
+                <PriceTitle>가격</PriceTitle>
+                <PriceDetail>
+                  <PriceContent canceled>{data2?.price} 원</PriceContent>
+                  <PriceContent>{"->"}</PriceContent>
+                  <PriceContent bolded finalPrice>
+                    {data &&
+                      data2 &&
+                      data2.price - data2.price * (data.discount / 100)}{" "}
+                    원
+                  </PriceContent>
+                </PriceDetail>
+              </PriceContainer>
+            </>
+          ) : (
+            <PriceContainer>
+              <PriceTitle>가격</PriceTitle>
+              <PriceDetail>
+                <PriceContent>{data2?.price} 원</PriceContent>
+              </PriceDetail>
+            </PriceContainer>
+          )}
 
-          <PayText>결제 방법</PayText>
+          <PayText discount>결제 방법</PayText>
           <Divider />
           <PriceContainer>
             <PriceTitle>결제기한</PriceTitle>

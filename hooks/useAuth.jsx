@@ -106,7 +106,7 @@ const useProvideAuth = () => {
       const result = await Auth.forgotPassword(userId);
       return result;
     } catch (error) {
-      return error;
+      return error.message;
     }
   };
 
@@ -119,7 +119,7 @@ const useProvideAuth = () => {
       );
       return result;
     } catch (error) {
-      return error;
+      return error.message;
     }
   };
 

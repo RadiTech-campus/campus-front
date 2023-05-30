@@ -234,7 +234,7 @@ export default function SignUp() {
         userName,
       );
       console.log("confirmUser result", result);
-      if (typeof result === "string") {
+      if (typeof result === "string" && result !== "SUCCESS") {
         if (result === "User already exists") {
           alert("이미 존재하는 아이디 입니다.");
           return;
