@@ -86,6 +86,7 @@ export default function MyPage() {
   const auth = useAuth();
   const router = useRouter();
   const [username, setUsername] = useState("");
+  const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
 
@@ -109,6 +110,7 @@ export default function MyPage() {
   useEffect(() => {
     if (auth.isAuthenticated) {
       setUsername(auth.username);
+      setUserName(auth.userName);
       setEmail(auth.useremail);
       setPhoneNumber(auth.userPhone);
     } else {
@@ -123,10 +125,10 @@ export default function MyPage() {
       <InputsContainer>
         {/* <LoginText>로그인</LoginText> */}
         <Divider />
-        <SignInLabel>아이디</SignInLabel>
+        <SignInLabel>이름</SignInLabel>
         <SignInInput
           type="text"
-          placeholder={username}
+          placeholder={userName}
           disabled
           // value={username}
           // onChange={(e) => setUsername(e.target.value)}
@@ -153,7 +155,6 @@ export default function MyPage() {
         {data.length < 1 ? (
           <Fragment>
             <Divider />
-            {console.log("길이 0")}
             <RegistLabel>강의명</RegistLabel>
             <RegistInput
               type="text"
