@@ -240,6 +240,15 @@ export default function SignUp() {
   };
   const { data: productData } = useGetProduct(Selected);
   const data2 = useMemo(() => productData?.Item || [], [Selected, productData]);
+
+  const handleCopyClipBoard = async () => {
+    try {
+      await navigator.clipboard.writeText("124-233998-12-601");
+      alert("계좌번호가 복사 되었습니다");
+    } catch (error) {
+      alert("복사를 실패했습니다!");
+    }
+  };
   return (
     <SignUpContainer>
       {isOpen && (
@@ -358,8 +367,16 @@ export default function SignUp() {
             <div style={{ display: "flex", flexDirection: "column" }}>
               <label style={{ margin: "5px 0px 0px" }}>
                 <input type="radio" defaultChecked />
-                계좌이체: 우리은행 예금주 이광자 124-233998-12-601
-                <button disabled>계좌 복사</button>
+                계좌이체: 우리은행 예금주
+                <div style={{ marginLeft: "20px", marginTop: "5px" }}>
+                  이광자 124-233998-12-601
+                  <button
+                    style={{ marginLeft: "20px" }}
+                    onClick={() => handleCopyClipBoard()}
+                  >
+                    계좌 복사
+                  </button>
+                </div>
               </label>
               <label style={{ margin: "5px 0px 10px" }}>
                 <input type="radio" disabled />
