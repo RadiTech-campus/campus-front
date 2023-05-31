@@ -93,6 +93,7 @@ export default function SignIn() {
   const executeSignIn = async (event) => {
     event.preventDefault();
     const result = await auth.signIn(username, password);
+    router.reload();
   };
 
   useEffect(() => {

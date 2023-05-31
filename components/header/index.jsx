@@ -96,6 +96,7 @@ export default function Header({ onMoveToForm }) {
               onClick={() => {
                 auth.signOut();
                 router.push("/");
+                router.reload();
               }}
             >
               로그아웃

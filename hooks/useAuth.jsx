@@ -23,9 +23,8 @@ const useProvideAuth = () => {
   const [userPhone, setUserPhone] = useState("");
   const [userName, setUserName] = useState("");
   useEffect(() => {
-    Auth.currentAuthenticatedUser()
+    Auth.currentAuthenticatedUser({ bypassCache: true })
       .then((result) => {
-        console.log("result", result);
         setUsername(result.username);
         setUseremail(result.attributes.email);
         setUserPhone(result.attributes["custom:phone"]);
@@ -37,11 +36,11 @@ const useProvideAuth = () => {
         setUsername("");
         setUseremail("");
         setUserPhone("");
+        setUserName("");
         setIsAuthenticated(false);
         setIsLoading(false);
       });
   }, [Auth]);
-
   const signUp = async (username, password, email, phone, userName) => {
     try {
       const result = await Auth.signUp({
