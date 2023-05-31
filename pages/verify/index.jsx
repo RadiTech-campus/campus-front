@@ -203,14 +203,14 @@ export default function SignUp() {
           <RegistLabel>강의명</RegistLabel>
           <RegistInput
             type="text"
-            placeholder={data[data.length - 1].productTitle}
+            placeholder={data[data.length - 1]?.productTitle}
             disabled
             // value={confirmPassword}
           />
           <RegistLabel>결제 금액</RegistLabel>
           <RegistInput
             type="text"
-            placeholder={`${data[data.length - 1].price} 원`}
+            placeholder={`${data[data.length - 1]?.price} 원`}
             disabled
             // value={confirmPassword}
           />
@@ -220,14 +220,14 @@ export default function SignUp() {
             type="text"
             placeholder="무통장입금"
             disabled
-            value={confirmPassword}
+            // value={confirmPassword}
           />
           <RegistLabel>결제 상태</RegistLabel>
           <RegistInput
             type="text"
             placeholder="입금 대기중: 우리은행 예금주 이광자 124-233998-12-601"
             disabled
-            value={confirmPassword}
+            // value={confirmPassword}
           />
 
           <UserText>구매자 정보</UserText>
