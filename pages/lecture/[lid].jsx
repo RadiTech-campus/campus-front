@@ -3,7 +3,11 @@ import { useRouter } from "next/router";
 import styled from "@emotion/styled";
 import Image from "next/image";
 import Lectures from "../../components/lectures";
-import { useGetContentDetails, useGetContents } from "../../query/contents";
+import {
+  useGetContentDetails,
+  useGetContents,
+  useGetPayment,
+} from "../../query/contents";
 import Lecturer from "../../components/lecturer";
 import LectureInfo from "../../components/lectureinfo";
 import LectureWarn from "../../components/lecturewarn";
@@ -163,11 +167,9 @@ export default function Lecture() {
     }, 200);
   };
 
-  // useEffect(() => {
-  //   if (selectedTab === "커리큘럼" && !auth.isAuthenticated) {
-  //     setIsOpen(true);
-  //   }
-  // }, [selectedTab]);
+  const { data: paymentData } = useGetPayment(auth.username);
+  const data3 = useMemo(() => paymentData?.Items || 0, [paymentData]);
+  console.log("data3", data3);
   return (
     <LectureDetailContainer>
       {isOpen && (
@@ -232,9 +234,29 @@ export default function Lecture() {
             <ClassButton colorCode="#000000" onClick={() => onMoveToForm()}>
               미리보기
             </ClassButton>
-            <ClassButton colorCode="#7100a6" onClick={() => handleOpenModal()}>
-              수강신청
-            </ClassButton>
+            {data3 &&
+            data3.length > 0 &&
+            data3.filter(
+              (li) =>
+                (li.status === "결제완료" &&
+                  li?.productCode?.includes("A_A01")) ||
+                (li.status === "결제완료" &&
+                  li?.productCode?.includes(lid?.substring(0, 5))),
+            ).length > 0 ? (
+              <ClassButton
+                colorCode="#7100a6"
+                onClick={() => setSelectedTab("커리큘럼")}
+              >
+                강의보기
+              </ClassButton>
+            ) : (
+              <ClassButton
+                colorCode="#7100a6"
+                onClick={() => handleOpenModal()}
+              >
+                수강신청
+              </ClassButton>
+            )}
           </ClassButtonContainer>
         </TopRightDetail>
       </TopDetail>

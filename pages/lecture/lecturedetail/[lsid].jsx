@@ -65,34 +65,37 @@ export default function LectureDetail() {
   const auth = useAuth();
   const router = useRouter();
   const { lsid, detailCode, classtype, title } = router.query;
-
   const { data: contentDetailData } = useGetContentDetails(lsid);
   const data = useMemo(
     () => contentDetailData?.Items || [],
     [contentDetailData, lsid],
   );
 
-  const { data: paymentData } = useGetPayment("rudghksldl");
+  const { data: paymentData, isLoading } = useGetPayment(auth.username);
   const data2 = useMemo(() => paymentData?.Items || [], [paymentData]);
 
-  console.log(
-    "data2",
-    data2.filter(
-      (li) => li.status === "입금대기" && li.productCode.includes("A_A01"),
-    ),
-  );
-
   const [isOpen, setIsOpen] = useState(false);
+  const [isOpen2, setIsOpen2] = useState(false);
 
   useEffect(() => {
     if (!auth.isAuthenticated) {
       setIsOpen(true);
     } else {
-      // if (data2.find((li) => li.status === "결제완료").length < 1) {
-      //   router.push(`/signin?returnpath=${router.asPath}`);
-      // }
+      if (!isLoading) {
+        if (
+          data2.filter(
+            (li) =>
+              (li.status === "결제완료" &&
+                li?.productCode?.includes("A_A01")) ||
+              (li.status === "결제완료" &&
+                li?.productCode?.includes(lsid?.substring(0, 5))),
+          ).length < 1
+        ) {
+          setIsOpen2(true);
+        }
+      }
     }
-  }, [auth]);
+  }, [auth, data2]);
 
   return (
     <LectureDetailContainer>
@@ -106,6 +109,19 @@ export default function LectureDetail() {
         >
           <>
             {/* <ModalTitle>{title}</ModalTitle> */}
+            <ModalTitle>{"로그인이 필요한 서비스 입니다."}</ModalTitle>
+          </>
+        </Modal>
+      )}
+      {isOpen2 && (
+        <Modal
+          open={isOpen2}
+          onClose={() => {
+            setIsOpen(false);
+            router.push(`/regist`);
+          }}
+        >
+          <>
             <ModalTitle>{"로그인이 필요한 서비스 입니다."}</ModalTitle>
           </>
         </Modal>

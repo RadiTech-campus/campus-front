@@ -1,9 +1,10 @@
 import styled from "@emotion/styled";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useAuth } from "../../hooks/useAuth";
 import Modal from "../modal/Modal";
 import { useRouter } from "next/router";
+import { useGetPayment } from "../../query/contents";
 
 const LecturesContainer = styled.div`
   padding: 10px 40px;
@@ -38,7 +39,26 @@ const LectureChapter = styled.div`
 export default function Lectures({ classData, classtype, title }) {
   const auth = useAuth();
   const [isOpen, setIsOpen] = useState(false);
+  const [isPayed, setIsPayed] = useState(false);
   const router = useRouter();
+  const { lid } = router.query;
+
+  const { data: paymentData, isLoading } = useGetPayment(auth.username);
+  const data2 = useMemo(() => paymentData?.Items || [], [paymentData]);
+  useEffect(() => {
+    if (!isLoading) {
+      if (
+        data2.filter(
+          (li) =>
+            (li.status === "결제완료" && li?.productCode?.includes("A_A01")) ||
+            (li.status === "결제완료" &&
+              li?.productCode?.includes(lid?.substring(0, 5))),
+        ).length > 0
+      ) {
+        setIsPayed(true);
+      }
+    }
+  }, [auth, data2]);
 
   return (
     <LecturesContainer>
@@ -75,7 +95,7 @@ export default function Lectures({ classData, classtype, title }) {
                 }}
               >
                 {`# ${i + 1}. ${li.contentDetailTitle}`}
-                {auth.isAuthenticated ? (
+                {auth.isAuthenticated && isPayed ? (
                   <div>
                     <Link
                       href={{
@@ -125,7 +145,7 @@ export default function Lectures({ classData, classtype, title }) {
                       </button>
                     </Link>
                   </div>
-                ) : (
+                ) : auth.isAuthenticated && !isPayed ? (
                   <div>
                     {/* <Link
                       href={{
@@ -145,7 +165,7 @@ export default function Lectures({ classData, classtype, title }) {
                         border: "none",
                         cursor: "pointer",
                       }}
-                      onClick={() => setIsOpen(true)}
+                      onClick={() => alert("수강신청이 필요한 과목 입니다.")}
                     >
                       강의자료
                     </button>
@@ -160,6 +180,58 @@ export default function Lectures({ classData, classtype, title }) {
                         },
                       }}
                     > */}
+                    <button
+                      style={{
+                        marginRight: "10px",
+                        padding: "10px 20px",
+                        backgroundColor: "#7100a6",
+                        color: "white",
+                        fontWeight: "bold",
+                        borderRadius: "5px",
+                        border: "none",
+                        cursor: "pointer",
+                      }}
+                      onClick={() => alert("수강신청이 필요한 과목 입니다.")}
+                    >
+                      강의보기
+                    </button>
+                    {/* </Link> */}
+                  </div>
+                ) : (
+                  <div>
+                    {/* <Link
+                  href={{
+                    pathname: `https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/content-data/${li.contentDetailCode}.pdf`,
+                  }}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                > */}
+                    <button
+                      style={{
+                        marginRight: "10px",
+                        padding: "10px 20px",
+                        backgroundColor: "#7100a6",
+                        color: "white",
+                        fontWeight: "bold",
+                        borderRadius: "5px",
+                        border: "none",
+                        cursor: "pointer",
+                      }}
+                      onClick={() => setIsOpen(true)}
+                    >
+                      강의자료
+                    </button>
+                    {/* </Link> */}
+                    {/* <Link
+                  href={{
+                    pathname: `/lecture/lecturedetail/${li.contentCode}`,
+                    query: {
+                      detailCode: li.contentDetailCode,
+                      classtype,
+                      title,
+                    },
+                  }}
+                > */}
                     <button
                       style={{
                         marginRight: "10px",

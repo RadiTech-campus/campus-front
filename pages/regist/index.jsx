@@ -4,7 +4,10 @@ import { useEffect, useMemo, useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import Modal from "../../components/modal/Modal";
 import {
+  useCreatePayment,
   useGetAUniv,
+  useGetPayment,
+  useGetPayments,
   useGetProduct,
   useGetProducts,
 } from "../../query/contents";
@@ -211,7 +214,6 @@ export default function SignUp() {
   };
   useEffect(() => {
     if (auth.isAuthenticated) {
-      console.log("auth", auth);
       setInputs({
         ...inputs,
         userName: auth.userName,
@@ -232,7 +234,6 @@ export default function SignUp() {
     email.substring(email.indexOf("@") + 1),
   );
   const data = useMemo(() => aUnivData?.Item || [], [email, aUnivData, inputs]);
-  console.log("data", data);
   const { data: productsData } = useGetProducts();
   const data3 = useMemo(() => productsData?.Items || [], [productsData]);
   const [Selected, setSelected] = useState("A_A01_12");
@@ -241,6 +242,25 @@ export default function SignUp() {
   };
   const { data: productData } = useGetProduct(Selected);
   const data2 = useMemo(() => productData?.Item || [], [Selected, productData]);
+
+  const { data: paymentDate } = useGetPayments();
+  const payCounts = useMemo(() => paymentDate?.Count || 0, [paymentDate]);
+
+  const mutate = useCreatePayment({
+    id: (10000 + payCounts).toString(),
+    applyDate: new Date(),
+    price:
+      data.length < 1 ? 0 : data2.price - data2.price * (data2.discount / 100),
+    productCode: data2?.productCode,
+    productTitle: data2?.productTitle,
+    userId: auth.username,
+    watched: 0,
+  });
+  const onSubmit = (e) => {
+    e.preventDefault();
+    mutate.mutateAsync();
+    handleOpenModal();
+  };
 
   const handleCopyClipBoard = async () => {
     try {
@@ -263,39 +283,33 @@ export default function SignUp() {
           <>
             <ModalTitle>주문 확정 안내</ModalTitle>
             <ModalContent>
-              {
-                "할인율 100% -> RadiTech-campus를 바로 사용하실 수 있습니다. 국시 합격을 기원합니다"
-              }
-            </ModalContent>
-            OR
-            <ModalContent>
-              {
-                "할인율 100% 이하-> 결제 확인 후 서비스 이용 가능합니다. 확인까지 영업일 3일 정도 소요되며 주문이 확정되면 문자/메일 안내가 갈 예정입니다"
-              }
+              {data2.price - data2.price * (data.discount / 100) === 0
+                ? "RadiTech-campus를 바로 사용하실 수 있습니다. 국시 합격을 기원합니다"
+                : "결제 확인 후 서비스 이용 가능합니다. 확인까지 영업일 3일 정도 소요되며 주문이 확정되면 문자/메일 안내가 갈 예정입니다"}
             </ModalContent>
           </>
         </Modal>
       )}
       <TitleContainer>수강신청하기</TitleContainer>
       <RegistBox>
-        {/* <form noValidate> */}
-        <InputsContainer>
-          <ClassText>수강정보</ClassText>
-          <Divider />
+        <form onSubmit={(e) => onSubmit(e)}>
+          <InputsContainer>
+            <ClassText>수강정보</ClassText>
+            <Divider />
 
-          <RegistLabel>강의명</RegistLabel>
-          <RegistSelect onChange={handleSelect} value={Selected}>
-            {data3 &&
-              data3.length > 0 &&
-              data3
-                .sort((a, b) => (a.productCode > b.productCode ? 1 : -1))
-                .map((li, i) => (
-                  <option key={i} value={li.productCode}>
-                    {li.productTitle}
-                  </option>
-                ))}
-          </RegistSelect>
-          {/* <RegistLabel>기간</RegistLabel>
+            <RegistLabel>강의명</RegistLabel>
+            <RegistSelect onChange={handleSelect} value={Selected}>
+              {data3 &&
+                data3.length > 0 &&
+                data3
+                  .sort((a, b) => (a.productCode > b.productCode ? 1 : -1))
+                  .map((li, i) => (
+                    <option key={i} value={li.productCode}>
+                      {li.productTitle}
+                    </option>
+                  ))}
+            </RegistSelect>
+            {/* <RegistLabel>기간</RegistLabel>
           <PeriodContainer>
             {periods.map((period, i) => (
               <PeriodLabel key={i}>
@@ -310,102 +324,107 @@ export default function SignUp() {
             ))}
           </PeriodContainer>
           {console.log("checked", checked)} */}
-          <UserText>구매자 정보</UserText>
-          <Divider />
-          <RegistLabel>이름</RegistLabel>
-          <RegistInput type="text" disabled value={userName} />
+            <UserText>구매자 정보</UserText>
+            <Divider />
+            <RegistLabel>이름</RegistLabel>
+            <RegistInput type="text" disabled value={userName} />
 
-          <RegistLabel>메일</RegistLabel>
-          <RegistInput type="email" disabled value={email} />
+            <RegistLabel>메일</RegistLabel>
+            <RegistInput type="email" disabled value={email} />
 
-          <RegistLabel>휴대번호</RegistLabel>
-          <RegistInput type="number" disabled value={phoneNumber} />
+            <RegistLabel>휴대번호</RegistLabel>
+            <RegistInput type="number" disabled value={phoneNumber} />
 
-          <PriceText>가격 정보</PriceText>
-          <Divider />
-          {console.log("data le", data.length)}
-          {data && data.discount > 0 ? (
-            <>
-              <PriceContainer>
-                <PriceTitle>할인율</PriceTitle>
-                <PriceDetail>
-                  <PriceContent>
-                    {data?.discount} % {data?.name} MOU 채결
-                  </PriceContent>
-                </PriceDetail>
-              </PriceContainer>
+            <PriceText up={data.discount === 0}>가격 정보</PriceText>
+            <Divider />
+            {data && data.discount > 0 ? (
+              <>
+                <PriceContainer>
+                  <PriceTitle>할인율</PriceTitle>
+                  <PriceDetail>
+                    <PriceContent>
+                      {data?.discount} % {data?.name} MOU 채결
+                    </PriceContent>
+                  </PriceDetail>
+                </PriceContainer>
+                <PriceContainer>
+                  <PriceTitle>가격</PriceTitle>
+                  <PriceDetail>
+                    <PriceContent canceled>{data2?.price} 원</PriceContent>
+                    <PriceContent>{"->"}</PriceContent>
+                    <PriceContent bolded finalPrice>
+                      {(data &&
+                        data2 &&
+                        data2.price - data2.price * (data.discount / 100)) ===
+                      null
+                        ? 0
+                        : data2.price -
+                          data2.price * (data.discount / 100)}{" "}
+                      원
+                    </PriceContent>
+                  </PriceDetail>
+                </PriceContainer>
+              </>
+            ) : (
               <PriceContainer>
                 <PriceTitle>가격</PriceTitle>
                 <PriceDetail>
-                  <PriceContent canceled>{data2?.price} 원</PriceContent>
-                  <PriceContent>{"->"}</PriceContent>
-                  <PriceContent bolded finalPrice>
-                    {data &&
-                      data2 &&
-                      data2.price - data2.price * (data.discount / 100)}{" "}
-                    원
-                  </PriceContent>
+                  <PriceContent>{data2?.price} 원</PriceContent>
                 </PriceDetail>
               </PriceContainer>
-            </>
-          ) : (
+            )}
+
+            <PayText discount={data.discount === 0}>결제 방법</PayText>
+            <Divider />
             <PriceContainer>
-              <PriceTitle>가격</PriceTitle>
+              <PriceTitle>결제기한</PriceTitle>
               <PriceDetail>
-                <PriceContent>{data2?.price} 원</PriceContent>
+                {/* <PriceContent>2023.2.2 까지</PriceContent> */}
+                <PriceContent>
+                  {AddDays(new Date().toISOString().substring(0, 10), 7)
+                    .toISOString()
+                    .substring(0, 10)}{" "}
+                  까지
+                </PriceContent>
               </PriceDetail>
+              <div
+                style={{ color: "red", fontSize: "14px", fontWeight: "bold" }}
+              >
+                *기간내 미 결제시 수강신청이 취소됩니다
+              </div>
             </PriceContainer>
-          )}
 
-          <PayText discount>결제 방법</PayText>
-          <Divider />
-          <PriceContainer>
-            <PriceTitle>결제기한</PriceTitle>
-            <PriceDetail>
-              {/* <PriceContent>2023.2.2 까지</PriceContent> */}
-              <PriceContent>
-                {AddDays(new Date().toISOString().substring(0, 10), 7)
-                  .toISOString()
-                  .substring(0, 10)}{" "}
-                까지
-              </PriceContent>
-            </PriceDetail>
-            <div style={{ color: "red", fontSize: "14px", fontWeight: "bold" }}>
-              *기간내 미 결제시 수강신청이 취소됩니다
-            </div>
-          </PriceContainer>
-
-          <PriceContainer>
-            <PriceTitle>결제방법</PriceTitle>
-            <div style={{ display: "flex", flexDirection: "column" }}>
-              <label style={{ margin: "5px 0px 0px" }}>
-                <input type="radio" defaultChecked />
-                계좌이체: 우리은행 예금주
-                <div style={{ marginLeft: "20px", marginTop: "5px" }}>
-                  이광자 124-233998-12-601
-                  <button
-                    style={{ marginLeft: "20px" }}
-                    onClick={() => handleCopyClipBoard()}
-                  >
-                    계좌 복사
-                  </button>
-                </div>
-              </label>
-              <label style={{ margin: "5px 0px 10px" }}>
-                <input type="radio" disabled />
-                신용카드: 준비중 입니다.
-              </label>
-            </div>
-            <div style={{ color: "red", fontSize: "14px", fontWeight: "bold" }}>
-              *유료서비스를 이용하지 않았을 경우 환불 가능합니다.
-            </div>
-          </PriceContainer>
-          {/* <RegistButton onClick={() => router.push("/verify")}> */}
-          <RegistButton onClick={() => handleOpenModal()}>
-            수강신청
-          </RegistButton>
-        </InputsContainer>
-        {/* </form> */}
+            <PriceContainer>
+              <PriceTitle>결제방법</PriceTitle>
+              <div style={{ display: "flex", flexDirection: "column" }}>
+                <label style={{ margin: "5px 0px 0px" }}>
+                  <input type="radio" defaultChecked />
+                  계좌이체: 우리은행 예금주
+                  <div style={{ marginLeft: "20px", marginTop: "5px" }}>
+                    이광자 124-233998-12-601
+                    <button
+                      style={{ marginLeft: "20px" }}
+                      onClick={() => handleCopyClipBoard()}
+                    >
+                      계좌 복사
+                    </button>
+                  </div>
+                </label>
+                <label style={{ margin: "5px 0px 10px" }}>
+                  <input type="radio" disabled />
+                  신용카드: 준비중 입니다.
+                </label>
+              </div>
+              <div
+                style={{ color: "red", fontSize: "14px", fontWeight: "bold" }}
+              >
+                *유료서비스를 이용하지 않았을 경우 환불 가능합니다.
+              </div>
+            </PriceContainer>
+            {/* <RegistButton onClick={() => router.push("/verify")}> */}
+            <RegistButton>수강신청</RegistButton>
+          </InputsContainer>
+        </form>
       </RegistBox>
     </SignUpContainer>
   );

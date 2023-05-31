@@ -21,6 +21,13 @@ export async function getPayment(userId) {
   return data;
 }
 
+export async function getPayments() {
+  const { data } = await axios(
+    `${process.env.NEXT_PUBLIC_REACT_APP_API_END_POINT}/payments`,
+  );
+  return data;
+}
+
 export async function getAUniv(domain) {
   const { data } = await axios(
     `${process.env.NEXT_PUBLIC_REACT_APP_API_END_POINT}/auniv?domain=${domain}`,
@@ -38,6 +45,14 @@ export async function getProduct(productCode) {
 export async function getProducts() {
   const { data } = await axios(
     `${process.env.NEXT_PUBLIC_REACT_APP_API_END_POINT}/products`,
+  );
+  return data;
+}
+
+export async function CreatePayment(paymentData) {
+  const { data } = await axios.post(
+    `${process.env.NEXT_PUBLIC_REACT_APP_API_END_POINT}/payment`,
+    paymentData,
   );
   return data;
 }

@@ -1,7 +1,8 @@
 import styled from "@emotion/styled";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
+import { useGetPayment } from "../../query/contents";
 
 const ClassText = styled.div`
   position: absolute;
@@ -139,6 +140,8 @@ const Divider = styled.div`
 const periods = [1, 3, 6, 9, 12];
 export default function SignUp() {
   const auth = useAuth();
+  const { data: paymentData } = useGetPayment(auth.username);
+  const data = useMemo(() => paymentData?.Items || 0, [paymentData]);
   const router = useRouter();
 
   const [inputs, setInputs] = useState({
@@ -200,24 +203,16 @@ export default function SignUp() {
           <RegistLabel>강의명</RegistLabel>
           <RegistInput
             type="text"
-            placeholder="심지나의 임상 합격 ALL PASS"
+            placeholder={data[data.length - 1].productTitle}
             disabled
-            value={confirmPassword}
+            // value={confirmPassword}
           />
-          <RegistLabel>기간</RegistLabel>
-          <RegistInput
-            type="text"
-            placeholder="12개월"
-            disabled
-            value={confirmPassword}
-          />
-
           <RegistLabel>결제 금액</RegistLabel>
           <RegistInput
             type="text"
-            placeholder="100,000원"
+            placeholder={`${data[data.length - 1].price} 원`}
             disabled
-            value={confirmPassword}
+            // value={confirmPassword}
           />
 
           <RegistLabel>결제 방법</RegistLabel>
@@ -240,25 +235,25 @@ export default function SignUp() {
           <RegistLabel>이름</RegistLabel>
           <RegistInput
             type="text"
-            placeholder="심지나"
+            placeholder={auth.userName}
             disabled
-            value={confirmPassword}
+            // value={confirmPassword}
           />
 
           <RegistLabel>메일</RegistLabel>
           <RegistInput
             type="email"
-            placeholder="eoeornfl1@jinhak.com"
+            placeholder={auth.useremail}
             disabled
-            value={email}
+            // value={email}
           />
 
           <RegistLabel>휴대번호</RegistLabel>
           <RegistInput
             type="email"
-            placeholder="010-4763-4695"
+            placeholder={auth.userPhone}
             disabled
-            value={email}
+            // value={email}
           />
 
           <InfoText>문의 사항</InfoText>

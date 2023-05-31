@@ -129,7 +129,6 @@ export default function ForgotPassword() {
     e.preventDefault();
     try {
       const result = await auth.forgotPassword(userId);
-      console.log("forgotPassword result", result);
       if (typeof result === "string" && result !== "SUCCESS") {
         if (result.includes("combination")) {
           alert("존재하지 않는 아이디 입니다.");
@@ -157,7 +156,6 @@ export default function ForgotPassword() {
     }
     try {
       const result = await auth.confirmForgotPassword(userId, code, password);
-      console.log("confirmForgotPassword result", result);
       if (typeof result === "string" && result !== "SUCCESS") {
         if (result.includes("Password") && result.includes("lowercase")) {
           alert("비밀번호는 소문자를 포함해야 합니다.");
