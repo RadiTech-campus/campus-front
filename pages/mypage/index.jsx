@@ -192,22 +192,6 @@ export default function MyPage() {
               <RegistLabel>결제 방법</RegistLabel>
               <RegistInput type="text" placeholder="무통장입금" disabled />
               <RegistLabel>결제 상태 </RegistLabel>
-              {console.log(
-                "getDateDiff(new Date(li.applyDate).toISOString().substring(0, 10),new Date().toISOString().substring(0, 10),)",
-                getDateDiff(
-                  new Date(
-                    AddDays(
-                      new Date(li.applyDate).toISOString().substring(0, 10),
-                      7,
-                    )
-                      .toISOString()
-                      .substring(0, 10),
-                  )
-                    .toISOString()
-                    .substring(0, 10),
-                  new Date().toISOString().substring(0, 10),
-                ),
-              )}
               <RegistInput
                 type="text"
                 placeholder={`${li.payStatus}${

@@ -12,6 +12,7 @@ import {
   useGetProducts,
 } from "../../query/contents";
 import { AddDays } from "../../libs/date";
+import { canclePayment } from "../../api/contents_api";
 
 const ClassText = styled.div`
   position: absolute;
@@ -246,6 +247,10 @@ export default function SignUp() {
   const { data: paymentDate } = useGetPayments();
   const payCounts = useMemo(() => paymentDate?.Count || 0, [paymentDate]);
 
+  const { data: paymentData } = useGetPayment(auth.username);
+  const data4 = useMemo(() => paymentData?.Items || [], [auth, paymentData]);
+  console.log("data4", data4);
+
   const mutate = useCreatePayment({
     id: (10000 + payCounts).toString(),
     applyDate: new Date(),
@@ -258,8 +263,50 @@ export default function SignUp() {
   });
   const onSubmit = (e) => {
     e.preventDefault();
-    mutate.mutateAsync();
-    handleOpenModal();
+    // 개별과목 입금대기 상태일때 & 올패스 신청시
+    if (
+      data4.filter(
+        (li) => li.productCode.includes("C") && li.payStatus === "입금대기",
+      ).length > 0 &&
+      Selected.includes("A")
+    ) {
+      for (
+        let i = 0;
+        i <
+        data4.filter(
+          (li) => li.productCode.includes("C") && li.payStatus === "입금대기",
+        ).length;
+        i++
+      ) {
+        canclePayment({
+          id: data4.filter(
+            (li) => li.productCode.includes("C") && li.payStatus === "입금대기",
+          )[i].id,
+        });
+      }
+      mutate.mutateAsync();
+      handleOpenModal();
+    } else if (
+      // "개별과목 입금대기 상태일때 & 개별과목 신청시 -> 같은과목 신청이면 중복 얼럿, 아니면 그냥 신청"
+      data4.filter(
+        (li) =>
+          li.productCode.includes("C") &&
+          li.payStatus === "입금대기" &&
+          li.productCode.includes(Selected.substring(0, 5)),
+      ).length > 0 &&
+      !Selected.includes("A")
+    ) {
+      alert("이미 수강신청된 강의 입니다.");
+    } else if (
+      data4.filter(
+        (li) => li.productCode.includes("A") && li.payStatus === "입금대기",
+      ).length > 0
+    ) {
+      alert("All Pass 강의를 취소후에 신청 가능합니다.");
+    } else {
+      mutate.mutateAsync();
+      handleOpenModal();
+    }
   };
 
   const handleCopyClipBoard = async (e) => {

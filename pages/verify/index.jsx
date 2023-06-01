@@ -141,9 +141,14 @@ const periods = [1, 3, 6, 9, 12];
 export default function SignUp() {
   const auth = useAuth();
   const { data: paymentData } = useGetPayment(auth.username);
-  const data = useMemo(() => paymentData?.Items || 0, [paymentData]);
+  const data = useMemo(
+    () =>
+      paymentData?.Items.sort(
+        (a, b) => new Date(a.applyDate) - new Date(b.applyDate),
+      ) || 0,
+    [paymentData],
+  );
   const router = useRouter();
-  console.log("data", data);
   const [inputs, setInputs] = useState({
     userId: "",
     password: "",
@@ -225,7 +230,11 @@ export default function SignUp() {
           <RegistLabel>결제 상태</RegistLabel>
           <RegistInput
             type="text"
-            placeholder="입금 대기중: 우리은행 예금주 이광자 124-233998-12-601"
+            placeholder={`${data[data.length - 1]?.payStatus}${
+              data[data.length - 1]?.payStatus === "입금대기"
+                ? ": 우리은행 예금주 이광자 124-233998-12-601"
+                : ""
+            }`}
             disabled
             // value={confirmPassword}
           />
