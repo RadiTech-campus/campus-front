@@ -105,8 +105,14 @@ export default function MyPage() {
   // console.log("auth", auth);
 
   const { data: paymentData } = useGetPayment(username);
-  const data = useMemo(() => paymentData?.Items || [], [username, paymentData]);
-  console.log("data", data.length);
+  const data = useMemo(
+    () =>
+      paymentData?.Items?.sort(
+        (a, b) => new Date(a.applyDate) - new Date(b.applyDate),
+      ) || [],
+    [username, paymentData],
+  );
+
   useEffect(() => {
     if (auth.isAuthenticated) {
       setUsername(auth.username);

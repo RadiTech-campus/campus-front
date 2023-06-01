@@ -15,7 +15,7 @@ const ClassText = styled.div`
 `;
 const UserText = styled.div`
   position: absolute;
-  margin: 438px 0px;
+  margin: 360px 0px;
   padding: 0px 15px;
   background-color: white;
   color: #595959;
@@ -24,7 +24,7 @@ const UserText = styled.div`
 `;
 const InfoText = styled.div`
   position: absolute;
-  margin: 710px 0px;
+  margin: 634px 0px;
   padding: 0px 15px;
   background-color: white;
   color: #595959;
@@ -143,7 +143,7 @@ export default function SignUp() {
   const { data: paymentData } = useGetPayment(auth.username);
   const data = useMemo(() => paymentData?.Items || 0, [paymentData]);
   const router = useRouter();
-
+  console.log("data", data);
   const [inputs, setInputs] = useState({
     userId: "",
     password: "",

@@ -93,7 +93,11 @@ export default function SignIn() {
   const executeSignIn = async (event) => {
     event.preventDefault();
     const result = await auth.signIn(username, password);
-    router.reload();
+    if (typeof result === "string" && result !== "SUCCESS") {
+      alert("아이디와 비밀번호를 확인해 주세요.");
+    } else {
+      router.reload();
+    }
   };
 
   useEffect(() => {

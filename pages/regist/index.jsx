@@ -246,11 +246,13 @@ export default function SignUp() {
   const { data: paymentDate } = useGetPayments();
   const payCounts = useMemo(() => paymentDate?.Count || 0, [paymentDate]);
 
+  console.log("data", data);
+  console.log("data2", data2);
   const mutate = useCreatePayment({
     id: (10000 + payCounts).toString(),
     applyDate: new Date(),
     price:
-      data.length < 1 ? 0 : data2.price - data2.price * (data2.discount / 100),
+      data.length < 1 ? 0 : data2.price - data2.price * (data.discount / 100),
     productCode: data2?.productCode,
     productTitle: data2?.productTitle,
     userId: auth.username,
@@ -262,7 +264,8 @@ export default function SignUp() {
     handleOpenModal();
   };
 
-  const handleCopyClipBoard = async () => {
+  const handleCopyClipBoard = async (e) => {
+    e.preventDefault();
     try {
       await navigator.clipboard.writeText("124-233998-12-601");
       alert("계좌번호가 복사 되었습니다");
@@ -404,7 +407,7 @@ export default function SignUp() {
                     이광자 124-233998-12-601
                     <button
                       style={{ marginLeft: "20px" }}
-                      onClick={() => handleCopyClipBoard()}
+                      onClick={(e) => handleCopyClipBoard(e)}
                     >
                       계좌 복사
                     </button>
