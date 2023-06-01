@@ -85,9 +85,9 @@ export default function LectureDetail() {
         if (
           data2.filter(
             (li) =>
-              (li.status === "결제완료" &&
+              (li.payStatus === "결제완료" &&
                 li?.productCode?.includes("A_A01")) ||
-              (li.status === "결제완료" &&
+              (li.payStatus === "결제완료" &&
                 li?.productCode?.includes(lsid?.substring(0, 5))),
           ).length < 1
         ) {

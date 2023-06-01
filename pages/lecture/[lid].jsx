@@ -238,9 +238,9 @@ export default function Lecture() {
             data3.length > 0 &&
             data3.filter(
               (li) =>
-                (li.status === "결제완료" &&
+                (li.payStatus === "결제완료" &&
                   li?.productCode?.includes("A_A01")) ||
-                (li.status === "결제완료" &&
+                (li.payStatus === "결제완료" &&
                   li?.productCode?.includes(lid?.substring(0, 5))),
             ).length > 0 ? (
               <ClassButton

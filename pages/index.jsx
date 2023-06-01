@@ -17,8 +17,11 @@ import "swiper/css/effect-fade";
 import LectureList from "../components/lecturelist";
 import styled from "@emotion/styled";
 import Image from "next/image";
-import { useMemo, useState } from "react";
-import { useGetContents } from "../query/contents";
+import { useEffect, useMemo, useState } from "react";
+import { useGetContents, useGetPayment } from "../query/contents";
+import { useAuth } from "../hooks/useAuth";
+import { getDateDiff } from "../libs/date";
+import { canclePayment } from "../api/contents_api";
 
 const IndexContainer = styled.div``;
 // const SwiperPagiContainer = styled.div`
@@ -29,8 +32,31 @@ const IndexContainer = styled.div``;
 // `;
 
 export default function Index() {
+  const auth = useAuth();
   const { data: contentData } = useGetContents();
   const data = useMemo(() => contentData?.Items || [], [contentData]);
+
+  const { data: paymentData } = useGetPayment(auth.username);
+  const data2 = useMemo(
+    () =>
+      paymentData?.Items?.filter(
+        (li) =>
+          getDateDiff(
+            new Date().toISOString().substring(0, 10),
+            new Date(li.applyDate).toISOString().substring(0, 10),
+          ) > 7 && li.payStatus === "입금대기",
+      ) || [],
+    [paymentData],
+  );
+
+  useEffect(() => {
+    if (data2.length > 0) {
+      for (let i = 0; i < data2.length; i++) {
+        canclePayment({ id: data2[i].id });
+      }
+    }
+  }, [data2]);
+
   return (
     <IndexContainer>
       <Swiper

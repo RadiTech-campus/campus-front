@@ -246,8 +246,6 @@ export default function SignUp() {
   const { data: paymentDate } = useGetPayments();
   const payCounts = useMemo(() => paymentDate?.Count || 0, [paymentDate]);
 
-  console.log("data", data);
-  console.log("data2", data2);
   const mutate = useCreatePayment({
     id: (10000 + payCounts).toString(),
     applyDate: new Date(),

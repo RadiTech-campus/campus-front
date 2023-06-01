@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import { useRouter } from "next/router";
 import styled from "@emotion/styled";
 import Image from "next/image";
+import { useGetPayments } from "../../query/contents";
 
 const SignInContainer = styled.div`
   display: flex;

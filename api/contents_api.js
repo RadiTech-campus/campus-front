@@ -57,6 +57,14 @@ export async function CreatePayment(paymentData) {
   return data;
 }
 
+export async function canclePayment(paymentId) {
+  const { data } = await axios.patch(
+    `${process.env.NEXT_PUBLIC_REACT_APP_API_END_POINT}/payment`,
+    paymentId,
+  );
+  return data;
+}
+
 // export async function CreateBulkProduct(
 //   companyId: any,
 //   productsdata: any,
