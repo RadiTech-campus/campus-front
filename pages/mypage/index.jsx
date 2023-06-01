@@ -210,41 +210,15 @@ export default function MyPage() {
               )}
               <RegistInput
                 type="text"
-                placeholder={`${
-                  getDateDiff(
-                    new Date(
-                      AddDays(
-                        new Date(li.applyDate).toISOString().substring(0, 10),
-                        7,
-                      )
-                        .toISOString()
-                        .substring(0, 10),
-                    )
-                      .toISOString()
-                      .substring(0, 10),
-                    new Date().toISOString().substring(0, 10),
-                  ) < 0
-                    ? "결제 취소"
-                    : li.payStatus
-                }: 우리은행 예금주 이광자 124-233998-12-601`}
+                placeholder={`${li.payStatus}${
+                  li.payStatus === "입금대기"
+                    ? ": 우리은행 예금주 이광자 124-233998-12-601"
+                    : ""
+                }`}
                 disabled
               />
-              {getDateDiff(
-                new Date(
-                  AddDays(
-                    new Date(li.applyDate).toISOString().substring(0, 10),
-                    7,
-                  )
-                    .toISOString()
-                    .substring(0, 10),
-                )
-                  .toISOString()
-                  .substring(0, 10),
-                new Date().toISOString().substring(0, 10),
-              ) < 0 ? (
-                ""
-              ) : (
-                <span>
+              {li.payStatus === "입금대기" ? (
+                <span style={{ marginBottom: "20px" }}>
                   {AddDays(
                     new Date(li.applyDate).toISOString().substring(0, 10),
                     7,
@@ -253,6 +227,8 @@ export default function MyPage() {
                     .substring(0, 10)}{" "}
                   까지 입금이 확인 되지 않는 경우 자동 취소됩니다.
                 </span>
+              ) : (
+                ""
               )}
             </Fragment>
           ))
