@@ -5,6 +5,7 @@ import styled from "@emotion/styled";
 import Image from "next/image";
 import { useGetPayment } from "../../query/contents";
 import { AddDays, getDateDiff } from "../../libs/date";
+import { canclePayment } from "../../api/contents_api";
 
 const SignInContainer = styled.div`
   margin: 15px auto;
@@ -124,6 +125,15 @@ export default function MyPage() {
     }
   }, [auth]);
 
+  const cancelPay = async (paymentId) => {
+    try {
+      canclePayment({ id: paymentId });
+      alert("수강취소 되었습니다.");
+    } catch (e) {
+      alert("수강취소 오류가 발생했습니다. 관리자에게 문의해주세요.");
+    }
+  };
+
   return (
     <SignInContainer>
       <div>My Page</div>
@@ -202,15 +212,18 @@ export default function MyPage() {
                 disabled
               />
               {li.payStatus === "입금대기" ? (
-                <span style={{ marginBottom: "20px" }}>
-                  {AddDays(
-                    new Date(li.applyDate).toISOString().substring(0, 10),
-                    7,
-                  )
-                    .toISOString()
-                    .substring(0, 10)}{" "}
-                  까지 입금이 확인 되지 않는 경우 자동 취소됩니다.
-                </span>
+                <>
+                  <span style={{ marginBottom: "20px" }}>
+                    {AddDays(
+                      new Date(li.applyDate).toISOString().substring(0, 10),
+                      7,
+                    )
+                      .toISOString()
+                      .substring(0, 10)}{" "}
+                    까지 입금이 확인 되지 않는 경우 자동 취소됩니다.
+                  </span>
+                  <button onClick={() => cancelPay(li.id)}>수강취소</button>
+                </>
               ) : (
                 ""
               )}
