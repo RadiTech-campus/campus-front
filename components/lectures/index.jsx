@@ -44,7 +44,7 @@ export default function Lectures({ classData, classtype, title }) {
   const { lid } = router.query;
 
   const { data: paymentData, isLoading } = useGetPayment(auth.username);
-  const data2 = useMemo(() => paymentData?.Items || [], [paymentData]);
+  const data2 = useMemo(() => paymentData?.Items || [], [paymentData, auth]);
   useEffect(() => {
     if (!isLoading) {
       if (
