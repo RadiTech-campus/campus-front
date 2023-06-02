@@ -291,7 +291,7 @@ export default function SignUp() {
       data4.filter(
         (li) =>
           li.productCode.includes("C") &&
-          li.payStatus === "입금대기" &&
+          (li.payStatus === "입금대기" || li.payStatus === "결제완료") &&
           li.productCode.includes(Selected.substring(0, 5)),
       ).length > 0 &&
       !Selected.includes("A")
@@ -303,6 +303,7 @@ export default function SignUp() {
       ).length > 0
     ) {
       alert("All Pass 강의를 취소후에 신청 가능합니다.");
+      router.push("/mypage");
     } else {
       mutate.mutateAsync();
       handleOpenModal();

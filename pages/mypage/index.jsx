@@ -109,7 +109,7 @@ export default function MyPage() {
   const data = useMemo(
     () =>
       paymentData?.Items?.sort(
-        (a, b) => new Date(a.applyDate) - new Date(b.applyDate),
+        (a, b) => new Date(b.applyDate) - new Date(a.applyDate),
       ) || [],
     [username, paymentData],
   );
