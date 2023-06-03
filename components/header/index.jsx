@@ -88,8 +88,8 @@ export default function Header({ onMoveToForm }) {
             <Image
               src="/titlelogo.png"
               alt="메인 배경 이미지"
-              width={270}
-              height={50}
+              width={190}
+              height={35}
               style={{ marginRight: "5px" }}
             />
           </Link>
