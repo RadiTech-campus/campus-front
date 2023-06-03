@@ -3,6 +3,7 @@ import React, { useRef } from "react";
 import Header from "../header";
 import TopNav from "../topnav";
 import Footer from "../footer";
+import { useRouter } from "next/router";
 
 const LayoutContainer = styled.div`
   /* display: flex;
@@ -25,6 +26,10 @@ export default function Layout({ children }) {
   const onMoveToForm = () => {
     footerRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
   };
+  const router = useRouter();
+  const { route } = router;
+  console.log("router", router);
+  const routes = ["/signin", "/signup", "/forgotpassword", "/regist"];
   return (
     <LayoutContainer>
       {/* <LeftContainer></LeftContainer> */}
@@ -32,7 +37,7 @@ export default function Layout({ children }) {
       <Header onMoveToForm={onMoveToForm} />
       {/* <TopNav /> */}
       {children}
-      <Footer footerRef={footerRef} />
+      {routes.includes(route) ? "" : <Footer footerRef={footerRef} />}
     </LayoutContainer>
   );
 }

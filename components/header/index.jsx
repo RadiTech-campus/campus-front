@@ -79,8 +79,8 @@ export default function Header({ onMoveToForm }) {
           setIsOpen(false);
         }}
       >
-        <div>결제, 환불, 서비스 이용 관련해서는 메일로 문의 주세요.​</div>
-        <div>고객센터 : raditech.campus@gmail.com</div>
+      <div>결제, 환불, 서비스 이용 관련해서는 메일로 문의 주세요.​</div>
+      <div>고객센터 : raditech.campus@gmail.com</div>
       </Modal> */}
       <HeaderContainer>
         <LogoContainer>
@@ -88,8 +88,8 @@ export default function Header({ onMoveToForm }) {
             <Image
               src="/titlelogo.png"
               alt="메인 배경 이미지"
-              width={160}
-              height={30}
+              width={270}
+              height={50}
               style={{ marginRight: "5px" }}
             />
           </Link>
