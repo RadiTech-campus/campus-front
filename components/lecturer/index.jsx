@@ -3,6 +3,7 @@ import React from "react";
 
 const LecturerContainer = styled.div`
   padding: 10px 40px;
+  margin-bottom: 50px;
 `;
 
 const InfoTitle = styled.div`
@@ -20,7 +21,7 @@ const InfoRightTitle = styled.div`
   margin: 10px 0px;
 `;
 const InfoRightContent = styled.div`
-  font-size: 16px;
+  font-size: 18px;
   margin-bottom: 3px;
 `;
 
