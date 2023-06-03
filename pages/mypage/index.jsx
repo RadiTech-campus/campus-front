@@ -171,6 +171,7 @@ export default function MyPage() {
         {data.length < 1 ? (
           <Fragment>
             <Divider />
+
             <RegistLabel>강의명</RegistLabel>
             <RegistInput
               type="text"
@@ -188,6 +189,33 @@ export default function MyPage() {
           data.map((li, i) => (
             <Fragment key={i}>
               <Divider />
+              <div
+                style={{
+                  width: "100%",
+                  // backgroundColor: "red",
+                  // height: "200px",
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+              >
+                <div></div>
+                <div>
+                  <button
+                    style={{
+                      width: "80px",
+                      border: "none",
+                      backgroundColor: "#c100d7",
+                      color: "white",
+                      padding: "5px 0px",
+                      borderRadius: "5px",
+                      fontWeight: "700",
+                    }}
+                    onClick={() => cancelPay(li.id)}
+                  >
+                    수강취소
+                  </button>
+                </div>
+              </div>
               <RegistLabel>강의명</RegistLabel>
               <RegistInput type="text" placeholder={li.productTitle} disabled />
               {/* <RegistLabel>기간</RegistLabel>
@@ -222,7 +250,6 @@ export default function MyPage() {
                       .substring(0, 10)}{" "}
                     까지 입금이 확인 되지 않는 경우 자동 취소됩니다.
                   </span>
-                  <button onClick={() => cancelPay(li.id)}>수강취소</button>
                 </>
               ) : (
                 ""

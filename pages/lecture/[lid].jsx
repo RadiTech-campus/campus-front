@@ -34,11 +34,11 @@ const TopLeftDetail = styled.div`
 `;
 
 const ClassImage = styled.div`
-  height: 250px;
+  height: 270px;
   position: relative;
-  /* > img {
+  > img {
     border-radius: 10px;
-  } */
+  }
 `;
 const TopRightDetail = styled.div`
   flex: 0.55;
@@ -79,8 +79,8 @@ const ClassPriceRight = styled.div`
 const ClassPriceInfo = styled.div`
   font-size: 18px;
   /* font-weight: bold; */
-  margin-bottom: 12px;
-  margin-top: 12px;
+  margin-bottom: 15px;
+  margin-top: 15px;
   color: #888888c1;
 `;
 

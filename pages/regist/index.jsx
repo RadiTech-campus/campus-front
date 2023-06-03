@@ -43,7 +43,7 @@ const PriceText = styled.div`
 `;
 const PayText = styled.div`
   position: absolute;
-  margin: ${(props) => (props.discount ? "582px 0px" : "512px 0px")};
+  margin: ${(props) => (props.discount !== 0 ? "582px 0px" : "512px 0px")};
   padding: 0px 15px;
   background-color: white;
   color: #595959;
@@ -109,8 +109,8 @@ const PriceContent = styled.div`
   margin: 5px;
   text-decoration: ${(props) => (props.canceled ? "line-through" : "")};
   font-weight: ${(props) => (props.finalPrice ? "bold" : "normal")};
-  font-size: ${(props) => (props.finalPrice ? "18px" : "16px")};
-  color: ${(props) => (props.finalPrice ? "red" : "")};
+  font-size: ${(props) => (props.finalPrice ? "16px" : "16px")};
+  color: ${(props) => (props.finalPrice ? "#7100a6" : "")};
 `;
 
 const RegistInput = styled.input`
@@ -375,7 +375,12 @@ export default function SignUp() {
           {console.log("checked", checked)} */}
             <UserText>구매자 정보</UserText>
             <Divider />
-            <RegistLabel>이름</RegistLabel>
+            <RegistLabel>
+              이름{" "}
+              <span style={{ color: "#7100a6" }}>
+                (입금자명과 동일해야 합니다.)
+              </span>{" "}
+            </RegistLabel>
             <RegistInput type="text" disabled value={userName} />
 
             <RegistLabel>메일</RegistLabel>
@@ -437,7 +442,11 @@ export default function SignUp() {
                 </PriceContent>
               </PriceDetail>
               <div
-                style={{ color: "red", fontSize: "14px", fontWeight: "bold" }}
+                style={{
+                  color: "#7100a6",
+                  fontSize: "13px",
+                  fontWeight: "bold",
+                }}
               >
                 *기간내 미 결제시 수강신청이 취소됩니다
               </div>
@@ -465,7 +474,11 @@ export default function SignUp() {
                 </label>
               </div>
               <div
-                style={{ color: "red", fontSize: "14px", fontWeight: "bold" }}
+                style={{
+                  color: "#7100a6",
+                  fontSize: "13px",
+                  fontWeight: "bold",
+                }}
               >
                 *유료서비스를 이용하지 않았을 경우 환불 가능합니다.
               </div>

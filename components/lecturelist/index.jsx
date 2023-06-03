@@ -47,7 +47,7 @@ const ClassCardsContainer = styled.div`
 `;
 const ClassCard = styled.div``;
 const ClassImage = styled.div`
-  height: 150px;
+  height: 180px;
   position: relative;
   > img {
     border-radius: 10px;
@@ -122,7 +122,14 @@ export default function LectureList({
                   />
                   {/* {li.thumbnail} */}
                 </ClassImage>
-                <ClassTitle>{li.secondCat}</ClassTitle>
+                <ClassTitle>
+                  {li.secondCat?.split("!").map((li, i) => (
+                    <div key={i} style={{ marginBottom: "3px" }}>
+                      {li}
+                      {i === 0 ? "!" : ""}
+                    </div>
+                  ))}
+                </ClassTitle>
                 <ClassDesc>{li?.iDescription}</ClassDesc>
                 <ClassTags>
                   {li?.iTags?.split(" ").map((li, i) => (
@@ -160,7 +167,14 @@ export default function LectureList({
                     />
                     {/* {li.thumbnail} */}
                   </ClassImage>
-                  <ClassTitle>{li.gTitle}</ClassTitle>
+                  <ClassTitle>
+                    {li.gTitle?.split("!").map((li, i) => (
+                      <div key={i} style={{ marginBottom: "3px" }}>
+                        {li}
+                        {i === 0 ? "!" : ""}
+                      </div>
+                    ))}
+                  </ClassTitle>
                   <ClassDesc>{li.gDescription}</ClassDesc>
                   {/* <ClassContent>{li.content}</ClassContent> */}
                   <ClassTags>
