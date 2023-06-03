@@ -30,7 +30,7 @@ const TopDetail = styled.div`
 
 const TopLeftDetail = styled.div`
   flex: 0.45;
-  padding: 40px;
+  padding: 20px;
 `;
 
 const ClassImage = styled.div`
@@ -42,7 +42,7 @@ const ClassImage = styled.div`
 `;
 const TopRightDetail = styled.div`
   flex: 0.55;
-  padding: 40px 0px;
+  padding: 20px 20px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -51,8 +51,9 @@ const ClassMainTitle = styled.div`
   font-size: 16px;
 `;
 const ClassSubTitle = styled.div`
-  font-size: 20px;
-  font-weight: bold;
+  font-size: 24px;
+  font-weight: 600;
+  margin-top: 10px;
 `;
 
 const ClassPriceContainer = styled.div`
@@ -61,17 +62,26 @@ const ClassPriceContainer = styled.div`
   margin: 10px 0px 5px 0px;
 `;
 
-const ClassPriceLeft = styled.div`
-  font-size: 22px;
-  font-weight: bold;
+const ClassPriceInner = styled.div`
+  font-size: 24px;
+  font-weight: 600;
+  margin-left: 7px;
+  margin-right: 3px;
 `;
+const ClassPriceOuter = styled.div`
+  font-size: 18px;
+  /* font-weight: bold; */
+`;
+
 const ClassPriceRight = styled.div`
   font-size: 18px;
 `;
 const ClassPriceInfo = styled.div`
   font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 15px;
+  /* font-weight: bold; */
+  margin-bottom: 12px;
+  margin-top: 12px;
+  color: #888888c1;
 `;
 
 const ClassButtonContainer = styled.div`
@@ -110,6 +120,7 @@ const ClassTap = styled.div`
 const ClassContent = styled.div`
   display: flex;
   margin-top: 5px;
+  color: #888888c1;
 `;
 const ClassLeftContent = styled.div`
   font-size: 14px;
@@ -207,18 +218,32 @@ export default function Lecture() {
               {lid?.slice(-1) === "F" && "#무료공개"} {`#${classtype}`}{" "}
               {`#${title}`}
             </ClassMainTitle> */}
-            <ClassMainTitle>
+            {/* <ClassMainTitle>
               {data2.find((li) => li.code === data[0]?.contentCode)?.subTitle}
-            </ClassMainTitle>
+            </ClassMainTitle> */}
             <ClassSubTitle>
               {classtype === "기출"
-                ? data2.find((li) => li.code === data[0]?.contentCode)?.gTitle
-                : title}
+                ? data2
+                    .find((li) => li.code === data[0]?.contentCode)
+                    ?.gTitle.split("!")
+                    .map((li, i) => (
+                      <div key={i} style={{ marginBottom: "3px" }}>
+                        {li}
+                        {i === 0 ? "!" : ""}
+                      </div>
+                    ))
+                : title?.split("!").map((li, i) => (
+                    <div key={i} style={{ marginBottom: "3px" }}>
+                      {li}
+                      {i === 0 ? "!" : ""}
+                    </div>
+                  ))}
             </ClassSubTitle>
 
             <ClassPriceContainer>
-              <ClassPriceLeft>월 8,250원 / 1년 99,000원</ClassPriceLeft>
-              {/* <ClassPriceRight>(ALLPASS 기준)</ClassPriceRight> */}
+              <ClassPriceOuter>월 </ClassPriceOuter>
+              <ClassPriceInner>8,250 </ClassPriceInner>
+              <ClassPriceOuter>원 (연 99,000원) </ClassPriceOuter>
             </ClassPriceContainer>
             <ClassPriceInfo>강연 + 기출 + 자료 무제한으로 수강</ClassPriceInfo>
             <ClassContent>
