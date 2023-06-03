@@ -11,7 +11,8 @@ const LectureListContainer = styled.div`
 const TitleContainer = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 10px 20px;
+  padding: 10px 20px 0px;
+  margin-top: 20px;
 `;
 
 const Category = styled.div`
@@ -31,7 +32,7 @@ const Description = styled.div`
 `;
 
 const ClassCardsContainer = styled.div`
-  padding: 30px 0px;
+  padding: 0px 0px 20px;
   display: flex;
   flex-wrap: wrap;
   /* justify-content: space-evenly; */
@@ -41,7 +42,7 @@ const ClassCardsContainer = styled.div`
     border-radius: 10px;
     padding: 10px;
     margin: 10px;
-    width: 27%;
+    width: 29%;
   }
 `;
 const ClassCard = styled.div``;
