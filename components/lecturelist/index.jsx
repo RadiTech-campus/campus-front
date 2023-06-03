@@ -37,7 +37,7 @@ const ClassCardsContainer = styled.div`
   /* justify-content: space-evenly; */
   a {
     text-decoration: none;
-    border: 0.1rem solid #e6e8ebc2;
+    /* border: 0.1rem solid #e6e8ebc2; */
     border-radius: 10px;
     padding: 10px;
     margin: 10px;
@@ -54,14 +54,34 @@ const ClassImage = styled.div`
 `;
 const ClassTitle = styled.div`
   /* text-align: center; */
-  font-size: 16px;
-  font-weight: bold;
-  padding: 10px 0px 0px;
+  font-size: 20px;
+  font-weight: 600;
+  margin: 10px 0px 0px 0px;
+  padding: 10px 5px 0px;
   color: black;
 `;
-const ClassContent = styled.div`
+
+const ClassDesc = styled.div`
+  /* text-align: center; */
   font-size: 16px;
-  color: black;
+  /* font-weight: bold; */
+  padding: 10px 5px 0px;
+  color: #888888c1;
+  margin: 5px 0px 0px 0px;
+`;
+
+const ClassTags = styled.div`
+  font-size: 16px;
+  margin-top: 10px;
+  padding: 10px 5px 0px;
+`;
+
+const ClassTag = styled.span`
+  font-size: 15px;
+  color: #8f8f8f;
+  padding: 5px 7px;
+  border-radius: 5px;
+  background-color: #e5e5e5 !important;
 `;
 
 export default function LectureList({
@@ -102,6 +122,17 @@ export default function LectureList({
                   {/* {li.thumbnail} */}
                 </ClassImage>
                 <ClassTitle>{li.secondCat}</ClassTitle>
+                <ClassDesc>{li?.iDescription}</ClassDesc>
+                <ClassTags>
+                  {li?.iTags?.split(" ").map((li, i) => (
+                    <ClassTag
+                      key={i}
+                      style={{ backgroundColor: "gray", marginRight: "5px" }}
+                    >
+                      {li}
+                    </ClassTag>
+                  ))}
+                </ClassTags>
                 {/* <ClassContent>{li.content}</ClassContent> */}
               </ClassCard>
             </Link>
@@ -129,7 +160,18 @@ export default function LectureList({
                     {/* {li.thumbnail} */}
                   </ClassImage>
                   <ClassTitle>{li.gTitle}</ClassTitle>
+                  <ClassDesc>{li.gDescription}</ClassDesc>
                   {/* <ClassContent>{li.content}</ClassContent> */}
+                  <ClassTags>
+                    {li?.gTags?.split(" ").map((li, i) => (
+                      <ClassTag
+                        key={i}
+                        style={{ backgroundColor: "gray", marginRight: "5px" }}
+                      >
+                        {li}
+                      </ClassTag>
+                    ))}
+                  </ClassTags>
                 </ClassCard>
               </Link>
             ) : null}
