@@ -1,11 +1,15 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/router";
 import styled from "@emotion/styled";
-import { useGetContentDetails } from "../../../query/contents";
+import {
+  useGetContentDetails,
+  useUpWatchedPayment,
+} from "../../../query/contents";
 import Link from "next/link";
 import { useAuth } from "../../../hooks/useAuth";
 import Modal from "../../../components/modal/Modal";
 import { useGetPayment } from "../../../query/contents";
+import { upWatchedPayment } from "../../../api/contents_api";
 
 const LectureDetailContainer = styled.div`
   /* display: flex;
@@ -92,6 +96,21 @@ export default function LectureDetail() {
           ).length < 1
         ) {
           setIsOpen2(true);
+        } else {
+          // upWatchedPayment({
+          //   id: data2.filter(
+          //     (li) =>
+          //       li.payStatus === "결제완료" &&
+          //       li?.productCode?.includes(lsid?.substring(0, 5)),
+          //   )[0]?.id,
+          //   watched: Number(
+          //     data2.filter(
+          //       (li) =>
+          //         li.payStatus === "결제완료" &&
+          //         li?.productCode?.includes(lsid?.substring(0, 5)),
+          //     )[0]?.watched + 1,
+          //   ),
+          // });
         }
       }
     }
@@ -164,7 +183,7 @@ export default function LectureDetail() {
               <iframe
                 src={`https://player.vimeo.com/video/${
                   data.filter((li) => li.contentDetailCode === detailCode)[0]
-                    .contentURL
+                    ?.contentURL
                 }`}
                 width="900"
                 height="564"

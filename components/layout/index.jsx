@@ -28,7 +28,6 @@ export default function Layout({ children }) {
   };
   const router = useRouter();
   const { route } = router;
-  console.log("router", router);
   const routes = ["/signin", "/signup", "/forgotpassword", "/regist"];
   return (
     <LayoutContainer>

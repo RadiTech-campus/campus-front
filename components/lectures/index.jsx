@@ -5,6 +5,7 @@ import { useAuth } from "../../hooks/useAuth";
 import Modal from "../modal/Modal";
 import { useRouter } from "next/router";
 import { useGetPayment } from "../../query/contents";
+import { upWatchedPayment } from "../../api/contents_api";
 
 const LecturesContainer = styled.div`
   padding: 10px 40px;
@@ -116,6 +117,30 @@ export default function Lectures({ classData, classtype, title }) {
                           border: "none",
                           cursor: "pointer",
                         }}
+                        onClick={() => {
+                          upWatchedPayment({
+                            id: data2.filter(
+                              (li) =>
+                                (li?.payStatus === "결제완료" &&
+                                  li?.productCode?.includes("A_A01")) ||
+                                (li?.payStatus === "결제완료" &&
+                                  li?.productCode?.includes(
+                                    lid?.substring(0, 5),
+                                  )),
+                            )[0]?.id,
+                            watched: Number(
+                              data2.filter(
+                                (li) =>
+                                  (li?.payStatus === "결제완료" &&
+                                    li?.productCode?.includes("A_A01")) ||
+                                  (li?.payStatus === "결제완료" &&
+                                    li?.productCode?.includes(
+                                      lid?.substring(0, 5),
+                                    )),
+                              )[0]?.watched + 1,
+                            ),
+                          });
+                        }}
                       >
                         강의자료
                       </button>
@@ -140,6 +165,30 @@ export default function Lectures({ classData, classtype, title }) {
                           borderRadius: "5px",
                           border: "none",
                           cursor: "pointer",
+                        }}
+                        onClick={() => {
+                          upWatchedPayment({
+                            id: data2.filter(
+                              (li) =>
+                                (li?.payStatus === "결제완료" &&
+                                  li?.productCode?.includes("A_A01")) ||
+                                (li?.payStatus === "결제완료" &&
+                                  li?.productCode?.includes(
+                                    lid?.substring(0, 5),
+                                  )),
+                            )[0]?.id,
+                            watched: Number(
+                              data2.filter(
+                                (li) =>
+                                  (li?.payStatus === "결제완료" &&
+                                    li?.productCode?.includes("A_A01")) ||
+                                  (li?.payStatus === "결제완료" &&
+                                    li?.productCode?.includes(
+                                      lid?.substring(0, 5),
+                                    )),
+                              )[0]?.watched + 1,
+                            ),
+                          });
                         }}
                       >
                         강의보기
@@ -166,7 +215,10 @@ export default function Lectures({ classData, classtype, title }) {
                         border: "none",
                         cursor: "pointer",
                       }}
-                      onClick={() => alert("수강신청이 필요한 과목 입니다.")}
+                      onClick={() => {
+                        alert("수강신청이 필요한 과목 입니다.");
+                        router.push("/regist");
+                      }}
                     >
                       강의자료
                     </button>
@@ -192,7 +244,10 @@ export default function Lectures({ classData, classtype, title }) {
                         border: "none",
                         cursor: "pointer",
                       }}
-                      onClick={() => alert("수강신청이 필요한 과목 입니다.")}
+                      onClick={() => {
+                        alert("수강신청이 필요한 과목 입니다.");
+                        router.push("/regist");
+                      }}
                     >
                       강의보기
                     </button>

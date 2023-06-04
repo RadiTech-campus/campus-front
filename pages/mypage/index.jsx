@@ -27,6 +27,11 @@ const RegistInput = styled.input`
   height: 40px;
   outline: none;
   margin-bottom: 20px;
+  ::placeholder {
+    color: ${(props) => (props.finished ? "#a603a6" : "#898989")};
+    font-weight: ${(props) => (props.finished ? "700" : "#898989")};
+    font-size: ${(props) => (props.finished ? "16px" : "")};
+  }
 `;
 const InputsContainer = styled.div`
   display: flex;
@@ -126,11 +131,13 @@ export default function MyPage() {
   }, [auth]);
 
   const cancelPay = async (paymentId) => {
-    try {
-      canclePayment({ id: paymentId });
-      alert("수강취소 되었습니다.");
-    } catch (e) {
-      alert("수강취소 오류가 발생했습니다. 관리자에게 문의해주세요.");
+    if (confirm("수강신청을 취소 하시겠습니까?")) {
+      try {
+        canclePayment({ id: paymentId });
+        alert("수강취소 되었습니다.");
+      } catch (e) {
+        alert("수강취소 오류가 발생했습니다. 관리자에게 문의해주세요.");
+      }
     }
   };
 
@@ -199,22 +206,51 @@ export default function MyPage() {
                 }}
               >
                 <div></div>
-                <div>
-                  <button
-                    style={{
-                      width: "80px",
-                      border: "none",
-                      backgroundColor: "#c100d7",
-                      color: "white",
-                      padding: "5px 0px",
-                      borderRadius: "5px",
-                      fontWeight: "700",
-                    }}
-                    onClick={() => cancelPay(li.id)}
-                  >
-                    수강취소
-                  </button>
-                </div>
+                {li?.payStatus === "결제취소" ? (
+                  ""
+                ) : (li?.payStatus === "결제완료" && li?.watched === 0) ||
+                  li?.payStatus === "입금대기" ? (
+                  <div>
+                    <button
+                      style={{
+                        width: "80px",
+                        border: "none",
+                        backgroundColor: "#c100d7",
+                        color: "white",
+                        padding: "5px 0px",
+                        borderRadius: "5px",
+                        fontWeight: "700",
+                      }}
+                      onClick={() => cancelPay(li.id)}
+                    >
+                      수강취소
+                    </button>
+                  </div>
+                ) : (
+                  ""
+                )}
+                {/* {(li?.payStatus === "결제취소" ||
+                  li?.payStatus === "결제완료") &&
+                li?.watched === 0 ? (
+                  ""
+                ) : (
+                  <div>
+                    <button
+                      style={{
+                        width: "80px",
+                        border: "none",
+                        backgroundColor: "#c100d7",
+                        color: "white",
+                        padding: "5px 0px",
+                        borderRadius: "5px",
+                        fontWeight: "700",
+                      }}
+                      onClick={() => cancelPay(li.id)}
+                    >
+                      수강취소
+                    </button>
+                  </div>
+                )} */}
               </div>
               <RegistLabel>강의명</RegistLabel>
               <RegistInput type="text" placeholder={li.productTitle} disabled />
@@ -238,6 +274,7 @@ export default function MyPage() {
                     : ""
                 }`}
                 disabled
+                finished
               />
               {li.payStatus === "입금대기" ? (
                 <>

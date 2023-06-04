@@ -233,7 +233,7 @@ export default function SignUp() {
         phoneNumber,
         userName,
       );
-      console.log("confirmUser result", result);
+      // console.log("confirmUser result", result);
       if (typeof result === "string" && result !== "SUCCESS") {
         if (result === "User already exists") {
           alert("이미 존재하는 아이디 입니다.");
@@ -246,6 +246,10 @@ export default function SignUp() {
           result.includes("lowercase")
         ) {
           alert("비밀번호는 소문자를 포함해야 합니다.");
+          return;
+        } else if (result.includes("email")) {
+          alert("아이디를 이메일 형태로 사용할 수 없습니다.");
+          return;
         }
       } else {
         setMailConfirmed(true);
@@ -274,8 +278,8 @@ export default function SignUp() {
     }
     try {
       const result = await auth.confirmSignUp(userId, code);
-      console.log("executeConfirm result", result);
-      console.log("typeof result", typeof result);
+      // console.log("executeConfirm result", result);
+      // console.log("typeof result", typeof result);
       if (typeof result === "string" && result !== "SUCCESS") {
         if (result.includes("Invalid")) {
           alert("메일 인증번호를 확인해 주세요.");

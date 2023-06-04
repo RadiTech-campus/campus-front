@@ -180,7 +180,6 @@ export default function Lecture() {
 
   const { data: paymentData } = useGetPayment(auth.username);
   const data3 = useMemo(() => paymentData?.Items || 0, [paymentData]);
-  console.log("data3", data3);
   return (
     <LectureDetailContainer>
       {isOpen && (

@@ -13,6 +13,7 @@ import {
 } from "../../query/contents";
 import { AddDays } from "../../libs/date";
 import { canclePayment } from "../../api/contents_api";
+import { LineWave, ThreeDots } from "react-loader-spinner";
 
 const ClassText = styled.div`
   position: absolute;
@@ -43,7 +44,7 @@ const PriceText = styled.div`
 `;
 const PayText = styled.div`
   position: absolute;
-  margin: ${(props) => (props.discount !== 0 ? "582px 0px" : "512px 0px")};
+  margin: ${(props) => (props.discount ? "510px 0px" : "576px 0px")};
   padding: 0px 15px;
   background-color: white;
   color: #595959;
@@ -231,25 +232,25 @@ export default function SignUp() {
     setIsOpen(true);
   };
 
-  const { data: aUnivData } = useGetAUniv(
+  const { data: aUnivData, isLoading: aUnivIsLoading } = useGetAUniv(
     email.substring(email.indexOf("@") + 1),
   );
   const data = useMemo(() => aUnivData?.Item || [], [email, aUnivData, inputs]);
-  const { data: productsData } = useGetProducts();
+  const { data: productsData, isLoading: productsIsLoading } = useGetProducts();
   const data3 = useMemo(() => productsData?.Items || [], [productsData]);
   const [Selected, setSelected] = useState("A_A01_12");
   const handleSelect = (e) => {
     setSelected(e.target.value);
   };
-  const { data: productData } = useGetProduct(Selected);
+  const { data: productData, isLoading: productIsLoading } =
+    useGetProduct(Selected);
   const data2 = useMemo(() => productData?.Item || [], [Selected, productData]);
 
-  const { data: paymentDate } = useGetPayments();
+  const { data: paymentDate, paymentsIsLoading } = useGetPayments();
   const payCounts = useMemo(() => paymentDate?.Count || 0, [paymentDate]);
 
-  const { data: paymentData } = useGetPayment(auth.username);
+  const { data: paymentData, paymentIsLoading } = useGetPayment(auth.username);
   const data4 = useMemo(() => paymentData?.Items || [], [auth, paymentData]);
-  console.log("data4", data4);
 
   const mutate = useCreatePayment({
     id: (10000 + payCounts).toString(),
@@ -312,12 +313,13 @@ export default function SignUp() {
 
   const handleCopyClipBoard = async (e) => {
     e.preventDefault();
-    try {
-      await navigator.clipboard.writeText("124-233998-12-601");
-      alert("계좌번호가 복사 되었습니다");
-    } catch (error) {
-      alert("복사를 실패했습니다!");
-    }
+    // try {
+    await navigator.clipboard.writeText("124-233998-12-601");
+    alert("계좌번호가 복사 되었습니다");
+    // } catch (error) {
+    // console.log("e", error);
+    // alert("복사를 실패했습니다!");
+    // }
   };
   return (
     <SignUpContainer>
@@ -347,32 +349,31 @@ export default function SignUp() {
             <Divider />
 
             <RegistLabel>강의명</RegistLabel>
-            <RegistSelect onChange={handleSelect} value={Selected}>
-              {data3 &&
-                data3.length > 0 &&
-                data3
-                  .sort((a, b) => (a.productCode > b.productCode ? 1 : -1))
-                  .map((li, i) => (
-                    <option key={i} value={li.productCode}>
-                      {li.productTitle}
-                    </option>
-                  ))}
-            </RegistSelect>
-            {/* <RegistLabel>기간</RegistLabel>
-          <PeriodContainer>
-            {periods.map((period, i) => (
-              <PeriodLabel key={i}>
-                <input
-                  type="radio"
-                  value={period}
-                  checked={checked === period}
-                  onChange={(e) => handleChecked(e)}
-                />
-                {`${period.replace("0", "")} 개월`}
-              </PeriodLabel>
-            ))}
-          </PeriodContainer>
-          {console.log("checked", checked)} */}
+            {productsIsLoading ? (
+              <ThreeDots
+                height="28"
+                width="28"
+                radius="9"
+                color="#7100a6"
+                ariaLabel="three-dots-loading"
+                wrapperStyle={{}}
+                wrapperClassName=""
+                visible={true}
+              />
+            ) : (
+              <RegistSelect onChange={handleSelect} value={Selected}>
+                {data3 &&
+                  data3.length > 0 &&
+                  data3
+                    .sort((a, b) => (a.productCode > b.productCode ? 1 : -1))
+                    .map((li, i) => (
+                      <option key={i} value={li.productCode}>
+                        {li.productTitle}
+                      </option>
+                    ))}
+              </RegistSelect>
+            )}
+
             <UserText>구매자 정보</UserText>
             <Divider />
             <RegistLabel>
@@ -397,25 +398,53 @@ export default function SignUp() {
                   <PriceTitle>할인율</PriceTitle>
                   <PriceDetail>
                     <PriceContent>
-                      {data?.discount} % {data?.name} MOU 채결
+                      {aUnivIsLoading ? (
+                        <ThreeDots
+                          height="28"
+                          width="28"
+                          radius="9"
+                          color="#7100a6"
+                          ariaLabel="three-dots-loading"
+                          wrapperStyle={{}}
+                          wrapperClassName=""
+                          visible={true}
+                        />
+                      ) : (
+                        `${data?.discount} % ${data?.name} MOU 체결`
+                      )}
                     </PriceContent>
                   </PriceDetail>
                 </PriceContainer>
                 <PriceContainer>
                   <PriceTitle>가격</PriceTitle>
                   <PriceDetail>
-                    <PriceContent canceled>{data2?.price} 원</PriceContent>
-                    <PriceContent>{"->"}</PriceContent>
-                    <PriceContent bolded finalPrice>
-                      {(data &&
-                        data2 &&
-                        data2.price - data2.price * (data.discount / 100)) ===
-                      null
-                        ? 0
-                        : data2.price -
-                          data2.price * (data.discount / 100)}{" "}
-                      원
-                    </PriceContent>
+                    {aUnivIsLoading || productsIsLoading || productIsLoading ? (
+                      <ThreeDots
+                        height="28"
+                        width="28"
+                        radius="9"
+                        color="#7100a6"
+                        ariaLabel="three-dots-loading"
+                        wrapperStyle={{}}
+                        wrapperClassName=""
+                        visible={true}
+                      />
+                    ) : (
+                      <>
+                        <PriceContent canceled>{data2?.price} 원</PriceContent>
+                        <PriceContent>{"->"}</PriceContent>
+                        <PriceContent bolded finalPrice>
+                          {(data &&
+                            data2 &&
+                            data2.price -
+                              data2.price * (data.discount / 100)) === null
+                            ? 0
+                            : data2.price -
+                              data2.price * (data.discount / 100)}{" "}
+                          원
+                        </PriceContent>
+                      </>
+                    )}
                   </PriceDetail>
                 </PriceContainer>
               </>
@@ -427,7 +456,6 @@ export default function SignUp() {
                 </PriceDetail>
               </PriceContainer>
             )}
-
             <PayText discount={data.discount === 0}>결제 방법</PayText>
             <Divider />
             <PriceContainer>
