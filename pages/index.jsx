@@ -102,7 +102,7 @@ export default function Index() {
             fill
           />
         </SwiperSlide>
-        <SwiperSlide
+        {/* <SwiperSlide
           style={{
             width: "1160px",
             height: "450px",
@@ -115,7 +115,7 @@ export default function Index() {
             style={{ objectFit: "contain" }}
             fill
           />
-        </SwiperSlide>
+        </SwiperSlide> */}
         {/* <SwiperSlide style={{ width: "100%", height: "450px" }}>
           <Image
             src="/2.png"
