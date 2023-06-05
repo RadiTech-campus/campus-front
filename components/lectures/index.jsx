@@ -80,7 +80,7 @@ export default function Lectures({ classData, classtype, title }) {
       )}
       {classData && classData.length > 0 ? (
         <LectureChapter>
-          {classtype === "강의" && lid?.substring(2, 3) !== "C" ? (
+          {classtype === "강의" && lid?.substring(2, 3) !== "C" && isPayed ? (
             <>
               <div
                 style={{
