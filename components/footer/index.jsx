@@ -13,7 +13,7 @@ const FooterContainer = styled.div`
 const Divider = styled.div`
   border-bottom: 0.1rem solid #e6e8eb;
   margin: 20px 0px;
-  width: 5000px;
+  width: 2000px;
 `;
 
 const BottomContainer = styled.div`

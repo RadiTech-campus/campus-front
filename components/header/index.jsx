@@ -60,10 +60,10 @@ const AuthButton = styled.div`
 export default function Header({ onMoveToForm }) {
   const router = useRouter();
   const auth = useAuth();
-  // const [isOpen, setIsOpen] = useState(false);
-  // const handleOpenModal = () => {
-  //   setIsOpen(true);
-  // };
+  const [isOpen, setIsOpen] = useState(false);
+  const handleOpenModal = () => {
+    setIsOpen(true);
+  };
   return (
     <div
       style={{
@@ -73,15 +73,20 @@ export default function Header({ onMoveToForm }) {
         backgroundColor: "white",
       }}
     >
-      {/* <Modal
-        open={isOpen}
-        onClose={() => {
-          setIsOpen(false);
-        }}
-      >
-      <div>결제, 환불, 서비스 이용 관련해서는 메일로 문의 주세요.​</div>
-      <div>고객센터 : raditech.campus@gmail.com</div>
-      </Modal> */}
+      {isOpen ? (
+        <Modal
+          open={isOpen}
+          onClose={() => {
+            setIsOpen(false);
+          }}
+        >
+          <div>결제, 환불, 서비스 이용 관련해서는 메일로 문의 주세요.​</div>
+          <div>고객센터 : raditech.campus@gmail.com</div>
+        </Modal>
+      ) : (
+        ""
+      )}
+
       <HeaderContainer>
         <LogoContainer>
           <Link href={"/"}>
@@ -117,7 +122,8 @@ export default function Header({ onMoveToForm }) {
             </AuthButton>
             <AuthButton
               onClick={() => {
-                onMoveToForm();
+                // onMoveToForm();
+                handleOpenModal();
               }}
             >
               고객센터
@@ -128,7 +134,7 @@ export default function Header({ onMoveToForm }) {
             <AuthButton onClick={() => router.push("/signin")}>
               로그인
             </AuthButton>
-            <AuthButton onClick={() => onMoveToForm()}>고객센터</AuthButton>
+            <AuthButton onClick={() => handleOpenModal()}>고객센터</AuthButton>
           </AuthContainer>
         )}
       </HeaderContainer>
