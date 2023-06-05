@@ -6,10 +6,10 @@ import Footer from "../footer";
 import { useRouter } from "next/router";
 
 const LayoutContainer = styled.div`
-  /* background-color: red;
   @media (max-width: 560px) {
-    background-color: tomato;
-  } */
+    width: 500%;
+  }
+  width: 100%;
 `;
 
 const LeftContainer = styled.div`

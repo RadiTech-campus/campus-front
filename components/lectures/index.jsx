@@ -80,6 +80,141 @@ export default function Lectures({ classData, classtype, title }) {
       )}
       {classData && classData.length > 0 ? (
         <LectureChapter>
+          {classtype === "강의" && lid?.substring(2, 3) !== "C" ? (
+            <>
+              <div
+                style={{
+                  padding: "15px 25px",
+                  fontSize: "16px",
+                  borderTop: "1px solid lightgray",
+                  display: "flex",
+                  fontWeight: "bold",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <div># 강의 요약본</div>
+                <div>
+                  <Link
+                    href={{
+                      pathname: `https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/content-summary/${lid.substring(
+                        0,
+                        5,
+                      )}_C.pdf`,
+                    }}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <button
+                      style={{
+                        marginRight: "10px",
+                        padding: "10px 20px",
+                        backgroundColor: "#7100a6",
+                        color: "white",
+                        fontWeight: "bold",
+                        borderRadius: "5px",
+                        border: "none",
+                        cursor: "pointer",
+                      }}
+                      onClick={() => {
+                        upWatchedPayment({
+                          id: data2.filter(
+                            (li) =>
+                              (li?.payStatus === "결제완료" &&
+                                li?.productCode?.includes("A_A01")) ||
+                              (li?.payStatus === "결제완료" &&
+                                li?.productCode?.includes(
+                                  lid?.substring(0, 5),
+                                )),
+                          )[0]?.id,
+                          watched: Number(
+                            data2.filter(
+                              (li) =>
+                                (li?.payStatus === "결제완료" &&
+                                  li?.productCode?.includes("A_A01")) ||
+                                (li?.payStatus === "결제완료" &&
+                                  li?.productCode?.includes(
+                                    lid?.substring(0, 5),
+                                  )),
+                            )[0]?.watched + 1,
+                          ),
+                        });
+                      }}
+                    >
+                      강의요약
+                    </button>
+                  </Link>
+                </div>
+              </div>
+              <div
+                style={{
+                  padding: "15px 25px",
+                  fontSize: "16px",
+                  borderTop: "1px solid lightgray",
+                  display: "flex",
+                  fontWeight: "bold",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <div># 영상 요약본</div>
+                <div>
+                  <Link
+                    href={{
+                      pathname: `https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/content-summary/${lid.substring(
+                        0,
+                        5,
+                      )}_V.pdf`,
+                    }}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <button
+                      style={{
+                        marginRight: "10px",
+                        padding: "10px 20px",
+                        backgroundColor: "#7100a6",
+                        color: "white",
+                        fontWeight: "bold",
+                        borderRadius: "5px",
+                        border: "none",
+                        cursor: "pointer",
+                      }}
+                      onClick={() => {
+                        upWatchedPayment({
+                          id: data2.filter(
+                            (li) =>
+                              (li?.payStatus === "결제완료" &&
+                                li?.productCode?.includes("A_A01")) ||
+                              (li?.payStatus === "결제완료" &&
+                                li?.productCode?.includes(
+                                  lid?.substring(0, 5),
+                                )),
+                          )[0]?.id,
+                          watched: Number(
+                            data2.filter(
+                              (li) =>
+                                (li?.payStatus === "결제완료" &&
+                                  li?.productCode?.includes("A_A01")) ||
+                                (li?.payStatus === "결제완료" &&
+                                  li?.productCode?.includes(
+                                    lid?.substring(0, 5),
+                                  )),
+                            )[0]?.watched + 1,
+                          ),
+                        });
+                      }}
+                    >
+                      영상요약
+                    </button>
+                  </Link>
+                </div>
+              </div>
+            </>
+          ) : (
+            ""
+          )}
+
           {classData
             ?.filter((li) => li.contentDetailSubTitle === classtype)
             .sort((a, b) => (a.sorting > b.sorting ? 1 : -1))
@@ -101,7 +236,7 @@ export default function Lectures({ classData, classtype, title }) {
                   <div>
                     <Link
                       href={{
-                        pathname: `https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/content-data/${li.contentDetailCode}.pdf`,
+                        pathname: `https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/content-summary/${li.contentDetailCode}.pdf`,
                       }}
                       target="_blank"
                       rel="noopener noreferrer"
