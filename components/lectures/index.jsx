@@ -80,7 +80,7 @@ export default function Lectures({ classData, classtype, title }) {
       )}
       {classData && classData.length > 0 ? (
         <LectureChapter>
-          {classtype === "강의" && lid?.substring(2, 3) !== "C" && isPayed ? (
+          {classtype === "강의" && lid?.substring(2, 3) !== "C" ? (
             <>
               <div
                 style={{
@@ -117,28 +117,31 @@ export default function Lectures({ classData, classtype, title }) {
                         cursor: "pointer",
                       }}
                       onClick={() => {
-                        upWatchedPayment({
-                          id: data2.filter(
-                            (li) =>
-                              (li?.payStatus === "결제완료" &&
-                                li?.productCode?.includes("A_A01")) ||
-                              (li?.payStatus === "결제완료" &&
-                                li?.productCode?.includes(
-                                  lid?.substring(0, 5),
-                                )),
-                          )[0]?.id,
-                          watched: Number(
-                            data2.filter(
-                              (li) =>
-                                (li?.payStatus === "결제완료" &&
-                                  li?.productCode?.includes("A_A01")) ||
-                                (li?.payStatus === "결제완료" &&
-                                  li?.productCode?.includes(
-                                    lid?.substring(0, 5),
-                                  )),
-                            )[0]?.watched + 1,
-                          ),
-                        });
+                        isPayed
+                          ? upWatchedPayment({
+                              id: data2.filter(
+                                (li) =>
+                                  (li?.payStatus === "결제완료" &&
+                                    li?.productCode?.includes("A_A01")) ||
+                                  (li?.payStatus === "결제완료" &&
+                                    li?.productCode?.includes(
+                                      lid?.substring(0, 5),
+                                    )),
+                              )[0]?.id,
+                              watched: Number(
+                                data2.filter(
+                                  (li) =>
+                                    (li?.payStatus === "결제완료" &&
+                                      li?.productCode?.includes("A_A01")) ||
+                                    (li?.payStatus === "결제완료" &&
+                                      li?.productCode?.includes(
+                                        lid?.substring(0, 5),
+                                      )),
+                                )[0]?.watched + 1,
+                              ),
+                            })
+                          : alert("수강신청이 필요한 과목 입니다.");
+                        router.push("/regist");
                       }}
                     >
                       강의요약
