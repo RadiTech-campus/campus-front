@@ -6,29 +6,48 @@ const FooterContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  /* padding: 15px 20px; */
-  margin: 0px auto 60px;
-  width: 1160px;
+  padding: 0px auto 60px;
+  width: 100%;
+  border-top: 1px solid lightgray;
+  @media (max-width: 620px) {
+    /* width: 620px; */
+    width: 100%;
+    margin: 0 auto;
+  }
 `;
 const Divider = styled.div`
   border-bottom: 0.1rem solid #e6e8eb;
   margin: 20px 0px;
-  width: 2000px;
+  /* width: 2000px; */
 `;
 
 const BottomContainer = styled.div`
   display: flex;
   width: 1160px;
+  @media (max-width: 620px) {
+    /* width: 620px; */
+    width: 100%;
+    margin: 0 auto;
+  }
 `;
 
 const LeftContainer = styled.div`
   width: 33%;
+  @media (max-width: 620px) {
+    padding: 20px;
+  }
 `;
 const CenterContainer = styled.div`
   width: 33%;
+  @media (max-width: 620px) {
+    padding: 20px;
+  }
 `;
 const RightContainer = styled.div`
   width: 33%;
+  @media (max-width: 620px) {
+    padding: 20px;
+  }
 `;
 
 const FooterTitle = styled.div`

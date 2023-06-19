@@ -9,26 +9,26 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { globalStyles } from "../global";
 import Layout from "../components/layout";
 import { ProvideAuth } from "../hooks/useAuth";
-
+import { ProvideIsMobile } from "../hooks/useIsMobile";
 
 export default function IndexPage({ Component, pageProps }) {
   const [queryClient] = React.useState(() => new QueryClient());
-  
-  
-  
+
   return (
     <QueryClientProvider client={queryClient}>
       <ProvideAuth>
-        <Hydrate state={pageProps.dehydratedState}>
-          {globalStyles}
-          <Head>
-            <title>Radi Tech Campus</title>
-          </Head>
-          <Layout>
-            <Component {...pageProps} />
-            <ReactQueryDevtools initialIsOpen={false} />
-          </Layout>
-        </Hydrate>
+        <ProvideIsMobile>
+          <Hydrate state={pageProps.dehydratedState}>
+            {globalStyles}
+            <Head>
+              <title>Radi Tech Campus</title>
+            </Head>
+            <Layout>
+              <Component {...pageProps} />
+              <ReactQueryDevtools initialIsOpen={false} />
+            </Layout>
+          </Hydrate>
+        </ProvideIsMobile>
       </ProvideAuth>
     </QueryClientProvider>
   );

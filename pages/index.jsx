@@ -22,6 +22,7 @@ import { useGetContents, useGetPayment } from "../query/contents";
 import { useAuth } from "../hooks/useAuth";
 import { getDateDiff } from "../libs/date";
 import { canclePayment } from "../api/contents_api";
+import { useIsMobile } from "../hooks/useIsMobile";
 
 const IndexContainer = styled.div``;
 // const SwiperPagiContainer = styled.div`
@@ -56,6 +57,7 @@ export default function Index() {
       }
     }
   }, [data2]);
+  const isMobile = useIsMobile();
 
   return (
     <IndexContainer>
@@ -88,20 +90,33 @@ export default function Index() {
         // onSwiper={(swiper) => console.log(swiper)}
         // onSlideChange={() => console.log("slide change")}
       >
-        <SwiperSlide
-          style={{
-            width: "1160px",
-            height: "450px",
-            backgroundColor: "#030712",
-          }}
-        >
-          <Image
-            src="/1.png"
-            alt="메인 배경 이미지"
-            style={{ objectFit: "contain" }}
-            fill
-          />
-        </SwiperSlide>
+        {isMobile ? (
+          <SwiperSlide>
+            <img
+              src={"1111.png"}
+              alt="메인 배경 이미지"
+              style={{
+                width: "100%",
+              }}
+            />
+          </SwiperSlide>
+        ) : (
+          <SwiperSlide
+            style={{
+              width: "1160px",
+              height: "450px",
+              backgroundColor: "#030712",
+            }}
+          >
+            <Image
+              src={"1.png"}
+              alt="메인 배경 이미지"
+              style={{ objectFit: "contain" }}
+              fill
+            />
+          </SwiperSlide>
+        )}
+
         {/* <SwiperSlide
           style={{
             width: "1160px",

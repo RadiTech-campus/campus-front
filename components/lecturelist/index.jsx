@@ -4,6 +4,11 @@ import React, { Fragment } from "react";
 import Link from "next/link";
 
 const LectureListContainer = styled.div`
+  @media (max-width: 620px) {
+    /* width: 620px; */
+    width: 100%;
+    margin: 0 auto;
+  }
   margin: 15px auto;
   width: 1160px;
 `;
@@ -32,29 +37,51 @@ const Description = styled.div`
 `;
 
 const ClassCardsContainer = styled.div`
+  @media (max-width: 620px) {
+    justify-content: center;
+  }
   padding: 0px 0px 20px;
   display: flex;
   flex-wrap: wrap;
   /* justify-content: space-evenly; */
   a {
+    @media (max-width: 620px) {
+      justify-content: space-around;
+      width: 45%;
+      margin: 10px;
+      padding: 0px;
+    }
     text-decoration: none;
-    /* border: 0.1rem solid #e6e8ebc2; */
     border-radius: 10px;
     padding: 10px;
     margin: 10px;
     width: 29%;
   }
 `;
-const ClassCard = styled.div``;
+const ClassCard = styled.div`
+  @media (max-width: 620px) {
+    width: 100%;
+    margin: 0 auto;
+  }
+`;
 const ClassImage = styled.div`
+  @media (max-width: 620px) {
+    height: 110px;
+  }
   height: 180px;
   position: relative;
   > img {
+    @media (max-width: 620px) {
+      border-radius: 5px;
+    }
     border-radius: 10px;
   }
 `;
 const ClassTitle = styled.div`
   /* text-align: center; */
+  @media (max-width: 620px) {
+    font-size: 16px;
+  }
   font-size: 20px;
   font-weight: 600;
   margin: 10px 0px 0px 0px;
@@ -65,6 +92,9 @@ const ClassTitle = styled.div`
 const ClassDesc = styled.div`
   /* text-align: center; */
   font-size: 16px;
+  @media (max-width: 620px) {
+    font-size: 12px;
+  }
   /* font-weight: bold; */
   padding: 10px 5px 0px;
   color: #888888c1;
@@ -72,12 +102,21 @@ const ClassDesc = styled.div`
 `;
 
 const ClassTags = styled.div`
+  @media (max-width: 620px) {
+    margin-top: 0px;
+  }
   font-size: 16px;
   margin-top: 10px;
   padding: 10px 5px 0px;
+  display: flex;
+  flex-wrap: wrap;
 `;
 
 const ClassTag = styled.span`
+  @media (max-width: 620px) {
+    font-size: 12px;
+    margin-top: 10px;
+  }
   font-size: 15px;
   color: #8f8f8f;
   padding: 5px 7px;

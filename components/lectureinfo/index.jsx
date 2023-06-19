@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import Image from "next/image";
 import React from "react";
+import { useIsMobile } from "../../hooks/useIsMobile";
 
 const LectureInfoContainer = styled.div`
   padding: 10px 40px;
@@ -8,6 +9,9 @@ const LectureInfoContainer = styled.div`
 
 const ClassImage1 = styled.div`
   width: 100%;
+  @media (max-width: 620px) {
+    height: 100%;
+  }
   height: 893px;
   position: relative;
   > img {
@@ -21,6 +25,9 @@ const PreviewContainer = styled.div`
 const ClassImage2 = styled.div`
   width: 100%;
   height: 260px;
+  @media (max-width: 620px) {
+    height: 100%;
+  }
   position: relative;
 `;
 const ClassImage3 = styled.div`
@@ -28,26 +35,47 @@ const ClassImage3 = styled.div`
   height: 1008px;
   margin-top: 80px;
   position: relative;
+  @media (max-width: 620px) {
+    height: 100%;
+  }
 `;
 
 export default function LectureInfo({ lid, classData, classtype, preview }) {
+  const isMobile = useIsMobile();
+
   return (
     <LectureInfoContainer>
       <ClassImage1>
-        <Image
-          src={`/detail/${lid}${classtype === "기출" ? "_G" : ""}.png`}
-          alt="메인 배경 이미지"
-          style={{ objectFit: "cover" }}
-          fill
-        />
+        {isMobile ? (
+          <img
+            src={`/detail/${lid}${classtype === "기출" ? "_G" : ""}.png`}
+            alt="메인 배경 이미지"
+            style={{ width: "100%" }}
+          />
+        ) : (
+          <Image
+            src={`/detail/${lid}${classtype === "기출" ? "_G" : ""}.png`}
+            alt="메인 배경 이미지"
+            style={{ objectFit: "cover" }}
+            fill
+          />
+        )}
       </ClassImage1>
       <ClassImage2>
-        <Image
-          src={`/detail/eye.png`}
-          alt="메인 배경 이미지"
-          style={{ objectFit: "cover" }}
-          fill
-        />
+        {isMobile ? (
+          <img
+            src={`/detail/eye.png`}
+            alt="메인 배경 이미지"
+            style={{ width: "100%" }}
+          />
+        ) : (
+          <Image
+            src={`/detail/eye.png`}
+            alt="메인 배경 이미지"
+            style={{ objectFit: "cover" }}
+            fill
+          />
+        )}
       </ClassImage2>
       <PreviewContainer ref={preview}>
         <iframe
@@ -57,19 +85,27 @@ export default function LectureInfo({ lid, classData, classtype, preview }) {
               : classData.find((li) => li.code === lid)?.lPreview
           }`}
           width="840"
-          height="564"
+          height={isMobile ? "300" : "546"}
           frameBorder="0"
           allow="autoplay; fullscreen"
           allowFullScreen
         ></iframe>
       </PreviewContainer>
       <ClassImage3>
-        <Image
-          src={`/detail/price.png`}
-          alt="메인 배경 이미지"
-          style={{ objectFit: "cover" }}
-          fill
-        />
+        {isMobile ? (
+          <img
+            src={`/detail/price.png`}
+            alt="메인 배경 이미지"
+            style={{ width: "100%" }}
+          />
+        ) : (
+          <Image
+            src={`/detail/price.png`}
+            alt="메인 배경 이미지"
+            style={{ objectFit: "cover" }}
+            fill
+          />
+        )}
       </ClassImage3>
     </LectureInfoContainer>
   );
