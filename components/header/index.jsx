@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import Modal from "../modal/Modal";
+import { useIsMobile } from "../../hooks/useIsMobile";
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -12,11 +13,17 @@ const HeaderContainer = styled.div`
   justify-content: space-between;
   padding: 15px 20px;
   margin: 0px auto;
-  /* width: 1160px; */
+  width: 1160px;
   position: "sticky";
   top: 0;
   z-index: 10;
   background-color: "white";
+  @media (max-width: 620px) {
+    /* width: 620px; */
+    width: 100%;
+    margin: 0 auto;
+    padding: 0px;
+  }
 `;
 
 const BorderLine = styled.div`
@@ -63,6 +70,8 @@ const AuthButton = styled.div`
 export default function Header({ onMoveToForm }) {
   const router = useRouter();
   const auth = useAuth();
+  const isMobile = useIsMobile();
+
   const [isOpen, setIsOpen] = useState(false);
   const handleOpenModal = () => {
     setIsOpen(true);
@@ -94,16 +103,21 @@ export default function Header({ onMoveToForm }) {
               style={{ marginRight: "5px" }}
             />
           </Link>
-          <SearchContainer>
-            {/* <Search />
-            <SearchInput disabled /> */}
-          </SearchContainer>
+          {/* <SearchContainer>
+            <Search />
+            <SearchInput disabled />
+          </SearchContainer> */}
         </LogoContainer>
         {auth.isAuthenticated ? (
           <AuthContainer>
-            <AuthButton onClick={() => router.push("/mypage")}>
-              안녕하세요 {auth.username} 님
-            </AuthButton>
+            {isMobile ? (
+              ""
+            ) : (
+              <AuthButton onClick={() => router.push("/mypage")}>
+                안녕하세요 {auth.username} 님
+              </AuthButton>
+            )}
+
             <AuthButton onClick={() => router.push("/mypage")}>
               마이페이지
             </AuthButton>

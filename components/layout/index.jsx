@@ -6,7 +6,8 @@ import { useRouter } from "next/router";
 
 const LayoutContainer = styled.div`
   @media (max-width: 620px) {
-    width: 620px;
+    /* width: 620px; */
+    width: 100%;
     margin: 0 auto;
   }
   /* width: 1160px; */

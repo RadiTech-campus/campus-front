@@ -13,10 +13,14 @@ import LectureInfo from "../../components/lectureinfo";
 import LectureWarn from "../../components/lecturewarn";
 import { useAuth } from "../../hooks/useAuth";
 import Modal from "../../components/modal/Modal";
+import { useIsMobile } from "../../hooks/useIsMobile";
 
 const LectureDetailContainer = styled.div`
   margin: 0px auto;
   width: 1160px;
+  @media (max-width: 620px) {
+    width: 100%;
+  }
 `;
 const Divider = styled.div`
   border-bottom: 0.1rem solid #e6e8eb;
@@ -26,6 +30,9 @@ const Divider = styled.div`
 const TopDetail = styled.div`
   display: flex;
   flex: 1;
+  @media (max-width: 620px) {
+    flex-direction: column;
+  }
 `;
 
 const TopLeftDetail = styled.div`
@@ -109,6 +116,10 @@ const ClassTapContainer = styled.div`
   margin: 20px 0px;
 `;
 const ClassTap = styled.div`
+  @media (max-width: 620px) {
+    padding: 10px 20px;
+    margin: 0px 0px;
+  }
   padding: 5px 30px;
   margin: 0px 50px;
   font-size: 20px;
@@ -145,6 +156,9 @@ const ModalContent = styled.div`
 const DetailBanner = styled.div`
   /* height: 250px; */
   width: 95%;
+  @media (max-width: 620px) {
+    height: 50px;
+  }
   height: 100px;
   position: relative;
   margin: auto;
@@ -156,6 +170,8 @@ const tabs = ["강의소개", "커리큘럼", "강사소개", "주의사항"];
 export default function Lecture() {
   const router = useRouter();
   const auth = useAuth();
+  const isMobile = useIsMobile();
+
   const { lid, classtype, title } = router.query;
   const [selectedTab, setSelectedTab] = useState("강의소개");
   const [isOpen, setIsOpen] = useState(false);
@@ -285,12 +301,22 @@ export default function Lecture() {
         </TopRightDetail>
       </TopDetail>
       <DetailBanner>
-        <Image
-          src={`/detailbanner.png`}
-          alt="메인 배경 이미지"
-          style={{ objectFit: "cover" }}
-          fill
-        />
+        {isMobile ? (
+          <img
+            src={`/detailbanner.png`}
+            alt="메인 배경 이미지"
+            style={{
+              width: "100%",
+            }}
+          />
+        ) : (
+          <Image
+            src={`/detailbanner.png`}
+            alt="메인 배경 이미지"
+            style={{ objectFit: "cover" }}
+            fill
+          />
+        )}
       </DetailBanner>
 
       <ClassTapContainer>
