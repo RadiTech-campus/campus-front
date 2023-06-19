@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 import Image from "next/image";
 import React, { Fragment } from "react";
 import Link from "next/link";
+import { useIsMobile } from "../../hooks/useIsMobile";
 
 const LectureListContainer = styled.div`
   @media (max-width: 620px) {
@@ -47,8 +48,8 @@ const ClassCardsContainer = styled.div`
   a {
     @media (max-width: 620px) {
       justify-content: space-around;
-      width: 45%;
-      margin: 10px;
+      width: 40%;
+      margin: 15px;
       padding: 0px;
     }
     text-decoration: none;
@@ -80,7 +81,9 @@ const ClassImage = styled.div`
 const ClassTitle = styled.div`
   /* text-align: center; */
   @media (max-width: 620px) {
-    font-size: 16px;
+    font-size: 14px;
+    margin: 0px 0px 0px 0px;
+    padding: 0px 5px 0px;
   }
   font-size: 20px;
   font-weight: 600;
@@ -130,6 +133,8 @@ export default function LectureList({
   description,
   classData,
 }) {
+  const isMobile = useIsMobile();
+
   return (
     <LectureListContainer>
       {/* <UserContent> */}
@@ -150,15 +155,24 @@ export default function LectureList({
             >
               <ClassCard>
                 <ClassImage>
-                  <Image
-                    src={`https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/contents/${li.code}.jpeg`}
-                    alt={li.secondCat}
-                    // width={30}
-                    // height={30}
-                    style={{ objectFit: "cover" }}
-                    fill
-                    //   style={{ borderRadius: "50%", marginRight: "5px" }}
-                  />
+                  {isMobile ? (
+                    <img
+                      src={`https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/contents/${li.code}.jpeg`}
+                      alt={li.secondCat}
+                      style={{ width: "100%" }}
+                    />
+                  ) : (
+                    <Image
+                      src={`https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/contents/${li.code}.jpeg`}
+                      alt={li.secondCat}
+                      // width={30}
+                      // height={30}
+                      style={{ objectFit: "cover" }}
+                      fill
+                      //   style={{ borderRadius: "50%", marginRight: "5px" }}
+                    />
+                  )}
+
                   {/* {li.thumbnail} */}
                 </ClassImage>
                 <ClassTitle>
@@ -195,15 +209,24 @@ export default function LectureList({
               >
                 <ClassCard>
                   <ClassImage>
-                    <Image
-                      src={`https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/contents/${li.code}_G.jpeg`}
-                      alt="메인 배경 이미지"
-                      // width={30}
-                      // height={30}
-                      style={{ objectFit: "cover" }}
-                      fill
-                      //   style={{ borderRadius: "50%", marginRight: "5px" }}
-                    />
+                    {isMobile ? (
+                      <img
+                        src={`https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/contents/${li.code}_G.jpeg`}
+                        alt="메인 배경 이미지"
+                        style={{ width: "100%" }}
+                      />
+                    ) : (
+                      <Image
+                        src={`https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/contents/${li.code}_G.jpeg`}
+                        alt="메인 배경 이미지"
+                        // width={30}
+                        // height={30}
+                        style={{ objectFit: "cover" }}
+                        fill
+                        //   style={{ borderRadius: "50%", marginRight: "5px" }}
+                      />
+                    )}
+
                     {/* {li.thumbnail} */}
                   </ClassImage>
                   <ClassTitle>
