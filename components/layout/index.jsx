@@ -1,26 +1,15 @@
 import styled from "@emotion/styled";
 import React, { useRef } from "react";
 import Header from "../header";
-import TopNav from "../topnav";
 import Footer from "../footer";
 import { useRouter } from "next/router";
 
 const LayoutContainer = styled.div`
-  @media (max-width: 560px) {
-    width: 500%;
+  @media (max-width: 620px) {
+    width: 620px;
+    margin: 0 auto;
   }
-  width: 100%;
-`;
-
-const LeftContainer = styled.div`
-  /* flex: 0.15; */
-`;
-
-const RightContainer = styled.div`
-  flex: 0.85;
-  display: flex;
-  flex-direction: column;
-  background-color: #e7f1fb;
+  /* width: 1160px; */
 `;
 
 export default function Layout({ children }) {
@@ -36,7 +25,6 @@ export default function Layout({ children }) {
       {/* <LeftContainer></LeftContainer> */}
       {/* <RightContainer></RightContainer> */}
       <Header onMoveToForm={onMoveToForm} />
-      {/* <TopNav /> */}
       {children}
       {routes.includes(route) ? "" : <Footer footerRef={footerRef} />}
     </LayoutContainer>

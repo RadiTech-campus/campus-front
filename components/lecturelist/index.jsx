@@ -4,6 +4,10 @@ import React, { Fragment } from "react";
 import Link from "next/link";
 
 const LectureListContainer = styled.div`
+  @media (max-width: 620px) {
+    width: 620px;
+    margin: 0 auto;
+  }
   margin: 15px auto;
   width: 1160px;
 `;
@@ -32,20 +36,32 @@ const Description = styled.div`
 `;
 
 const ClassCardsContainer = styled.div`
+  @media (max-width: 620px) {
+    justify-content: center;
+  }
   padding: 0px 0px 20px;
   display: flex;
   flex-wrap: wrap;
   /* justify-content: space-evenly; */
   a {
+    @media (max-width: 620px) {
+      justify-content: space-around;
+      width: 40%;
+      margin: 10px;
+    }
     text-decoration: none;
-    /* border: 0.1rem solid #e6e8ebc2; */
     border-radius: 10px;
     padding: 10px;
     margin: 10px;
     width: 29%;
   }
 `;
-const ClassCard = styled.div``;
+const ClassCard = styled.div`
+  @media (max-width: 620px) {
+    width: 100%;
+    margin: 0 auto;
+  }
+`;
 const ClassImage = styled.div`
   height: 180px;
   position: relative;

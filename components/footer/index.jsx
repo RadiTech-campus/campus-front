@@ -6,7 +6,6 @@ const FooterContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  /* padding: 15px 20px; */
   margin: 0px auto 60px;
   width: 1160px;
 `;

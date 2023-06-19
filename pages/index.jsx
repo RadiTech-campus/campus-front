@@ -96,7 +96,7 @@ export default function Index() {
           }}
         >
           <Image
-            src="/1.png"
+            src="/1111.png"
             alt="메인 배경 이미지"
             style={{ objectFit: "contain" }}
             fill
@@ -197,14 +197,14 @@ export default function Index() {
           ?.filter((li) => li.firstCat === "일반강의" && li.pay === "유료")
           .sort((a, b) => (a.code > b.code ? 1 : -1))}
       />
-      <LectureList
+      {/* <LectureList
         category="Big5 자소서 및 면접"
         mainTitle="Big5 취업까지 한번에 합격하기"
         // description="취업 가즈아 !"
         classData={data
           ?.filter((li) => li.firstCat === "취업" && li.pay === "유료")
           .sort((a, b) => (a.code > b.code ? 1 : -1))}
-      />
+      /> */}
     </IndexContainer>
   );
 }

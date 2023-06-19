@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
-import Search from "../icons/Search";
 import Modal from "../modal/Modal";
 
 const HeaderContainer = styled.div`
@@ -13,7 +12,11 @@ const HeaderContainer = styled.div`
   justify-content: space-between;
   padding: 15px 20px;
   margin: 0px auto;
-  width: 1160px;
+  /* width: 1160px; */
+  position: "sticky";
+  top: 0;
+  z-index: 10;
+  background-color: "white";
 `;
 
 const BorderLine = styled.div`
@@ -65,14 +68,7 @@ export default function Header({ onMoveToForm }) {
     setIsOpen(true);
   };
   return (
-    <div
-      style={{
-        position: "sticky",
-        top: 0,
-        zIndex: 10,
-        backgroundColor: "white",
-      }}
-    >
+    <>
       {isOpen ? (
         <Modal
           open={isOpen}
@@ -138,7 +134,7 @@ export default function Header({ onMoveToForm }) {
           </AuthContainer>
         )}
       </HeaderContainer>
-      <BorderLine />
-    </div>
+      {/* <BorderLine /> */}
+    </>
   );
 }
