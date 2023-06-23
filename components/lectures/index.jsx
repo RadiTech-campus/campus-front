@@ -80,7 +80,7 @@ export default function Lectures({ classData, classtype, title }) {
       )}
       {classData && classData.length > 0 ? (
         <LectureChapter>
-          {classtype === "강의" && lid?.substring(2, 3) !== "C" ? (
+          {classtype === "강의" && lid?.substring(2, 3) !== "C" && isPayed ? (
             <>
               <div
                 style={{
@@ -117,31 +117,28 @@ export default function Lectures({ classData, classtype, title }) {
                         cursor: "pointer",
                       }}
                       onClick={() => {
-                        isPayed
-                          ? upWatchedPayment({
-                              id: data2.filter(
-                                (li) =>
-                                  (li?.payStatus === "결제완료" &&
-                                    li?.productCode?.includes("A_A01")) ||
-                                  (li?.payStatus === "결제완료" &&
-                                    li?.productCode?.includes(
-                                      lid?.substring(0, 5),
-                                    )),
-                              )[0]?.id,
-                              watched: Number(
-                                data2.filter(
-                                  (li) =>
-                                    (li?.payStatus === "결제완료" &&
-                                      li?.productCode?.includes("A_A01")) ||
-                                    (li?.payStatus === "결제완료" &&
-                                      li?.productCode?.includes(
-                                        lid?.substring(0, 5),
-                                      )),
-                                )[0]?.watched + 1,
-                              ),
-                            })
-                          : alert("수강신청이 필요한 과목 입니다.");
-                        router.push("/regist");
+                        upWatchedPayment({
+                          id: data2.filter(
+                            (li) =>
+                              (li?.payStatus === "결제완료" &&
+                                li?.productCode?.includes("A_A01")) ||
+                              (li?.payStatus === "결제완료" &&
+                                li?.productCode?.includes(
+                                  lid?.substring(0, 5),
+                                )),
+                          )[0]?.id,
+                          watched: Number(
+                            data2.filter(
+                              (li) =>
+                                (li?.payStatus === "결제완료" &&
+                                  li?.productCode?.includes("A_A01")) ||
+                                (li?.payStatus === "결제완료" &&
+                                  li?.productCode?.includes(
+                                    lid?.substring(0, 5),
+                                  )),
+                            )[0]?.watched + 1,
+                          ),
+                        });
                       }}
                     >
                       강의요약
@@ -215,7 +212,74 @@ export default function Lectures({ classData, classtype, title }) {
               </div>
             </>
           ) : (
-            ""
+            <>
+              <div
+                style={{
+                  padding: "15px 25px",
+                  fontSize: "16px",
+                  borderTop: "1px solid lightgray",
+                  display: "flex",
+                  fontWeight: "bold",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <div># 강의 요약본</div>
+                <div>
+                  <button
+                    style={{
+                      marginRight: "10px",
+                      padding: "10px 20px",
+                      backgroundColor: "#7100a6",
+                      color: "white",
+                      fontWeight: "bold",
+                      borderRadius: "5px",
+                      border: "none",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => {
+                      alert("수강신청이 필요한 과목 입니다.");
+                      router.push("/regist");
+                    }}
+                  >
+                    강의요약
+                  </button>
+                </div>
+              </div>
+              <div
+                style={{
+                  padding: "15px 25px",
+                  fontSize: "16px",
+                  borderTop: "1px solid lightgray",
+                  display: "flex",
+                  fontWeight: "bold",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <div># 영상 요약본</div>
+                <div>
+                  <button
+                    style={{
+                      marginRight: "10px",
+                      padding: "10px 20px",
+                      backgroundColor: "#7100a6",
+                      color: "white",
+                      fontWeight: "bold",
+                      borderRadius: "5px",
+                      border: "none",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => {
+                      alert("수강신청이 필요한 과목 입니다.");
+                      router.push("/regist");
+                    }}
+                  >
+                    영상요약
+                  </button>
+                </div>
+              </div>
+            </>
           )}
 
           {classData
