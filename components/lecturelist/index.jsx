@@ -91,7 +91,7 @@ const ClassTitle = styled.div`
   @media (max-width: 620px) {
     font-size: 18px;
     margin: 0px 0px 0px 0px;
-    padding: 0px 5px 0px;
+    padding: 10px 5px 0px;
     /* background-color: red; */
   }
   font-size: 20px;
@@ -108,7 +108,7 @@ const ClassDesc = styled.div`
     font-size: 14px;
     /* display: none; */
     width: 100%;
-    padding: 15px 5px;
+    padding: 10px 5px;
     line-height: 140%;
   }
   /* font-weight: bold; */

@@ -115,6 +115,8 @@ const ClassPriceInfo = styled.div`
 
 const ClassButtonContainer = styled.div`
   display: flex;
+
+  justify-content: center;
   @media (max-width: 620px) {
     margin-top: 20px;
   }
@@ -122,7 +124,7 @@ const ClassButtonContainer = styled.div`
 
 const ClassButton = styled.button`
   width: 100%;
-  margin-right: 10px;
+  margin: 3px;
   padding: 10px 20px;
   background-color: ${(props) => props.colorCode};
   /* background-color: #7100a6; */

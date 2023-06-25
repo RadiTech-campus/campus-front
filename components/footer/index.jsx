@@ -19,6 +19,9 @@ const Divider = styled.div`
   border-bottom: 0.1rem solid #e6e8eb;
   margin: 20px 0px;
   /* width: 2000px; */
+  @media (max-width: 620px) {
+    margin: 0px;
+  }
 `;
 
 const BottomContainer = styled.div`

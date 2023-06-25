@@ -8,7 +8,7 @@ import { useGetPayment } from "../../query/contents";
 import { upWatchedPayment } from "../../api/contents_api";
 
 const LecturesContainer = styled.div`
-  padding: 10px 40px;
+  padding: 10px 10px;
 `;
 
 const ModalTitle = styled.div`
@@ -37,6 +37,47 @@ const LectureChapter = styled.div`
     box-shadow: 0 7px 14px rgba(0, 0, 0, 0.25), 0 5px 5px rgba(0, 0, 0, 0.22);
   } */
 `;
+
+const PreviewContainer = styled.div`
+  padding: 15px 25px;
+  font-size: 16px;
+  border-top: 1px solid lightgray;
+  display: flex;
+  font-weight: bold;
+  justify-content: space-between;
+  align-items: center;
+  @media (max-width: 620px) {
+    padding: 10px;
+  }
+`;
+
+const ChapterContainer = styled.div`
+  padding: 15px 25px;
+  font-size: 16px;
+  border-top: 1px solid lightgray;
+  display: flex;
+  font-weight: bold;
+  justify-content: space-between;
+  align-items: center;
+  @media (max-width: 620px) {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+  }
+`;
+const ChapterTitle = styled.div`
+  @media (max-width: 620px) {
+    width: 100%;
+  }
+`;
+const ChapterButtonContainer = styled.div`
+  @media (max-width: 620px) {
+    width: 100%;
+    display: flex;
+    justify-content: end;
+  }
+`;
+
 export default function Lectures({ classData, classtype, title }) {
   const auth = useAuth();
   const [isOpen, setIsOpen] = useState(false);
@@ -82,17 +123,7 @@ export default function Lectures({ classData, classtype, title }) {
         <LectureChapter>
           {classtype === "강의" && lid?.substring(2, 3) !== "C" && isPayed ? (
             <>
-              <div
-                style={{
-                  padding: "15px 25px",
-                  fontSize: "16px",
-                  borderTop: "1px solid lightgray",
-                  display: "flex",
-                  fontWeight: "bold",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                }}
-              >
+              <PreviewContainer>
                 <div># 강의 요약본</div>
                 <div>
                   <Link
@@ -146,18 +177,8 @@ export default function Lectures({ classData, classtype, title }) {
                     {/* ㅇㄹ아ㅣ너 */}
                   </Link>
                 </div>
-              </div>
-              <div
-                style={{
-                  padding: "15px 25px",
-                  fontSize: "16px",
-                  borderTop: "1px solid lightgray",
-                  display: "flex",
-                  fontWeight: "bold",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                }}
-              >
+              </PreviewContainer>
+              <PreviewContainer>
                 <div># 영상 요약본</div>
                 <div>
                   <Link
@@ -210,21 +231,11 @@ export default function Lectures({ classData, classtype, title }) {
                     </button>
                   </Link>
                 </div>
-              </div>
+              </PreviewContainer>
             </>
           ) : (
             <>
-              <div
-                style={{
-                  padding: "15px 25px",
-                  fontSize: "16px",
-                  borderTop: "1px solid lightgray",
-                  display: "flex",
-                  fontWeight: "bold",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                }}
-              >
+              <PreviewContainer>
                 <div># 강의 요약본</div>
                 <div>
                   <button
@@ -246,18 +257,8 @@ export default function Lectures({ classData, classtype, title }) {
                     강의요약
                   </button>
                 </div>
-              </div>
-              <div
-                style={{
-                  padding: "15px 25px",
-                  fontSize: "16px",
-                  borderTop: "1px solid lightgray",
-                  display: "flex",
-                  fontWeight: "bold",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                }}
-              >
+              </PreviewContainer>
+              <PreviewContainer>
                 <div># 영상 요약본</div>
                 <div>
                   <button
@@ -279,7 +280,7 @@ export default function Lectures({ classData, classtype, title }) {
                     영상요약
                   </button>
                 </div>
-              </div>
+              </PreviewContainer>
             </>
           )}
 
@@ -287,21 +288,13 @@ export default function Lectures({ classData, classtype, title }) {
             ?.filter((li) => li.contentDetailSubTitle === classtype)
             .sort((a, b) => (a.sorting > b.sorting ? 1 : -1))
             .map((li, i) => (
-              <div
-                key={i}
-                style={{
-                  padding: "15px 25px",
-                  fontSize: "16px",
-                  borderTop: "1px solid lightgray",
-                  display: "flex",
-                  fontWeight: "bold",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                }}
-              >
-                {`# ${i + 1}. ${li.contentDetailTitle}`}
+              <ChapterContainer key={i} style={{}}>
+                <ChapterTitle>{`# ${i + 1}. ${
+                  li.contentDetailTitle
+                }`}</ChapterTitle>
+
                 {auth.isAuthenticated && isPayed ? (
-                  <div>
+                  <ChapterButtonContainer>
                     <Link
                       href={{
                         pathname: `https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/content-summary/${li.contentDetailCode}.pdf`,
@@ -397,9 +390,9 @@ export default function Lectures({ classData, classtype, title }) {
                         강의보기
                       </button>
                     </Link>
-                  </div>
+                  </ChapterButtonContainer>
                 ) : auth.isAuthenticated && !isPayed ? (
-                  <div>
+                  <ChapterButtonContainer>
                     {/* <Link
                       href={{
                         pathname: `https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/content-data/${li.contentDetailCode}.pdf`,
@@ -455,9 +448,9 @@ export default function Lectures({ classData, classtype, title }) {
                       강의보기
                     </button>
                     {/* </Link> */}
-                  </div>
+                  </ChapterButtonContainer>
                 ) : (
-                  <div>
+                  <ChapterButtonContainer>
                     {/* <Link
                   href={{
                     pathname: `https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/content-data/${li.contentDetailCode}.pdf`,
@@ -507,9 +500,9 @@ export default function Lectures({ classData, classtype, title }) {
                       강의보기
                     </button>
                     {/* </Link> */}
-                  </div>
+                  </ChapterButtonContainer>
                 )}
-              </div>
+              </ChapterContainer>
             ))}
         </LectureChapter>
       ) : (

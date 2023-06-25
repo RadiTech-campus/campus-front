@@ -4,12 +4,18 @@ import React from "react";
 const LecturerContainer = styled.div`
   padding: 10px 40px;
   margin-bottom: 50px;
+  @media (max-width: 620px) {
+    padding: 10px 15px;
+  }
 `;
 
 const InfoTitle = styled.div`
   font-size: 24px;
   font-weight: bold;
   padding: 10px 0px;
+  @media (max-width: 620px) {
+    font-size: 20px;
+  }
 `;
 const InfoLecturer = styled.div``;
 const InfoRightLecturer = styled.div`
@@ -19,10 +25,16 @@ const InfoRightTitle = styled.div`
   font-size: 20px;
   font-weight: bold;
   margin: 10px 0px;
+  @media (max-width: 620px) {
+    font-size: 16px;
+  }
 `;
 const InfoRightContent = styled.div`
   font-size: 18px;
   margin-bottom: 3px;
+  @media (max-width: 620px) {
+    font-size: 14px;
+  }
 `;
 
 export default function Lecturer() {

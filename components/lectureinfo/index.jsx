@@ -40,7 +40,7 @@ const ClassImage3 = styled.div`
   position: relative;
   @media (max-width: 620px) {
     height: 100%;
-    margin: 20px auto 30px;
+    margin: 40px auto 30px;
   }
 `;
 
