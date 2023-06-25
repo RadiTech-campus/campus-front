@@ -25,11 +25,17 @@ const Category = styled.div`
   font-size: 16px;
   font-weight: bold;
   color: rgb(237, 35, 75);
+  @media (max-width: 620px) {
+    font-size: 14px;
+  }
 `;
 const MainTitle = styled.div`
   font-size: 24px;
   font-weight: bold;
   margin-top: 10px;
+  @media (max-width: 620px) {
+    font-size: 20px;
+  }
 `;
 const Description = styled.div`
   font-size: 16px;
@@ -48,9 +54,10 @@ const ClassCardsContainer = styled.div`
   a {
     @media (max-width: 620px) {
       justify-content: space-around;
-      width: 40%;
-      margin: 15px;
+      width: 45%;
+      margin: 10px 5px 5px 10px;
       padding: 0px;
+      /* background-color: green; */
     }
     text-decoration: none;
     border-radius: 10px;
@@ -63,11 +70,12 @@ const ClassCard = styled.div`
   @media (max-width: 620px) {
     width: 100%;
     margin: 0 auto;
+    /* background-color: red; */
   }
 `;
 const ClassImage = styled.div`
   @media (max-width: 620px) {
-    height: 110px;
+    height: 100px;
   }
   height: 180px;
   position: relative;
@@ -81,9 +89,10 @@ const ClassImage = styled.div`
 const ClassTitle = styled.div`
   /* text-align: center; */
   @media (max-width: 620px) {
-    font-size: 14px;
+    font-size: 18px;
     margin: 0px 0px 0px 0px;
     padding: 0px 5px 0px;
+    /* background-color: red; */
   }
   font-size: 20px;
   font-weight: 600;
@@ -96,7 +105,11 @@ const ClassDesc = styled.div`
   /* text-align: center; */
   font-size: 16px;
   @media (max-width: 620px) {
-    font-size: 12px;
+    font-size: 14px;
+    /* display: none; */
+    width: 100%;
+    padding: 15px 5px;
+    line-height: 140%;
   }
   /* font-weight: bold; */
   padding: 10px 5px 0px;
@@ -106,6 +119,8 @@ const ClassDesc = styled.div`
 
 const ClassTags = styled.div`
   @media (max-width: 620px) {
+    /* display: none; */
+    padding: 0px 5px 0px;
     margin-top: 0px;
   }
   font-size: 16px;
@@ -134,7 +149,6 @@ export default function LectureList({
   classData,
 }) {
   const isMobile = useIsMobile();
-
   return (
     <LectureListContainer>
       {/* <UserContent> */}
@@ -176,23 +190,33 @@ export default function LectureList({
                   {/* {li.thumbnail} */}
                 </ClassImage>
                 <ClassTitle>
-                  {li.secondCat?.split("!").map((li, i) => (
+                  {isMobile ? (
                     <div key={i} style={{ marginBottom: "3px" }}>
-                      {li}
-                      {i === 0 ? "!" : ""}
+                      {li.secondCat?.split("!")[0]}
                     </div>
-                  ))}
+                  ) : (
+                    li.secondCat?.split("!").map((li, i) => (
+                      <div key={i} style={{ marginBottom: "3px" }}>
+                        {li}
+                        {i === 0 ? "!" : ""}
+                      </div>
+                    ))
+                  )}
                 </ClassTitle>
                 <ClassDesc>{li?.iDescription}</ClassDesc>
                 <ClassTags>
-                  {li?.iTags?.split(" ").map((li, i) => (
-                    <ClassTag
-                      key={i}
-                      style={{ backgroundColor: "gray", marginRight: "5px" }}
-                    >
-                      {li}
-                    </ClassTag>
-                  ))}
+                  {li?.iTags?.split(" ").map((li, i) =>
+                    i === 0 || i === 1 ? (
+                      <ClassTag
+                        key={i}
+                        style={{ backgroundColor: "gray", marginRight: "5px" }}
+                      >
+                        {li}
+                      </ClassTag>
+                    ) : (
+                      ""
+                    ),
+                  )}
                 </ClassTags>
                 {/* <ClassContent>{li.content}</ClassContent> */}
               </ClassCard>
@@ -230,12 +254,18 @@ export default function LectureList({
                     {/* {li.thumbnail} */}
                   </ClassImage>
                   <ClassTitle>
-                    {li.gTitle?.split("!").map((li, i) => (
-                      <div key={i} style={{ marginBottom: "3px" }}>
-                        {li}
-                        {i === 0 ? "!" : ""}
+                    {isMobile ? (
+                      <div style={{ marginBottom: "3px" }}>
+                        {li.gTitle?.split("!")[0]}
                       </div>
-                    ))}
+                    ) : (
+                      li.gTitle?.split("!").map((li, i) => (
+                        <div key={i} style={{ marginBottom: "3px" }}>
+                          {li}
+                          {i === 0 ? "!" : ""}
+                        </div>
+                      ))
+                    )}
                   </ClassTitle>
                   <ClassDesc>{li.gDescription}</ClassDesc>
                   {/* <ClassContent>{li.content}</ClassContent> */}

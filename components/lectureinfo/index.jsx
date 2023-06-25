@@ -5,6 +5,9 @@ import { useIsMobile } from "../../hooks/useIsMobile";
 
 const LectureInfoContainer = styled.div`
   padding: 10px 40px;
+  @media (max-width: 620px) {
+    padding: 10px;
+  }
 `;
 
 const ClassImage1 = styled.div`
@@ -37,6 +40,7 @@ const ClassImage3 = styled.div`
   position: relative;
   @media (max-width: 620px) {
     height: 100%;
+    margin: 20px auto 30px;
   }
 `;
 
@@ -85,7 +89,7 @@ export default function LectureInfo({ lid, classData, classtype, preview }) {
               : classData.find((li) => li.code === lid)?.lPreview
           }`}
           width="840"
-          height={isMobile ? "300" : "546"}
+          height={isMobile ? "200" : "546"}
           frameBorder="0"
           allow="autoplay; fullscreen"
           allowFullScreen

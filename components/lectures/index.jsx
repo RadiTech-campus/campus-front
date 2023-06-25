@@ -143,6 +143,7 @@ export default function Lectures({ classData, classtype, title }) {
                     >
                       강의요약
                     </button>
+                    {/* ㅇㄹ아ㅣ너 */}
                   </Link>
                 </div>
               </div>

@@ -38,6 +38,10 @@ const TopDetail = styled.div`
 const TopLeftDetail = styled.div`
   flex: 0.45;
   padding: 20px;
+  @media (max-width: 620px) {
+    height: 200px;
+    padding: 10px;
+  }
 `;
 
 const ClassImage = styled.div`
@@ -46,6 +50,9 @@ const ClassImage = styled.div`
   > img {
     border-radius: 10px;
   }
+  @media (max-width: 620px) {
+    height: 180px;
+  }
 `;
 const TopRightDetail = styled.div`
   flex: 0.55;
@@ -53,6 +60,10 @@ const TopRightDetail = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  @media (max-width: 620px) {
+    /* padding: 0px; */
+    /* margin: 15px; */
+  }
 `;
 const ClassMainTitle = styled.div`
   font-size: 16px;
@@ -61,6 +72,9 @@ const ClassSubTitle = styled.div`
   font-size: 24px;
   font-weight: 600;
   margin-top: 10px;
+  @media (max-width: 620px) {
+    font-size: 20px;
+  }
 `;
 
 const ClassPriceContainer = styled.div`
@@ -70,6 +84,9 @@ const ClassPriceContainer = styled.div`
 `;
 
 const ClassPriceInner = styled.div`
+  @media (max-width: 620px) {
+    font-size: 20px;
+  }
   font-size: 24px;
   font-weight: 600;
   margin-left: 7px;
@@ -77,6 +94,7 @@ const ClassPriceInner = styled.div`
 `;
 const ClassPriceOuter = styled.div`
   font-size: 18px;
+
   /* font-weight: bold; */
 `;
 
@@ -89,10 +107,17 @@ const ClassPriceInfo = styled.div`
   margin-bottom: 15px;
   margin-top: 15px;
   color: #888888c1;
+  @media (max-width: 620px) {
+    font-size: 14px;
+    margin-top: 10px;
+  }
 `;
 
 const ClassButtonContainer = styled.div`
   display: flex;
+  @media (max-width: 620px) {
+    margin-top: 20px;
+  }
 `;
 
 const ClassButton = styled.button`
@@ -107,6 +132,10 @@ const ClassButton = styled.button`
   border-radius: 5px;
   border: none;
   cursor: pointer;
+  @media (max-width: 620px) {
+    /* margin: 0px;
+    padding: 0px; */
+  }
 `;
 
 const ClassTapContainer = styled.div`
@@ -114,11 +143,16 @@ const ClassTapContainer = styled.div`
   justify-content: center;
   border-bottom: 1px solid gray;
   margin: 20px 0px;
+  @media (max-width: 620px) {
+    /* padding: 10px 20px; */
+    margin: 0px 0px;
+  }
 `;
 const ClassTap = styled.div`
   @media (max-width: 620px) {
     padding: 10px 20px;
     margin: 0px 0px;
+    font-size: 14px;
   }
   padding: 5px 30px;
   margin: 0px 50px;
@@ -158,6 +192,7 @@ const DetailBanner = styled.div`
   width: 95%;
   @media (max-width: 620px) {
     height: 50px;
+    display: none;
   }
   height: 100px;
   position: relative;
@@ -217,14 +252,26 @@ export default function Lecture() {
       <TopDetail>
         <TopLeftDetail>
           <ClassImage>
-            <Image
-              src={`https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/contents/${lid}${
-                classtype === "기출" ? "_G" : ""
-              }.jpeg`}
-              alt="메인 배경 이미지"
-              style={{ objectFit: "cover" }}
-              fill
-            />
+            {isMobile ? (
+              <img
+                src={`https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/contents/${lid}${
+                  classtype === "기출" ? "_G" : ""
+                }.jpeg`}
+                alt="메인 배경 이미지"
+                style={{
+                  width: "100%",
+                }}
+              />
+            ) : (
+              <Image
+                src={`https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/contents/${lid}${
+                  classtype === "기출" ? "_G" : ""
+                }.jpeg`}
+                alt="메인 배경 이미지"
+                style={{ objectFit: "cover" }}
+                fill
+              />
+            )}
           </ClassImage>
         </TopLeftDetail>
         <TopRightDetail>
