@@ -71,6 +71,9 @@ const TitleContainer = styled.div`
   padding: 20px 0px;
   width: 440px;
   margin: 0px auto;
+  @media (max-width: 620px) {
+    display: none;
+  }
 `;
 
 const InputsContainer = styled.div`

@@ -68,6 +68,7 @@ const AuthContainer = styled.div`
   font-size: 13px;
   display: flex;
   @media (max-width: 620px) {
+    display: none;
     width: 100%;
     justify-content: end;
     border-bottom: 1px solid lightgray;
@@ -86,7 +87,6 @@ export default function Header({ onMoveToForm }) {
   const router = useRouter();
   const auth = useAuth();
   const isMobile = useIsMobile();
-  console.log("router", router);
   const [isOpen, setIsOpen] = useState(false);
   const handleOpenModal = () => {
     setIsOpen(true);
@@ -106,7 +106,6 @@ export default function Header({ onMoveToForm }) {
       ) : (
         ""
       )}
-
       <HeaderContainer>
         <LogoContainer>
           <Link href={"/"}>
@@ -132,7 +131,7 @@ export default function Header({ onMoveToForm }) {
           </SearchContainer> */}
         </LogoContainer>
         {auth.isAuthenticated ? (
-          <AuthContainer>
+          <AuthContainer isMobile={isMobile}>
             {isMobile ? (
               ""
             ) : (
