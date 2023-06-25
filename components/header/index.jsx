@@ -23,11 +23,17 @@ const HeaderContainer = styled.div`
     width: 100%;
     margin: 0 auto;
     padding: 0px;
+    flex-direction: column;
+    align-items: flex-start;
   }
 `;
 
-const BorderLine = styled.div`
-  border-bottom: 0.1px solid #e6e8eb;
+const MobileLogo = styled.img`
+  width: 195px;
+  @media (max-width: 620px) {
+    width: 150px;
+    padding: 10px 5px;
+  }
 `;
 const LogoContainer = styled.div`
   display: flex;
@@ -61,17 +67,26 @@ const SearchInput = styled.input`
 const AuthContainer = styled.div`
   font-size: 13px;
   display: flex;
+  @media (max-width: 620px) {
+    width: 100%;
+    justify-content: end;
+    border-bottom: 1px solid lightgray;
+  }
 `;
 
 const AuthButton = styled.div`
   margin-right: 20px;
   cursor: pointer;
+  @media (max-width: 620px) {
+    border-bottom: ${(props) => (props.selected ? "2px solid black;" : "")};
+    margin: 0px 5px 0px;
+  }
 `;
 export default function Header({ onMoveToForm }) {
   const router = useRouter();
   const auth = useAuth();
   const isMobile = useIsMobile();
-
+  console.log("router", router);
   const [isOpen, setIsOpen] = useState(false);
   const handleOpenModal = () => {
     setIsOpen(true);
@@ -95,13 +110,21 @@ export default function Header({ onMoveToForm }) {
       <HeaderContainer>
         <LogoContainer>
           <Link href={"/"}>
-            <Image
-              src="/titlelogo.png"
-              alt="메인 배경 이미지"
-              width={190}
-              height={35}
-              style={{ marginRight: "5px" }}
-            />
+            {isMobile ? (
+              <MobileLogo
+                src="/titlelogo.png"
+                alt="메인 배경 이미지"
+                style={{ marginRight: "5px" }}
+              />
+            ) : (
+              <Image
+                src="/titlelogo.png"
+                alt="메인 배경 이미지"
+                width={190}
+                height={35}
+                style={{ marginRight: "5px" }}
+              />
+            )}
           </Link>
           {/* <SearchContainer>
             <Search />
@@ -118,7 +141,10 @@ export default function Header({ onMoveToForm }) {
               </AuthButton>
             )}
 
-            <AuthButton onClick={() => router.push("/mypage")}>
+            <AuthButton
+              selected={router.pathname === "/mypage"}
+              onClick={() => router.push("/mypage")}
+            >
               마이페이지
             </AuthButton>
             <AuthButton
