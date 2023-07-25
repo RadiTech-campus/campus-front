@@ -237,6 +237,9 @@ export default function Lectures({ classData, classtype, title }) {
                 </div>
               </PreviewContainer>
             </>
+          ) : (classtype === "강의" && lid?.substring(2, 3) === "C") ||
+            (classtype !== "강의" && isPayed) ? (
+            ""
           ) : (
             <>
               <PreviewContainer>
