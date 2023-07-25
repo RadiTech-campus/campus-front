@@ -44,8 +44,11 @@ const ClassImage3 = styled.div`
   }
 `;
 
+const embed = {};
+
 export default function LectureInfo({ lid, classData, classtype, preview }) {
   const isMobile = useIsMobile();
+  console.log("lid", lid);
 
   return (
     <LectureInfoContainer>
@@ -68,13 +71,13 @@ export default function LectureInfo({ lid, classData, classtype, preview }) {
       <ClassImage2>
         {isMobile ? (
           <img
-            src={`/detail/eye.png`}
+            src={`/detail/eye${lid?.substring(2, 3) === "H" ? "2" : ""}.png`}
             alt="메인 배경 이미지"
             style={{ width: "100%" }}
           />
         ) : (
           <Image
-            src={`/detail/eye.png`}
+            src={`/detail/eye${lid?.substring(2, 3) === "H" ? "2" : ""}.png`}
             alt="메인 배경 이미지"
             style={{ objectFit: "cover" }}
             fill
@@ -82,7 +85,7 @@ export default function LectureInfo({ lid, classData, classtype, preview }) {
         )}
       </ClassImage2>
       <PreviewContainer ref={preview}>
-        <iframe
+        {/* <iframe
           src={`https://player.vimeo.com/video/${
             classtype === "기출"
               ? classData.find((li) => li.code === lid)?.gPreview
@@ -93,6 +96,18 @@ export default function LectureInfo({ lid, classData, classtype, preview }) {
           frameBorder="0"
           allow="autoplay; fullscreen"
           allowFullScreen
+        ></iframe> */}
+        <iframe
+          width="840"
+          height={isMobile ? "200" : "546"}
+          src={`https://www.youtube.com/embed/${
+            classtype === "기출"
+              ? classData.find((li) => li.code === lid)?.gPreview
+              : classData.find((li) => li.code === lid)?.lPreview
+          }`}
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
         ></iframe>
       </PreviewContainer>
       <ClassImage3>
