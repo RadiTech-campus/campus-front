@@ -220,6 +220,14 @@ export default function Index() {
           ?.filter((li) => li.firstCat === "취업" && li.pay === "유료")
           .sort((a, b) => (a.code > b.code ? 1 : -1))}
       />
+      <LectureList
+        category="BIG5 대학병원 핵심 분석"
+        mainTitle="대학병원 핵심 정보 한번에 알아보기"
+        // description="취업 가즈아 !"
+        classData={data
+          ?.filter((li) => li.firstCat === "병원" && li.pay === "유료")
+          .sort((a, b) => (a.code > b.code ? 1 : -1))}
+      />
     </IndexContainer>
   );
 }

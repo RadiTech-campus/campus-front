@@ -124,7 +124,9 @@ export default function Lectures({ classData, classtype, title }) {
           {classtype === "강의" && lid?.substring(2, 3) !== "C" && isPayed ? (
             <>
               <PreviewContainer>
-                <div># 강의 요약본</div>
+                <div>
+                  {lid.includes("C_B05") ? "# 물리 요약본" : "# 강의 요약본"}{" "}
+                </div>
                 <div>
                   <Link
                     href={{
@@ -179,7 +181,9 @@ export default function Lectures({ classData, classtype, title }) {
                 </div>
               </PreviewContainer>
               <PreviewContainer>
-                <div># 영상 요약본</div>
+                <div>
+                  {lid.includes("C_B05") ? "# 임상 요약본" : "# 영상 요약본"}{" "}
+                </div>
                 <div>
                   <Link
                     href={{
@@ -236,7 +240,9 @@ export default function Lectures({ classData, classtype, title }) {
           ) : (
             <>
               <PreviewContainer>
-                <div># 강의 요약본</div>
+                <div>
+                  {lid.includes("C_B05") ? "# 물리 요약본" : "# 강의 요약본"}{" "}
+                </div>
                 <div>
                   <button
                     style={{
@@ -259,7 +265,9 @@ export default function Lectures({ classData, classtype, title }) {
                 </div>
               </PreviewContainer>
               <PreviewContainer>
-                <div># 영상 요약본</div>
+                <div>
+                  {lid.includes("C_B05") ? "# 임상 요약본" : "# 영상 요약본"}{" "}
+                </div>
                 <div>
                   <button
                     style={{
@@ -297,7 +305,7 @@ export default function Lectures({ classData, classtype, title }) {
                   <ChapterButtonContainer>
                     <Link
                       href={{
-                        pathname: `https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/content-summary/${li.contentDetailCode}.pdf`,
+                        pathname: `https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/content-data/${li.contentDetailCode}.pdf`,
                       }}
                       target="_blank"
                       rel="noopener noreferrer"
