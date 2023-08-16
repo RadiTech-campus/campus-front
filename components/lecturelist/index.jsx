@@ -226,7 +226,8 @@ export default function LectureList({
             li.code === "C_B02_P" ||
             li.code === "C_B03_P" ||
             li.code === "C_B04_P" ||
-            li.code === "C_B05_P" ? (
+            li.code === "C_B05_P" ||
+            li.code === "C_B06_P" ? (
               <Link
                 href={{
                   pathname: `/lecture/${li.code}`,
