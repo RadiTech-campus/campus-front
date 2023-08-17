@@ -149,7 +149,6 @@ export default function LectureList({
   classData,
 }) {
   const isMobile = useIsMobile();
-  console.log("classData", classData);
   return (
     <LectureListContainer>
       {/* <UserContent> */}
