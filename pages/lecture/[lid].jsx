@@ -312,11 +312,16 @@ export default function Lecture() {
             <ClassPriceInfo>강연 + 기출 + 자료 무제한으로 수강</ClassPriceInfo>
             <ClassContent>
               <ClassLeftContent>강의 분량</ClassLeftContent>
-              <ClassRightContent>{data?.length} 개</ClassRightContent>
+              <ClassRightContent>{data?.length - 1} 개</ClassRightContent>
             </ClassContent>
             <ClassContent>
               <ClassLeftContent>강의 시간</ClassLeftContent>
-              <ClassRightContent>4시간 +</ClassRightContent>
+              <ClassRightContent>
+                {classtype === "기출"
+                  ? data2.find((li) => li.code === lid).gTime
+                  : data2.find((li) => li.code === lid).iTime}{" "}
+                분
+              </ClassRightContent>
             </ClassContent>
           </div>
           <ClassButtonContainer>

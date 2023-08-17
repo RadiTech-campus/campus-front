@@ -128,7 +128,7 @@ export default function Lectures({ classData, classtype, title }) {
             <>
               <PreviewContainer>
                 <div>
-                  {lid.includes("C_B05") ? "# 물리 요약본" : "# 강의 요약본"}{" "}
+                  {lid.includes("C_B06") ? "# 물리 요약본" : "# 강의 요약본"}{" "}
                 </div>
                 <div>
                   <Link
@@ -248,7 +248,7 @@ export default function Lectures({ classData, classtype, title }) {
             <>
               <PreviewContainer>
                 <div>
-                  {lid.includes("C_B05") ? "# 물리 요약본" : "# 강의 요약본"}{" "}
+                  {lid.includes("C_B06") ? "# 물리 요약본" : "# 강의 요약본"}{" "}
                 </div>
                 <div>
                   <button
