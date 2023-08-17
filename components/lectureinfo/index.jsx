@@ -48,7 +48,6 @@ const embed = {};
 
 export default function LectureInfo({ lid, classData, classtype, preview }) {
   const isMobile = useIsMobile();
-  console.log("lid", lid);
 
   return (
     <LectureInfoContainer>
