@@ -318,8 +318,8 @@ export default function Lecture() {
               <ClassLeftContent>강의 시간</ClassLeftContent>
               <ClassRightContent>
                 {classtype === "기출"
-                  ? data2.find((li) => li.code === lid).gTime
-                  : data2.find((li) => li.code === lid).iTime}{" "}
+                  ? data2?.find((li) => li.code === lid)?.gTime
+                  : data2?.find((li) => li.code === lid)?.iTime}{" "}
                 분
               </ClassRightContent>
             </ClassContent>
