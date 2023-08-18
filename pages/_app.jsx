@@ -21,7 +21,7 @@ export default function IndexPage({ Component, pageProps }) {
           <Hydrate state={pageProps.dehydratedState}>
             {globalStyles}
             <Head>
-              <title>Radi Tech Campus</title>
+              <title>Radi Tech Campus DEV</title>
             </Head>
             <Layout>
               <Component {...pageProps} />
