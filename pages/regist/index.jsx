@@ -254,12 +254,13 @@ export default function SignUp() {
 
   const { data: paymentData, paymentIsLoading } = useGetPayment(auth.username);
   const data4 = useMemo(() => paymentData?.Items || [], [auth, paymentData]);
-
   const mutate = useCreatePayment({
     id: (10000 + payCounts).toString(),
     applyDate: new Date(),
     price:
-      data.length < 1 ? 0 : data2.price - data2.price * (data.discount / 100),
+      data.length < 1
+        ? data2.price
+        : data2.price - data2.price * (data.discount / 100),
     productCode: data2?.productCode,
     productTitle: data2?.productTitle,
     userId: auth.username,
