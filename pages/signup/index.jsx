@@ -341,7 +341,7 @@ export default function SignUp() {
           <LogoContainer>
             <Image
               src="/titlelogo.png"
-              alt="메인 배경 이미지"
+              alt="레디테크 캠퍼스"
               width={160}
               height={30}
               style={{ marginRight: "5px" }}

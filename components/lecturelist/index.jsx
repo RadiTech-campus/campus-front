@@ -239,13 +239,13 @@ export default function LectureList({
                     {isMobile ? (
                       <img
                         src={`https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/contents/${li.code}_G.jpeg`}
-                        alt="메인 배경 이미지"
+                        alt="레디테크 캠퍼스"
                         style={{ width: "100%" }}
                       />
                     ) : (
                       <Image
                         src={`https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/contents/${li.code}_G.jpeg`}
-                        alt="메인 배경 이미지"
+                        alt="레디테크 캠퍼스"
                         // width={30}
                         // height={30}
                         style={{ objectFit: "cover" }}

@@ -94,7 +94,7 @@ export default function Index() {
           <SwiperSlide>
             <img
               src={"1111.png"}
-              alt="메인 배경 이미지"
+              alt="레디테크 캠퍼스"
               style={{
                 width: "100%",
               }}
@@ -110,7 +110,7 @@ export default function Index() {
           >
             <Image
               src={"1.png"}
-              alt="메인 배경 이미지"
+              alt="레디테크 캠퍼스"
               style={{ objectFit: "contain" }}
               fill
             />
@@ -126,7 +126,7 @@ export default function Index() {
         >
           <Image
             src="/2.png"
-            alt="메인 배경 이미지"
+            alt="레디테크 캠퍼스"
             style={{ objectFit: "contain" }}
             fill
           />
@@ -134,7 +134,7 @@ export default function Index() {
         {/* <SwiperSlide style={{ width: "100%", height: "450px" }}>
           <Image
             src="/2.png"
-            alt="메인 배경 이미지"
+            alt="레디테크 캠퍼스"
             style={{ objectFit: "fill" }}
             fill
           />
@@ -142,7 +142,7 @@ export default function Index() {
         <SwiperSlide style={{ width: "100%", height: "450px" }}>
           <Image
             src="/3.png"
-            alt="메인 배경 이미지"
+            alt="레디테크 캠퍼스"
             style={{ objectFit: "fill" }}
             fill
           />
@@ -150,7 +150,7 @@ export default function Index() {
         <SwiperSlide style={{ width: "100%", height: "450px" }}>
           <Image
             src="/4.png"
-            alt="메인 배경 이미지"
+            alt="레디테크 캠퍼스"
             style={{ objectFit: "fill" }}
             fill
           />
@@ -158,7 +158,7 @@ export default function Index() {
         {/* <SwiperSlide style={{ width: "100%", height: "450px" }}>
           <Image
             src="/swi.png"
-            alt="메인 배경 이미지"
+            alt="레디테크 캠퍼스"
             style={{ objectFit: "fill" }}
             fill
           />
@@ -166,7 +166,7 @@ export default function Index() {
         <SwiperSlide style={{ width: "100%", height: "350px" }}>
           <Image
             src="/swi2.png"
-            alt="메인 배경 이미지"
+            alt="레디테크 캠퍼스"
             style={{ objectFit: "contain" }}
             fill
           />
@@ -174,7 +174,7 @@ export default function Index() {
         <SwiperSlide style={{ width: "100%", height: "350px" }}>
           <Image
             src="/swi3.png"
-            alt="메인 배경 이미지"
+            alt="레디테크 캠퍼스"
             style={{ objectFit: "contain" }}
             fill
           />
@@ -182,7 +182,7 @@ export default function Index() {
         <SwiperSlide style={{ width: "100%", height: "350px" }}>
           <Image
             src="/swi.png"
-            alt="메인 배경 이미지"
+            alt="레디테크 캠퍼스"
             style={{ objectFit: "contain" }}
             fill
           />
@@ -190,7 +190,7 @@ export default function Index() {
         {/* <SwiperSlide style={{ width: "100%", height: "350px" }}>
           <Image
             src="/swi.png"
-            alt="메인 배경 이미지"
+            alt="레디테크 캠퍼스"
             style={{ objectFit: "contain" }}
             fill
           />

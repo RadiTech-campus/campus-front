@@ -211,6 +211,7 @@ export default function Lecture() {
 
   const { lid, classtype, title } = router.query;
   const [selectedTab, setSelectedTab] = useState("강의소개");
+  w;
   const [isOpen, setIsOpen] = useState(false);
   const handleOpenModal = () => {
     auth.isAuthenticated ? router.push("/regist") : setIsOpen(true);
@@ -259,7 +260,7 @@ export default function Lecture() {
                 src={`https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/contents/${lid}${
                   classtype === "기출" ? "_G" : ""
                 }.jpeg`}
-                alt="메인 배경 이미지"
+                alt="레디테크 캠퍼스"
                 style={{
                   width: "100%",
                 }}
@@ -269,7 +270,7 @@ export default function Lecture() {
                 src={`https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/contents/${lid}${
                   classtype === "기출" ? "_G" : ""
                 }.jpeg`}
-                alt="메인 배경 이미지"
+                alt="레디테크 캠퍼스"
                 style={{ objectFit: "cover" }}
                 fill
               />
@@ -358,7 +359,7 @@ export default function Lecture() {
         {isMobile ? (
           <img
             src={`/detailbanner.png`}
-            alt="메인 배경 이미지"
+            alt="레디테크 캠퍼스"
             style={{
               width: "100%",
             }}
@@ -366,7 +367,7 @@ export default function Lecture() {
         ) : (
           <Image
             src={`/detailbanner.png`}
-            alt="메인 배경 이미지"
+            alt="레디테크 캠퍼스"
             style={{ objectFit: "cover" }}
             fill
           />

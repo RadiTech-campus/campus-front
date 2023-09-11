@@ -41,7 +41,7 @@ function PrivacyModal({ onClose }) {
           <Image
             //   src={`/${lid}.jpeg`}
             src={`/privacy.png`}
-            alt="메인 배경 이미지"
+            alt="레디테크 캠퍼스"
             style={{ objectFit: "cover" }}
             fill
           />

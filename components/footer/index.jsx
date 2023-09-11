@@ -69,7 +69,7 @@ export default function Footer({ footerRef }) {
       <Divider />
       <BottomContainer>
         <LeftContainer>
-          <FooterTitle>RadiTech-campus</FooterTitle>
+          <FooterTitle>레디테크 캠퍼스</FooterTitle>
           <FooterContent>㈜하이웨이​</FooterContent>
           <FooterContent>대표 : 이광자​​</FooterContent>
           <FooterContent>사업자번호 : 731-90-01929</FooterContent>
@@ -90,7 +90,7 @@ export default function Footer({ footerRef }) {
           </FooterContent>
         </CenterContainer>
         <RightContainer>
-          <FooterContent>RadiTech-campus</FooterContent>
+          <FooterContent>레디테크 캠퍼스</FooterContent>
         </RightContainer>
       </BottomContainer>
     </FooterContainer>

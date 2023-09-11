@@ -134,7 +134,7 @@ export default function Lecture() {
           <ClassImage>
             <Image
               src="https://cdn.news.unn.net/news/photo/202301/540181_346310_728.jpg"
-              alt="메인 배경 이미지"
+              alt="레디테크 캠퍼스"
               style={{ objectFit: "cover" }}
               fill
             />
@@ -166,7 +166,7 @@ export default function Lecture() {
           <InfoImage>
             <Image
               src="https://cdn.news.unn.net/news/photo/202301/540181_346310_728.jpg"
-              alt="메인 배경 이미지"
+              alt="레디테크 캠퍼스"
               style={{ objectFit: "cover" }}
               fill
             />

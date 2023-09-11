@@ -55,13 +55,13 @@ export default function LectureInfo({ lid, classData, classtype, preview }) {
         {isMobile ? (
           <img
             src={`/detail/${lid}${classtype === "기출" ? "_G" : ""}.png`}
-            alt="메인 배경 이미지"
+            alt="레디테크 캠퍼스"
             style={{ width: "100%" }}
           />
         ) : (
           <Image
             src={`/detail/${lid}${classtype === "기출" ? "_G" : ""}.png`}
-            alt="메인 배경 이미지"
+            alt="레디테크 캠퍼스"
             style={{ objectFit: "cover" }}
             fill
           />
@@ -71,13 +71,13 @@ export default function LectureInfo({ lid, classData, classtype, preview }) {
         {isMobile ? (
           <img
             src={`/detail/eye${lid?.substring(2, 3) === "H" ? "2" : ""}.png`}
-            alt="메인 배경 이미지"
+            alt="레디테크 캠퍼스"
             style={{ width: "100%" }}
           />
         ) : (
           <Image
             src={`/detail/eye${lid?.substring(2, 3) === "H" ? "2" : ""}.png`}
-            alt="메인 배경 이미지"
+            alt="레디테크 캠퍼스"
             style={{ objectFit: "cover" }}
             fill
           />
@@ -113,13 +113,13 @@ export default function LectureInfo({ lid, classData, classtype, preview }) {
         {isMobile ? (
           <img
             src={`/detail/price.png`}
-            alt="메인 배경 이미지"
+            alt="레디테크 캠퍼스"
             style={{ width: "100%" }}
           />
         ) : (
           <Image
             src={`/detail/price.png`}
-            alt="메인 배경 이미지"
+            alt="레디테크 캠퍼스"
             style={{ objectFit: "cover" }}
             fill
           />
