@@ -211,7 +211,6 @@ export default function Lecture() {
 
   const { lid, classtype, title } = router.query;
   const [selectedTab, setSelectedTab] = useState("강의소개");
-  w;
   const [isOpen, setIsOpen] = useState(false);
   const handleOpenModal = () => {
     auth.isAuthenticated ? router.push("/regist") : setIsOpen(true);
