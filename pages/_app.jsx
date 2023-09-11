@@ -20,9 +20,9 @@ export default function IndexPage({ Component, pageProps }) {
         <ProvideIsMobile>
           <Hydrate state={pageProps.dehydratedState}>
             {globalStyles}
-            <Head>
+            {/* <Head>
               <title>Radi Tech Campus</title>
-            </Head>
+            </Head> */}
             <Layout>
               <Component {...pageProps} />
               <ReactQueryDevtools initialIsOpen={false} />
