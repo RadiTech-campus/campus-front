@@ -205,8 +205,15 @@ export default function Index() {
           .sort((a, b) => (a.code > b.code ? 1 : -1))}
       /> */}
       <LectureList
+        category="기간 한정 이벤트"
+        mainTitle="무료 인강 & 요약 자료"
+        classData={data
+          ?.filter((li) => li.pay === "무료")
+          .sort((a, b) => (a.code > b.code ? 1 : -1))}
+      />
+      <LectureList
         category="방사선사 국가고시"
-        mainTitle="어려운 임상도 한번에 합격하기"
+        mainTitle="촉박한 시간, 방대한 시험범위, 한번에 해결!"
         // description="어려운 실기를 가장 효과적으로 공부하기 !"
         classData={data
           ?.filter((li) => li.firstCat === "일반강의" && li.pay === "유료")

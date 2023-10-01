@@ -1,8 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import styled from "@emotion/styled";
-import Image from "next/image";
-import Lectures from "../../components/lectures";
 import {
   useGetContentDetails,
   useGetContents,
@@ -14,6 +12,8 @@ import LectureWarn from "../../components/lecturewarn";
 import { useAuth } from "../../hooks/useAuth";
 import Modal from "../../components/modal/Modal";
 import { useIsMobile } from "../../hooks/useIsMobile";
+import LectureDetail from "../../components/lecturedetail";
+import FreeLectureDetail from "../../components/lecturedetail/freeLectureDetail";
 
 const LectureDetailContainer = styled.div`
   margin: 0px auto;
@@ -210,6 +210,7 @@ export default function Lecture() {
   const isMobile = useIsMobile();
 
   const { lid, classtype, title } = router.query;
+
   const [selectedTab, setSelectedTab] = useState("강의소개");
   const [isOpen, setIsOpen] = useState(false);
   const handleOpenModal = () => {
@@ -233,171 +234,171 @@ export default function Lecture() {
 
   const { data: paymentData } = useGetPayment(auth.username);
   const data3 = useMemo(() => paymentData?.Items || 0, [paymentData]);
-  return (
-    <LectureDetailContainer>
-      {isOpen && (
-        <Modal
-          open={isOpen}
-          onClose={() => {
-            setIsOpen(false);
-            router.push(`/signin?returnpath=${router.asPath}`);
-          }}
-        >
-          <>
-            <ModalTitle>
-              {selectedTab === "커리큘럼" ? "커리큘럼" : "수강 신청"}
-            </ModalTitle>
-            <ModalContent>{"로그인이 필요한 서비스 입니다."}</ModalContent>
-          </>
-        </Modal>
-      )}
-      <TopDetail>
-        <TopLeftDetail>
-          <ClassImage>
-            {isMobile ? (
-              <img
-                src={`https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/contents/${lid}${
-                  classtype === "기출" ? "_G" : ""
-                }.jpeg`}
-                alt="레디테크 캠퍼스"
-                style={{
-                  width: "100%",
-                }}
-              />
-            ) : (
-              <Image
-                src={`https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/contents/${lid}${
-                  classtype === "기출" ? "_G" : ""
-                }.jpeg`}
-                alt="레디테크 캠퍼스"
-                style={{ objectFit: "cover" }}
-                fill
-              />
-            )}
-          </ClassImage>
-        </TopLeftDetail>
-        <TopRightDetail>
-          <div>
-            {/* <ClassMainTitle>
-              {lid?.slice(-1) === "F" && "#무료공개"} {`#${classtype}`}{" "}
-              {`#${title}`}
-            </ClassMainTitle> */}
-            {/* <ClassMainTitle>
-              {data2.find((li) => li.code === data[0]?.contentCode)?.subTitle}
-            </ClassMainTitle> */}
-            <ClassSubTitle>
-              {classtype === "기출"
-                ? data2
-                    .find((li) => li.code === data[0]?.contentCode)
-                    ?.gTitle.split("!")
-                    .map((li, i) => (
-                      <div key={i} style={{ marginBottom: "3px" }}>
-                        {li}
-                        {i === 0 ? "!" : ""}
-                      </div>
-                    ))
-                : title?.split("!").map((li, i) => (
-                    <div key={i} style={{ marginBottom: "3px" }}>
-                      {li}
-                      {i === 0 ? "!" : ""}
-                    </div>
-                  ))}
-            </ClassSubTitle>
+  return lid?.includes("F") ? <FreeLectureDetail /> : <LectureDetail />;
 
-            <ClassPriceContainer>
-              <ClassPriceOuter>월 </ClassPriceOuter>
-              <ClassPriceInner>8,250 </ClassPriceInner>
-              <ClassPriceOuter>원 (연 99,000원) </ClassPriceOuter>
-            </ClassPriceContainer>
-            <ClassPriceInfo>강연 + 기출 + 자료 무제한으로 수강</ClassPriceInfo>
-            <ClassContent>
-              <ClassLeftContent>강의 분량</ClassLeftContent>
-              <ClassRightContent>{data?.length - 1} 개</ClassRightContent>
-            </ClassContent>
-            <ClassContent>
-              <ClassLeftContent>강의 시간</ClassLeftContent>
-              <ClassRightContent>
-                {classtype === "기출"
-                  ? data2?.find((li) => li.code === lid)?.gTime
-                  : data2?.find((li) => li.code === lid)?.iTime}{" "}
-                분
-              </ClassRightContent>
-            </ClassContent>
-          </div>
-          <ClassButtonContainer>
-            <ClassButton colorCode="#000000" onClick={() => onMoveToForm()}>
-              미리보기
-            </ClassButton>
-            {data3 &&
-            data3.length > 0 &&
-            data3.filter(
-              (li) =>
-                (li.payStatus === "결제완료" &&
-                  li?.productCode?.includes("A_A01")) ||
-                (li.payStatus === "결제완료" &&
-                  li?.productCode?.includes(lid?.substring(0, 5))),
-            ).length > 0 ? (
-              <ClassButton
-                colorCode="#7100a6"
-                onClick={() => setSelectedTab("커리큘럼")}
-              >
-                강의보기
-              </ClassButton>
-            ) : (
-              <ClassButton
-                colorCode="#7100a6"
-                onClick={() => handleOpenModal()}
-              >
-                수강신청
-              </ClassButton>
-            )}
-          </ClassButtonContainer>
-        </TopRightDetail>
-      </TopDetail>
-      <DetailBanner>
-        {isMobile ? (
-          <img
-            src={`/detailbanner.png`}
-            alt="레디테크 캠퍼스"
-            style={{
-              width: "100%",
-            }}
-          />
-        ) : (
-          <Image
-            src={`/detailbanner.png`}
-            alt="레디테크 캠퍼스"
-            style={{ objectFit: "cover" }}
-            fill
-          />
-        )}
-      </DetailBanner>
+  // <LectureDetailContainer>
+  //   {isOpen && (
+  //     <Modal
+  //       open={isOpen}
+  //       onClose={() => {
+  //         setIsOpen(false);
+  //         router.push(`/signin?returnpath=${router.asPath}`);
+  //       }}
+  //     >
+  //       <>
+  //         <ModalTitle>
+  //           {selectedTab === "커리큘럼" ? "커리큘럼" : "수강 신청"}
+  //         </ModalTitle>
+  //         <ModalContent>{"로그인이 필요한 서비스 입니다."}</ModalContent>
+  //       </>
+  //     </Modal>
+  //   )}
+  //   <TopDetail>
+  //     <TopLeftDetail>
+  //       <ClassImage>
+  //         {isMobile ? (
+  //           <img
+  //             src={`https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/contents/${lid}${
+  //               classtype === "기출" ? "_G" : ""
+  //             }.jpeg`}
+  //             alt="레디테크 캠퍼스"
+  //             style={{
+  //               width: "100%",
+  //             }}
+  //           />
+  //         ) : (
+  //           <Image
+  //             src={`https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/contents/${lid}${
+  //               classtype === "기출" ? "_G" : ""
+  //             }.jpeg`}
+  //             alt="레디테크 캠퍼스"
+  //             style={{ objectFit: "cover" }}
+  //             fill
+  //           />
+  //         )}
+  //       </ClassImage>
+  //     </TopLeftDetail>
+  //     <TopRightDetail>
+  //       <div>
+  //         {/* <ClassMainTitle>
+  //           {lid?.slice(-1) === "F" && "#무료공개"} {`#${classtype}`}{" "}
+  //           {`#${title}`}
+  //         </ClassMainTitle> */}
+  //         {/* <ClassMainTitle>
+  //           {data2.find((li) => li.code === data[0]?.contentCode)?.subTitle}
+  //         </ClassMainTitle> */}
+  //         <ClassSubTitle>
+  //           {classtype === "기출"
+  //             ? data2
+  //                 .find((li) => li.code === data[0]?.contentCode)
+  //                 ?.gTitle.split("!")
+  //                 .map((li, i) => (
+  //                   <div key={i} style={{ marginBottom: "3px" }}>
+  //                     {li}
+  //                     {i === 0 ? "!" : ""}
+  //                   </div>
+  //                 ))
+  //             : title?.split("!").map((li, i) => (
+  //                 <div key={i} style={{ marginBottom: "3px" }}>
+  //                   {li}
+  //                   {i === 0 ? "!" : ""}
+  //                 </div>
+  //               ))}
+  //         </ClassSubTitle>
 
-      <ClassTapContainer>
-        {tabs.map((tab, i) => (
-          <ClassTap
-            key={i}
-            id={tab}
-            onClick={(e) => setSelectedTab(e.target.id)}
-            selected={tab === selectedTab ? true : false}
-          >
-            {tab}
-          </ClassTap>
-        ))}
-      </ClassTapContainer>
-      {selectedTab === "강의소개" && (
-        <LectureInfo
-          lid={lid}
-          classtype={classtype}
-          classData={data2}
-          preview={preview}
-        />
-      )}
-      {selectedTab === "커리큘럼" && (
-        <Lectures classData={data} classtype={classtype} title={title} />
-      )}
-      {selectedTab === "강사소개" && <Lecturer />}
-      {selectedTab === "주의사항" && <LectureWarn />}
-    </LectureDetailContainer>
-  );
+  //         <ClassPriceContainer>
+  //           <ClassPriceOuter>월 </ClassPriceOuter>
+  //           <ClassPriceInner>8,250 </ClassPriceInner>
+  //           <ClassPriceOuter>원 (연 99,000원) </ClassPriceOuter>
+  //         </ClassPriceContainer>
+  //         <ClassPriceInfo>강연 + 기출 + 자료 무제한으로 수강</ClassPriceInfo>
+  //         <ClassContent>
+  //           <ClassLeftContent>강의 분량</ClassLeftContent>
+  //           <ClassRightContent>{data?.length - 1} 개</ClassRightContent>
+  //         </ClassContent>
+  //         <ClassContent>
+  //           <ClassLeftContent>강의 시간</ClassLeftContent>
+  //           <ClassRightContent>
+  //             {classtype === "기출"
+  //               ? data2?.find((li) => li.code === lid)?.gTime
+  //               : data2?.find((li) => li.code === lid)?.iTime}{" "}
+  //             분
+  //           </ClassRightContent>
+  //         </ClassContent>
+  //       </div>
+  //       <ClassButtonContainer>
+  //         <ClassButton colorCode="#000000" onClick={() => onMoveToForm()}>
+  //           미리보기
+  //         </ClassButton>
+  //         {data3 &&
+  //         data3.length > 0 &&
+  //         data3.filter(
+  //           (li) =>
+  //             (li.payStatus === "결제완료" &&
+  //               li?.productCode?.includes("A_A01")) ||
+  //             (li.payStatus === "결제완료" &&
+  //               li?.productCode?.includes(lid?.substring(0, 5))),
+  //         ).length > 0 ? (
+  //           <ClassButton
+  //             colorCode="#7100a6"
+  //             onClick={() => setSelectedTab("커리큘럼")}
+  //           >
+  //             강의보기
+  //           </ClassButton>
+  //         ) : (
+  //           <ClassButton
+  //             colorCode="#7100a6"
+  //             onClick={() => handleOpenModal()}
+  //           >
+  //             수강신청
+  //           </ClassButton>
+  //         )}
+  //       </ClassButtonContainer>
+  //     </TopRightDetail>
+  //   </TopDetail>
+  //   <DetailBanner>
+  //     {isMobile ? (
+  //       <img
+  //         src={`/detailbanner.png`}
+  //         alt="레디테크 캠퍼스"
+  //         style={{
+  //           width: "100%",
+  //         }}
+  //       />
+  //     ) : (
+  //       <Image
+  //         src={`/detailbanner.png`}
+  //         alt="레디테크 캠퍼스"
+  //         style={{ objectFit: "cover" }}
+  //         fill
+  //       />
+  //     )}
+  //   </DetailBanner>
+
+  //   <ClassTapContainer>
+  //     {tabs.map((tab, i) => (
+  //       <ClassTap
+  //         key={i}
+  //         id={tab}
+  //         onClick={(e) => setSelectedTab(e.target.id)}
+  //         selected={tab === selectedTab ? true : false}
+  //       >
+  //         {tab}
+  //       </ClassTap>
+  //     ))}
+  //   </ClassTapContainer>
+  //   {selectedTab === "강의소개" && (
+  //     <LectureInfo
+  //       lid={lid}
+  //       classtype={classtype}
+  //       classData={data2}
+  //       preview={preview}
+  //     />
+  //   )}
+  //   {selectedTab === "커리큘럼" && (
+  //     <Lectures classData={data} classtype={classtype} title={title} />
+  //   )}
+  //   {selectedTab === "강사소개" && <Lecturer />}
+  //   {selectedTab === "주의사항" && <LectureWarn />}
+  // </LectureDetailContainer>
 }
