@@ -228,6 +228,7 @@ export default function LectureList({
             li.code === "C_B05_P" ||
             li.code === "C_B06_P" ||
             li.code === "C_B07_P" ||
+            li.code === "C_B08_P" ||
             li.code === "C_B09_P" ? (
               <Link
                 href={{
