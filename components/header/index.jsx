@@ -19,12 +19,9 @@ const HeaderContainer = styled.div`
   z-index: 10;
   background-color: "white";
   @media (max-width: 620px) {
-    /* width: 620px; */
     width: 100%;
     margin: 0 auto;
     padding: 0px;
-    flex-direction: column;
-    align-items: flex-start;
   }
 `;
 
@@ -68,10 +65,10 @@ const AuthContainer = styled.div`
   font-size: 13px;
   display: flex;
   @media (max-width: 620px) {
-    display: none;
     width: 100%;
     justify-content: end;
-    border-bottom: 1px solid lightgray;
+    font-size: 15px;
+    font-weight: 600;
   }
 `;
 
@@ -80,7 +77,6 @@ const AuthButton = styled.div`
   cursor: pointer;
   @media (max-width: 620px) {
     border-bottom: ${(props) => (props.selected ? "2px solid black;" : "")};
-    margin: 0px 5px 0px;
   }
 `;
 export default function Header({ onMoveToForm }) {
