@@ -77,6 +77,7 @@ const AuthButton = styled.div`
   cursor: pointer;
   @media (max-width: 620px) {
     border-bottom: ${(props) => (props.selected ? "2px solid black;" : "")};
+    margin-right: 15px;
   }
 `;
 export default function Header({ onMoveToForm }) {
