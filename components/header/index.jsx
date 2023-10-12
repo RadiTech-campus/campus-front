@@ -67,7 +67,7 @@ const AuthContainer = styled.div`
   @media (max-width: 620px) {
     width: 100%;
     justify-content: end;
-    font-size: 15px;
+    /* font-size: 15px; */
     font-weight: 600;
   }
 `;
@@ -107,11 +107,7 @@ export default function Header({ onMoveToForm }) {
         <LogoContainer>
           <Link href={"/"}>
             {isMobile ? (
-              <MobileLogo
-                src="/titlelogo.png"
-                alt="레디테크 캠퍼스"
-                style={{ marginRight: "5px" }}
-              />
+              <MobileLogo src="/titlelogo.png" alt="레디테크 캠퍼스" />
             ) : (
               <Image
                 src="/titlelogo.png"
