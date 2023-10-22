@@ -9,6 +9,7 @@ import { useIsMobile } from "../../../hooks/useIsMobile";
 import FreeLectureInfo from "../../lectureinfo/freeLectureInfo";
 import FreeLectures from "../../lectures/freeLectures";
 import useIsPeriod from "../../../hooks/useIsPeriod";
+import PeriodLectures from "../../lectures/periodLectures";
 
 const LectureDetailContainer = styled.div`
   margin: 0px auto;
@@ -186,18 +187,20 @@ const DetailBanner = styled.div`
   > img {
   }
 `;
-const tabs = ["요약자료", "무료인강"];
+// const tabs = ["요약자료", "무료인강"];
+const tabs = ["무료인강"];
 
-export default function FreeLectureDetail() {
+export default function PeriodLectureDetail() {
   const router = useRouter();
   const auth = useAuth();
   const isMobile = useIsMobile();
 
   const { lid, classtype } = router.query;
-  const [selectedTab, setSelectedTab] = useState("요약자료");
+  const [selectedTab, setSelectedTab] = useState("무료인강");
   const [isOpen, setIsOpen] = useState(false);
 
   const { data: contentDetailData } = useGetContentDetails(lid);
+
   const data = useMemo(
     () => contentDetailData?.Items || [],
     [contentDetailData, lid, auth],
@@ -222,6 +225,23 @@ export default function FreeLectureDetail() {
     setTitle(data2.filter((li) => li.code === lid)[0]?.secondCat);
   }, [data2]);
 
+  const { startDate, endDate } = useMemo(
+    () =>
+      data2.filter((li) => li.code === lid)[0] || {
+        startDate: "",
+        endDate: "",
+      },
+    [data2],
+  );
+
+  const { isPeriod } = useIsPeriod(startDate, endDate);
+  const [isOpen2, setIsOpen2] = useState(false);
+  useEffect(() => {
+    if (!isPeriod) {
+      setIsOpen2(true);
+    }
+  }, [isPeriod]);
+
   return (
     <LectureDetailContainer>
       {isOpen && (
@@ -238,7 +258,19 @@ export default function FreeLectureDetail() {
           </>
         </Modal>
       )}
-
+      {isOpen2 && (
+        <Modal
+          open={isOpen2}
+          onClose={() => {
+            setIsOpen2(false);
+            router.push(`/`);
+          }}
+        >
+          <>
+            <ModalTitle>{"제공 기간이 아닙니다"}</ModalTitle>
+          </>
+        </Modal>
+      )}
       <TopDetail>
         <TopLeftDetail>
           <ClassImage>
@@ -292,16 +324,6 @@ export default function FreeLectureDetail() {
           </div>
           <ClassButtonContainer>
             <ClassButton
-              colorCode="#000000"
-              onClick={() =>
-                auth.isAuthenticated
-                  ? setSelectedTab("요약자료")
-                  : setIsOpen(true)
-              }
-            >
-              요약자료
-            </ClassButton>
-            <ClassButton
               colorCode="#7100a6"
               onClick={() =>
                 auth.isAuthenticated
@@ -345,11 +367,8 @@ export default function FreeLectureDetail() {
           </ClassTap>
         ))}
       </ClassTapContainer>
-      {selectedTab === "요약자료" && (
-        <FreeLectureInfo lid={lid} classtype={classtype} classData={data2} />
-      )}
       {selectedTab === "무료인강" && (
-        <FreeLectures classData={data} classtype={classtype} title={title} />
+        <PeriodLectures classData={data} classtype={classtype} title={title} />
       )}
     </LectureDetailContainer>
   );
