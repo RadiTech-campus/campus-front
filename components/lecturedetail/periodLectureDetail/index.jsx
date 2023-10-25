@@ -212,19 +212,6 @@ export default function PeriodLectureDetail() {
     [contentData, lid, auth],
   );
 
-  useEffect(() => {
-    if (!auth.isLoading) {
-      if (!auth.isAuthenticated) {
-        setIsOpen(true);
-      }
-    }
-  }, [auth]);
-
-  const [title, setTitle] = useState();
-  useEffect(() => {
-    setTitle(data2.filter((li) => li.code === lid)[0]?.secondCat);
-  }, [data2]);
-
   const { startDate, endDate } = useMemo(
     () =>
       data2.filter((li) => li.code === lid)[0] || {
@@ -236,11 +223,22 @@ export default function PeriodLectureDetail() {
 
   const { isPeriod } = useIsPeriod(startDate, endDate);
   const [isOpen2, setIsOpen2] = useState(false);
+
   useEffect(() => {
-    if (!isPeriod) {
-      setIsOpen2(true);
+    if (!auth.isLoading) {
+      if (!auth.isAuthenticated) {
+        setIsOpen(true);
+      }
+      if (!isPeriod) {
+        setIsOpen2(true);
+      }
     }
-  }, [isPeriod]);
+  }, [auth, isPeriod]);
+
+  const [title, setTitle] = useState();
+  useEffect(() => {
+    setTitle(data2.filter((li) => li.code === lid)[0]?.secondCat);
+  }, [data2]);
 
   return (
     <LectureDetailContainer>

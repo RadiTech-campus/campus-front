@@ -3,9 +3,6 @@ import { useEffect, useState } from "react";
 export default function useIsPeriod(startDate, endDate) {
   const [isPeriod, setIsPeriod] = useState(true);
 
-  console.log("isPeriod", isPeriod);
-  console.log("startDate, endDate", startDate, endDate);
-
   useEffect(() => {
     const currentDate = new Date();
     const start = new Date(startDate);
