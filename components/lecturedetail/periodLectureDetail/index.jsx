@@ -228,9 +228,10 @@ export default function PeriodLectureDetail() {
     if (!auth.isLoading) {
       if (!auth.isAuthenticated) {
         setIsOpen(true);
-      }
-      if (!isPeriod) {
-        setIsOpen2(true);
+      } else {
+        if (!isPeriod) {
+          setIsOpen2(true);
+        }
       }
     }
   }, [auth, isPeriod]);
