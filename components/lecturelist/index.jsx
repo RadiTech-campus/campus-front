@@ -45,7 +45,7 @@ const Description = styled.div`
 
 const ClassCardsContainer = styled.div`
   @media (max-width: 620px) {
-    justify-content: center;
+    justify-content: start;
   }
   padding: 0px 0px 20px;
   display: flex;

@@ -349,6 +349,7 @@ export default function SignUp() {
           </LogoContainer>
           <TitleContainer>
             <div>국시부터 BIG5 취업까지</div>
+            <div>레디테크 캠퍼스</div>
           </TitleContainer>
           <InputsContainer>
             <LoginText>회원가입</LoginText>
