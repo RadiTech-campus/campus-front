@@ -205,6 +205,13 @@ export default function Index() {
           .sort((a, b) => (a.code > b.code ? 1 : -1))}
       /> */}
       <LectureList
+        category="무료 특강"
+        mainTitle="3개년 기출 풀이"
+        classData={data
+          ?.filter((li) => li.pay === "기간")
+          .sort((a, b) => (a.code > b.code ? 1 : -1))}
+      />
+      <LectureList
         category="기간 한정 이벤트"
         mainTitle="무료 인강 & 요약 자료"
         classData={data

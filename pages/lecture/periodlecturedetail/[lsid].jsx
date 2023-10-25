@@ -1,10 +1,11 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/router";
 import styled from "@emotion/styled";
-import { useGetContentDetails } from "../../../query/contents";
+import { useGetContentDetails, useGetContents } from "../../../query/contents";
 import Link from "next/link";
 import { useAuth } from "../../../hooks/useAuth";
 import Modal from "../../../components/modal/Modal";
+import useIsPeriod from "../../../hooks/useIsPeriod";
 
 const LectureDetailContainer = styled.div`
   display: flex;
@@ -64,7 +65,29 @@ export default function LectureDetail() {
     [contentDetailData, lsid],
   );
 
+  const { data: contentData } = useGetContents();
+  const data2 = useMemo(
+    () => contentData?.Items || [],
+    [contentData, lsid, auth],
+  );
+  const { startDate, endDate } = useMemo(
+    () =>
+      data2.filter((li) => li.code === lsid)[0] || {
+        startDate: "",
+        endDate: "",
+      },
+    [data2],
+  );
+  const { isPeriod } = useIsPeriod(startDate, endDate);
+
   const [isOpen, setIsOpen] = useState(false);
+  const [isOpen2, setIsOpen2] = useState(false);
+
+  useEffect(() => {
+    if (!isPeriod) {
+      setIsOpen2(true);
+    }
+  }, [isPeriod]);
 
   useEffect(() => {
     if (!auth.isLoading) {
@@ -96,6 +119,19 @@ export default function LectureDetail() {
         >
           <>
             <ModalTitle>{"로그인이 필요한 서비스 입니다."}</ModalTitle>
+          </>
+        </Modal>
+      )}
+      {isOpen2 && (
+        <Modal
+          open={isOpen2}
+          onClose={() => {
+            setIsOpen2(false);
+            router.push(`/`);
+          }}
+        >
+          <>
+            <ModalTitle>{"공개 기간이 아닙니다."}</ModalTitle>
           </>
         </Modal>
       )}
