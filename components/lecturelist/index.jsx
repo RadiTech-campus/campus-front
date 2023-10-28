@@ -3,6 +3,7 @@ import Image from "next/image";
 import React, { Fragment } from "react";
 import Link from "next/link";
 import { useIsMobile } from "../../hooks/useIsMobile";
+import Countdown from "../timer";
 
 const LectureListContainer = styled.div`
   @media (max-width: 620px) {
@@ -149,6 +150,7 @@ export default function LectureList({
   classData,
 }) {
   const isMobile = useIsMobile();
+
   return (
     <LectureListContainer>
       {/* <UserContent> */}
@@ -168,6 +170,8 @@ export default function LectureList({
               }}
             >
               <ClassCard>
+                {li.pay === "기간" && <Countdown targetDate={li.startDate} />}
+
                 <ClassImage>
                   {isMobile ? (
                     <img
