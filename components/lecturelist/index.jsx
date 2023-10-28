@@ -4,7 +4,6 @@ import React, { Fragment } from "react";
 import Link from "next/link";
 import { useIsMobile } from "../../hooks/useIsMobile";
 import Countdown from "../timer";
-import Countdown2 from "../timer2";
 
 const LectureListContainer = styled.div`
   @media (max-width: 620px) {
@@ -152,7 +151,6 @@ export default function LectureList({
 }) {
   const isMobile = useIsMobile();
 
-  const targetDate = "2023-10-30";
   return (
     <LectureListContainer>
       {/* <UserContent> */}
