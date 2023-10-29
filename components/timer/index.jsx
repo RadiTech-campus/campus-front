@@ -13,9 +13,9 @@ const TextContainer = styled.div`
   color: white;
   font-weight: 600;
   @media (max-width: 620px) {
-    width: 85px;
+    /* width: 85px; */
     font-size: 11px;
-    padding: 2px;
+    padding: 3px 6px;
     margin: 5px 5px;
   }
 `;
