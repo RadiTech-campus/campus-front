@@ -196,20 +196,13 @@ export default function Index() {
           />
         </SwiperSlide> */}
       </Swiper>
-      {/* <LectureList
-        category="Free"
-        mainTitle="무료 공개 강의"
-        description="국시 합격과 취업을 심지나쌤이 응원하겠습니다!"
-        classData={data
-          ?.filter((li) => li.pay === "무료")
-          .sort((a, b) => (a.code > b.code ? 1 : -1))}
-      /> */}
+
       <LectureList
         category="무료 특강"
         mainTitle="3개년 기출 풀이"
         classData={data
           ?.filter((li) => li.pay === "기간")
-          .sort((a, b) => (a.code > b.code ? 1 : -1))}
+          .sort((a, b) => new Date(a.startDate) - new Date(b.startDate))}
       />
       <LectureList
         category="기간 한정 이벤트"

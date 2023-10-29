@@ -213,7 +213,10 @@ export default function LectureList({
                     i === 0 || i === 1 ? (
                       <ClassTag
                         key={i}
-                        style={{ backgroundColor: "gray", marginRight: "5px" }}
+                        style={{
+                          backgroundColor: "gray",
+                          marginRight: "5px",
+                        }}
                       >
                         {li}
                       </ClassTag>
@@ -282,7 +285,10 @@ export default function LectureList({
                     {li?.gTags?.split(" ").map((li, i) => (
                       <ClassTag
                         key={i}
-                        style={{ backgroundColor: "gray", marginRight: "5px" }}
+                        style={{
+                          backgroundColor: "gray",
+                          marginRight: "5px",
+                        }}
                       >
                         {li}
                       </ClassTag>
