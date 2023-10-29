@@ -3,9 +3,9 @@ import React, { useState, useEffect, useCallback } from "react";
 
 const TextContainer = styled.div`
   background-color: #b034b9dd;
-  width: 120px;
+  /* width: 130px; */
   margin: 10px 15px;
-  padding: 5px 5px;
+  padding: 5px 8px;
   border-radius: 5px;
   text-align: center;
   position: absolute;
@@ -19,7 +19,7 @@ const TextContainer = styled.div`
     margin: 5px 5px;
   }
 `;
-const TextTimer = styled.p``;
+// const TextTimer = styled.p``;
 
 const Countdown = ({ targetDate }) => {
   const calculateTimeLeft = useCallback(() => {
@@ -38,7 +38,7 @@ const Countdown = ({ targetDate }) => {
 
     const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
     const hours = Math.floor(
-      (timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60) + days * 24,
+      (timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
     );
     const minutes = Math.floor(
       (timeDifference % (1000 * 60 * 60)) / (1000 * 60),
@@ -65,8 +65,11 @@ const Countdown = ({ targetDate }) => {
 
   return (
     <TextContainer>
-      {/* <TextTimer> */}D - {timeLeft.hours} : {timeLeft.minutes} :{" "}
-      {timeLeft.seconds}
+      {/* <TextTimer> */}D - {timeLeft.days}
+      {/* {timeLeft.hours} :{" "} */}
+      {/* {timeLeft.minutes} */}
+      {/* :{" "}
+      {timeLeft.minutes} : {timeLeft.seconds} */}
       {/* </TextTimer> */}
     </TextContainer>
   );
