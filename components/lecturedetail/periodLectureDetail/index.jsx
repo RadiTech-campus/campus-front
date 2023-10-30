@@ -240,7 +240,6 @@ export default function PeriodLectureDetail() {
   useEffect(() => {
     setTitle(data2.filter((li) => li.code === lid)[0]?.secondCat);
   }, [data2]);
-
   return (
     <LectureDetailContainer>
       {isOpen && (
@@ -257,7 +256,7 @@ export default function PeriodLectureDetail() {
           </>
         </Modal>
       )}
-      {/* {isOpen2 && (
+      {isOpen2 && (
         <Modal
           open={isOpen2}
           onClose={() => {
@@ -269,7 +268,7 @@ export default function PeriodLectureDetail() {
             <ModalTitle>{"제공 기간이 아닙니다"}</ModalTitle>
           </>
         </Modal>
-      )} */}
+      )}
       <TopDetail>
         <TopLeftDetail>
           <ClassImage>
@@ -325,9 +324,12 @@ export default function PeriodLectureDetail() {
             <ClassButton
               colorCode="#7100a6"
               onClick={() =>
-                auth.isAuthenticated
-                  ? setSelectedTab("무료인강")
-                  : setIsOpen(true)
+                // auth.isAuthenticated
+                //   ? setSelectedTab("무료인강")
+                //   : setIsOpen(true)
+                router.push(
+                  `/lecture/periodlecturedetail/${data[0].contentCode}?detailCode=${data[0].contentDetailData}&classtype=강의&title=${title}`,
+                )
               }
             >
               무료인강

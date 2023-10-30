@@ -110,28 +110,6 @@ export default function PeriodLectures({ classData, classtype, title }) {
                 }`}</ChapterTitle>
 
                 <ChapterButtonContainer>
-                  {/* <Link
-                    href={{
-                      pathname: `https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/free-content-data/${lid}.pdf`,
-                    }}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <button
-                      style={{
-                        marginRight: "10px",
-                        padding: "10px 20px",
-                        backgroundColor: "#7100a6",
-                        color: "white",
-                        fontWeight: "bold",
-                        borderRadius: "5px",
-                        border: "none",
-                        cursor: "pointer",
-                      }}
-                    >
-                      강의요약
-                    </button>
-                  </Link> */}
                   <Link
                     href={{
                       pathname: `/lecture/periodlecturedetail/${li.contentCode}`,
