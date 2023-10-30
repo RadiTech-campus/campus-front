@@ -3,6 +3,7 @@ import Image from "next/image";
 import React, { Fragment } from "react";
 import Link from "next/link";
 import { useIsMobile } from "../../hooks/useIsMobile";
+import Countdown from "../timer";
 
 const LectureListContainer = styled.div`
   @media (max-width: 620px) {
@@ -150,6 +151,7 @@ export default function LectureList({
 }) {
   console.log("classData", classData);
   const isMobile = useIsMobile();
+
   return (
     <LectureListContainer>
       {/* <UserContent> */}
@@ -169,6 +171,8 @@ export default function LectureList({
               }}
             >
               <ClassCard>
+                {li.pay === "기간" && <Countdown targetDate={li.startDate} />}
+
                 <ClassImage>
                   {isMobile ? (
                     <img
@@ -210,7 +214,10 @@ export default function LectureList({
                     i === 0 || i === 1 ? (
                       <ClassTag
                         key={i}
-                        style={{ backgroundColor: "gray", marginRight: "5px" }}
+                        style={{
+                          backgroundColor: "gray",
+                          marginRight: "5px",
+                        }}
                       >
                         {li}
                       </ClassTag>
@@ -279,7 +286,10 @@ export default function LectureList({
                     {li?.gTags?.split(" ").map((li, i) => (
                       <ClassTag
                         key={i}
-                        style={{ backgroundColor: "gray", marginRight: "5px" }}
+                        style={{
+                          backgroundColor: "gray",
+                          marginRight: "5px",
+                        }}
                       >
                         {li}
                       </ClassTag>
