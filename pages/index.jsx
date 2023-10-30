@@ -204,12 +204,19 @@ export default function Index() {
           ?.filter((li) => li.pay === "무료")
           .sort((a, b) => (a.code > b.code ? 1 : -1))}
       /> */}
+      {console.log("data", [
+        data
+          ?.filter((li) => li.pay === "기간")
+          .sort((a, b) => (a.code > b.code ? 1 : -1))[0],
+      ])}
       <LectureList
         category="무료 특강"
         mainTitle="3개년 기출 풀이"
-        classData={data
-          ?.filter((li) => li.pay === "기간")
-          .sort((a, b) => (a.code > b.code ? 1 : -1))}
+        classData={[
+          data
+            ?.filter((li) => li.pay === "기간")
+            .sort((a, b) => (a.code > b.code ? 1 : -1))[0],
+        ]}
       />
       <LectureList
         category="기간 한정 이벤트"

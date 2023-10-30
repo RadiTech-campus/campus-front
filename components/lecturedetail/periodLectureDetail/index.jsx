@@ -257,7 +257,7 @@ export default function PeriodLectureDetail() {
           </>
         </Modal>
       )}
-      {isOpen2 && (
+      {/* {isOpen2 && (
         <Modal
           open={isOpen2}
           onClose={() => {
@@ -269,7 +269,7 @@ export default function PeriodLectureDetail() {
             <ModalTitle>{"제공 기간이 아닙니다"}</ModalTitle>
           </>
         </Modal>
-      )}
+      )} */}
       <TopDetail>
         <TopLeftDetail>
           <ClassImage>
