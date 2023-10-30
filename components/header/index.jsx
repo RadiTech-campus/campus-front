@@ -2,10 +2,12 @@ import styled from "@emotion/styled";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import Modal from "../modal/Modal";
 import { useIsMobile } from "../../hooks/useIsMobile";
+import { useGetPayment } from "../../query/contents";
+import { updatePayStatus } from "../../api/contents_api";
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -88,6 +90,32 @@ export default function Header({ onMoveToForm }) {
   const handleOpenModal = () => {
     setIsOpen(true);
   };
+
+  const { data: paymentData, isLoading } = useGetPayment(auth.username);
+  const data = useMemo(() => paymentData?.Items || [], [paymentData]);
+
+  useEffect(() => {
+    if (!isLoading) {
+      const filtered = data.filter(
+        (li) =>
+          li.payStatus === "결제완료" && new Date() > new Date(li.endDate),
+      );
+      if (filtered.length > 0) {
+        for (let index = 0; index < filtered.length; index++) {
+          const element = filtered[index];
+          console.log("call 전");
+          updatePayStatus({
+            id: element.id,
+            payStatus: "기간만료",
+            endDate: element.endDate,
+            applyedStatus: "사용종료",
+          });
+          console.log("call 후");
+        }
+      }
+    }
+  }, [data, isLoading]);
+
   return (
     <>
       {isOpen ? (
