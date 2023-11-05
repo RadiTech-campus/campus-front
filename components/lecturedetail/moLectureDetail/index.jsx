@@ -309,7 +309,9 @@ export default function MoLectureDetail() {
             </ClassContent>
             <ClassContent>
               <ClassLeftContent>강의 시간</ClassLeftContent>
-              <ClassRightContent>25 분</ClassRightContent>
+              <ClassRightContent>
+                {data2?.filter((li) => lid === li.code)[0]?.iTime} 분
+              </ClassRightContent>
             </ClassContent>
           </div>
           <ClassButtonContainer>
