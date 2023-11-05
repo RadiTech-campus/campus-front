@@ -213,13 +213,13 @@ export default function Index() {
         </SwiperSlide> */}
       </Swiper>
 
-      <LectureList
+      {/* <LectureList
         category="무료 특강"
         mainTitle="미니 모의고사"
         classData={data
           ?.filter((li) => li.firstCat === "미니모의고사" && li.pay === "무료")
           .sort((a, b) => (a.code > b.code ? 1 : -1))}
-      />
+      /> */}
       <LectureList
         category="무료 특강"
         mainTitle="3개년 기출 풀이"
