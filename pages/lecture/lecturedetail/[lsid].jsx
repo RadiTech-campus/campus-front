@@ -141,7 +141,7 @@ export default function LectureDetail() {
           }}
         >
           <>
-            <ModalTitle>{"로그인이 필요한 서비스 입니다."}</ModalTitle>
+            <ModalTitle>{"수강신청이 필요한 서비스 입니다.."}</ModalTitle>
           </>
         </Modal>
       )}

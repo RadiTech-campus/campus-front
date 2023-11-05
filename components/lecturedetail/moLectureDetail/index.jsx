@@ -232,13 +232,7 @@ export default function MoLectureDetail() {
 
   const { data: paymentData } = useGetPayment(auth.username);
   const data3 = useMemo(() => paymentData?.Items || 0, [paymentData]);
-  useEffect(() => {
-    if (!auth.isLoading) {
-      if (!auth.isAuthenticated) {
-        setIsOpen(true);
-      }
-    }
-  }, [auth]);
+
   return (
     <LectureDetailContainer>
       {isOpen && (
@@ -305,8 +299,8 @@ export default function MoLectureDetail() {
 
             <ClassPriceContainer>
               <ClassPriceOuter></ClassPriceOuter>
-              <ClassPriceInner>0 </ClassPriceInner>
-              <ClassPriceOuter>원 (기간 한정 이벤트) </ClassPriceOuter>
+              <ClassPriceInner>25,000 </ClassPriceInner>
+              <ClassPriceOuter>원 </ClassPriceOuter>
             </ClassPriceContainer>
             <ClassPriceInfo>강연 + 자료 무제한으로 수강</ClassPriceInfo>
             <ClassContent>
@@ -322,12 +316,27 @@ export default function MoLectureDetail() {
             <ClassButton colorCode="#000000" onClick={() => onMoveToForm()}>
               미리보기
             </ClassButton>
-            {data3 && data3.length > 0 && (
+            {data3 &&
+            data3.length > 0 &&
+            data3.filter(
+              (li) =>
+                (li.payStatus === "결제완료" &&
+                  li?.productCode?.includes("A_A01")) ||
+                (li.payStatus === "결제완료" &&
+                  li?.productCode?.includes(lid?.substring(0, 5))),
+            ).length > 0 ? (
               <ClassButton
                 colorCode="#7100a6"
                 onClick={() => setSelectedTab("커리큘럼")}
               >
                 강의보기
+              </ClassButton>
+            ) : (
+              <ClassButton
+                colorCode="#7100a6"
+                onClick={() => handleOpenModal()}
+              >
+                수강신청
               </ClassButton>
             )}
           </ClassButtonContainer>

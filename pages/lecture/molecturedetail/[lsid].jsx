@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/router";
 import styled from "@emotion/styled";
-import { useGetContentDetails } from "../../../query/contents";
+import { useGetContentDetails, useGetPayment } from "../../../query/contents";
 import Link from "next/link";
 import { useAuth } from "../../../hooks/useAuth";
 import Modal from "../../../components/modal/Modal";
@@ -58,13 +58,45 @@ export default function MoLectureDetail() {
     () => contentDetailData?.Items || [],
     [contentDetailData, lsid],
   );
+  const { data: paymentData, isLoading } = useGetPayment(auth.username);
+  const data2 = useMemo(() => paymentData?.Items || [], [paymentData]);
   const [isOpen, setIsOpen] = useState(false);
+  const [isOpen2, setIsOpen2] = useState(false);
 
   useEffect(() => {
     if (!auth.isAuthenticated) {
       setIsOpen(true);
+    } else {
+      if (!isLoading) {
+        if (
+          data2.filter(
+            (li) =>
+              (li.payStatus === "결제완료" &&
+                li?.productCode?.includes("A_A01")) ||
+              (li.payStatus === "결제완료" &&
+                li?.productCode?.includes(lsid?.substring(0, 5))),
+          ).length < 1
+        ) {
+          setIsOpen2(true);
+        } else {
+          // upWatchedPayment({
+          //   id: data2.filter(
+          //     (li) =>
+          //       li.payStatus === "결제완료" &&
+          //       li?.productCode?.includes(lsid?.substring(0, 5)),
+          //   )[0]?.id,
+          //   watched: Number(
+          //     data2.filter(
+          //       (li) =>
+          //         li.payStatus === "결제완료" &&
+          //         li?.productCode?.includes(lsid?.substring(0, 5)),
+          //     )[0]?.watched + 1,
+          //   ),
+          // });
+        }
+      }
     }
-  }, [auth]);
+  }, [auth, data2]);
 
   return (
     <LectureDetailContainer>
@@ -78,6 +110,19 @@ export default function MoLectureDetail() {
         >
           <>
             <ModalTitle>{"로그인이 필요한 서비스 입니다."}</ModalTitle>
+          </>
+        </Modal>
+      )}
+      {isOpen2 && (
+        <Modal
+          open={isOpen2}
+          onClose={() => {
+            setIsOpen(false);
+            router.push(`/regist`);
+          }}
+        >
+          <>
+            <ModalTitle>{"수강신청이 필요한 서비스 입니다."}</ModalTitle>
           </>
         </Modal>
       )}

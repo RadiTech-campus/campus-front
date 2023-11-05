@@ -80,8 +80,31 @@ const ChapterButtonContainer = styled.div`
 `;
 
 export default function MoLectures({ classData, classtype, title }) {
+  const auth = useAuth();
+
   const [isOpen, setIsOpen] = useState(false);
+  const [isPayed, setIsPayed] = useState(false);
+
   const router = useRouter();
+  const { lid } = router.query;
+
+  const { data: paymentData, isLoading } = useGetPayment(auth.username);
+  const data2 = useMemo(() => paymentData?.Items || [], [paymentData, auth]);
+  useEffect(() => {
+    if (!isLoading) {
+      if (
+        data2.filter(
+          (li) =>
+            (li.payStatus === "결제완료" &&
+              li?.productCode?.includes("A_A01")) ||
+            (li.payStatus === "결제완료" &&
+              li?.productCode?.includes(lid?.substring(0, 5))),
+        ).length > 0
+      ) {
+        setIsPayed(true);
+      }
+    }
+  }, [auth, data2]);
   return (
     <LecturesContainer>
       {isOpen && (
@@ -103,76 +126,13 @@ export default function MoLectures({ classData, classtype, title }) {
             <PreviewContainer>
               <div>2교시</div>
               <div>
-                <Link
-                  href={{
-                    pathname: `https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/mo/2.pdf`,
-                  }}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <button
-                    style={{
-                      marginRight: "10px",
-                      padding: "10px 20px",
-                      backgroundColor: "#7100a6",
-                      color: "white",
-                      fontWeight: "bold",
-                      borderRadius: "5px",
-                      border: "none",
-                      cursor: "pointer",
-                    }}
-                  >
-                    모의고사
-                  </button>
-                </Link>
-              </div>
-            </PreviewContainer>
-            <PreviewContainer>
-              <div>3교시</div>
-              <div>
-                <Link
-                  href={{
-                    pathname: `https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/mo/3.pdf`,
-                  }}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <button
-                    style={{
-                      marginRight: "10px",
-                      padding: "10px 20px",
-                      backgroundColor: "#7100a6",
-                      color: "white",
-                      fontWeight: "bold",
-                      borderRadius: "5px",
-                      border: "none",
-                      cursor: "pointer",
-                    }}
-                  >
-                    모의고사
-                  </button>
-                </Link>
-              </div>
-            </PreviewContainer>
-          </>
-          {classData
-            .sort((a, b) => (a.sorting > b.sorting ? 1 : -1))
-            .map((li, i) => (
-              <ChapterContainer key={i} style={{}}>
-                <ChapterTitle>{`# ${i + 1}. ${
-                  li.contentDetailTitle
-                }`}</ChapterTitle>
-
-                <ChapterButtonContainer>
+                {isPayed ? (
                   <Link
                     href={{
-                      pathname: `/lecture/molecturedetail/${li.contentCode}`,
-                      query: {
-                        detailCode: li.contentDetailCode,
-                        classtype,
-                        title,
-                      },
+                      pathname: `https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/mo/2.pdf`,
                     }}
+                    target="_blank"
+                    rel="noopener noreferrer"
                   >
                     <button
                       style={{
@@ -186,9 +146,135 @@ export default function MoLectures({ classData, classtype, title }) {
                         cursor: "pointer",
                       }}
                     >
-                      강의보기
+                      모의고사
                     </button>
                   </Link>
+                ) : (
+                  <button
+                    style={{
+                      marginRight: "10px",
+                      padding: "10px 20px",
+                      backgroundColor: "#7100a6",
+                      color: "white",
+                      fontWeight: "bold",
+                      borderRadius: "5px",
+                      border: "none",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => {
+                      alert("수강신청이 필요한 과목 입니다.");
+                      router.push("/regist");
+                    }}
+                  >
+                    모의고사
+                  </button>
+                )}
+              </div>
+            </PreviewContainer>
+            <PreviewContainer>
+              <div>3교시</div>
+              <div>
+                {isPayed ? (
+                  <Link
+                    href={{
+                      pathname: `https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/mo/3.pdf`,
+                    }}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <button
+                      style={{
+                        marginRight: "10px",
+                        padding: "10px 20px",
+                        backgroundColor: "#7100a6",
+                        color: "white",
+                        fontWeight: "bold",
+                        borderRadius: "5px",
+                        border: "none",
+                        cursor: "pointer",
+                      }}
+                    >
+                      모의고사
+                    </button>
+                  </Link>
+                ) : (
+                  <button
+                    style={{
+                      marginRight: "10px",
+                      padding: "10px 20px",
+                      backgroundColor: "#7100a6",
+                      color: "white",
+                      fontWeight: "bold",
+                      borderRadius: "5px",
+                      border: "none",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => {
+                      alert("수강신청이 필요한 과목 입니다.");
+                      router.push("/regist");
+                    }}
+                  >
+                    모의고사
+                  </button>
+                )}
+              </div>
+            </PreviewContainer>
+          </>
+          {classData
+            .sort((a, b) => (a.sorting > b.sorting ? 1 : -1))
+            .map((li, i) => (
+              <ChapterContainer key={i} style={{}}>
+                <ChapterTitle>{`# ${i + 1}. ${
+                  li.contentDetailTitle
+                }`}</ChapterTitle>
+
+                <ChapterButtonContainer>
+                  {isPayed ? (
+                    <Link
+                      href={{
+                        pathname: `/lecture/molecturedetail/${li.contentCode}`,
+                        query: {
+                          detailCode: li.contentDetailCode,
+                          classtype,
+                          title,
+                        },
+                      }}
+                    >
+                      <button
+                        style={{
+                          marginRight: "10px",
+                          padding: "10px 20px",
+                          backgroundColor: "#7100a6",
+                          color: "white",
+                          fontWeight: "bold",
+                          borderRadius: "5px",
+                          border: "none",
+                          cursor: "pointer",
+                        }}
+                      >
+                        강의보기
+                      </button>
+                    </Link>
+                  ) : (
+                    <button
+                      style={{
+                        marginRight: "10px",
+                        padding: "10px 20px",
+                        backgroundColor: "#7100a6",
+                        color: "white",
+                        fontWeight: "bold",
+                        borderRadius: "5px",
+                        border: "none",
+                        cursor: "pointer",
+                      }}
+                      onClick={() => {
+                        alert("수강신청이 필요한 과목 입니다.");
+                        router.push("/regist");
+                      }}
+                    >
+                      강의보기
+                    </button>
+                  )}
                 </ChapterButtonContainer>
               </ChapterContainer>
             ))}
