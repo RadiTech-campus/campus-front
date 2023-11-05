@@ -94,7 +94,7 @@ export default function MoLectureDetail() {
                 >
                   <Link
                     href={{
-                      pathname: `/lecture/lecturedetail/${li.contentCode}`,
+                      pathname: `/lecture/molecturedetail/${li.contentCode}`,
                       query: {
                         detailCode: li.contentDetailCode,
                         classtype,
