@@ -215,6 +215,13 @@ export default function Index() {
 
       <LectureList
         category="무료 특강"
+        mainTitle="미니 모의고사"
+        classData={data
+          ?.filter((li) => li.firstCat === "미니모의고사" && li.pay === "무료")
+          .sort((a, b) => (a.code > b.code ? 1 : -1))}
+      />
+      <LectureList
+        category="무료 특강"
         mainTitle="3개년 기출 풀이"
         classData={[...periodData, ...nonPeriodData]}
       />
@@ -222,7 +229,7 @@ export default function Index() {
         category="기간 한정 이벤트"
         mainTitle="무료 인강 & 요약 자료"
         classData={data
-          ?.filter((li) => li.pay === "무료")
+          ?.filter((li) => li.pay === "무료" && li.firstCat === "일반강의")
           .sort((a, b) => (a.code > b.code ? 1 : -1))}
       />
       <LectureList

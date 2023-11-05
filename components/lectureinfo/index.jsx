@@ -44,58 +44,26 @@ const ClassImage3 = styled.div`
   }
 `;
 
-const embed = {};
-
 export default function LectureInfo({ lid, classData, classtype, preview }) {
   const isMobile = useIsMobile();
 
   return (
     <LectureInfoContainer>
       <ClassImage1>
-        {isMobile ? (
-          <img
-            src={`/detail/${lid}${classtype === "기출" ? "_G" : ""}.png`}
-            alt="레디테크 캠퍼스"
-            style={{ width: "100%" }}
-          />
-        ) : (
-          <Image
-            src={`/detail/${lid}${classtype === "기출" ? "_G" : ""}.png`}
-            alt="레디테크 캠퍼스"
-            style={{ objectFit: "cover" }}
-            fill
-          />
-        )}
+        <img
+          src={`../../free/${lid}/1.png`}
+          alt="레디테크 캠퍼스"
+          style={{ width: "100%" }}
+        />
       </ClassImage1>
       <ClassImage2>
-        {isMobile ? (
-          <img
-            src={`/detail/eye${lid?.substring(2, 3) === "H" ? "2" : ""}.png`}
-            alt="레디테크 캠퍼스"
-            style={{ width: "100%" }}
-          />
-        ) : (
-          <Image
-            src={`/detail/eye${lid?.substring(2, 3) === "H" ? "2" : ""}.png`}
-            alt="레디테크 캠퍼스"
-            style={{ objectFit: "cover" }}
-            fill
-          />
-        )}
+        <img
+          src={`../../free/${lid}/2.png`}
+          alt="레디테크 캠퍼스"
+          style={{ width: "100%" }}
+        />
       </ClassImage2>
       <PreviewContainer ref={preview}>
-        {/* <iframe
-          src={`https://player.vimeo.com/video/${
-            classtype === "기출"
-              ? classData.find((li) => li.code === lid)?.gPreview
-              : classData.find((li) => li.code === lid)?.lPreview
-          }`}
-          width="840"
-          height={isMobile ? "200" : "546"}
-          frameBorder="0"
-          allow="autoplay; fullscreen"
-          allowFullScreen
-        ></iframe> */}
         <iframe
           width="840"
           height={isMobile ? "200" : "546"}
@@ -110,20 +78,11 @@ export default function LectureInfo({ lid, classData, classtype, preview }) {
         ></iframe>
       </PreviewContainer>
       <ClassImage3>
-        {isMobile ? (
-          <img
-            src={`/detail/price.png`}
-            alt="레디테크 캠퍼스"
-            style={{ width: "100%" }}
-          />
-        ) : (
-          <Image
-            src={`/detail/price.png`}
-            alt="레디테크 캠퍼스"
-            style={{ objectFit: "cover" }}
-            fill
-          />
-        )}
+        <img
+          src={`../../free/${lid}/3.png`}
+          alt="레디테크 캠퍼스"
+          style={{ width: "100%" }}
+        />
       </ClassImage3>
     </LectureInfoContainer>
   );
