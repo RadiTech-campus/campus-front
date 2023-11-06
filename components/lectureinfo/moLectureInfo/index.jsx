@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import Image from "next/image";
 import React from "react";
-import { useIsMobile } from "../../hooks/useIsMobile";
+import { useIsMobile } from "../../../hooks/useIsMobile";
 
 const LectureInfoContainer = styled.div`
   padding: 10px 40px;

@@ -241,7 +241,7 @@ export default function SignUp() {
   const data = useMemo(() => aUnivData?.Item || [], [email, aUnivData, inputs]);
   const { data: productsData, isLoading: productsIsLoading } = useGetProducts();
   const data3 = useMemo(() => productsData?.Items || [], [productsData]);
-  const [Selected, setSelected] = useState("A_A01_12");
+  const [Selected, setSelected] = useState("C_B11_06");
   const handleSelect = (e) => {
     setSelected(e.target.value);
   };

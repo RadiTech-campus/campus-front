@@ -15,6 +15,7 @@ import { useAuth } from "../../../hooks/useAuth";
 import Modal from "../../modal/Modal";
 import { useIsMobile } from "../../../hooks/useIsMobile";
 import MoLectures from "../../lectures/moLectures";
+import MoLectureInfo from "../../lectureinfo/moLectureInfo";
 
 const LectureDetailContainer = styled.div`
   margin: 0px auto;
@@ -376,7 +377,7 @@ export default function MoLectureDetail() {
         ))}
       </ClassTapContainer>
       {selectedTab === "강의소개" && (
-        <LectureInfo
+        <MoLectureInfo
           lid={lid}
           classtype={classtype}
           classData={data2}
