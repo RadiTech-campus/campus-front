@@ -107,46 +107,106 @@ export default function Index() {
         // onSlideChange={() => console.log("slide change")}
       >
         {isMobile ? (
-          <SwiperSlide>
-            <img
-              src={"1111.png"}
-              alt="레디테크 캠퍼스"
-              style={{
-                width: "100%",
-              }}
-            />
-          </SwiperSlide>
+          <>
+            <SwiperSlide>
+              <img
+                src={"4.png"}
+                alt="레디테크 캠퍼스"
+                style={{
+                  width: "100%",
+                }}
+              />
+            </SwiperSlide>
+            <SwiperSlide>
+              <img
+                src={"33.png"}
+                alt="레디테크 캠퍼스"
+                style={{
+                  width: "100%",
+                }}
+              />
+            </SwiperSlide>
+            <SwiperSlide>
+              <img
+                src={"777.png"}
+                alt="레디테크 캠퍼스"
+                style={{
+                  width: "100%",
+                }}
+              />
+            </SwiperSlide>
+          </>
         ) : (
-          <SwiperSlide
-            style={{
-              width: "1160px",
-              height: "450px",
-              backgroundColor: "#030712",
-            }}
-          >
-            <Image
-              src={"1.png"}
-              alt="레디테크 캠퍼스"
-              style={{ objectFit: "contain" }}
-              fill
-            />
-          </SwiperSlide>
+          <>
+            <SwiperSlide
+              style={{
+                width: "1160px",
+                height: "450px",
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              <Image
+                src={"a.png"}
+                alt="레디테크 캠퍼스"
+                fill
+                sizes="100vw"
+                style={{
+                  objectFit: "cover",
+                }}
+              />
+            </SwiperSlide>
+            <SwiperSlide
+              style={{
+                height: "450px",
+                width: "1160px",
+              }}
+            >
+              <Image
+                src={"b.png"}
+                alt="레디테크 캠퍼스"
+                fill
+                sizes="100vw"
+                style={{
+                  objectFit: "cover",
+                }}
+              />
+            </SwiperSlide>
+            <SwiperSlide
+              style={{
+                height: "450px",
+                width: "1160px",
+              }}
+            >
+              <Image
+                src={"c.png"}
+                alt="레디테크 캠퍼스"
+                fill
+                sizes="100vw"
+                style={{
+                  objectFit: "cover",
+                }}
+              />
+            </SwiperSlide>
+            <SwiperSlide
+              style={{
+                height: "450px",
+                width: "1160px",
+              }}
+            >
+              <Image
+                src={"d.png"}
+                alt="레디테크 캠퍼스"
+                fill
+                sizes="100vw"
+                style={{
+                  objectFit: "cover",
+                }}
+              />
+            </SwiperSlide>
+          </>
         )}
 
-        {/* <SwiperSlide
-          style={{
-            width: "1160px",
-            height: "450px",
-            backgroundColor: "#000F2A",
-          }}
-        >
-          <Image
-            src="/2.png"
-            alt="레디테크 캠퍼스"
-            style={{ objectFit: "contain" }}
-            fill
-          />
-        </SwiperSlide> */}
         {/* <SwiperSlide style={{ width: "100%", height: "450px" }}>
           <Image
             src="/2.png"
@@ -235,7 +295,6 @@ export default function Index() {
       <LectureList
         category="방사선사 국가고시"
         mainTitle="촉박한 시간, 방대한 시험범위, 한번에 해결!"
-        // description="어려운 실기를 가장 효과적으로 공부하기 !"
         classData={data
           ?.filter((li) => li.firstCat === "일반강의" && li.pay === "유료")
           .sort((a, b) => (a.code > b.code ? 1 : -1))}
@@ -243,7 +302,6 @@ export default function Index() {
       <LectureList
         category="Big5 자소서 및 면접"
         mainTitle="Big5 취업까지 한번에 합격하기"
-        // description="취업 가즈아 !"
         classData={data
           ?.filter((li) => li.firstCat === "취업" && li.pay === "유료")
           .sort((a, b) => (a.code > b.code ? 1 : -1))}
@@ -251,7 +309,6 @@ export default function Index() {
       <LectureList
         category="BIG5 대학병원 핵심 분석"
         mainTitle="대학병원 핵심 정보 한번에 알아보기"
-        // description="취업 가즈아 !"
         classData={data
           ?.filter((li) => li.firstCat === "병원" && li.pay === "유료")
           .sort((a, b) => (a.code > b.code ? 1 : -1))}
