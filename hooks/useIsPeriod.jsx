@@ -7,6 +7,7 @@ export default function useIsPeriod(startDate, endDate) {
     const currentDate = new Date();
     const start = new Date(startDate);
     const end = new Date(endDate);
+
     if (!isNaN(start) && !isNaN(end)) {
       setIsPeriod(currentDate >= start && currentDate <= end);
     } else {

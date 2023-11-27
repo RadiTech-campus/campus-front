@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import Image from "next/image";
 import React from "react";
-import { useIsMobile } from "../../hooks/useIsMobile";
+import { useIsMobile } from "../../../hooks/useIsMobile";
 
 const LectureInfoContainer = styled.div`
   padding: 10px 40px;
@@ -44,21 +44,21 @@ const ClassImage3 = styled.div`
   }
 `;
 
-export default function LectureInfo({ lid, classData, classtype, preview }) {
+export default function MoLectureInfo({ lid, classData, classtype, preview }) {
   const isMobile = useIsMobile();
 
   return (
     <LectureInfoContainer>
       <ClassImage1>
         <img
-          src={`/detail/${lid}${classtype === "기출" ? "_G" : ""}.png`}
+          src={`../../free/${lid}/1.png`}
           alt="레디테크 캠퍼스"
           style={{ width: "100%" }}
         />
       </ClassImage1>
       <ClassImage2>
         <img
-          src={`/detail/eye${lid?.substring(2, 3) === "H" ? "2" : ""}.png`}
+          src={`../../free/${lid}/2.png`}
           alt="레디테크 캠퍼스"
           style={{ width: "100%" }}
         />
@@ -79,7 +79,7 @@ export default function LectureInfo({ lid, classData, classtype, preview }) {
       </PreviewContainer>
       <ClassImage3>
         <img
-          src={`/detail/price.png`}
+          src={`../../free/${lid}/3.png`}
           alt="레디테크 캠퍼스"
           style={{ width: "100%" }}
         />

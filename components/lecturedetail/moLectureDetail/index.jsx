@@ -2,14 +2,20 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import styled from "@emotion/styled";
 import Image from "next/image";
-import { useGetContentDetails, useGetContents } from "../../../query/contents";
+import Lectures from "../../lectures";
+import {
+  useGetContentDetails,
+  useGetContents,
+  useGetPayment,
+} from "../../../query/contents";
+import Lecturer from "../../lecturer";
+import LectureInfo from "../../lectureinfo";
+import LectureWarn from "../../lecturewarn";
 import { useAuth } from "../../../hooks/useAuth";
 import Modal from "../../modal/Modal";
 import { useIsMobile } from "../../../hooks/useIsMobile";
-import FreeLectureInfo from "../../lectureinfo/freeLectureInfo";
-import FreeLectures from "../../lectures/freeLectures";
-import useIsPeriod from "../../../hooks/useIsPeriod";
-import PeriodLectures from "../../lectures/periodLectures";
+import MoLectures from "../../lectures/moLectures";
+import MoLectureInfo from "../../lectureinfo/moLectureInfo";
 
 const LectureDetailContainer = styled.div`
   margin: 0px auto;
@@ -17,6 +23,10 @@ const LectureDetailContainer = styled.div`
   @media (max-width: 620px) {
     width: 100%;
   }
+`;
+const Divider = styled.div`
+  border-bottom: 0.1rem solid #e6e8eb;
+  margin: 20px 0px;
 `;
 
 const TopDetail = styled.div`
@@ -57,7 +67,9 @@ const TopRightDetail = styled.div`
     /* margin: 15px; */
   }
 `;
-
+const ClassMainTitle = styled.div`
+  font-size: 16px;
+`;
 const ClassSubTitle = styled.div`
   font-size: 24px;
   font-weight: 600;
@@ -86,6 +98,9 @@ const ClassPriceOuter = styled.div`
   font-size: 18px;
 `;
 
+const ClassPriceRight = styled.div`
+  font-size: 18px;
+`;
 const ClassPriceInfo = styled.div`
   font-size: 18px;
   /* font-weight: bold; */
@@ -187,59 +202,38 @@ const DetailBanner = styled.div`
   > img {
   }
 `;
-// const tabs = ["요약자료", "무료인강"];
-const tabs = ["무료인강"];
+const tabs = ["강의소개", "커리큘럼", "강사소개", "주의사항"];
 
-export default function PeriodLectureDetail() {
+export default function MoLectureDetail() {
   const router = useRouter();
   const auth = useAuth();
   const isMobile = useIsMobile();
 
-  const { lid, classtype } = router.query;
-  const [selectedTab, setSelectedTab] = useState("무료인강");
+  const { lid, classtype, title } = router.query;
+  const [selectedTab, setSelectedTab] = useState("강의소개");
   const [isOpen, setIsOpen] = useState(false);
-
+  const handleOpenModal = () => {
+    auth.isAuthenticated ? router.push("/regist") : setIsOpen(true);
+  };
   const { data: contentDetailData } = useGetContentDetails(lid);
-
   const data = useMemo(
     () => contentDetailData?.Items || [],
-    [contentDetailData, lid, auth],
+    [contentDetailData, lid],
   );
-
+  //
   const { data: contentData } = useGetContents();
-  const data2 = useMemo(
-    () => contentData?.Items || [],
-    [contentData, lid, auth],
-  );
+  const data2 = useMemo(() => contentData?.Items || [], [contentData]);
+  const preview = useRef(); //특정 DOM을 가리킬 때 사용하는 Hook함수, SecondDiv에 적용
+  const onMoveToForm = () => {
+    setSelectedTab("강의소개");
+    setTimeout(() => {
+      preview.current.scrollIntoView({ behavior: "smooth", block: "center" });
+    }, 200);
+  };
 
-  const { startDate, endDate } = useMemo(
-    () =>
-      data2.filter((li) => li.code === lid)[0] || {
-        startDate: "",
-        endDate: "",
-      },
-    [data2],
-  );
+  const { data: paymentData } = useGetPayment(auth.username);
+  const data3 = useMemo(() => paymentData?.Items || 0, [paymentData]);
 
-  const { isPeriod } = useIsPeriod(startDate, endDate);
-  const [isOpen2, setIsOpen2] = useState(false);
-
-  useEffect(() => {
-    if (!auth.isLoading) {
-      if (!auth.isAuthenticated) {
-        setIsOpen(true);
-      } else {
-        if (!isPeriod) {
-          setIsOpen2(true);
-        }
-      }
-    }
-  }, [auth, isPeriod]);
-
-  const [title, setTitle] = useState();
-  useEffect(() => {
-    setTitle(data2.filter((li) => li.code === lid)[0]?.secondCat);
-  }, [data2]);
   return (
     <LectureDetailContainer>
       {isOpen && (
@@ -251,21 +245,10 @@ export default function PeriodLectureDetail() {
           }}
         >
           <>
-            <ModalTitle>무료 수강</ModalTitle>
+            <ModalTitle>
+              {selectedTab === "커리큘럼" ? "커리큘럼" : "수강 신청"}
+            </ModalTitle>
             <ModalContent>{"로그인이 필요한 서비스 입니다."}</ModalContent>
-          </>
-        </Modal>
-      )}
-      {isOpen2 && (
-        <Modal
-          open={isOpen2}
-          onClose={() => {
-            setIsOpen2(false);
-            router.push(`/`);
-          }}
-        >
-          <>
-            <ModalTitle>{"제공 기간이 아닙니다"}</ModalTitle>
           </>
         </Modal>
       )}
@@ -297,18 +280,28 @@ export default function PeriodLectureDetail() {
         <TopRightDetail>
           <div>
             <ClassSubTitle>
-              {title?.split("!").map((li, i) => (
-                <div key={i} style={{ marginBottom: "3px" }}>
-                  {li}
-                  {i === 0 ? "!" : ""}
-                </div>
-              ))}
+              {classtype === "기출"
+                ? data2
+                    .find((li) => li.code === data[0]?.contentCode)
+                    ?.gTitle.split("!")
+                    .map((li, i) => (
+                      <div key={i} style={{ marginBottom: "3px" }}>
+                        {li}
+                        {i === 0 ? "!" : ""}
+                      </div>
+                    ))
+                : title?.split("!").map((li, i) => (
+                    <div key={i} style={{ marginBottom: "3px" }}>
+                      {li}
+                      {i === 0 ? "!" : ""}
+                    </div>
+                  ))}
             </ClassSubTitle>
 
             <ClassPriceContainer>
               <ClassPriceOuter></ClassPriceOuter>
-              <ClassPriceInner>0 </ClassPriceInner>
-              <ClassPriceOuter>원 (기간 한정 이벤트) </ClassPriceOuter>
+              <ClassPriceInner>25,000 </ClassPriceInner>
+              <ClassPriceOuter>원 </ClassPriceOuter>
             </ClassPriceContainer>
             <ClassPriceInfo>강연 + 자료 무제한으로 수강</ClassPriceInfo>
             <ClassContent>
@@ -317,23 +310,38 @@ export default function PeriodLectureDetail() {
             </ClassContent>
             <ClassContent>
               <ClassLeftContent>강의 시간</ClassLeftContent>
-              <ClassRightContent>25 분</ClassRightContent>
+              <ClassRightContent>
+                {data2?.filter((li) => lid === li.code)[0]?.iTime} 분
+              </ClassRightContent>
             </ClassContent>
           </div>
           <ClassButtonContainer>
-            <ClassButton
-              colorCode="#7100a6"
-              onClick={() =>
-                // auth.isAuthenticated
-                //   ? setSelectedTab("무료인강")
-                //   : setIsOpen(true)
-                router.push(
-                  `/lecture/periodlecturedetail/${data[0].contentCode}?detailCode=${data[0].contentDetailData}&classtype=강의&title=${title}`,
-                )
-              }
-            >
-              무료인강
+            <ClassButton colorCode="#000000" onClick={() => onMoveToForm()}>
+              미리보기
             </ClassButton>
+            {data3 &&
+            data3.length > 0 &&
+            data3.filter(
+              (li) =>
+                (li.payStatus === "결제완료" &&
+                  li?.productCode?.includes("A_A01")) ||
+                (li.payStatus === "결제완료" &&
+                  li?.productCode?.includes(lid?.substring(0, 5))),
+            ).length > 0 ? (
+              <ClassButton
+                colorCode="#7100a6"
+                onClick={() => setSelectedTab("커리큘럼")}
+              >
+                강의보기
+              </ClassButton>
+            ) : (
+              <ClassButton
+                colorCode="#7100a6"
+                onClick={() => handleOpenModal()}
+              >
+                수강신청
+              </ClassButton>
+            )}
           </ClassButtonContainer>
         </TopRightDetail>
       </TopDetail>
@@ -368,9 +376,19 @@ export default function PeriodLectureDetail() {
           </ClassTap>
         ))}
       </ClassTapContainer>
-      {selectedTab === "무료인강" && (
-        <PeriodLectures classData={data} classtype={classtype} title={title} />
+      {selectedTab === "강의소개" && (
+        <MoLectureInfo
+          lid={lid}
+          classtype={classtype}
+          classData={data2}
+          preview={preview}
+        />
       )}
+      {selectedTab === "커리큘럼" && (
+        <MoLectures classData={data} classtype={classtype} title={title} />
+      )}
+      {selectedTab === "강사소개" && <Lecturer />}
+      {selectedTab === "주의사항" && <LectureWarn />}
     </LectureDetailContainer>
   );
 }

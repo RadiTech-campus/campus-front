@@ -37,6 +37,22 @@ export default function Index() {
   const { data: contentData } = useGetContents();
   const data = useMemo(() => contentData?.Items || [], [contentData]);
 
+  const periodData = useMemo(
+    () =>
+      contentData?.Items?.filter(
+        (li) => li.pay === "기간" && new Date() < new Date(li.startDate),
+      ).sort((a, b) => new Date(a.startDate) - new Date(b.startDate)) || [],
+    [contentData],
+  );
+
+  const nonPeriodData = useMemo(
+    () =>
+      contentData?.Items?.filter(
+        (li) => li.pay === "기간" && new Date() > new Date(li.startDate),
+      ).sort((a, b) => new Date(a.startDate) - new Date(b.startDate)) || [],
+    [contentData],
+  );
+
   const { data: paymentData } = useGetPayment(auth.username);
   const data2 = useMemo(
     () =>
@@ -198,17 +214,22 @@ export default function Index() {
       </Swiper>
 
       <LectureList
+        category="자체 제작"
+        mainTitle="레디테크 모의고사"
+        classData={data
+          ?.filter((li) => li.firstCat === "미니모의고사" && li.pay === "무료")
+          .sort((a, b) => (a.code > b.code ? 1 : -1))}
+      />
+      <LectureList
         category="무료 특강"
         mainTitle="3개년 기출 풀이"
-        classData={data
-          ?.filter((li) => li.pay === "기간")
-          .sort((a, b) => new Date(a.startDate) - new Date(b.startDate))}
+        classData={[...periodData, ...nonPeriodData]}
       />
       <LectureList
         category="기간 한정 이벤트"
         mainTitle="무료 인강 & 요약 자료"
         classData={data
-          ?.filter((li) => li.pay === "무료")
+          ?.filter((li) => li.pay === "무료" && li.firstCat === "일반강의")
           .sort((a, b) => (a.code > b.code ? 1 : -1))}
       />
       <LectureList

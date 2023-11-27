@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import LectureDetail from "../../components/lecturedetail";
 import FreeLectureDetail from "../../components/lecturedetail/freeLectureDetail";
 import PeriodLectureDetail from "../../components/lecturedetail/periodLectureDetail";
+import MoLectureDetail from "../../components/lecturedetail/moLectureDetail";
 
 export default function Lecture() {
   const router = useRouter();
@@ -13,6 +14,8 @@ export default function Lecture() {
     <FreeLectureDetail />
   ) : lid?.includes("Q") ? (
     <PeriodLectureDetail />
+  ) : lid?.includes("M") ? (
+    <MoLectureDetail />
   ) : (
     <LectureDetail />
   );

@@ -170,7 +170,9 @@ export default function LectureList({
               }}
             >
               <ClassCard>
-                {li.pay === "기간" && <Countdown targetDate={li.startDate} />}
+                {li.pay === "기간" && (
+                  <Countdown targetDate={li.startDate} endDate={li.endDate} />
+                )}
 
                 <ClassImage>
                   {isMobile ? (
