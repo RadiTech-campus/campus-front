@@ -47,7 +47,7 @@ const PreviewContainer = styled.div`
   font-weight: bold;
   justify-content: space-between;
   align-items: center;
-  @media (max-width: 620px) {
+  @media (max-width: 650px) {
     padding: 10px;
   }
 `;
@@ -60,19 +60,19 @@ const ChapterContainer = styled.div`
   font-weight: bold;
   justify-content: space-between;
   align-items: center;
-  @media (max-width: 620px) {
+  @media (max-width: 650px) {
     padding: 10px;
     display: flex;
     flex-direction: column;
   }
 `;
 const ChapterTitle = styled.div`
-  @media (max-width: 620px) {
+  @media (max-width: 650px) {
     width: 100%;
   }
 `;
 const ChapterButtonContainer = styled.div`
-  @media (max-width: 620px) {
+  @media (max-width: 650px) {
     width: 100%;
     display: flex;
     justify-content: end;

@@ -5,14 +5,14 @@ import { useIsMobile } from "../../hooks/useIsMobile";
 
 const LectureInfoContainer = styled.div`
   padding: 10px 40px;
-  @media (max-width: 620px) {
+  @media (max-width: 650px) {
     padding: 10px;
   }
 `;
 
 const ClassImage1 = styled.div`
   width: 100%;
-  @media (max-width: 620px) {
+  @media (max-width: 650px) {
     height: 100%;
   }
   height: 893px;
@@ -28,7 +28,7 @@ const PreviewContainer = styled.div`
 const ClassImage2 = styled.div`
   width: 100%;
   height: 260px;
-  @media (max-width: 620px) {
+  @media (max-width: 650px) {
     height: 100%;
   }
   position: relative;
@@ -38,7 +38,7 @@ const ClassImage3 = styled.div`
   height: 1008px;
   margin-top: 80px;
   position: relative;
-  @media (max-width: 620px) {
+  @media (max-width: 650px) {
     height: 100%;
     margin: 40px auto 30px;
   }

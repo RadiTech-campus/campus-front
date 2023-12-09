@@ -4,14 +4,14 @@ import React from "react";
 import { useIsMobile } from "../../../hooks/useIsMobile";
 
 const LectureInfoContainer = styled.div`
-  @media (max-width: 620px) {
+  @media (max-width: 650px) {
     padding: 10px;
   }
   padding: 10px 40px;
 `;
 
 const ClassImage1 = styled.div`
-  @media (max-width: 620px) {
+  @media (max-width: 650px) {
     height: 100%;
   }
   width: 100%;
@@ -20,14 +20,14 @@ const ClassImage1 = styled.div`
 `;
 
 const ClassImage2 = styled.div`
-  @media (max-width: 620px) {
+  @media (max-width: 650px) {
     height: 100%;
   }
   width: 100%;
 `;
 
 const ClassImage3 = styled.div`
-  @media (max-width: 620px) {
+  @media (max-width: 650px) {
     height: 100%;
     margin: 40px auto 30px;
   }

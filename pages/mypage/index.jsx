@@ -10,7 +10,7 @@ import { canclePayment } from "../../api/contents_api";
 const SignInContainer = styled.div`
   margin: 15px auto;
   width: 1160px;
-  @media (max-width: 620px) {
+  @media (max-width: 650px) {
     width: 90%;
   }
 `;
@@ -50,7 +50,7 @@ const PriceContainer = styled.div`
 `;
 const SignInInput = styled.input`
   width: 20%;
-  @media (max-width: 620px) {
+  @media (max-width: 650px) {
     width: 50%;
   }
   border: none;

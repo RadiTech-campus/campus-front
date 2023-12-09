@@ -9,17 +9,15 @@ const FooterContainer = styled.div`
   padding: 0px auto 60px;
   width: 100%;
   border-top: 1px solid lightgray;
-  @media (max-width: 620px) {
-    /* width: 620px; */
-    width: 100%;
-    margin: 0 auto;
+  @media (max-width: 650px) {
+    display: none;
   }
 `;
 const Divider = styled.div`
   border-bottom: 0.1rem solid #e6e8eb;
   margin: 20px 0px;
   /* width: 2000px; */
-  @media (max-width: 620px) {
+  @media (max-width: 650px) {
     margin: 0px;
   }
 `;
@@ -27,7 +25,7 @@ const Divider = styled.div`
 const BottomContainer = styled.div`
   display: flex;
   width: 1160px;
-  @media (max-width: 620px) {
+  @media (max-width: 650px) {
     /* width: 620px; */
     width: 100%;
     margin: 0 auto;
@@ -36,19 +34,19 @@ const BottomContainer = styled.div`
 
 const LeftContainer = styled.div`
   width: 33%;
-  @media (max-width: 620px) {
+  @media (max-width: 650px) {
     padding: 20px;
   }
 `;
 const CenterContainer = styled.div`
   width: 33%;
-  @media (max-width: 620px) {
+  @media (max-width: 650px) {
     padding: 20px;
   }
 `;
 const RightContainer = styled.div`
   width: 33%;
-  @media (max-width: 620px) {
+  @media (max-width: 650px) {
     padding: 20px;
   }
 `;

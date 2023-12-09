@@ -4,7 +4,7 @@ import React from "react";
 const WarnContainer = styled.div`
   padding: 10px 40px;
   margin-bottom: 50px;
-  @media (max-width: 620px) {
+  @media (max-width: 650px) {
     padding: 10px 15px;
   }
 `;
@@ -12,7 +12,7 @@ const WarnTitle = styled.div`
   font-size: 22px;
   font-weight: bold;
   margin: 20px 0px 10px;
-  @media (max-width: 620px) {
+  @media (max-width: 650px) {
     font-size: 16px;
     margin: 10px 0px 5px;
   }
@@ -20,7 +20,7 @@ const WarnTitle = styled.div`
 const WarnContent = styled.div`
   font-size: 18px;
   padding: 5px 0px;
-  @media (max-width: 620px) {
+  @media (max-width: 650px) {
     font-size: 14px;
   }
 `;

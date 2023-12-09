@@ -20,7 +20,7 @@ const HeaderContainer = styled.div`
   top: 0;
   z-index: 10;
   background-color: "white";
-  @media (max-width: 620px) {
+  @media (max-width: 650px) {
     width: 100%;
     margin: 0 auto;
     padding: 0px;
@@ -29,7 +29,7 @@ const HeaderContainer = styled.div`
 
 const MobileLogo = styled.img`
   width: 195px;
-  @media (max-width: 620px) {
+  @media (max-width: 650px) {
     width: 150px;
     padding: 10px 5px;
   }
@@ -66,7 +66,7 @@ const SearchInput = styled.input`
 const AuthContainer = styled.div`
   font-size: 13px;
   display: flex;
-  @media (max-width: 620px) {
+  @media (max-width: 650px) {
     width: 100%;
     justify-content: end;
     /* font-size: 15px; */
@@ -77,7 +77,7 @@ const AuthContainer = styled.div`
 const AuthButton = styled.div`
   margin-right: 20px;
   cursor: pointer;
-  @media (max-width: 620px) {
+  @media (max-width: 650px) {
     border-bottom: ${(props) => (props.selected ? "2px solid black;" : "")};
     margin-right: 15px;
   }

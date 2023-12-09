@@ -23,14 +23,10 @@ import { useAuth } from "../hooks/useAuth";
 import { getDateDiff } from "../libs/date";
 import { canclePayment } from "../api/contents_api";
 import { useIsMobile } from "../hooks/useIsMobile";
+import LectureListBox from "../components/lecturelist_box";
+import LectureList4Box from "../components/lecturelist_4box";
 
 const IndexContainer = styled.div``;
-// const SwiperPagiContainer = styled.div`
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   margin-top: 5px;
-// `;
 
 export default function Index() {
   const auth = useAuth();
@@ -272,47 +268,88 @@ export default function Index() {
           />
         </SwiperSlide> */}
       </Swiper>
+      {isMobile && (
+        <>
+          <LectureList
+            category="기간 한정 이벤트"
+            mainTitle="무료 요약 자료 및 해설 강의 ✍️"
+            classData={data
+              ?.filter((li) => li.pay === "무료" && li.firstCat === "일반강의")
+              .sort((a, b) => (a.code > b.code ? 1 : -1))}
+          />
+          <LectureList
+            category="방사선사 국가고시"
+            mainTitle="촉박한 시간, 방대한 시험범위, 한번에 해결!"
+            classData={data
+              ?.filter((li) => li.firstCat === "일반강의" && li.pay === "유료")
+              .sort((a, b) => (a.code > b.code ? 1 : -1))}
+          />
+          <LectureListBox
+            category="자체 제작"
+            mainTitle="레디테크 모의고사 무료 제공중 ✨"
+            classData={data
+              ?.filter(
+                (li) => li.firstCat === "미니모의고사" && li.pay === "무료",
+              )
+              .sort((a, b) => (a.code > b.code ? 1 : -1))}
+          />
+          <img src="/pass.jpg" alt="line" style={{ width: "100%" }} />
+          <LectureList4Box
+            category="BIG5 대학병원 핵심 분석"
+            mainTitle="대학병원 핵심 정보 분석 🥇"
+            classData={data
+              ?.filter((li) => li.firstCat === "병원" && li.pay === "유료")
+              .sort((a, b) => (a.code > b.code ? 1 : -1))}
+          />
+        </>
+      )}
 
-      <LectureList
-        category="자체 제작"
-        mainTitle="레디테크 모의고사"
-        classData={data
-          ?.filter((li) => li.firstCat === "미니모의고사" && li.pay === "무료")
-          .sort((a, b) => (a.code > b.code ? 1 : -1))}
-      />
-      <LectureList
-        category="무료 특강"
-        mainTitle="3개년 기출 풀이"
-        classData={[...periodData, ...nonPeriodData]}
-      />
-      <LectureList
-        category="기간 한정 이벤트"
-        mainTitle="무료 인강 & 요약 자료"
-        classData={data
-          ?.filter((li) => li.pay === "무료" && li.firstCat === "일반강의")
-          .sort((a, b) => (a.code > b.code ? 1 : -1))}
-      />
-      <LectureList
-        category="방사선사 국가고시"
-        mainTitle="촉박한 시간, 방대한 시험범위, 한번에 해결!"
-        classData={data
-          ?.filter((li) => li.firstCat === "일반강의" && li.pay === "유료")
-          .sort((a, b) => (a.code > b.code ? 1 : -1))}
-      />
-      <LectureList
-        category="Big5 자소서 및 면접"
-        mainTitle="Big5 취업까지 한번에 합격하기"
-        classData={data
-          ?.filter((li) => li.firstCat === "취업" && li.pay === "유료")
-          .sort((a, b) => (a.code > b.code ? 1 : -1))}
-      />
-      <LectureList
-        category="BIG5 대학병원 핵심 분석"
-        mainTitle="대학병원 핵심 정보 한번에 알아보기"
-        classData={data
-          ?.filter((li) => li.firstCat === "병원" && li.pay === "유료")
-          .sort((a, b) => (a.code > b.code ? 1 : -1))}
-      />
+      {!isMobile && (
+        <>
+          <LectureList
+            category="자체 제작"
+            mainTitle="레디테크 모의고사 무료 제공중 ✨"
+            classData={data
+              ?.filter(
+                (li) => li.firstCat === "미니모의고사" && li.pay === "무료",
+              )
+              .sort((a, b) => (a.code > b.code ? 1 : -1))}
+          />
+          <LectureList
+            category="무료 특강"
+            mainTitle="3개년 기출 풀이"
+            classData={[...periodData, ...nonPeriodData]}
+          />
+          <LectureList
+            category="기간 한정 이벤트"
+            mainTitle="무료 요약 자료 및 해설 강의 ✍️"
+            classData={data
+              ?.filter((li) => li.pay === "무료" && li.firstCat === "일반강의")
+              .sort((a, b) => (a.code > b.code ? 1 : -1))}
+          />
+          <LectureList
+            category="방사선사 국가고시"
+            mainTitle="촉박한 시간, 방대한 시험범위, 한번에 해결!"
+            classData={data
+              ?.filter((li) => li.firstCat === "일반강의" && li.pay === "유료")
+              .sort((a, b) => (a.code > b.code ? 1 : -1))}
+          />
+          <LectureList
+            category="Big5 자소서 및 면접"
+            mainTitle="Big5 취업까지 한번에 합격하기"
+            classData={data
+              ?.filter((li) => li.firstCat === "취업" && li.pay === "유료")
+              .sort((a, b) => (a.code > b.code ? 1 : -1))}
+          />
+          <LectureList
+            category="BIG5 대학병원 핵심 분석"
+            mainTitle="대학병원 핵심 정보 분석 🥇"
+            classData={data
+              ?.filter((li) => li.firstCat === "병원" && li.pay === "유료")
+              .sort((a, b) => (a.code > b.code ? 1 : -1))}
+          />
+        </>
+      )}
     </IndexContainer>
   );
 }

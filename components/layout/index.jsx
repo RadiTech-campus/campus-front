@@ -3,9 +3,11 @@ import React, { useRef } from "react";
 import Header from "../header";
 import Footer from "../footer";
 import { useRouter } from "next/router";
+import FooterMobile from "../footer_mobile";
+import BottomNav from "../bottom_nav";
 
 const LayoutContainer = styled.div`
-  @media (max-width: 620px) {
+  @media (max-width: 650px) {
     /* width: 620px; */
     width: 100%;
     margin: 0 auto;
@@ -28,6 +30,8 @@ export default function Layout({ children }) {
       <Header onMoveToForm={onMoveToForm} />
       {children}
       {routes.includes(route) ? "" : <Footer footerRef={footerRef} />}
+      <FooterMobile footerRef={footerRef} />
+      <BottomNav />
     </LayoutContainer>
   );
 }

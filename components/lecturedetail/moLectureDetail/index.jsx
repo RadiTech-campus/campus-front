@@ -20,7 +20,7 @@ import MoLectureInfo from "../../lectureinfo/moLectureInfo";
 const LectureDetailContainer = styled.div`
   margin: 0px auto;
   width: 1160px;
-  @media (max-width: 620px) {
+  @media (max-width: 650px) {
     width: 100%;
   }
 `;
@@ -32,7 +32,7 @@ const Divider = styled.div`
 const TopDetail = styled.div`
   display: flex;
   flex: 1;
-  @media (max-width: 620px) {
+  @media (max-width: 650px) {
     flex-direction: column;
   }
 `;
@@ -40,7 +40,7 @@ const TopDetail = styled.div`
 const TopLeftDetail = styled.div`
   flex: 0.45;
   padding: 20px;
-  @media (max-width: 620px) {
+  @media (max-width: 650px) {
     height: 200px;
     padding: 10px;
   }
@@ -52,7 +52,7 @@ const ClassImage = styled.div`
   > img {
     border-radius: 10px;
   }
-  @media (max-width: 620px) {
+  @media (max-width: 650px) {
     height: 180px;
   }
 `;
@@ -62,7 +62,7 @@ const TopRightDetail = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  @media (max-width: 620px) {
+  @media (max-width: 650px) {
     /* padding: 0px; */
     /* margin: 15px; */
   }
@@ -74,7 +74,7 @@ const ClassSubTitle = styled.div`
   font-size: 24px;
   font-weight: 600;
   margin-top: 10px;
-  @media (max-width: 620px) {
+  @media (max-width: 650px) {
     font-size: 20px;
   }
 `;
@@ -86,7 +86,7 @@ const ClassPriceContainer = styled.div`
 `;
 
 const ClassPriceInner = styled.div`
-  @media (max-width: 620px) {
+  @media (max-width: 650px) {
     font-size: 20px;
   }
   font-size: 24px;
@@ -107,7 +107,7 @@ const ClassPriceInfo = styled.div`
   margin-bottom: 15px;
   margin-top: 15px;
   color: #888888c1;
-  @media (max-width: 620px) {
+  @media (max-width: 650px) {
     font-size: 14px;
     margin-top: 10px;
   }
@@ -117,7 +117,7 @@ const ClassButtonContainer = styled.div`
   display: flex;
 
   justify-content: center;
-  @media (max-width: 620px) {
+  @media (max-width: 650px) {
     margin-top: 20px;
   }
 `;
@@ -134,7 +134,7 @@ const ClassButton = styled.button`
   border-radius: 5px;
   border: none;
   cursor: pointer;
-  @media (max-width: 620px) {
+  @media (max-width: 650px) {
     /* margin: 0px;
     padding: 0px; */
   }
@@ -145,13 +145,13 @@ const ClassTapContainer = styled.div`
   justify-content: center;
   border-bottom: 1px solid gray;
   margin: 20px 0px;
-  @media (max-width: 620px) {
+  @media (max-width: 650px) {
     /* padding: 10px 20px; */
     margin: 0px 0px;
   }
 `;
 const ClassTap = styled.div`
-  @media (max-width: 620px) {
+  @media (max-width: 650px) {
     padding: 10px 20px;
     margin: 0px 0px;
     font-size: 14px;
@@ -192,7 +192,7 @@ const ModalContent = styled.div`
 const DetailBanner = styled.div`
   /* height: 250px; */
   width: 95%;
-  @media (max-width: 620px) {
+  @media (max-width: 650px) {
     height: 50px;
     display: none;
   }
