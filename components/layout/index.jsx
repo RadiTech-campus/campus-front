@@ -9,11 +9,9 @@ import HeaderMobile from "../header_mobile";
 
 const LayoutContainer = styled.div`
   @media (max-width: 650px) {
-    /* width: 620px; */
     width: 100%;
     margin: 0 auto;
   }
-  /* width: 1160px; */
 `;
 
 export default function Layout({ children }) {
@@ -26,8 +24,6 @@ export default function Layout({ children }) {
   const routes = ["/signin", "/signup", "/forgotpassword", "/regist"];
   return (
     <LayoutContainer>
-      {/* <LeftContainer></LeftContainer> */}
-      {/* <RightContainer></RightContainer> */}
       <Header onMoveToForm={onMoveToForm} />
       <HeaderMobile />
       {children}

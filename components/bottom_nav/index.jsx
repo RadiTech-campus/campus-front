@@ -5,15 +5,16 @@ import MyHome from "../icons/MyHome";
 import Gang from "../icons/Gang";
 import Logo from "../icons/Logo";
 import Kuk from "../icons/Kuk";
+import { useRouter } from "next/router";
 
 const BottomNavContainer = styled.div`
   display: none;
   @media (max-width: 650px) {
-    height: 60px;
+    height: 65px;
     width: 100%;
     display: flex;
-    justify-content: space-evenly;
-    align-items: end;
+    justify-content: center;
+    align-items: center;
     position: fixed;
     bottom: 0;
     background-color: white;
@@ -22,12 +23,12 @@ const BottomNavContainer = styled.div`
 `;
 
 const NavButton = styled.div`
-  width: 80px;
+  width: 25%;
   color: #a2a2a2;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 5px;
+  margin: 0 0px 5px;
 `;
 const NavButtonIcon = styled.div``;
 const NavButtonText = styled.div`
@@ -37,6 +38,8 @@ const NavButtonText = styled.div`
 `;
 
 export default function BottomNav() {
+  const router = useRouter();
+
   return (
     <BottomNavContainer>
       <NavButton>
@@ -45,13 +48,13 @@ export default function BottomNav() {
         </NavButtonIcon>
         <NavButtonText>고객센터</NavButtonText>
       </NavButton>
-      <NavButton>
+      <NavButton onClick={() => router.push("/mypage")}>
         <NavButtonIcon>
           <MyHome />
         </NavButtonIcon>
         <NavButtonText>마이룸</NavButtonText>
       </NavButton>
-      <NavButton>
+      <NavButton onClick={() => router.push("/")}>
         <NavButtonIcon>
           <Logo />
         </NavButtonIcon>
