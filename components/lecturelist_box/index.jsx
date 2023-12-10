@@ -63,13 +63,14 @@ const ClassCard = styled.div`
 
 const Description = styled.div`
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   margin: 10px 0px 30px;
 `;
 const DescriptionLeft = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  padding-left: 20px;
 `;
 const DescriptionText = styled.div`
   font-weight: 400;
@@ -77,7 +78,11 @@ const DescriptionText = styled.div`
   line-height: 24px;
 `;
 
-const DescriptionRight = styled.div``;
+const DescriptionRight = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 40%;
+`;
 
 const ClassCardCircle = styled.div`
   @media (max-width: 650px) {
@@ -135,7 +140,7 @@ export default function LectureListBox({
             <div style={{ width: "30px", borderTop: "3px solid black" }}></div>
           </DescriptionLeft>
           <DescriptionRight>
-            <img src="/step.png" alt="image" />
+            <img src="/step.png" alt="image" style={{ width: "80%" }} />
           </DescriptionRight>
         </Description>
         {classData?.map((li, i) => (

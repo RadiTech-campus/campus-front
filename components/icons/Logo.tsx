@@ -4,7 +4,7 @@ export default function Logo() {
   return (
     <svg
       width="64"
-      height="63"
+      height="40"
       viewBox="0 0 64 63"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

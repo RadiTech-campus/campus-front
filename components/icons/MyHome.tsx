@@ -4,7 +4,7 @@ export default function MyHome() {
   return (
     <svg
       width="46"
-      height="43"
+      height="30"
       viewBox="0 0 46 43"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

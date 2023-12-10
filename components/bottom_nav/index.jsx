@@ -2,14 +2,14 @@ import styled from "@emotion/styled";
 import React from "react";
 import Phone from "../icons/Phone";
 import MyHome from "../icons/MyHome";
-import Gosi from "../icons/Gosi";
 import Gang from "../icons/Gang";
 import Logo from "../icons/Logo";
+import Gosi from "../icons/gosi";
 
 const BottomNavContainer = styled.div`
   display: none;
   @media (max-width: 650px) {
-    height: 77px;
+    height: 60px;
     width: 100%;
     display: flex;
     justify-content: space-evenly;
@@ -27,12 +27,12 @@ const NavButton = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 `;
 const NavButtonIcon = styled.div``;
 const NavButtonText = styled.div`
   font-weight: 700;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 19.36px;
 `;
 

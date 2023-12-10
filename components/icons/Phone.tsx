@@ -4,7 +4,7 @@ export default function Phone() {
   return (
     <svg
       width="43"
-      height="40"
+      height="30"
       viewBox="0 0 43 40"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
