@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Gosi() {
+export default function Kuk() {
   return (
     <svg
       width="40"

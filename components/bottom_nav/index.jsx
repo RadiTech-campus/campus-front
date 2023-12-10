@@ -4,7 +4,7 @@ import Phone from "../icons/Phone";
 import MyHome from "../icons/MyHome";
 import Gang from "../icons/Gang";
 import Logo from "../icons/Logo";
-import Gosi from "../icons/gosi";
+import Kuk from "../icons/Kuk";
 
 const BottomNavContainer = styled.div`
   display: none;
@@ -59,7 +59,7 @@ export default function BottomNav() {
       </NavButton>
       <NavButton>
         <NavButtonIcon>
-          <Gosi />
+          <Kuk />
         </NavButtonIcon>
         <NavButtonText>국가고시</NavButtonText>
       </NavButton>
