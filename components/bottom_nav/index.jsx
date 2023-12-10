@@ -1,11 +1,15 @@
 import styled from "@emotion/styled";
 import React from "react";
 import Phone from "../icons/Phone";
+import MyHome from "../icons/MyHome";
+import Gosi from "../icons/Gosi";
+import Gang from "../icons/Gang";
+import Logo from "../icons/Logo";
 
 const BottomNavContainer = styled.div`
   display: none;
   @media (max-width: 650px) {
-    height: 107px;
+    height: 77px;
     width: 100%;
     display: flex;
     justify-content: space-evenly;
@@ -23,7 +27,7 @@ const NavButton = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 `;
 const NavButtonIcon = styled.div``;
 const NavButtonText = styled.div`
@@ -43,27 +47,27 @@ export default function BottomNav() {
       </NavButton>
       <NavButton>
         <NavButtonIcon>
-          <Phone />
+          <MyHome />
         </NavButtonIcon>
-        <NavButtonText>고객센터</NavButtonText>
+        <NavButtonText>마이룸</NavButtonText>
       </NavButton>
       <NavButton>
         <NavButtonIcon>
-          <Phone />
+          <Logo />
         </NavButtonIcon>
-        <NavButtonText>고객센터</NavButtonText>
+        <NavButtonText>홈</NavButtonText>
       </NavButton>
       <NavButton>
         <NavButtonIcon>
-          <Phone />
+          <Gosi />
         </NavButtonIcon>
-        <NavButtonText>고객센터</NavButtonText>
+        <NavButtonText>국가고시</NavButtonText>
       </NavButton>
       <NavButton>
         <NavButtonIcon>
-          <Phone />
+          <Gang />
         </NavButtonIcon>
-        <NavButtonText>고객센터</NavButtonText>
+        <NavButtonText>취업특강</NavButtonText>
       </NavButton>
     </BottomNavContainer>
   );

@@ -21,6 +21,7 @@ const HeaderContainer = styled.div`
   z-index: 10;
   background-color: "white";
   @media (max-width: 650px) {
+    display: none;
     width: 100%;
     margin: 0 auto;
     padding: 0px;

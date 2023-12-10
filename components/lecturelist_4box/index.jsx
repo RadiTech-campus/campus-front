@@ -9,7 +9,6 @@ const LectureListContainer = styled.div`
     width: 100%;
   }
   margin: 15px auto;
-  width: 1160px;
 `;
 
 const TitleContainer = styled.div`
@@ -55,6 +54,7 @@ const ClassCard = styled.div`
     border-radius: 20px;
     margin-bottom: 20px;
     width: 42%;
+    height: 223px;
   }
   a {
     @media (max-width: 650px) {
@@ -65,26 +65,28 @@ const ClassCard = styled.div`
 `;
 const ClassImage = styled.div`
   @media (max-width: 650px) {
+    padding-top: 20px;
+    height: 60%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
-  height: 180px;
-  position: relative;
   > img {
     @media (max-width: 650px) {
-      border-radius: 20px 20px 0 0;
-      width: 100%;
-      height: 168px;
     }
-    border-radius: 10px;
   }
 `;
 const ClassTitle = styled.div`
   @media (max-width: 650px) {
-    font-size: 20px;
+    font-size: 22px;
     font-weight: 700;
     padding: 0;
     margin: 0;
-    line-height: 28.96px;
-    text-align: center;
+    line-height: 31.86px;
+    height: 40%;
+    display: flex;
+    align-items: start;
+    justify-content: center;
   }
   font-size: 20px;
   font-weight: 600;
@@ -116,33 +118,13 @@ export default function LectureList4Box({
               }}
             >
               <ClassImage>
-                {isMobile ? (
-                  <img
-                    src={`https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/contents/${li.code}.jpeg`}
-                    alt={li.secondCat}
-                  />
-                ) : (
-                  <Image
-                    src={`https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/contents/${li.code}.jpeg`}
-                    alt={li.secondCat}
-                    style={{ objectFit: "cover" }}
-                    fill
-                  />
-                )}
+                <img src={`/hos/${li.code}.png`} alt={li.secondCat} />
               </ClassImage>
               <ClassTitle>
-                {isMobile ? (
-                  <div key={i} style={{ marginBottom: "3px" }}>
-                    {li.secondCat?.split("!")[0]}
-                  </div>
-                ) : (
-                  li.secondCat?.split("!").map((li, i) => (
-                    <div key={i} style={{ marginBottom: "3px" }}>
-                      {li}
-                      {i === 0 ? "!" : ""}
-                    </div>
-                  ))
-                )}
+                {i === 0 && "서울아산/삼성병원"}
+                {i === 1 && "성모병원"}
+                {i === 2 && "서울대병원"}
+                {i === 3 && "연세의료원"}
               </ClassTitle>
             </Link>
           </ClassCard>

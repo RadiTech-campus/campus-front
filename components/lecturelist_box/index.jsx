@@ -13,17 +13,6 @@ const LectureListContainer = styled.div`
   width: 1160px;
 `;
 
-const TitleContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 10px 20px 0px;
-  margin-top: 20px;
-  @media (max-width: 650px) {
-    padding: 5px 15px;
-    margin: 0;
-  }
-`;
-
 const MainTitle = styled.div`
   font-size: 24px;
   font-weight: bold;
@@ -34,32 +23,35 @@ const MainTitle = styled.div`
     font-weight: 700;
     line-height: 34.75px;
     letter-spacing: -3%;
+    padding: 5px 15px;
+    margin: 0;
   }
 `;
 
 const ClassCardsContainer = styled.div`
   @media (max-width: 650px) {
     display: flex;
+    flex-direction: column;
     background-color: #ecf2fd;
     margin: 0 20px;
     border-radius: 20px;
-    height: 390px;
   }
   padding: 0px 0px 20px;
   display: flex;
   flex-wrap: wrap;
 `;
 const ClassCard = styled.div`
-  margin: 10px;
-  width: 29%;
-  text-decoration: none;
-  border-radius: 10px;
   @media (max-width: 650px) {
     box-shadow: 0 0 10px 0 rgb(0 0 0 / 20%);
     border-radius: 20px;
     margin: 0 15px;
-    width: 234px;
-    flex: 0 0 auto;
+    width: 45%;
+    height: 169px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
   a {
     @media (max-width: 650px) {
@@ -67,6 +59,60 @@ const ClassCard = styled.div`
     text-decoration: none;
     border-radius: 10px;
   }
+`;
+
+const Description = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  margin: 10px 0px 30px;
+`;
+const DescriptionLeft = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+const DescriptionText = styled.div`
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 24px;
+`;
+
+const DescriptionRight = styled.div``;
+
+const ClassCardCircle = styled.div`
+  @media (max-width: 650px) {
+    width: 75px;
+    height: 75px;
+    background-color: #f2f3f5;
+    color: #818181;
+    font-weight: 700;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    margin-bottom: 20px;
+  }
+  a {
+    @media (max-width: 650px) {
+    }
+    text-decoration: none;
+    border-radius: 10px;
+  }
+`;
+
+const ApplyButton = styled.div`
+  font-size: 14px;
+  font-weight: 700;
+  width: 141px;
+  height: 30px;
+  border-radius: 60px;
+  background-color: #2b66f5;
+  color: white;
+  line-height: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export default function LectureListBox({
@@ -78,20 +124,30 @@ export default function LectureListBox({
   const isMobile = useIsMobile();
   return (
     <LectureListContainer>
-      <TitleContainer>
-        <MainTitle>{mainTitle}</MainTitle>
-      </TitleContainer>
+      <MainTitle>{mainTitle}</MainTitle>
 
       <ClassCardsContainer>
+        <Description>
+          <DescriptionLeft>
+            <DescriptionText>레디테크 자체제작</DescriptionText>
+            <DescriptionText>방사선사 국가고시 모의고사</DescriptionText>
+            <DescriptionText>무료 제공중</DescriptionText>
+            <div style={{ width: "30px", borderTop: "3px solid black" }}></div>
+          </DescriptionLeft>
+          <DescriptionRight>
+            <img src="/step.png" alt="image" />
+          </DescriptionRight>
+        </Description>
         {classData?.map((li, i) => (
           <ClassCard>
-            <Link
+            {/* <Link
               href={{
                 pathname: `/lecture/${li.code}`,
                 query: { classtype: "강의", title: li.secondCat },
               }}
-            ></Link>
-            <button>응시하기</button>
+            ></Link> */}
+            <ClassCardCircle>2, 3 교시</ClassCardCircle>
+            <ApplyButton>응시하기</ApplyButton>
           </ClassCard>
         ))}
       </ClassCardsContainer>

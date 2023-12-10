@@ -5,6 +5,7 @@ import Footer from "../footer";
 import { useRouter } from "next/router";
 import FooterMobile from "../footer_mobile";
 import BottomNav from "../bottom_nav";
+import HeaderMobile from "../header_mobile";
 
 const LayoutContainer = styled.div`
   @media (max-width: 650px) {
@@ -28,6 +29,7 @@ export default function Layout({ children }) {
       {/* <LeftContainer></LeftContainer> */}
       {/* <RightContainer></RightContainer> */}
       <Header onMoveToForm={onMoveToForm} />
+      <HeaderMobile />
       {children}
       {routes.includes(route) ? "" : <Footer footerRef={footerRef} />}
       <FooterMobile footerRef={footerRef} />
