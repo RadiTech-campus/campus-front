@@ -27,11 +27,9 @@ const MainTitle = styled.div`
   font-weight: bold;
   margin-top: 10px;
   @media (max-width: 650px) {
-    font-size: 24px;
+    font-size: 3.7vw;
     color: #0b0d0f;
     font-weight: 700;
-    line-height: 34.75px;
-    letter-spacing: -3%;
   }
 `;
 
@@ -53,8 +51,8 @@ const ClassCard = styled.div`
     box-shadow: 0 0 10px 0 rgb(0 0 0 / 20%);
     border-radius: 20px;
     margin-bottom: 20px;
-    width: 42%;
-    height: 223px;
+    width: 44%;
+    /* height: 223px; */
   }
   a {
     @media (max-width: 650px) {
@@ -65,24 +63,25 @@ const ClassCard = styled.div`
 `;
 const ClassImage = styled.div`
   @media (max-width: 650px) {
-    padding-top: 20px;
-    height: 60%;
+    padding: 0px;
+    /* height: 60%; */
+    /* width: 20%; */
     display: flex;
     align-items: center;
     justify-content: center;
   }
   > img {
     @media (max-width: 650px) {
+      width: 50%;
     }
   }
 `;
 const ClassTitle = styled.div`
   @media (max-width: 650px) {
-    font-size: 22px;
+    font-size: 3.7vw;
     font-weight: 700;
     padding: 0;
-    margin: 0;
-    line-height: 31.86px;
+    margin: 0 0 20px 0;
     height: 40%;
     display: flex;
     align-items: start;

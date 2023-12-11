@@ -11,13 +11,14 @@ const FooterContainer = styled.div`
     width: 100%;
     margin: 0 auto;
     border-top: 1px #f2f3f5 solid;
-    height: 106px;
+    height: 200%;
+    padding-top: 20px;
     margin-bottom: 107px;
   }
 `;
 
 const FooterContent = styled.div`
-  font-size: 12px;
+  font-size: 2vw;
   line-height: 24px;
   color: #666666;
 `;

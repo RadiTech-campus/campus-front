@@ -95,18 +95,16 @@ export default function Index() {
           "--swiper-pagination-color": "#0422627d",
           "--swiper-pagination-bullet-inactive-color": "#9999998d",
           "--swiper-pagination-bullet-inactive-opacity": "1",
-          "--swiper-pagination-bullet-size": "12px",
-          "--swiper-pagination-bullet-horizontal-gap": "10px",
+          "--swiper-pagination-bullet-size": "8px",
+          "--swiper-pagination-bullet-horizontal-gap": "5px",
+          paddingBottom: "30px",
         }}
-        // scrollbar={{ draggable: true }}
-        // onSwiper={(swiper) => console.log(swiper)}
-        // onSlideChange={() => console.log("slide change")}
       >
         {isMobile ? (
           <>
             <SwiperSlide>
               <img
-                src={"4.png"}
+                src={"/mainbanner/ba.png"}
                 alt="레디테크 캠퍼스"
                 style={{
                   width: "100%",
@@ -114,6 +112,15 @@ export default function Index() {
               />
             </SwiperSlide>
             <SwiperSlide>
+              <img
+                src={"/mainbanner/ba.png"}
+                alt="레디테크 캠퍼스"
+                style={{
+                  width: "100%",
+                }}
+              />
+            </SwiperSlide>
+            {/* <SwiperSlide>
               <img
                 src={"33.png"}
                 alt="레디테크 캠퍼스"
@@ -130,7 +137,7 @@ export default function Index() {
                   width: "100%",
                 }}
               />
-            </SwiperSlide>
+            </SwiperSlide> */}
           </>
         ) : (
           <>

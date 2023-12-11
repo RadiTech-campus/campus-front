@@ -9,7 +9,7 @@ const LectureListContainer = styled.div`
   @media (max-width: 650px) {
     width: 100%;
   }
-  margin: 15px auto;
+  margin: 0px auto;
   width: 1160px;
 `;
 
@@ -37,11 +37,11 @@ const MainTitle = styled.div`
   font-weight: bold;
   margin-top: 10px;
   @media (max-width: 650px) {
-    font-size: 24px;
+    font-size: 3.5vw;
     color: #0b0d0f;
     font-weight: 700;
-    line-height: 34.75px;
     letter-spacing: -3%;
+    margin-top: 0px;
   }
 `;
 const Description = styled.div`
@@ -75,9 +75,9 @@ const ClassCard = styled.div`
   @media (max-width: 650px) {
     box-shadow: 0 0 10px 0 rgb(0 0 0 / 20%);
     border-radius: 20px;
-    margin: 0 15px;
-    width: 234px;
+    width: 35%;
     flex: 0 0 auto;
+    margin: 0 0 0 10px;
   }
   a {
     @media (max-width: 650px) {
@@ -95,18 +95,18 @@ const ClassImage = styled.div`
     @media (max-width: 650px) {
       border-radius: 20px 20px 0 0;
       width: 100%;
-      height: 168px;
     }
     border-radius: 10px;
   }
 `;
 const ClassTitle = styled.div`
   @media (max-width: 650px) {
-    font-size: 20px;
+    font-size: 3.2vw;
     font-weight: 700;
     padding: 0 0 0 10px;
-    margin: 0;
-    line-height: 28.96px;
+    margin: 5px 0 3px 0;
+    /* line-height: 28.96px; */
+    color: #0b0d0f;
   }
   font-size: 20px;
   font-weight: 600;
@@ -117,11 +117,12 @@ const ClassTitle = styled.div`
 
 const ClassDesc = styled.div`
   @media (max-width: 650px) {
-    font-size: 18px;
+    font-size: 3vw;
     font-weight: 700;
     padding: 0 0 0 10px;
-    margin: 0;
-    line-height: 26.06px;
+    margin: 0 0 10px 0;
+    /* line-height: 26.06px; */
+    color: #818181;
   }
   font-size: 16px;
   padding: 10px 5px 0px;
@@ -166,7 +167,7 @@ export default function LectureList({
         <MainTitle>{mainTitle}</MainTitle>
         <Description>{description}</Description>
       </TitleContainer>
-
+      {console.log(classData)}
       <ClassCardsContainer>
         {classData?.map((li, i) => (
           <Fragment key={i}>
@@ -180,25 +181,29 @@ export default function LectureList({
                   query: { classtype: "강의", title: li.secondCat },
                 }}
               >
-                <ClassImage>
-                  {isMobile ? (
-                    <img
-                      src={`https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/contents/${li.code}.jpeg`}
-                      alt={li.secondCat}
-                    />
-                  ) : (
+                {isMobile ? (
+                  <img
+                    // src={`https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/contents/${li.code}.jpeg`}
+                    src={`Rectangle.png`}
+                    alt={li.secondCat}
+                    style={{ width: "100%", borderRadius: "20px 20px 0 0" }}
+                  />
+                ) : (
+                  <ClassImage>
                     <Image
                       src={`https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/contents/${li.code}.jpeg`}
                       alt={li.secondCat}
                       style={{ objectFit: "cover" }}
                       fill
                     />
-                  )}
-                </ClassImage>
+                  </ClassImage>
+                )}
                 <ClassTitle>
                   {isMobile ? (
-                    <div key={i} style={{ marginBottom: "3px" }}>
-                      {li.secondCat?.split("!")[0]}
+                    // <div key={i} style={{ marginBottom: "3px" }}>
+                    <div key={i}>
+                      {/* {li.secondCat?.split("!")[0]} */}
+                      혈관조영
                     </div>
                   ) : (
                     li.secondCat?.split("!").map((li, i) => (
@@ -209,7 +214,8 @@ export default function LectureList({
                     ))
                   )}
                 </ClassTitle>
-                <ClassDesc>{li?.iDescription}</ClassDesc>
+                {/* <ClassDesc>{li?.iDescription}</ClassDesc> */}
+                <ClassDesc>비혈관계 중재적시술</ClassDesc>
                 <ClassTags>
                   {li?.iTags?.split(" ").map((li, i) =>
                     i === 0 || i === 1 ? (
@@ -245,26 +251,28 @@ export default function LectureList({
                     query: { classtype: "기출", title: li.secondCat },
                   }}
                 >
-                  <ClassImage>
-                    {isMobile ? (
-                      <img
-                        src={`https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/contents/${li.code}_G.jpeg`}
-                        alt="레디테크 캠퍼스"
-                        style={{ width: "100%" }}
-                      />
-                    ) : (
+                  {isMobile ? (
+                    <img
+                      // src={`https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/contents/${li.code}_G.jpeg`}
+                      src={`Rectangle.png`}
+                      alt="레디테크 캠퍼스"
+                      style={{ width: "100%", borderRadius: "20px 20px 0 0" }}
+                    />
+                  ) : (
+                    <ClassImage>
                       <Image
                         src={`https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/contents/${li.code}_G.jpeg`}
                         alt="레디테크 캠퍼스"
                         style={{ objectFit: "cover" }}
                         fill
                       />
-                    )}
-                  </ClassImage>
+                    </ClassImage>
+                  )}
                   <ClassTitle>
                     {isMobile ? (
                       <div style={{ marginBottom: "3px" }}>
-                        {li.gTitle?.split("!")[0]}
+                        {/* {li.gTitle?.split("!")[0]} */}
+                        혈관조영
                       </div>
                     ) : (
                       li.gTitle?.split("!").map((li, i) => (
@@ -275,7 +283,9 @@ export default function LectureList({
                       ))
                     )}
                   </ClassTitle>
-                  <ClassDesc>{li.gDescription}</ClassDesc>
+                  {/* <ClassDesc>{li.gDescription}</ClassDesc> */}
+                  <ClassDesc>비혈관계 중재적시술</ClassDesc>
+
                   <ClassTags>
                     {li?.gTags?.split(" ").map((li, i) => (
                       <ClassTag

@@ -18,10 +18,10 @@ const MainTitle = styled.div`
   font-weight: bold;
   margin-top: 10px;
   @media (max-width: 650px) {
-    font-size: 24px;
+    font-size: 3.5vw;
     color: #0b0d0f;
     font-weight: 700;
-    line-height: 34.75px;
+    /* line-height: 34.75px; */
     letter-spacing: -3%;
     padding: 5px 15px;
     margin: 0;
@@ -33,7 +33,8 @@ const ClassCardsContainer = styled.div`
     display: flex;
     flex-direction: column;
     background-color: #ecf2fd;
-    margin: 0 20px;
+    margin: 0 10px 20px;
+    padding: 0px 10px 20px 10px;
     border-radius: 20px;
   }
   padding: 0px 0px 20px;
@@ -43,9 +44,9 @@ const ClassCardsContainer = styled.div`
 const ClassCard = styled.div`
   @media (max-width: 650px) {
     box-shadow: 0 0 10px 0 rgb(0 0 0 / 20%);
-    border-radius: 20px;
-    margin: 0 15px;
-    width: 45%;
+    border-radius: 8px;
+    margin: 0 auto;
+    width: 42%;
     height: 169px;
     background-color: white;
     display: flex;
@@ -74,7 +75,7 @@ const DescriptionLeft = styled.div`
 `;
 const DescriptionText = styled.div`
   font-weight: 400;
-  font-size: 18px;
+  font-size: 3.2vw;
   line-height: 24px;
 `;
 
@@ -91,12 +92,12 @@ const ClassCardCircle = styled.div`
     background-color: #f2f3f5;
     color: #818181;
     font-weight: 700;
-    font-size: 18px;
+    font-size: 3.5vw;
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 50%;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
   }
   a {
     @media (max-width: 650px) {
@@ -107,9 +108,9 @@ const ClassCardCircle = styled.div`
 `;
 
 const ApplyButton = styled.div`
-  font-size: 14px;
+  font-size: 2.7vw;
   font-weight: 700;
-  width: 141px;
+  width: 70%;
   height: 30px;
   border-radius: 60px;
   background-color: #2b66f5;
@@ -144,16 +145,28 @@ export default function LectureListBox({
           </DescriptionRight>
         </Description>
         {classData?.map((li, i) => (
-          <ClassCard>
-            {/* <Link
+          <div style={{ display: "flex" }}>
+            <ClassCard>
+              {/* <Link
               href={{
                 pathname: `/lecture/${li.code}`,
                 query: { classtype: "강의", title: li.secondCat },
               }}
             ></Link> */}
-            <ClassCardCircle>2, 3 교시</ClassCardCircle>
-            <ApplyButton>응시하기</ApplyButton>
-          </ClassCard>
+              <ClassCardCircle>2 교시</ClassCardCircle>
+              <ApplyButton>응시하기</ApplyButton>
+            </ClassCard>
+            <ClassCard>
+              {/* <Link
+              href={{
+                pathname: `/lecture/${li.code}`,
+                query: { classtype: "강의", title: li.secondCat },
+              }}
+            ></Link> */}
+              <ClassCardCircle>3 교시</ClassCardCircle>
+              <ApplyButton>응시하기</ApplyButton>
+            </ClassCard>
+          </div>
         ))}
       </ClassCardsContainer>
     </LectureListContainer>

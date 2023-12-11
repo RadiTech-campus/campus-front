@@ -23,7 +23,7 @@ const HeaderContainer = styled.div`
 
 const MobileLogo = styled.img`
   @media (max-width: 650px) {
-    width: 300px;
+    width: 65%;
     padding: 0px 5px;
   }
 `;
