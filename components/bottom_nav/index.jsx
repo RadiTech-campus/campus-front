@@ -10,7 +10,7 @@ import { useRouter } from "next/router";
 const BottomNavContainer = styled.div`
   display: none;
   @media (max-width: 650px) {
-    height: 65px;
+    height: 55px;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -23,7 +23,7 @@ const BottomNavContainer = styled.div`
 `;
 
 const NavButton = styled.div`
-  width: 25%;
+  width: 18%;
   color: #a2a2a2;
   display: flex;
   flex-direction: column;
@@ -31,10 +31,20 @@ const NavButton = styled.div`
   margin: 0 0px 5px;
 `;
 const NavButtonIcon = styled.div``;
+const NavButtonCenterIcon = styled.div`
+  position: fixed;
+  bottom: 25px;
+`;
+const NavButtonCenterText = styled.div`
+  position: fixed;
+  bottom: 3px;
+  font-weight: 700;
+  color: black;
+  font-size: 15px;
+`;
 const NavButtonText = styled.div`
   font-weight: 700;
-  font-size: 14px;
-  line-height: 19.36px;
+  font-size: 12px;
 `;
 
 export default function BottomNav() {
@@ -55,10 +65,10 @@ export default function BottomNav() {
         <NavButtonText>마이룸</NavButtonText>
       </NavButton>
       <NavButton onClick={() => router.push("/")}>
-        <NavButtonIcon>
+        <NavButtonCenterIcon>
           <Logo />
-        </NavButtonIcon>
-        <NavButtonText>홈</NavButtonText>
+        </NavButtonCenterIcon>
+        <NavButtonCenterText>홈</NavButtonCenterText>
       </NavButton>
       <NavButton>
         <NavButtonIcon>

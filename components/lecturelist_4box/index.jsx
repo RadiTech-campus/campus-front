@@ -69,6 +69,7 @@ const ClassImage = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-top: 10px;
   }
   > img {
     @media (max-width: 650px) {
@@ -81,7 +82,7 @@ const ClassTitle = styled.div`
     font-size: 3.7vw;
     font-weight: 700;
     padding: 0;
-    margin: 0 0 20px 0;
+    margin: 0 0 30px 0;
     height: 40%;
     display: flex;
     align-items: start;
