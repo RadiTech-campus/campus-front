@@ -70,13 +70,13 @@ export default function BottomNav() {
         </NavButtonCenterIcon>
         <NavButtonCenterText>홈</NavButtonCenterText>
       </NavButton>
-      <NavButton>
+      <NavButton onClick={() => router.push("/gosi")}>
         <NavButtonIcon>
           <Kuk />
         </NavButtonIcon>
         <NavButtonText>국가고시</NavButtonText>
       </NavButton>
-      <NavButton>
+      <NavButton onClick={() => router.push("/job")}>
         <NavButtonIcon>
           <Gang />
         </NavButtonIcon>
