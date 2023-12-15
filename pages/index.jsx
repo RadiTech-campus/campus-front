@@ -25,6 +25,8 @@ import { canclePayment } from "../api/contents_api";
 import { useIsMobile } from "../hooks/useIsMobile";
 import LectureListBox from "../components/lecturelist_box";
 import LectureList4Box from "../components/lecturelist_4box";
+import LectureListMobile from "../components/lecturelist_mobile";
+import { useGetLecturesByContentId } from "../query/new/queries";
 
 const IndexContainer = styled.div``;
 
@@ -69,7 +71,16 @@ export default function Index() {
       }
     }
   }, [data2]);
+
+  // 이하 모바일 영역
   const isMobile = useIsMobile();
+  const { data: lecturesData } = useGetLecturesByContentId(11);
+  const lectureData = useMemo(() => lecturesData || [], [lecturesData]);
+  const { data: freeLecturesData } = useGetLecturesByContentId(8);
+  const freeLectureData = useMemo(
+    () => freeLecturesData || [],
+    [freeLecturesData],
+  );
 
   return (
     <IndexContainer>
@@ -212,20 +223,23 @@ export default function Index() {
       </Swiper>
       {isMobile && (
         <>
-          <LectureList
-            category="기간 한정 이벤트"
+          <LectureListMobile
+            mainTitle="big5 취업트레이닝 ✍️"
+            classData={lectureData}
+          />
+          <img src="/jobbanner.png" alt="line" style={{ width: "100%" }} />
+          <LectureList4Box
+            category="BIG5 대학병원 핵심 분석"
+            mainTitle="대학병원 핵심 정보 분석 🥇"
+            classData={data
+              ?.filter((li) => li.firstCat === "병원" && li.pay === "유료")
+              .sort((a, b) => (a.code > b.code ? 1 : -1))}
+          />
+          <LectureListMobile
             mainTitle="무료 요약 자료 및 해설 강의 ✍️"
-            classData={data
-              ?.filter((li) => li.pay === "무료" && li.firstCat === "일반강의")
-              .sort((a, b) => (a.code > b.code ? 1 : -1))}
+            classData={freeLectureData}
           />
-          <LectureList
-            category="방사선사 국가고시"
-            mainTitle="촉박한 시간, 방대한 시험범위, 한번에 해결!"
-            classData={data
-              ?.filter((li) => li.firstCat === "일반강의" && li.pay === "유료")
-              .sort((a, b) => (a.code > b.code ? 1 : -1))}
-          />
+          <img src="/pass.jpg" alt="line" style={{ width: "100%" }} />
           <LectureListBox
             category="자체 제작"
             mainTitle="레디테크 모의고사 무료 제공중 ✨"
@@ -233,14 +247,6 @@ export default function Index() {
               ?.filter(
                 (li) => li.firstCat === "미니모의고사" && li.pay === "무료",
               )
-              .sort((a, b) => (a.code > b.code ? 1 : -1))}
-          />
-          <img src="/pass.jpg" alt="line" style={{ width: "100%" }} />
-          <LectureList4Box
-            category="BIG5 대학병원 핵심 분석"
-            mainTitle="대학병원 핵심 정보 분석 🥇"
-            classData={data
-              ?.filter((li) => li.firstCat === "병원" && li.pay === "유료")
               .sort((a, b) => (a.code > b.code ? 1 : -1))}
           />
         </>

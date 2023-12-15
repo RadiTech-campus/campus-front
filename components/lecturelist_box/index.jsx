@@ -145,7 +145,7 @@ export default function LectureListBox({
           </DescriptionRight>
         </Description>
         {classData?.map((li, i) => (
-          <div style={{ display: "flex" }}>
+          <div style={{ display: "flex" }} key={i}>
             <ClassCard>
               {/* <Link
               href={{

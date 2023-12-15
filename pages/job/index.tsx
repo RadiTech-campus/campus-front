@@ -1,6 +1,7 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useMemo } from "react";
 import styled from "@emotion/styled";
 import Link from "next/link";
+import { useGetLecturesByContentId } from "../../query/new/queries";
 
 const LectureListContainer = styled.div`
   @media (max-width: 650px) {
@@ -133,158 +134,40 @@ const ClassDesc = styled.div`
   margin: 5px 0px 0px 0px;
 `;
 
-export default function Gosi() {
+export default function Job() {
+  const { data: lecturesData } = useGetLecturesByContentId(11);
+  const lectureData = useMemo(() => lecturesData || [], [lecturesData]);
   return (
     <div>
       <img src="/job/job.png" alt="image" style={{ width: "100%" }} />
       <LectureListContainer>
         <TitleContainer>
-          <MainTitle>이론 & 3개년 기출 강의 ✍️</MainTitle>
+          <MainTitle>자소서, 면접, 대학정보 ✍️</MainTitle>
           <Tags>
             <Tag>전체강의</Tag>
-            <Tag>이론강의</Tag>
-            <Tag>기출강의</Tag>
+            <Tag>자소서/면접</Tag>
+            <Tag>대학정보</Tag>
           </Tags>
         </TitleContainer>
         <ClassCardsContainer>
-          <>
-            <ClassCard>
+          {lectureData?.map((li, i) => (
+            <ClassCard key={i}>
               <Link
                 href={{
-                  pathname: `/`,
+                  pathname: `/lecture/${li.code}`,
+                  query: { classtype: "강의", title: li.secondCat },
                 }}
               >
                 <img
-                  // src={`https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/contents/${li.code}.jpeg`}
-                  src={`/job/chi.png`}
-                  // alt={li.secondCat}
+                  src={`${li.thumbnailURL}`}
+                  alt={li.secondCat}
                   style={{ width: "100%", borderRadius: "20px 20px 0 0" }}
                 />
-
-                <ClassTitle>타이틀</ClassTitle>
-                <ClassDesc>비혈관계 중재적시술</ClassDesc>
-                {/* <ClassTags>
-                  {li?.iTags?.split(" ").map((li, i) =>
-                    i === 0 || i === 1 ? (
-                      <ClassTag
-                        key={i}
-                        style={{
-                          backgroundColor: "gray",
-                          marginRight: "5px",
-                        }}
-                      >
-                        {li}
-                      </ClassTag>
-                    ) : (
-                      ""
-                    ),
-                  )}
-                </ClassTags> */}
+                <ClassTitle>{li.lectureTitle}</ClassTitle>
+                <ClassDesc>{li.description}</ClassDesc>
               </Link>
             </ClassCard>
-            <ClassCard>
-              <Link
-                href={{
-                  pathname: `/`,
-                }}
-              >
-                <img
-                  // src={`https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/contents/${li.code}.jpeg`}
-                  src={`/job/chi.png`}
-                  // alt={li.secondCat}
-                  style={{ width: "100%", borderRadius: "20px 20px 0 0" }}
-                />
-
-                <ClassTitle>타이틀</ClassTitle>
-                <ClassDesc>비혈관계 중재적시술</ClassDesc>
-                {/* <ClassTags>
-                  {li?.iTags?.split(" ").map((li, i) =>
-                    i === 0 || i === 1 ? (
-                      <ClassTag
-                        key={i}
-                        style={{
-                          backgroundColor: "gray",
-                          marginRight: "5px",
-                        }}
-                      >
-                        {li}
-                      </ClassTag>
-                    ) : (
-                      ""
-                    ),
-                  )}
-                </ClassTags> */}
-              </Link>
-            </ClassCard>
-            <ClassCard>
-              <Link
-                href={{
-                  pathname: `/`,
-                }}
-              >
-                <img
-                  // src={`https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/contents/${li.code}.jpeg`}
-                  src={`/job/chi.png`}
-                  // alt={li.secondCat}
-                  style={{ width: "100%", borderRadius: "20px 20px 0 0" }}
-                />
-
-                <ClassTitle>타이틀</ClassTitle>
-                <ClassDesc>비혈관계 중재적시술</ClassDesc>
-                {/* <ClassTags>
-                  {li?.iTags?.split(" ").map((li, i) =>
-                    i === 0 || i === 1 ? (
-                      <ClassTag
-                        key={i}
-                        style={{
-                          backgroundColor: "gray",
-                          marginRight: "5px",
-                        }}
-                      >
-                        {li}
-                      </ClassTag>
-                    ) : (
-                      ""
-                    ),
-                  )}
-                </ClassTags> */}
-              </Link>
-            </ClassCard>
-            <ClassCard>
-              <Link
-                href={{
-                  pathname: `/`,
-                }}
-              >
-                <img
-                  // src={`https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/contents/${li.code}.jpeg`}
-                  src={`/job/chi.png`}
-                  // alt={li.secondCat}
-                  style={{ width: "100%", borderRadius: "20px 20px 0 0" }}
-                />
-
-                <ClassTitle>타이틀</ClassTitle>
-                <ClassDesc>비혈관계 중재적시술</ClassDesc>
-                {/* <ClassTags>
-                  {li?.iTags?.split(" ").map((li, i) =>
-                    i === 0 || i === 1 ? (
-                      <ClassTag
-                        key={i}
-                        style={{
-                          backgroundColor: "gray",
-                          marginRight: "5px",
-                        }}
-                      >
-                        {li}
-                      </ClassTag>
-                    ) : (
-                      ""
-                    ),
-                  )}
-                </ClassTags> */}
-              </Link>
-            </ClassCard>
-          </>
+          ))}
         </ClassCardsContainer>
       </LectureListContainer>
     </div>

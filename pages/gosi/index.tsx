@@ -1,6 +1,7 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useMemo } from "react";
 import styled from "@emotion/styled";
 import Link from "next/link";
+import { useGetLecturesByContentId } from "../../query/new/queries";
 
 const LectureListContainer = styled.div`
   @media (max-width: 650px) {
@@ -89,19 +90,7 @@ const ClassCard = styled.div`
     border-radius: 10px;
   }
 `;
-const ClassImage = styled.div`
-  @media (max-width: 650px) {
-  }
-  height: 180px;
-  position: relative;
-  > img {
-    @media (max-width: 650px) {
-      border-radius: 20px 20px 0 0;
-      width: 100%;
-    }
-    border-radius: 10px;
-  }
-`;
+
 const ClassTitle = styled.div`
   @media (max-width: 650px) {
     font-size: 3.2vw;
@@ -134,6 +123,16 @@ const ClassDesc = styled.div`
 `;
 
 export default function Gosi() {
+  const { data: lecturesData1 } = useGetLecturesByContentId(1);
+  const { data: lecturesData2 } = useGetLecturesByContentId(2);
+  const data = useMemo(
+    () =>
+      (lecturesData1 &&
+        lecturesData2 && [...lecturesData1, ...lecturesData2]) ||
+      [],
+    [lecturesData1, lecturesData2],
+  );
+
   return (
     <div>
       <img src="/gosi/gositop.png" alt="image" style={{ width: "100%" }} />
@@ -147,144 +146,25 @@ export default function Gosi() {
           </Tags>
         </TitleContainer>
         <ClassCardsContainer>
-          <>
-            <ClassCard>
-              <Link
-                href={{
-                  pathname: `/`,
-                }}
-              >
-                <img
-                  // src={`https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/contents/${li.code}.jpeg`}
-                  src={`/job/chi.png`}
-                  // alt={li.secondCat}
-                  style={{ width: "100%", borderRadius: "20px 20px 0 0" }}
-                />
-
-                <ClassTitle>타이틀</ClassTitle>
-                <ClassDesc>비혈관계 중재적시술</ClassDesc>
-                {/* <ClassTags>
-                  {li?.iTags?.split(" ").map((li, i) =>
-                    i === 0 || i === 1 ? (
-                      <ClassTag
-                        key={i}
-                        style={{
-                          backgroundColor: "gray",
-                          marginRight: "5px",
-                        }}
-                      >
-                        {li}
-                      </ClassTag>
-                    ) : (
-                      ""
-                    ),
-                  )}
-                </ClassTags> */}
-              </Link>
-            </ClassCard>
-            <ClassCard>
-              <Link
-                href={{
-                  pathname: `/`,
-                }}
-              >
-                <img
-                  // src={`https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/contents/${li.code}.jpeg`}
-                  src={`/job/chi.png`}
-                  // alt={li.secondCat}
-                  style={{ width: "100%", borderRadius: "20px 20px 0 0" }}
-                />
-
-                <ClassTitle>타이틀</ClassTitle>
-                <ClassDesc>비혈관계 중재적시술</ClassDesc>
-                {/* <ClassTags>
-                  {li?.iTags?.split(" ").map((li, i) =>
-                    i === 0 || i === 1 ? (
-                      <ClassTag
-                        key={i}
-                        style={{
-                          backgroundColor: "gray",
-                          marginRight: "5px",
-                        }}
-                      >
-                        {li}
-                      </ClassTag>
-                    ) : (
-                      ""
-                    ),
-                  )}
-                </ClassTags> */}
-              </Link>
-            </ClassCard>
-            <ClassCard>
-              <Link
-                href={{
-                  pathname: `/`,
-                }}
-              >
-                <img
-                  // src={`https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/contents/${li.code}.jpeg`}
-                  src={`/job/chi.png`}
-                  // alt={li.secondCat}
-                  style={{ width: "100%", borderRadius: "20px 20px 0 0" }}
-                />
-
-                <ClassTitle>타이틀</ClassTitle>
-                <ClassDesc>비혈관계 중재적시술</ClassDesc>
-                {/* <ClassTags>
-                  {li?.iTags?.split(" ").map((li, i) =>
-                    i === 0 || i === 1 ? (
-                      <ClassTag
-                        key={i}
-                        style={{
-                          backgroundColor: "gray",
-                          marginRight: "5px",
-                        }}
-                      >
-                        {li}
-                      </ClassTag>
-                    ) : (
-                      ""
-                    ),
-                  )}
-                </ClassTags> */}
-              </Link>
-            </ClassCard>
-            <ClassCard>
-              <Link
-                href={{
-                  pathname: `/`,
-                }}
-              >
-                <img
-                  // src={`https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/contents/${li.code}.jpeg`}
-                  src={`/job/chi.png`}
-                  // alt={li.secondCat}
-                  style={{ width: "100%", borderRadius: "20px 20px 0 0" }}
-                />
-
-                <ClassTitle>타이틀</ClassTitle>
-                <ClassDesc>비혈관계 중재적시술</ClassDesc>
-                {/* <ClassTags>
-                  {li?.iTags?.split(" ").map((li, i) =>
-                    i === 0 || i === 1 ? (
-                      <ClassTag
-                        key={i}
-                        style={{
-                          backgroundColor: "gray",
-                          marginRight: "5px",
-                        }}
-                      >
-                        {li}
-                      </ClassTag>
-                    ) : (
-                      ""
-                    ),
-                  )}
-                </ClassTags> */}
-              </Link>
-            </ClassCard>
-          </>
+          {data
+            ?.sort((a, b) => (a.sorting > b.sorting ? 1 : -1))
+            .map((li, i) => (
+              <ClassCard key={i}>
+                <Link
+                  href={{
+                    pathname: `/`,
+                  }}
+                >
+                  <img
+                    src={li.thumbnailURL}
+                    alt={li.secondCat}
+                    style={{ width: "100%", borderRadius: "20px 20px 0 0" }}
+                  />
+                  <ClassTitle>{li.lectureTitle}</ClassTitle>
+                  <ClassDesc>{li.description}</ClassDesc>
+                </Link>
+              </ClassCard>
+            ))}
         </ClassCardsContainer>
       </LectureListContainer>
     </div>

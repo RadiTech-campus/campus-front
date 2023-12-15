@@ -1,14 +1,16 @@
 import styled from "@emotion/styled";
 import Image from "next/image";
-import React from "react";
+import React, { Fragment } from "react";
 import Link from "next/link";
 import { useIsMobile } from "../../hooks/useIsMobile";
+import Countdown from "../timer";
 
 const LectureListContainer = styled.div`
   @media (max-width: 650px) {
     width: 100%;
   }
-  margin: 15px auto;
+  margin: 0px auto;
+  width: 1160px;
 `;
 
 const TitleContainer = styled.div`
@@ -27,16 +29,22 @@ const MainTitle = styled.div`
   font-weight: bold;
   margin-top: 10px;
   @media (max-width: 650px) {
-    font-size: 3.7vw;
+    font-size: 3.5vw;
     color: #0b0d0f;
     font-weight: 700;
+    letter-spacing: -3%;
+    margin-top: 0px;
   }
 `;
 
 const ClassCardsContainer = styled.div`
   @media (max-width: 650px) {
     display: flex;
-    justify-content: space-evenly;
+    flex-wrap: nowrap;
+    overflow: scroll;
+    ::-webkit-scrollbar {
+      display: none;
+    }
   }
   padding: 0px 0px 20px;
   display: flex;
@@ -50,9 +58,9 @@ const ClassCard = styled.div`
   @media (max-width: 650px) {
     box-shadow: 0 0 10px 0 rgb(0 0 0 / 20%);
     border-radius: 20px;
-    margin-bottom: 20px;
-    width: 44%;
-    /* height: 223px; */
+    width: 43%;
+    flex: 0 0 auto;
+    margin: 0 0 0 10px;
   }
   a {
     @media (max-width: 650px) {
@@ -61,32 +69,14 @@ const ClassCard = styled.div`
     border-radius: 10px;
   }
 `;
-const ClassImage = styled.div`
-  @media (max-width: 650px) {
-    padding: 0px;
-    /* height: 60%; */
-    /* width: 20%; */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 10px;
-  }
-  > img {
-    @media (max-width: 650px) {
-      width: 50%;
-    }
-  }
-`;
+
 const ClassTitle = styled.div`
   @media (max-width: 650px) {
-    font-size: 3.7vw;
+    font-size: 3.2vw;
     font-weight: 700;
-    padding: 0;
-    margin: 0 0 30px 0;
-    height: 40%;
-    display: flex;
-    align-items: start;
-    justify-content: center;
+    padding: 0 0 0 10px;
+    margin: 5px 0 3px 0;
+    color: #0b0d0f;
   }
   font-size: 20px;
   font-weight: 600;
@@ -95,37 +85,43 @@ const ClassTitle = styled.div`
   color: black;
 `;
 
-export default function LectureList4Box({
-  category,
-  mainTitle,
-  description,
-  classData,
-}) {
-  const isMobile = useIsMobile();
+const ClassDesc = styled.div`
+  @media (max-width: 650px) {
+    font-size: 2.8vw;
+    font-weight: 700;
+    padding: 0 30px 0px 10px;
+    margin: 0 0 10px 0;
+    /* line-height: 26.06px; */
+    color: #818181;
+  }
+  font-size: 16px;
+  padding: 10px 5px 0px;
+  color: #888888c1;
+  margin: 5px 0px 0px 0px;
+`;
+
+export default function LectureListMobile({ mainTitle, classData }) {
   return (
     <LectureListContainer>
       <TitleContainer>
         <MainTitle>{mainTitle}</MainTitle>
       </TitleContainer>
-
       <ClassCardsContainer>
         {classData?.map((li, i) => (
           <ClassCard key={i}>
             <Link
               href={{
-                pathname: `/lecture/${li.code}`,
-                query: { classtype: "강의", title: li.secondCat },
+                pathname: `/lecture-new/${li.id}`,
               }}
             >
-              <ClassImage>
-                <img src={`/hos/${li.code}.png`} alt={li.secondCat} />
-              </ClassImage>
-              <ClassTitle>
-                {i === 0 && "서울아산/삼성병원"}
-                {i === 1 && "성모병원"}
-                {i === 2 && "서울대병원"}
-                {i === 3 && "연세의료원"}
-              </ClassTitle>
+              <img
+                src={`${li.thumbnailURL}`}
+                alt={li.lectureTitle}
+                style={{ width: "100%", borderRadius: "20px 20px 0 0" }}
+              />
+
+              <ClassTitle>{li.lectureTitle}</ClassTitle>
+              <ClassDesc>{li.description}</ClassDesc>
             </Link>
           </ClassCard>
         ))}

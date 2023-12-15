@@ -167,14 +167,13 @@ export default function LectureList({
         <MainTitle>{mainTitle}</MainTitle>
         <Description>{description}</Description>
       </TitleContainer>
-      {console.log(classData)}
       <ClassCardsContainer>
         {classData?.map((li, i) => (
           <Fragment key={i}>
             <ClassCard>
-              {/* {li.pay === "기간" && (
+              {li.pay === "기간" && (
                 <Countdown targetDate={li.startDate} endDate={li.endDate} />
-              )} */}
+              )}
               <Link
                 href={{
                   pathname: `/lecture/${li.code}`,
@@ -183,8 +182,8 @@ export default function LectureList({
               >
                 {isMobile ? (
                   <img
-                    // src={`https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/contents/${li.code}.jpeg`}
-                    src={`Rectangle.png`}
+                    src={`https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/contents/${li.code}.jpeg`}
+                    // src={`Rectangle.png`}
                     alt={li.secondCat}
                     style={{ width: "100%", borderRadius: "20px 20px 0 0" }}
                   />
@@ -200,10 +199,10 @@ export default function LectureList({
                 )}
                 <ClassTitle>
                   {isMobile ? (
-                    // <div key={i} style={{ marginBottom: "3px" }}>
-                    <div key={i}>
-                      {/* {li.secondCat?.split("!")[0]} */}
-                      혈관조영
+                    <div key={i} style={{ marginBottom: "3px" }}>
+                      {/* <div key={i}> */}
+                      {li.secondCat?.split("!")[0]}
+                      {/* 혈관조영 */}
                     </div>
                   ) : (
                     li.secondCat?.split("!").map((li, i) => (
@@ -214,8 +213,8 @@ export default function LectureList({
                     ))
                   )}
                 </ClassTitle>
-                {/* <ClassDesc>{li?.iDescription}</ClassDesc> */}
-                <ClassDesc>비혈관계 중재적시술</ClassDesc>
+                <ClassDesc>{li?.iDescription}</ClassDesc>
+                {/* <ClassDesc>비혈관계 중재적시술</ClassDesc> */}
                 <ClassTags>
                   {li?.iTags?.split(" ").map((li, i) =>
                     i === 0 || i === 1 ? (
@@ -253,8 +252,8 @@ export default function LectureList({
                 >
                   {isMobile ? (
                     <img
-                      // src={`https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/contents/${li.code}_G.jpeg`}
-                      src={`Rectangle.png`}
+                      src={`https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/contents/${li.code}_G.jpeg`}
+                      // src={`Rectangle.png`}
                       alt="레디테크 캠퍼스"
                       style={{ width: "100%", borderRadius: "20px 20px 0 0" }}
                     />
@@ -271,8 +270,8 @@ export default function LectureList({
                   <ClassTitle>
                     {isMobile ? (
                       <div style={{ marginBottom: "3px" }}>
-                        {/* {li.gTitle?.split("!")[0]} */}
-                        혈관조영
+                        {li.gTitle?.split("!")[0]}
+                        {/* 혈관조영 */}
                       </div>
                     ) : (
                       li.gTitle?.split("!").map((li, i) => (
@@ -283,8 +282,8 @@ export default function LectureList({
                       ))
                     )}
                   </ClassTitle>
-                  {/* <ClassDesc>{li.gDescription}</ClassDesc> */}
-                  <ClassDesc>비혈관계 중재적시술</ClassDesc>
+                  <ClassDesc>{li.gDescription}</ClassDesc>
+                  {/* <ClassDesc>비혈관계 중재적시술</ClassDesc> */}
 
                   <ClassTags>
                     {li?.gTags?.split(" ").map((li, i) => (
