@@ -148,7 +148,7 @@ const RegistButton = styled.button`
   padding: 10px;
   font-size: 14px;
   font-weight: bold;
-  background-color: #a603a6;
+  background-color: #a2a2a2;
   color: white;
   cursor: pointer;
 `;
@@ -269,50 +269,50 @@ export default function SignUp() {
   const onSubmit = (e) => {
     e.preventDefault();
     // 개별과목 입금대기 상태일때 & 올패스 신청시
-    if (
-      data4.filter(
-        (li) => li.productCode.includes("C") && li.payStatus === "입금대기",
-      ).length > 0 &&
-      Selected.includes("A")
-    ) {
-      for (
-        let i = 0;
-        i <
-        data4.filter(
-          (li) => li.productCode.includes("C") && li.payStatus === "입금대기",
-        ).length;
-        i++
-      ) {
-        canclePayment({
-          id: data4.filter(
-            (li) => li.productCode.includes("C") && li.payStatus === "입금대기",
-          )[i].id,
-        });
-      }
-      mutate.mutateAsync();
-      handleOpenModal();
-    } else if (
-      // "개별과목 입금대기 상태일때 & 개별과목 신청시 -> 같은과목 신청이면 중복 얼럿, 아니면 그냥 신청"
-      data4.filter(
-        (li) =>
-          li.productCode.includes("C") &&
-          (li.payStatus === "입금대기" || li.payStatus === "결제완료") &&
-          li.productCode.includes(Selected.substring(0, 5)),
-      ).length > 0 &&
-      !Selected.includes("A")
-    ) {
-      alert("이미 수강신청된 강의 입니다.");
-    } else if (
-      data4.filter(
-        (li) => li.productCode.includes("A") && li.payStatus === "입금대기",
-      ).length > 0
-    ) {
-      alert("All Pass 강의를 취소후에 신청 가능합니다.");
-      router.push("/mypage");
-    } else {
-      mutate.mutateAsync();
-      handleOpenModal();
-    }
+    // if (
+    //   data4.filter(
+    //     (li) => li.productCode.includes("C") && li.payStatus === "입금대기",
+    //   ).length > 0 &&
+    //   Selected.includes("A")
+    // ) {
+    //   for (
+    //     let i = 0;
+    //     i <
+    //     data4.filter(
+    //       (li) => li.productCode.includes("C") && li.payStatus === "입금대기",
+    //     ).length;
+    //     i++
+    //   ) {
+    //     canclePayment({
+    //       id: data4.filter(
+    //         (li) => li.productCode.includes("C") && li.payStatus === "입금대기",
+    //       )[i].id,
+    //     });
+    //   }
+    //   mutate.mutateAsync();
+    //   handleOpenModal();
+    // } else if (
+    //   // "개별과목 입금대기 상태일때 & 개별과목 신청시 -> 같은과목 신청이면 중복 얼럿, 아니면 그냥 신청"
+    //   data4.filter(
+    //     (li) =>
+    //       li.productCode.includes("C") &&
+    //       (li.payStatus === "입금대기" || li.payStatus === "결제완료") &&
+    //       li.productCode.includes(Selected.substring(0, 5)),
+    //   ).length > 0 &&
+    //   !Selected.includes("A")
+    // ) {
+    //   alert("이미 수강신청된 강의 입니다.");
+    // } else if (
+    //   data4.filter(
+    //     (li) => li.productCode.includes("A") && li.payStatus === "입금대기",
+    //   ).length > 0
+    // ) {
+    //   alert("All Pass 강의를 취소후에 신청 가능합니다.");
+    //   router.push("/mypage");
+    // } else {
+    //   mutate.mutateAsync();
+    //   handleOpenModal();
+    // }
   };
 
   const handleCopyClipBoard = async (e) => {
@@ -351,7 +351,6 @@ export default function SignUp() {
           <InputsContainer>
             <ClassText>수강정보</ClassText>
             <Divider />
-
             <RegistLabel>강의명</RegistLabel>
             {productsIsLoading ? (
               <ThreeDots
@@ -366,7 +365,7 @@ export default function SignUp() {
               />
             ) : (
               <RegistSelect onChange={handleSelect} value={Selected}>
-                {data3 &&
+                {/* {data3 &&
                   data3.length > 0 &&
                   data3
                     .sort((a, b) => (a.productCode > b.productCode ? 1 : -1))
@@ -374,10 +373,10 @@ export default function SignUp() {
                       <option key={i} value={li.productCode}>
                         {li.productTitle}
                       </option>
-                    ))}
+                    ))} */}
+                <option>2024 강의를 준비중입니다.</option>
               </RegistSelect>
             )}
-
             <UserText>구매자 정보</UserText>
             <Divider />
             <RegistLabel>
@@ -387,16 +386,13 @@ export default function SignUp() {
               </span>{" "}
             </RegistLabel>
             <RegistInput type="text" disabled value={userName} />
-
             <RegistLabel>메일</RegistLabel>
             <RegistInput type="email" disabled value={email} />
-
             <RegistLabel>휴대번호</RegistLabel>
             <RegistInput type="number" disabled value={phoneNumber} />
-
             <PriceText up={data.discount === 0}>가격 정보</PriceText>
             <Divider />
-            {data && data.discount > 0 ? (
+            {/* {data && data.discount > 0 ? (
               <>
                 <PriceContainer>
                   <PriceTitle>할인율</PriceTitle>
@@ -459,7 +455,8 @@ export default function SignUp() {
                   <PriceContent>{data2?.price} 원</PriceContent>
                 </PriceDetail>
               </PriceContainer>
-            )}
+            )} */}
+            2024 강의를 준비중 입니다.
             <PayText discount={data.discount === 0}>결제 방법</PayText>
             <Divider />
             <PriceContainer>
@@ -483,7 +480,6 @@ export default function SignUp() {
                 *기간내 미 결제시 수강신청이 취소됩니다
               </div>
             </PriceContainer>
-
             <PriceContainer>
               <PriceTitle>결제방법</PriceTitle>
               <div style={{ display: "flex", flexDirection: "column" }}>
@@ -516,7 +512,7 @@ export default function SignUp() {
               </div>
             </PriceContainer>
             {/* <RegistButton onClick={() => router.push("/verify")}> */}
-            <RegistButton>수강신청</RegistButton>
+            <RegistButton disabled>수강신청</RegistButton>
           </InputsContainer>
         </form>
       </RegistBox>
