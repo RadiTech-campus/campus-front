@@ -6,6 +6,7 @@ import Modal from "../modal/Modal";
 import { useRouter } from "next/router";
 import { useGetPayment } from "../../query/contents";
 import { upWatchedPayment } from "../../api/contents_api";
+import { useGetLectureAuthByUserIdAndLectureId } from "../../query/new/queries";
 
 const LecturesContainer = styled.div`
   @media (max-width: 650px) {
@@ -53,6 +54,7 @@ const ChapterButton = styled.button`
 export default function LecturesMobile({
   lectureDetailsData,
   setSelectedLectureDetail,
+  onMoveToForm,
 }) {
   const auth = useAuth();
   const [isOpen, setIsOpen] = useState(false);
@@ -78,6 +80,12 @@ export default function LecturesMobile({
   //   }
   // }, [auth, data2]);
 
+  const { data: paymentData } = useGetLectureAuthByUserIdAndLectureId(
+    auth.username,
+    lid,
+  );
+  const payment = useMemo(() => paymentData || false, [paymentData]);
+
   return (
     <LecturesContainer>
       {isOpen && (
@@ -97,7 +105,14 @@ export default function LecturesMobile({
         ? lectureDetailsData.map((li, i) => (
             <ChapterContainer
               key={i}
-              onClick={() => setSelectedLectureDetail(li.videoURL)}
+              onClick={() => {
+                if (payment) {
+                  onMoveToForm();
+                  setSelectedLectureDetail(li.videoURL);
+                } else {
+                  alert("결제필요");
+                }
+              }}
             >
               <ChapterTitle># {li.lectureDetailTitle}</ChapterTitle>
               <ChapterButton>해설</ChapterButton>

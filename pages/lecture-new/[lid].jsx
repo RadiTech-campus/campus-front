@@ -9,6 +9,7 @@ import { useIsMobile } from "../../hooks/useIsMobile";
 import { useAuth } from "../../hooks/useAuth";
 import LectureInfoMobile from "../../components/lectureinfo_mobile";
 import {
+  useGetLectureAuthByUserIdAndLectureId,
   useGetLectureById,
   useGetLectureDetailByLecturetId,
 } from "../../query/new/queries";
@@ -114,13 +115,13 @@ export default function Lecture() {
   //
   // const { data: contentData } = useGetContents();
   // const data2 = useMemo(() => contentData?.Items || [], [contentData]);
-  // const preview = useRef(); //특정 DOM을 가리킬 때 사용하는 Hook함수, SecondDiv에 적용
-  // const onMoveToForm = () => {
-  //   setSelectedTab("강의소개");
-  //   setTimeout(() => {
-  //     preview.current.scrollIntoView({ behavior: "smooth", block: "center" });
-  //   }, 200);
-  // };
+  const preview = useRef(); //특정 DOM을 가리킬 때 사용하는 Hook함수, SecondDiv에 적용
+  const onMoveToForm = () => {
+    // setSelectedTab("강의소개");
+    setTimeout(() => {
+      preview.current.scrollIntoView({ behavior: "smooth", block: "center" });
+    }, 200);
+  };
   // const { data: lectureDetailData } = useGetLectureDetailByLecturetId(lid);
   const { data: lectureDetailData } = useGetLectureDetailByLecturetId(lid);
   const lectureDetailsData = useMemo(
@@ -150,14 +151,15 @@ export default function Lecture() {
         </Modal>
       )}
       {selectedLectureDetail ? (
-        <iframe
-          src={`https://player.vimeo.com/video/${selectedLectureDetail}`}
-          width="100%"
-          // height="564"
-          frameBorder="0"
-          allow="autoplay; fullscreen"
-          allowFullScreen
-        />
+        <div ref={preview}>
+          <iframe
+            src={`https://player.vimeo.com/video/${selectedLectureDetail}`}
+            width="100%"
+            frameBorder="0"
+            allow="autoplay; fullscreen"
+            allowFullScreen
+          />
+        </div>
       ) : (
         <img
           src={`/lecturebanner/lecture.png`}
@@ -183,7 +185,10 @@ export default function Lecture() {
           <ClassTap
             key={i}
             id={tab}
-            onClick={(e) => setSelectedTab(e.target.id)}
+            onClick={(e) => {
+              setSelectedLectureDetail();
+              setSelectedTab(e.target.id);
+            }}
             selected={tab === selectedTab ? true : false}
           >
             {tab}
@@ -197,6 +202,7 @@ export default function Lecture() {
         <LecturesMobile
           lectureDetailsData={lectureDetailsData}
           setSelectedLectureDetail={setSelectedLectureDetail}
+          onMoveToForm={onMoveToForm}
         />
       )}
       {selectedTab === "강사소개" && <Lecturer />}

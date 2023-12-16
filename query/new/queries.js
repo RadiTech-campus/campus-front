@@ -1,10 +1,24 @@
 import { useQuery } from "@tanstack/react-query";
 import {
+  getLectureAuthByUserIdAndLectureId,
   getLectureById,
   getLectureDetailByLectureId,
   getLecturesByContentId,
 } from "../../api/new_apis";
 
+export const useGetLectureAuthByUserIdAndLectureId = (userId, contentId) => {
+  return useQuery({
+    queryKey: ["payment", userId, contentId],
+    queryFn: async () => {
+      const data = await getLectureAuthByUserIdAndLectureId(userId, contentId);
+      return data;
+    },
+    onError: (e) => {
+      console.log("e", e);
+    },
+    enabled: !!userId && !!contentId,
+  });
+};
 export const useGetLecturesByContentId = (contentId) => {
   return useQuery({
     queryKey: ["lectures", contentId],
