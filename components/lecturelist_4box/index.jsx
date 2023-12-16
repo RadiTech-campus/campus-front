@@ -95,13 +95,9 @@ const ClassTitle = styled.div`
   color: black;
 `;
 
-export default function LectureList4Box({
-  category,
-  mainTitle,
-  description,
-  classData,
-}) {
+export default function LectureList4Box({ mainTitle, classData }) {
   const isMobile = useIsMobile();
+  console.log("classData", classData);
   return (
     <LectureListContainer>
       <TitleContainer>
@@ -113,17 +109,16 @@ export default function LectureList4Box({
           <ClassCard key={i}>
             <Link
               href={{
-                pathname: `/lecture/${li.code}`,
-                query: { classtype: "강의", title: li.secondCat },
+                pathname: `/lecture-new/${li.id}`,
               }}
             >
               <ClassImage>
-                <img src={`/hos/${li.code}.png`} alt={li.secondCat} />
+                <img src={`/hos/${li.id}.png`} alt={li.id} />
               </ClassImage>
               <ClassTitle>
                 {i === 0 && "서울아산/삼성병원"}
-                {i === 1 && "성모병원"}
-                {i === 2 && "서울대병원"}
+                {i === 1 && "서울대병원"}
+                {i === 2 && "성모병원"}
                 {i === 3 && "연세의료원"}
               </ClassTitle>
             </Link>

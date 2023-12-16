@@ -72,15 +72,20 @@ export default function Index() {
     }
   }, [data2]);
 
-  // 이하 모바일 영역
+  // 이하 개편 영역
   const isMobile = useIsMobile();
+
   const { data: lecturesData } = useGetLecturesByContentId(11);
   const lectureData = useMemo(() => lecturesData || [], [lecturesData]);
+
   const { data: freeLecturesData } = useGetLecturesByContentId(8);
   const freeLectureData = useMemo(
     () => freeLecturesData || [],
     [freeLecturesData],
   );
+
+  const { data: hosData } = useGetLecturesByContentId(5);
+  const hospitalData = useMemo(() => hosData || [], [hosData]);
 
   return (
     <IndexContainer>
@@ -231,9 +236,7 @@ export default function Index() {
           <LectureList4Box
             category="BIG5 대학병원 핵심 분석"
             mainTitle="대학병원 핵심 정보 분석 🥇"
-            classData={data
-              ?.filter((li) => li.firstCat === "병원" && li.pay === "유료")
-              .sort((a, b) => (a.code > b.code ? 1 : -1))}
+            classData={hospitalData}
           />
           <LectureListMobile
             mainTitle="무료 요약 자료 및 해설 강의 ✍️"
