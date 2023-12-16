@@ -8,13 +8,19 @@ const WarnContainer = styled.div`
     padding: 10px 15px;
   }
 `;
-const WarnTitle = styled.div`
+const WarnTitle = styled.button`
   font-size: 22px;
   font-weight: bold;
   margin: 20px 0px 10px;
   @media (max-width: 650px) {
-    font-size: 16px;
-    margin: 10px 0px 5px;
+    font-size: 3.5vw;
+    background-color: #e96962;
+    color: white;
+    text-align: center;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-top: 20px;
+    border: none;
   }
 `;
 const WarnContent = styled.div`

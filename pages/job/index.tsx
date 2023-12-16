@@ -154,13 +154,12 @@ export default function Job() {
             <ClassCard key={i}>
               <Link
                 href={{
-                  pathname: `/lecture/${li.code}`,
-                  query: { classtype: "강의", title: li.secondCat },
+                  pathname: `/lecture-new/${li.id}`,
                 }}
               >
                 <img
                   src={`${li.thumbnailURL}`}
-                  alt={li.secondCat}
+                  alt={li.description}
                   style={{ width: "100%", borderRadius: "20px 20px 0 0" }}
                 />
                 <ClassTitle>{li.lectureTitle}</ClassTitle>

@@ -152,7 +152,7 @@ export default function Gosi() {
               <ClassCard key={i}>
                 <Link
                   href={{
-                    pathname: `/`,
+                    pathname: `/lecture-new/${li.id}`,
                   }}
                 >
                   <img

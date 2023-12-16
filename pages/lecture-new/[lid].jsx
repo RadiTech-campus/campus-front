@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import LectureDetail from "../../components/lecturedetail";
 import FreeLectureDetail from "../../components/lecturedetail/freeLectureDetail";
@@ -7,6 +7,15 @@ import MoLectureDetail from "../../components/lecturedetail/moLectureDetail";
 import styled from "@emotion/styled";
 import { useIsMobile } from "../../hooks/useIsMobile";
 import { useAuth } from "../../hooks/useAuth";
+import LectureInfoMobile from "../../components/lectureinfo_mobile";
+import {
+  useGetLectureById,
+  useGetLectureDetailByLecturetId,
+} from "../../query/new/queries";
+import { getLectureById } from "../../api/new_apis";
+import LecturesMobile from "../../components/lectures_mobile";
+import Lecturer from "../../components/lecturer";
+import LectureWarn from "../../components/lecturewarn";
 
 const LectureDetailContainer = styled.div`
   margin: 0px auto;
@@ -15,137 +24,51 @@ const LectureDetailContainer = styled.div`
     width: 100%;
   }
 `;
-const Divider = styled.div`
-  border-bottom: 0.1rem solid #e6e8eb;
-  margin: 20px 0px;
-`;
 
 const TopDetail = styled.div`
   display: flex;
   flex: 1;
   @media (max-width: 650px) {
     flex-direction: column;
-  }
-`;
-
-const TopLeftDetail = styled.div`
-  flex: 0.45;
-  padding: 20px;
-  @media (max-width: 650px) {
-    height: 200px;
     padding: 10px;
   }
 `;
 
-const ClassImage = styled.div`
-  height: 270px;
-  position: relative;
-  > img {
-    border-radius: 10px;
-  }
-  @media (max-width: 650px) {
-    height: 180px;
-  }
-`;
-const TopRightDetail = styled.div`
-  flex: 0.55;
-  padding: 20px 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  @media (max-width: 650px) {
-    /* padding: 0px; */
-    /* margin: 15px; */
-  }
-`;
 const ClassMainTitle = styled.div`
   font-size: 16px;
+  @media (max-width: 650px) {
+    font-size: 4.5vw;
+    color: #0b0d0f;
+    font-weight: 700;
+  }
 `;
 const ClassSubTitle = styled.div`
   font-size: 24px;
   font-weight: 600;
   margin-top: 10px;
   @media (max-width: 650px) {
-    font-size: 20px;
-  }
-`;
-
-const ClassPriceContainer = styled.div`
-  display: flex;
-  align-items: end;
-  margin: 10px 0px 5px 0px;
-`;
-
-const ClassPriceInner = styled.div`
-  @media (max-width: 650px) {
-    font-size: 20px;
-  }
-  font-size: 24px;
-  font-weight: 600;
-  margin-left: 7px;
-  margin-right: 3px;
-`;
-const ClassPriceOuter = styled.div`
-  font-size: 18px;
-
-  /* font-weight: bold; */
-`;
-
-const ClassPriceRight = styled.div`
-  font-size: 18px;
-`;
-const ClassPriceInfo = styled.div`
-  font-size: 18px;
-  /* font-weight: bold; */
-  margin-bottom: 15px;
-  margin-top: 15px;
-  color: #888888c1;
-  @media (max-width: 650px) {
-    font-size: 14px;
-    margin-top: 10px;
-  }
-`;
-
-const ClassButtonContainer = styled.div`
-  display: flex;
-
-  justify-content: center;
-  @media (max-width: 650px) {
-    margin-top: 20px;
-  }
-`;
-
-const ClassButton = styled.button`
-  width: 100%;
-  margin: 3px;
-  padding: 10px 20px;
-  background-color: ${(props) => props.colorCode};
-  /* background-color: #7100a6; */
-  color: white;
-  font-weight: bold;
-  font-size: 18px;
-  border-radius: 5px;
-  border: none;
-  cursor: pointer;
-  @media (max-width: 650px) {
-    /* margin: 0px;
-    padding: 0px; */
+    font-size: 4.2vw;
+    color: #818181;
+    font-weight: 500;
+    margin-top: 5px;
   }
 `;
 
 const ClassTapContainer = styled.div`
   display: flex;
-  justify-content: center;
-  border-bottom: 1px solid gray;
+  justify-content: space-around;
+  border-bottom: 1px solid #a2a2a2;
   margin: 20px 0px;
   @media (max-width: 650px) {
     /* padding: 10px 20px; */
     margin: 0px 0px;
+    padding: 0 10px;
+    color: #666666;
   }
 `;
 const ClassTap = styled.div`
   @media (max-width: 650px) {
-    padding: 10px 20px;
+    padding: 10px 10px;
     margin: 0px 0px;
     font-size: 14px;
   }
@@ -153,22 +76,8 @@ const ClassTap = styled.div`
   margin: 0px 50px;
   font-size: 20px;
   font-weight: ${(props) => (props.selected ? "bold" : "normal")};
-  border-bottom: ${(props) => (props.selected ? "2px" : "0px")} solid black;
+  border-bottom: ${(props) => (props.selected ? "3px" : "0px")} solid #e96962;
   cursor: pointer;
-`;
-
-const ClassContent = styled.div`
-  display: flex;
-  margin-top: 5px;
-  color: #888888c1;
-`;
-const ClassLeftContent = styled.div`
-  font-size: 14px;
-  font-weight: bold;
-  width: 100px;
-`;
-const ClassRightContent = styled.div`
-  font-size: 14px;
 `;
 
 const ModalTitle = styled.div`
@@ -182,19 +91,7 @@ const ModalContent = styled.div`
   text-align: center;
   margin-bottom: 10px;
 `;
-const DetailBanner = styled.div`
-  /* height: 250px; */
-  width: 95%;
-  @media (max-width: 650px) {
-    height: 50px;
-    display: none;
-  }
-  height: 100px;
-  position: relative;
-  margin: auto;
-  > img {
-  }
-`;
+
 const tabs = ["강의소개", "커리큘럼", "강사소개", "주의사항"];
 
 export default function Lecture() {
@@ -202,7 +99,7 @@ export default function Lecture() {
   const auth = useAuth();
   const isMobile = useIsMobile();
 
-  const { lid, classtype, title } = router.query;
+  const { lid } = router.query;
   const [selectedTab, setSelectedTab] = useState("강의소개");
   const [isOpen, setIsOpen] = useState(false);
   const handleOpenModal = () => {
@@ -216,16 +113,22 @@ export default function Lecture() {
   //
   // const { data: contentData } = useGetContents();
   // const data2 = useMemo(() => contentData?.Items || [], [contentData]);
-  const preview = useRef(); //특정 DOM을 가리킬 때 사용하는 Hook함수, SecondDiv에 적용
-  const onMoveToForm = () => {
-    setSelectedTab("강의소개");
-    setTimeout(() => {
-      preview.current.scrollIntoView({ behavior: "smooth", block: "center" });
-    }, 200);
-  };
+  // const preview = useRef(); //특정 DOM을 가리킬 때 사용하는 Hook함수, SecondDiv에 적용
+  // const onMoveToForm = () => {
+  //   setSelectedTab("강의소개");
+  //   setTimeout(() => {
+  //     preview.current.scrollIntoView({ behavior: "smooth", block: "center" });
+  //   }, 200);
+  // };
+  // const { data: lectureDetailData } = useGetLectureDetailByLecturetId(lid);
+  const { data: lectureDetailData } = useGetLectureDetailByLecturetId(lid);
+  const lectureDetailsData = useMemo(
+    () => lectureDetailData || [],
+    [lectureDetailData],
+  );
 
-  // const { data: paymentData } = useGetPayment(auth.username);
-  // const data3 = useMemo(() => paymentData?.Items || 0, [paymentData]);
+  const { data: lectureData } = useGetLectureById(lid);
+  const aLectureData = useMemo(() => lectureData || null, [lectureData]);
 
   return (
     <LectureDetailContainer>
@@ -237,113 +140,28 @@ export default function Lecture() {
             router.push(`/signin?returnpath=${router.asPath}`);
           }}
         >
-          <>
-            <ModalTitle>
-              {selectedTab === "커리큘럼" ? "커리큘럼" : "수강 신청"}
-            </ModalTitle>
-            <ModalContent>{"로그인이 필요한 서비스 입니다."}</ModalContent>
-          </>
+          <ModalTitle>
+            {selectedTab === "커리큘럼" ? "커리큘럼" : "수강 신청"}
+          </ModalTitle>
+          <ModalContent>{"로그인이 필요한 서비스 입니다."}</ModalContent>
         </Modal>
       )}
+      <img
+        src={`/lecturebanner/lecture.png`}
+        alt="레디테크 캠퍼스"
+        style={{ width: "100%" }}
+      />
       <TopDetail>
-        {/* <TopLeftDetail>
-          <img
-            src={`https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/contents/${lid}${
-              classtype === "기출" ? "_G" : ""
-            }.jpeg`}
-            alt="레디테크 캠퍼스"
-            style={{
-              width: "100%",
-            }}
-          />
-        </TopLeftDetail> */}
-        <TopRightDetail>
-          <div>
-            {/* <ClassMainTitle>
-          {lid?.slice(-1) === "F" && "#무료공개"} {`#${classtype}`}{" "}
-          {`#${title}`}
-        </ClassMainTitle> */}
-            {/* <ClassMainTitle>
-          {data2.find((li) => li.code === data[0]?.contentCode)?.subTitle}
-        </ClassMainTitle> */}
-            {/* <ClassSubTitle>
-              {classtype === "기출"
-                ? data2
-                    .find((li) => li.code === data[0]?.contentCode)
-                    ?.gTitle.split("!")
-                    .map((li, i) => (
-                      <div key={i} style={{ marginBottom: "3px" }}>
-                        {li}
-                        {i === 0 ? "!" : ""}
-                      </div>
-                    ))
-                : title?.split("!").map((li, i) => (
-                    <div key={i} style={{ marginBottom: "3px" }}>
-                      {li}
-                      {i === 0 ? "!" : ""}
-                    </div>
-                  ))}
-            </ClassSubTitle> */}
-
-            <ClassPriceContainer>
-              <ClassPriceOuter>월 </ClassPriceOuter>
-              <ClassPriceInner>8,250 </ClassPriceInner>
-              <ClassPriceOuter>원 (연 99,000원) </ClassPriceOuter>
-            </ClassPriceContainer>
-            <ClassPriceInfo>강연 + 기출 + 자료 무제한으로 수강</ClassPriceInfo>
-            <ClassContent>
-              <ClassLeftContent>강의 분량</ClassLeftContent>
-              {/* <ClassRightContent>{data?.length - 1} 개</ClassRightContent> */}
-            </ClassContent>
-            <ClassContent>
-              <ClassLeftContent>강의 시간</ClassLeftContent>
-              <ClassRightContent>
-                {/* {classtype === "기출"
-                  ? data2?.find((li) => li.code === lid)?.gTime
-                  : data2?.find((li) => li.code === lid)?.iTime}{" "}
-                분 */}
-              </ClassRightContent>
-            </ClassContent>
-          </div>
-          {/* <ClassButtonContainer>
-            <ClassButton colorCode="#000000" onClick={() => onMoveToForm()}>
-              미리보기
-            </ClassButton>
-            {data3 &&
-            data3.length > 0 &&
-            data3.filter(
-              (li) =>
-                (li.payStatus === "결제완료" &&
-                  li?.productCode?.includes("A_A01")) ||
-                (li.payStatus === "결제완료" &&
-                  li?.productCode?.includes(lid?.substring(0, 5))),
-            ).length > 0 ? (
-              <ClassButton
-                colorCode="#7100a6"
-                onClick={() => setSelectedTab("커리큘럼")}
-              >
-                강의보기
-              </ClassButton>
-            ) : (
-              <ClassButton
-                colorCode="#7100a6"
-                onClick={() => handleOpenModal()}
-              >
-                수강신청
-              </ClassButton>
-            )}
-          </ClassButtonContainer> */}
-        </TopRightDetail>
+        <ClassMainTitle>{aLectureData?.lectureTitle}</ClassMainTitle>
+        <ClassSubTitle>{aLectureData?.description}</ClassSubTitle>
       </TopDetail>
-      <DetailBanner>
-        <img
-          src={`/detailbanner.png`}
-          alt="레디테크 캠퍼스"
-          style={{
-            width: "100%",
-          }}
-        />
-      </DetailBanner>
+      <img
+        src={`/pass.jpg`}
+        alt="레디테크 캠퍼스"
+        style={{
+          width: "100%",
+        }}
+      />
 
       <ClassTapContainer>
         {tabs.map((tab, i) => (
@@ -357,17 +175,12 @@ export default function Lecture() {
           </ClassTap>
         ))}
       </ClassTapContainer>
-      {/* {selectedTab === "강의소개" && (
-        <LectureInfo
-          lid={lid}
-          classtype={classtype}
-          classData={data2}
-          preview={preview}
-        />
-      )} */}
-      {/* {selectedTab === "커리큘럼" && (
-        <Lectures classData={data} classtype={classtype} title={title} />
-      )} */}
+      {selectedTab === "강의소개" && (
+        <LectureInfoMobile aLectureData={aLectureData} />
+      )}
+      {selectedTab === "커리큘럼" && (
+        <LecturesMobile lectureDetailsData={lectureDetailsData} />
+      )}
       {selectedTab === "강사소개" && <Lecturer />}
       {selectedTab === "주의사항" && <LectureWarn />}
     </LectureDetailContainer>
