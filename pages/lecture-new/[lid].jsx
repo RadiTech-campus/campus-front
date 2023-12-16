@@ -101,6 +101,7 @@ export default function Lecture() {
 
   const { lid } = router.query;
   const [selectedTab, setSelectedTab] = useState("강의소개");
+
   const [isOpen, setIsOpen] = useState(false);
   const handleOpenModal = () => {
     auth.isAuthenticated ? router.push("/regist") : setIsOpen(true);
@@ -130,6 +131,8 @@ export default function Lecture() {
   const { data: lectureData } = useGetLectureById(lid);
   const aLectureData = useMemo(() => lectureData || null, [lectureData]);
 
+  const [selectedLectureDetail, setSelectedLectureDetail] = useState();
+
   return (
     <LectureDetailContainer>
       {isOpen && (
@@ -146,11 +149,23 @@ export default function Lecture() {
           <ModalContent>{"로그인이 필요한 서비스 입니다."}</ModalContent>
         </Modal>
       )}
-      <img
-        src={`/lecturebanner/lecture.png`}
-        alt="레디테크 캠퍼스"
-        style={{ width: "100%" }}
-      />
+      {selectedLectureDetail ? (
+        <iframe
+          src={`https://player.vimeo.com/video/${selectedLectureDetail}`}
+          width="100%"
+          // height="564"
+          frameBorder="0"
+          allow="autoplay; fullscreen"
+          allowFullScreen
+        />
+      ) : (
+        <img
+          src={`/lecturebanner/lecture.png`}
+          alt="레디테크 캠퍼스"
+          style={{ width: "100%" }}
+        />
+      )}
+
       <TopDetail>
         <ClassMainTitle>{aLectureData?.lectureTitle}</ClassMainTitle>
         <ClassSubTitle>{aLectureData?.description}</ClassSubTitle>
@@ -179,7 +194,10 @@ export default function Lecture() {
         <LectureInfoMobile aLectureData={aLectureData} />
       )}
       {selectedTab === "커리큘럼" && (
-        <LecturesMobile lectureDetailsData={lectureDetailsData} />
+        <LecturesMobile
+          lectureDetailsData={lectureDetailsData}
+          setSelectedLectureDetail={setSelectedLectureDetail}
+        />
       )}
       {selectedTab === "강사소개" && <Lecturer />}
       {selectedTab === "주의사항" && <LectureWarn />}

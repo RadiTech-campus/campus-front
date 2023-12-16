@@ -50,7 +50,10 @@ const ChapterButton = styled.button`
   }
 `;
 
-export default function LecturesMobile({ lectureDetailsData }) {
+export default function LecturesMobile({
+  lectureDetailsData,
+  setSelectedLectureDetail,
+}) {
   const auth = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const [isPayed, setIsPayed] = useState(false);
@@ -92,7 +95,10 @@ export default function LecturesMobile({ lectureDetailsData }) {
       )}
       {lectureDetailsData.length > 0
         ? lectureDetailsData.map((li, i) => (
-            <ChapterContainer key={i}>
+            <ChapterContainer
+              key={i}
+              onClick={() => setSelectedLectureDetail(li.videoURL)}
+            >
               <ChapterTitle># {li.lectureDetailTitle}</ChapterTitle>
               <ChapterButton>해설</ChapterButton>
             </ChapterContainer>
