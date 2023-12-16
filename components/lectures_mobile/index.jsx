@@ -45,6 +45,8 @@ const ChapterButton = styled.button`
     background-color: transparent;
     border: 1px solid #bec1c6;
     padding: 7px 10px;
+    text-decoration: none;
+    color: #bec1c6;
   }
 `;
 
