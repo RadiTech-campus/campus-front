@@ -36,7 +36,7 @@ const ChapterContainer = styled.div`
 `;
 const ChapterTitle = styled.div`
   @media (max-width: 650px) {
-    width: 100%;
+    width: 70%;
     font-size: 14px;
   }
 `;
@@ -48,6 +48,11 @@ const ChapterButton = styled.button`
     padding: 7px 10px;
     text-decoration: none;
     color: #bec1c6;
+    margin-left: 5px;
+    > a {
+      text-decoration: none;
+      color: #bec1c6;
+    }
   }
 `;
 
@@ -58,27 +63,8 @@ export default function LecturesMobile({
 }) {
   const auth = useAuth();
   const [isOpen, setIsOpen] = useState(false);
-  const [isPayed, setIsPayed] = useState(false);
   const router = useRouter();
   const { lid } = router.query;
-
-  // const { data: paymentData, isLoading } = useGetPayment(auth.username);
-  // const data2 = useMemo(() => paymentData?.Items || [], [paymentData, auth]);
-  // useEffect(() => {
-  //   if (!isLoading) {
-  //     if (
-  //       data2.filter(
-  //         (li) =>
-  //           (li.payStatus === "결제완료" &&
-  //             li?.productCode?.includes("A_A01")) ||
-  //           (li.payStatus === "결제완료" &&
-  //             li?.productCode?.includes(lid?.substring(0, 5))),
-  //       ).length > 0
-  //     ) {
-  //       setIsPayed(true);
-  //     }
-  //   }
-  // }, [auth, data2]);
 
   const { data: paymentData } = useGetLectureAuthByUserIdAndLectureId(
     auth.username,
@@ -93,29 +79,44 @@ export default function LecturesMobile({
           open={isOpen}
           onClose={() => {
             setIsOpen(false);
-            router.push(`/signin?returnpath=${router.asPath}`);
+            router.push(`/regist?returnpath=${router.asPath}`);
           }}
         >
           <>
-            <ModalTitle>로그인이 필요한 서비스 입니다.</ModalTitle>
+            <ModalTitle>수강신청이 필요한 서비스 입니다.</ModalTitle>
           </>
         </Modal>
       )}
       {lectureDetailsData.length > 0
         ? lectureDetailsData.map((li, i) => (
-            <ChapterContainer
-              key={i}
-              onClick={() => {
-                if (payment) {
-                  onMoveToForm();
-                  setSelectedLectureDetail(li.videoURL);
-                } else {
-                  alert("결제필요");
-                }
-              }}
-            >
+            <ChapterContainer key={i}>
               <ChapterTitle># {li.lectureDetailTitle}</ChapterTitle>
-              <ChapterButton>해설</ChapterButton>
+              {li?.noteURL && (
+                <ChapterButton
+                  onClick={() => {
+                    if (payment) {
+                      window.open(li.noteURL, "_blank");
+                    } else {
+                      setIsOpen(true);
+                    }
+                  }}
+                >
+                  자료
+                </ChapterButton>
+              )}
+
+              <ChapterButton
+                onClick={() => {
+                  if (payment) {
+                    onMoveToForm();
+                    setSelectedLectureDetail(li.videoURL);
+                  } else {
+                    setIsOpen(true);
+                  }
+                }}
+              >
+                해설
+              </ChapterButton>
             </ChapterContainer>
           ))
         : "강의가 준비중 입니다"}

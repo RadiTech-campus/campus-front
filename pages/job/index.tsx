@@ -139,7 +139,7 @@ export default function Job() {
   const lectureData = useMemo(() => lecturesData || [], [lecturesData]);
   return (
     <div>
-      <img src="/job/job.png" alt="image" style={{ width: "100%" }} />
+      <img src="/gosi/gositop.png" alt="image" style={{ width: "100%" }} />
       <LectureListContainer>
         <TitleContainer>
           <MainTitle>자소서, 면접, 대학정보 ✍️</MainTitle>

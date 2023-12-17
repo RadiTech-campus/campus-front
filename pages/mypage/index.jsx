@@ -21,7 +21,19 @@ const TitleContainer = styled.div`
   font-size: 16px;
   font-weight: bold;
   padding: 10px 0px;
+  @media (max-width: 650px) {
+    display: flex;
+    justify-content: space-between;
+  }
 `;
+
+const LogoutButton = styled.button`
+  display: none;
+  @media (max-width: 650px) {
+    display: block;
+  }
+`;
+
 const RegistLabel = styled.label`
   width: 100%;
   font-size: 12px;
@@ -155,7 +167,17 @@ export default function MyPage() {
   return (
     <SignInContainer>
       <div>My Page</div>
-      <TitleContainer>기본 정보</TitleContainer>
+      <TitleContainer>
+        기본 정보
+        <LogoutButton
+          onClick={() => {
+            auth.signOut();
+            router.push("/");
+          }}
+        >
+          로그아웃
+        </LogoutButton>
+      </TitleContainer>
       <InputsContainer>
         <Divider />
         <SignInLabel>이름</SignInLabel>

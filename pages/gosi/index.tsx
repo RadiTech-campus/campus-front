@@ -135,7 +135,7 @@ export default function Gosi() {
 
   return (
     <div>
-      <img src="/gosi/gositop.png" alt="image" style={{ width: "100%" }} />
+      <img src="/job/job.png" alt="image" style={{ width: "100%" }} />
       <LectureListContainer>
         <TitleContainer>
           <MainTitle>이론 & 3개년 기출 강의 ✍️</MainTitle>
