@@ -24,6 +24,7 @@ const TitleContainer = styled.div`
   @media (max-width: 650px) {
     display: flex;
     justify-content: space-between;
+    align-items: center;
   }
 `;
 
@@ -31,6 +32,11 @@ const LogoutButton = styled.button`
   display: none;
   @media (max-width: 650px) {
     display: block;
+    background-color: transparent;
+    border: 1px solid #a2a2a2;
+    border-radius: 5px;
+    color: #a2a2a2;
+    padding: 3px 5px;
   }
 `;
 
