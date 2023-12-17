@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import styled from "@emotion/styled";
 import Image from "next/image";
 import { useGetPayment } from "../../query/contents";
+import { useGetPaymentsList } from "../../query/new/queries";
 import { AddDays, getDateDiff } from "../../libs/date";
 import { canclePayment } from "../../api/contents_api";
 
@@ -139,14 +140,15 @@ export default function MyPage() {
   };
   // console.log("auth", auth);
 
-  const { data: paymentData } = useGetPayment(username);
-  const data = useMemo(
-    () =>
-      paymentData?.Items?.sort(
-        (a, b) => new Date(b.applyDate) - new Date(a.applyDate),
-      ) || [],
-    [username, paymentData],
-  );
+  const { data: paymentData } = useGetPaymentsList(auth?.username);
+  console.log("paymentData", paymentData);
+  // const data = useMemo(
+  //   () =>
+  //     paymentData?.Items?.sort(
+  //       (a, b) => new Date(b.applyDate) - new Date(a.applyDate),
+  //     ) || [],
+  //   [username, paymentData],
+  // );
 
   useEffect(() => {
     if (auth.isAuthenticated) {
@@ -168,6 +170,12 @@ export default function MyPage() {
         alert("수강취소 오류가 발생했습니다. 관리자에게 문의해주세요.");
       }
     }
+  };
+
+  const handleCopyClipBoard = async (e) => {
+    e.preventDefault();
+    await navigator.clipboard.writeText("124-233998-12-601");
+    alert("계좌번호가 복사 되었습니다");
   };
 
   return (
@@ -219,7 +227,7 @@ export default function MyPage() {
       </InputsContainer>
       <TitleContainer>수강 신청 정보</TitleContainer>
       <InputsContainer>
-        {data.length < 1 ? (
+        {paymentData && paymentData < 1 && (
           <Fragment>
             <Divider />
 
@@ -269,8 +277,10 @@ export default function MyPage() {
               <RegistInput type="text" placeholder="" disabled />
             </div>
           </Fragment>
-        ) : (
-          data.map((li, i) => (
+        )}
+        {paymentData &&
+          paymentData.length > 0 &&
+          paymentData.map((li, i) => (
             <Fragment key={i}>
               <Divider />
               <RegistLabel>강의명</RegistLabel>
@@ -286,7 +296,7 @@ export default function MyPage() {
               >
                 <RegistInput
                   type="text"
-                  placeholder={li.productTitle}
+                  placeholder={li.product.productTitle}
                   disabled
                 />
               </div>
@@ -334,16 +344,13 @@ export default function MyPage() {
               >
                 <RegistInput
                   type="text"
-                  placeholder={`${li.payStatus}${
-                    li.payStatus === "입금대기"
-                      ? ": 우리은행 예금주 이광자 124-233998-12-601"
-                      : ""
-                  }`}
+                  placeholder={`${li.payStatus}`}
                   disabled
                   finished
                 />
+
                 {(li?.payStatus === "결제완료" && li?.watched === 0) ||
-                  (li?.payStatus === "입금대기" && (
+                  (li?.payStatus === "결제대기" && (
                     <button
                       style={{
                         width: "80px",
@@ -363,6 +370,7 @@ export default function MyPage() {
                       취소
                     </button>
                   ))}
+
                 {li?.payStatus === "결제완료" && (
                   <button
                     style={{
@@ -384,25 +392,49 @@ export default function MyPage() {
                   </button>
                 )}
               </div>
+              {li?.payStatus === "결제대기" && (
+                <div
+                  style={{
+                    marginBottom: "20px",
+                    width: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    fontSize: "14px",
+                  }}
+                >
+                  우리은행 예금주 이광자 124-233998-12-601
+                  <button
+                    onClick={(e) => handleCopyClipBoard(e)}
+                    style={{
+                      width: "12%",
+                      border: "none",
+                      backgroundColor: "#E96962",
+                      color: "white",
+                      padding: "5px 0px",
+                      borderRadius: "5px",
+                      height: "30px",
+                      fontWeight: "700",
+                      fontSize: "14px",
+                    }}
+                  >
+                    복사
+                  </button>
+                </div>
+              )}
 
-              {li.payStatus === "입금대기" ? (
-                <>
-                  <span style={{ marginBottom: "20px" }}>
-                    {AddDays(
-                      new Date(li.applyDate).toISOString().substring(0, 10),
-                      7,
-                    )
-                      .toISOString()
-                      .substring(0, 10)}{" "}
-                    까지 입금이 확인 되지 않는 경우 자동 취소됩니다.
-                  </span>
-                </>
-              ) : (
-                ""
+              {li.payStatus === "결제대기" && (
+                <span style={{ marginBottom: "20px", fontSize: "14px" }}>
+                  {AddDays(
+                    new Date(li.createdAt).toISOString().substring(0, 10),
+                    7,
+                  )
+                    .toISOString()
+                    .substring(0, 10)}{" "}
+                  까지 입금이 확인 되지 않는 경우 자동 취소됩니다.
+                </span>
               )}
             </Fragment>
-          ))
-        )}
+          ))}
 
         <TitleContainer>문의 사항</TitleContainer>
         <Divider />

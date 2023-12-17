@@ -7,6 +7,7 @@ import {
   getLectureById,
   getLectureDetailByLectureId,
   getLecturesByContentId,
+  getPaymentsList,
 } from "../../api/new_apis";
 
 export function useCreateAPayment(userId, productId) {
@@ -33,6 +34,20 @@ export const useGetLatestPayment = (userId) => {
     queryKey: ["payment", userId],
     queryFn: async () => {
       const data = await getLatestPayment(userId);
+      return data;
+    },
+    onError: (e) => {
+      console.log("e", e);
+    },
+    enabled: !!userId,
+  });
+};
+
+export const useGetPaymentsList = (userId) => {
+  return useQuery({
+    queryKey: ["payments", userId],
+    queryFn: async () => {
+      const data = await getPaymentsList(userId);
       return data;
     },
     onError: (e) => {

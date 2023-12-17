@@ -40,6 +40,14 @@ export async function getLatestPayment(userId) {
   return data;
 }
 
+export async function getPaymentsList(userId) {
+  const { data } = await axios(
+    `${process.env.NEXT_PUBLIC_REACT_APP_API_NEW_END_POINT}/payment/list/${userId}`,
+    { withCredentials: true },
+  );
+  return data;
+}
+
 export async function createAPayment(userId, productId) {
   const { data } = await axios.post(
     `${process.env.NEXT_PUBLIC_REACT_APP_API_NEW_END_POINT}/payment/${userId}/${productId}`,
