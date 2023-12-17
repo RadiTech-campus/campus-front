@@ -269,7 +269,7 @@ export default function SignUp() {
             <RegistLabel>휴대번호</RegistLabel>
             <RegistInput type="number" disabled value={phoneNumber} />
 
-            <PriceText up={data.discount === 0}>가격 정보</PriceText>
+            <PriceText up>가격 정보</PriceText>
             <Divider />
 
             <PriceContainer>
@@ -283,7 +283,7 @@ export default function SignUp() {
                 </PriceContent>
               </PriceDetail>
             </PriceContainer>
-            <PayText discount={data.discount === 0}>결제 방법</PayText>
+            <PayText discount>결제 방법</PayText>
             <Divider />
             <PriceContainer>
               <PriceTitle>결제기한</PriceTitle>
