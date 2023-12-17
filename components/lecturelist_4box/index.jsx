@@ -96,8 +96,6 @@ const ClassTitle = styled.div`
 `;
 
 export default function LectureList4Box({ mainTitle, classData }) {
-  const isMobile = useIsMobile();
-  console.log("classData", classData);
   return (
     <LectureListContainer>
       <TitleContainer>

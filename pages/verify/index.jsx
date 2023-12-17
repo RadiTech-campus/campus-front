@@ -1,8 +1,8 @@
 import styled from "@emotion/styled";
 import { useRouter } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
-import { useGetPayment } from "../../query/contents";
+import { useGetLatestPayment } from "../../query/new/queries";
 
 const ClassText = styled.div`
   position: absolute;
@@ -58,17 +58,6 @@ const InputsContainer = styled.div`
   flex-direction: column;
   align-items: center;
 `;
-const PeriodContainer = styled.div`
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  margin-bottom: 20px;
-  margin-top: 5px;
-`;
-const PeriodLabel = styled.label`
-  width: 40%;
-  margin: 3px 0px;
-`;
 
 const PriceContainer = styled.div`
   width: 100%;
@@ -76,22 +65,6 @@ const PriceContainer = styled.div`
   flex-direction: column;
   margin-bottom: 20px;
   margin-top: 5px;
-`;
-
-const PriceTitle = styled.div`
-  font-size: 12px;
-`;
-const PriceDetail = styled.div`
-  display: flex;
-  font-size: 16px;
-  /* margin: 5px; */
-`;
-const PriceContent = styled.div`
-  margin: 5px;
-  text-decoration: ${(props) => (props.canceled ? "line-through" : "")};
-  font-weight: ${(props) => (props.finalPrice ? "bold" : "normal")};
-  font-size: ${(props) => (props.finalPrice ? "18px" : "16px")};
-  color: ${(props) => (props.finalPrice ? "red" : "")};
 `;
 
 const RegistInput = styled.input`
@@ -137,70 +110,17 @@ const Divider = styled.div`
   width: 100%;
 `;
 
-const periods = [1, 3, 6, 9, 12];
-export default function SignUp() {
+export default function Verify() {
   const auth = useAuth();
-  const { data: paymentData } = useGetPayment(auth.username);
-  const data = useMemo(
-    () =>
-      paymentData?.Items.sort(
-        (a, b) => new Date(a.applyDate) - new Date(b.applyDate),
-      ) || 0,
-    [paymentData],
-  );
+
+  const { data: latestPaymentData } = useGetLatestPayment(auth?.username);
+
   const router = useRouter();
-  const [inputs, setInputs] = useState({
-    userId: "",
-    password: "",
-    confirmPassword: "",
-    email: "",
-    code: "",
-    userName: "",
-    phoneNumber: "",
-  });
-
-  const {
-    userId,
-    password,
-    confirmPassword,
-    email,
-    code,
-    userName,
-    phoneNumber,
-  } = inputs;
-
-  const onChange = (e) => {
-    const { name, value } = e.target;
-    const nextInputs = {
-      ...inputs,
-      [name]: value,
-    };
-
-    setInputs(nextInputs);
-  };
-
-  const onReset = () => {
-    setInputs({
-      userId: "",
-      password: "",
-      confirmPassword: "",
-      email: "",
-      code: "",
-      userName: "",
-      phoneNumber: "",
-    });
-  };
-
-  const [checked, setChecked] = useState(12);
-  const handleChecked = (e) => {
-    setChecked(Number(e.target.value));
-  };
 
   return (
     <SignUpContainer>
       <TitleContainer>주문 확인하기</TitleContainer>
       <RegistBox>
-        {/* <form noValidate> */}
         <InputsContainer>
           <ClassText>주문확인</ClassText>
           <Divider />
@@ -208,62 +128,35 @@ export default function SignUp() {
           <RegistLabel>강의명</RegistLabel>
           <RegistInput
             type="text"
-            placeholder={data[data.length - 1]?.productTitle}
+            placeholder={latestPaymentData?.productTitle}
             disabled
-            // value={confirmPassword}
           />
           <RegistLabel>결제 금액</RegistLabel>
           <RegistInput
             type="text"
-            placeholder={`${data[data.length - 1]?.price} 원`}
+            placeholder={latestPaymentData?.price}
             disabled
-            // value={confirmPassword}
           />
 
           <RegistLabel>결제 방법</RegistLabel>
-          <RegistInput
-            type="text"
-            placeholder="무통장입금"
-            disabled
-            // value={confirmPassword}
-          />
+          <RegistInput type="text" placeholder="무통장입금" disabled />
           <RegistLabel>결제 상태</RegistLabel>
           <RegistInput
             type="text"
-            placeholder={`${data[data.length - 1]?.payStatus}${
-              data[data.length - 1]?.payStatus === "입금대기"
-                ? ": 우리은행 예금주 이광자 124-233998-12-601"
-                : ""
-            }`}
+            placeholder={latestPaymentData?.payStatus}
             disabled
-            // value={confirmPassword}
           />
 
           <UserText>구매자 정보</UserText>
           <Divider />
           <RegistLabel>이름</RegistLabel>
-          <RegistInput
-            type="text"
-            placeholder={auth.userName}
-            disabled
-            // value={confirmPassword}
-          />
+          <RegistInput type="text" placeholder={auth.userName} disabled />
 
           <RegistLabel>메일</RegistLabel>
-          <RegistInput
-            type="email"
-            placeholder={auth.useremail}
-            disabled
-            // value={email}
-          />
+          <RegistInput type="email" placeholder={auth.useremail} disabled />
 
           <RegistLabel>휴대번호</RegistLabel>
-          <RegistInput
-            type="email"
-            placeholder={auth.userPhone}
-            disabled
-            // value={email}
-          />
+          <RegistInput type="email" placeholder={auth.userPhone} disabled />
 
           <InfoText>문의 사항</InfoText>
           <Divider />
@@ -286,19 +179,16 @@ export default function SignUp() {
             style={{
               width: "100%",
               display: "flex",
-              // color: "red",
               fontSize: "14px",
               fontWeight: "bold",
-              // marginTop: "20px",
             }}
           >
             <RegistButton onClick={() => router.push("/")}>HOME</RegistButton>
             <RegistButton onClick={() => router.push("/mypage")}>
-              My Page
+              My Room
             </RegistButton>
           </div>
         </InputsContainer>
-        {/* </form> */}
       </RegistBox>
     </SignUpContainer>
   );
