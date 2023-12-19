@@ -78,7 +78,7 @@ export default function Index() {
   const { data: lecturesData } = useGetLecturesByContentId(11);
   const lectureData = useMemo(() => lecturesData || [], [lecturesData]);
 
-  const { data: freeLecturesData } = useGetLecturesByContentId(8);
+  const { data: freeLecturesData } = useGetLecturesByContentId(12);
   const freeLectureData = useMemo(
     () => freeLecturesData || [],
     [freeLecturesData],
