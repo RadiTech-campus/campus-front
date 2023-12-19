@@ -1,9 +1,6 @@
 import styled from "@emotion/styled";
-import Image from "next/image";
-import React, { Fragment } from "react";
+import React from "react";
 import Link from "next/link";
-import { useIsMobile } from "../../hooks/useIsMobile";
-import Countdown from "../timer";
 
 const LectureListContainer = styled.div`
   @media (max-width: 650px) {
@@ -48,13 +45,15 @@ const ClassCardsContainer = styled.div`
   }
   padding: 0px 0px 20px;
   display: flex;
+  justify-content: space-between;
   flex-wrap: wrap;
 `;
 const ClassCard = styled.div`
   margin: 10px;
-  width: 29%;
+  width: 23%;
   text-decoration: none;
-  border-radius: 10px;
+  border-radius: 20px;
+  box-shadow: 0 0 10px 0 rgb(0 0 0 / 20%);
   @media (max-width: 650px) {
     box-shadow: 0 0 10px 0 rgb(0 0 0 / 20%);
     border-radius: 20px;
@@ -78,9 +77,9 @@ const ClassTitle = styled.div`
     margin: 5px 0 3px 0;
     color: #0b0d0f;
   }
-  font-size: 20px;
+  font-size: 24px;
   font-weight: 600;
-  margin: 10px 0px 0px 0px;
+  margin: 10px 0px 0px 10px;
   padding: 10px 5px 0px;
   color: black;
 `;
@@ -94,10 +93,10 @@ const ClassDesc = styled.div`
     /* line-height: 26.06px; */
     color: #818181;
   }
-  font-size: 16px;
-  padding: 10px 5px 0px;
+  font-size: 20px;
+  padding: 10px 10px 0px;
   color: #888888c1;
-  margin: 5px 0px 0px 0px;
+  margin: 0px 0px 20px 10px;
 `;
 
 export default function LectureListMobile({ mainTitle, classData }) {

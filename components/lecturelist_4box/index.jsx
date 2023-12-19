@@ -8,6 +8,7 @@ const LectureListContainer = styled.div`
   @media (max-width: 650px) {
     width: 100%;
   }
+  width: 1160px;
   margin: 15px auto;
 `;
 
@@ -40,13 +41,15 @@ const ClassCardsContainer = styled.div`
   }
   padding: 0px 0px 20px;
   display: flex;
+  justify-content: space-between;
   flex-wrap: wrap;
 `;
 const ClassCard = styled.div`
   margin: 10px;
-  width: 29%;
+  width: 23%;
   text-decoration: none;
-  border-radius: 10px;
+  border-radius: 20px;
+  box-shadow: 0 0 10px 0 rgb(0 0 0 / 20%);
   @media (max-width: 650px) {
     box-shadow: 0 0 10px 0 rgb(0 0 0 / 20%);
     border-radius: 20px;
@@ -62,10 +65,14 @@ const ClassCard = styled.div`
   }
 `;
 const ClassImage = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 10px;
+
   @media (max-width: 650px) {
     padding: 0px;
-    /* height: 60%; */
-    /* width: 20%; */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -88,11 +95,13 @@ const ClassTitle = styled.div`
     align-items: start;
     justify-content: center;
   }
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 600;
-  margin: 10px 0px 0px 0px;
-  padding: 10px 5px 0px;
   color: black;
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  margin: 10px 0 30px 0;
 `;
 
 export default function LectureList4Box({ mainTitle, classData }) {

@@ -120,6 +120,15 @@ export default function Index() {
           <>
             <SwiperSlide>
               <img
+                src={"/mainbanner/ba2.png"}
+                alt="레디테크 캠퍼스"
+                style={{
+                  width: "100%",
+                }}
+              />
+            </SwiperSlide>
+            <SwiperSlide>
+              <img
                 src={"/mainbanner/ba.png"}
                 alt="레디테크 캠퍼스"
                 style={{
@@ -136,24 +145,6 @@ export default function Index() {
                 }}
               />
             </SwiperSlide>
-            {/* <SwiperSlide>
-              <img
-                src={"33.png"}
-                alt="레디테크 캠퍼스"
-                style={{
-                  width: "100%",
-                }}
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <img
-                src={"777.png"}
-                alt="레디테크 캠퍼스"
-                style={{
-                  width: "100%",
-                }}
-              />
-            </SwiperSlide> */}
           </>
         ) : (
           <>
@@ -226,36 +217,47 @@ export default function Index() {
           </>
         )}
       </Swiper>
-      {isMobile && (
-        <>
-          <LectureListMobile
-            mainTitle="big5 취업트레이닝 ✍️"
-            classData={lectureData}
-          />
+      {/* {isMobile && (
+        <> */}
+      <LectureListMobile
+        mainTitle="big5 취업트레이닝 ✍️"
+        classData={lectureData}
+      />
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        {isMobile ? (
           <img src="/jobbanner.png" alt="line" style={{ width: "100%" }} />
-          <LectureList4Box
-            category="BIG5 대학병원 핵심 분석"
-            mainTitle="대학병원 핵심 정보 분석 🥇"
-            classData={hospitalData}
-          />
-          <LectureListMobile
-            mainTitle="무료 요약 자료 및 해설 강의 ✍️"
-            classData={freeLectureData}
-          />
-          <img src="/pass.jpg" alt="line" style={{ width: "100%" }} />
-          <LectureListBox
-            category="자체 제작"
-            mainTitle="레디테크 모의고사 무료 제공중 ✨"
-            classData={data
-              ?.filter(
-                (li) => li.firstCat === "미니모의고사" && li.pay === "무료",
-              )
-              .sort((a, b) => (a.code > b.code ? 1 : -1))}
-          />
-        </>
-      )}
+        ) : (
+          <img src="/jobbanner.png" alt="line" style={{ width: "1160px" }} />
+        )}
+      </div>
 
-      {!isMobile && (
+      <LectureList4Box
+        category="BIG5 대학병원 핵심 분석"
+        mainTitle="대학병원 핵심 정보 분석 🥇"
+        classData={hospitalData}
+      />
+      <LectureListMobile
+        mainTitle="무료 요약 자료 및 해설 강의 ✍️"
+        classData={freeLectureData}
+      />
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        {isMobile ? (
+          <img src="/pass.png" alt="line" style={{ width: "100%" }} />
+        ) : (
+          <img src="/pass.png" alt="line" style={{ width: "1160px" }} />
+        )}
+      </div>
+      <LectureListBox
+        category="자체 제작"
+        mainTitle="레디테크 모의고사 무료 제공중 ✨"
+        classData={data
+          ?.filter((li) => li.firstCat === "미니모의고사" && li.pay === "무료")
+          .sort((a, b) => (a.code > b.code ? 1 : -1))}
+      />
+      {/* </>
+      )} */}
+
+      {/* {!isMobile && (
         <>
           <LectureList
             category="자체 제작"
@@ -300,7 +302,7 @@ export default function Index() {
               .sort((a, b) => (a.code > b.code ? 1 : -1))}
           />
         </>
-      )}
+      )} */}
     </IndexContainer>
   );
 }
