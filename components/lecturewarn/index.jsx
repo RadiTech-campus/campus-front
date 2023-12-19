@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import React from "react";
 
 const WarnContainer = styled.div`
-  padding: 10px 40px;
+  padding: 30px 140px;
   margin-bottom: 50px;
   @media (max-width: 650px) {
     padding: 10px 15px;
@@ -10,8 +10,15 @@ const WarnContainer = styled.div`
 `;
 const WarnTitle = styled.button`
   font-size: 22px;
-  font-weight: bold;
-  margin: 20px 0px 10px;
+  background-color: #e96962;
+  font-weight: 700;
+  color: white;
+  text-align: center;
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin-top: 20px;
+  margin-bottom: 5px;
+  border: none;
   @media (max-width: 650px) {
     font-size: 3.5vw;
     background-color: #e96962;
@@ -24,8 +31,8 @@ const WarnTitle = styled.button`
   }
 `;
 const WarnContent = styled.div`
-  font-size: 18px;
-  padding: 5px 0px;
+  font-size: 20px;
+  color: #666666;
   @media (max-width: 650px) {
     font-size: 14px;
   }

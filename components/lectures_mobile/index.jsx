@@ -9,8 +9,12 @@ import { upWatchedPayment } from "../../api/contents_api";
 import { useGetLectureAuthByUserIdAndLectureId } from "../../query/new/queries";
 
 const LecturesContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   @media (max-width: 650px) {
     padding: 20px;
+    display: block;
   }
 `;
 
@@ -22,16 +26,26 @@ const ModalTitle = styled.div`
 `;
 
 const ChapterContainer = styled.div`
+  display: flex;
+  padding: 15px;
+  border: 1px solid #bec1c6;
+  color: #0b0d0f;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 0px 5px;
+  border-radius: 5px;
+  width: 60%;
+  font-size: 22px;
   @media (max-width: 650px) {
     display: flex;
     padding: 10px;
     border: 1px solid #bec1c6;
     color: #0b0d0f;
-    display: flex;
     justify-content: space-between;
     align-items: center;
     margin: 10px 0px 15px;
     border-radius: 10px;
+    width: auto;
   }
 `;
 const ChapterTitle = styled.div`
@@ -41,6 +55,17 @@ const ChapterTitle = styled.div`
   }
 `;
 const ChapterButton = styled.button`
+  width: 20%;
+  background-color: transparent;
+  border: 1px solid #bec1c6;
+  padding: 7px 10px;
+  text-decoration: none;
+  color: #bec1c6;
+  margin-left: 5px;
+  > a {
+    text-decoration: none;
+    color: #bec1c6;
+  }
   @media (max-width: 650px) {
     width: 20%;
     background-color: transparent;

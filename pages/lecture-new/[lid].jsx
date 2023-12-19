@@ -1,19 +1,13 @@
 import React, { useMemo, useRef, useState } from "react";
 import { useRouter } from "next/router";
-import LectureDetail from "../../components/lecturedetail";
-import FreeLectureDetail from "../../components/lecturedetail/freeLectureDetail";
-import PeriodLectureDetail from "../../components/lecturedetail/periodLectureDetail";
-import MoLectureDetail from "../../components/lecturedetail/moLectureDetail";
 import styled from "@emotion/styled";
 import { useIsMobile } from "../../hooks/useIsMobile";
 import { useAuth } from "../../hooks/useAuth";
 import LectureInfoMobile from "../../components/lectureinfo_mobile";
 import {
-  useGetLectureAuthByUserIdAndLectureId,
   useGetLectureById,
   useGetLectureDetailByLecturetId,
 } from "../../query/new/queries";
-import { getLectureById } from "../../api/new_apis";
 import LecturesMobile from "../../components/lectures_mobile";
 import Lecturer from "../../components/lecturer";
 import LectureWarn from "../../components/lecturewarn";
@@ -21,14 +15,17 @@ import LectureWarn from "../../components/lecturewarn";
 const LectureDetailContainer = styled.div`
   margin: 0px auto;
   width: 1160px;
+  margin-top: 100px;
   @media (max-width: 650px) {
     width: 100%;
+    margin-top: 0px;
   }
 `;
 
 const TopDetail = styled.div`
   display: flex;
-  flex: 1;
+  flex-direction: column;
+  align-items: center;
   @media (max-width: 650px) {
     flex-direction: column;
     padding: 10px;
@@ -36,22 +33,34 @@ const TopDetail = styled.div`
 `;
 
 const ClassMainTitle = styled.div`
-  font-size: 16px;
+  font-size: 28px;
+  font-weight: 600;
+  width: 80%;
+  text-align: left;
+  margin: 20px 0 0 20px;
   @media (max-width: 650px) {
     font-size: 4.5vw;
     color: #0b0d0f;
     font-weight: 700;
+    width: 100%;
+    text-align: left;
+    margin-left: 10px;
   }
 `;
 const ClassSubTitle = styled.div`
   font-size: 24px;
-  font-weight: 600;
   margin-top: 10px;
+  width: 80%;
+  text-align: left;
+  margin: 20px 0 20px 20px;
   @media (max-width: 650px) {
     font-size: 4.2vw;
     color: #818181;
     font-weight: 500;
     margin-top: 5px;
+    margin-left: 10px;
+    width: 100%;
+    text-align: left;
   }
 `;
 
@@ -161,24 +170,27 @@ export default function Lecture() {
           />
         </div>
       ) : (
-        <img
-          src={`/lecturebanner/lecture.png`}
-          alt="레디테크 캠퍼스"
-          style={{ width: "100%" }}
-        />
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          {isMobile ? (
+            <img
+              src={`/lecturebanner/lecture.png`}
+              alt="레디테크 캠퍼스"
+              style={{ width: "100%" }}
+            />
+          ) : (
+            <img
+              src={`/lecturebanner/lecture.png`}
+              alt="레디테크 캠퍼스"
+              style={{ width: "80%" }}
+            />
+          )}
+        </div>
       )}
 
       <TopDetail>
         <ClassMainTitle>{aLectureData?.lectureTitle}</ClassMainTitle>
         <ClassSubTitle>{aLectureData?.description}</ClassSubTitle>
       </TopDetail>
-      <img
-        src={`/pass.jpg`}
-        alt="레디테크 캠퍼스"
-        style={{
-          width: "100%",
-        }}
-      />
 
       <ClassTapContainer>
         {tabs.map((tab, i) => (
@@ -207,6 +219,27 @@ export default function Lecture() {
       )}
       {selectedTab === "강사소개" && <Lecturer />}
       {selectedTab === "주의사항" && <LectureWarn />}
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        {isMobile ? (
+          <img
+            src={`/mainbanner/mobile/main2.png`}
+            alt="레디테크 캠퍼스"
+            style={{
+              width: "100%",
+            }}
+          />
+        ) : (
+          <img
+            src={`/mainbanner/mobile/main2.png`}
+            alt="레디테크 캠퍼스"
+            style={{
+              width: "80%",
+              marginBottom: "20px",
+              marginTop: "20px",
+            }}
+          />
+        )}
+      </div>
     </LectureDetailContainer>
   );
 }

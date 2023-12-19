@@ -89,143 +89,131 @@ export default function Index() {
 
   return (
     <IndexContainer>
-      <Swiper
-        modules={[
-          Navigation,
-          Pagination,
-          Scrollbar,
-          A11y,
-          EffectFade,
-          Autoplay,
-        ]}
-        // spaceBetween={50}
-        slidesPerView={1}
-        // navigation
-        pagination={{ clickable: true }}
-        autoplay={{
-          delay: 4000,
-          disableOnInteraction: false,
-        }}
-        effect={"fade"}
-        style={{
-          "--swiper-pagination-color": "#0422627d",
-          "--swiper-pagination-bullet-inactive-color": "#9999998d",
-          "--swiper-pagination-bullet-inactive-opacity": "1",
-          "--swiper-pagination-bullet-size": "8px",
-          "--swiper-pagination-bullet-horizontal-gap": "5px",
-          paddingBottom: "30px",
-        }}
-      >
-        {isMobile ? (
-          <>
-            <SwiperSlide>
-              <img
-                src={"/mainbanner/ba2.png"}
-                alt="레디테크 캠퍼스"
-                style={{
-                  width: "100%",
-                }}
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <img
-                src={"/mainbanner/ba.png"}
-                alt="레디테크 캠퍼스"
-                style={{
-                  width: "100%",
-                }}
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <img
-                src={"/mainbanner/ba.png"}
-                alt="레디테크 캠퍼스"
-                style={{
-                  width: "100%",
-                }}
-              />
-            </SwiperSlide>
-          </>
-        ) : (
-          <>
-            <SwiperSlide
+      {isMobile && (
+        <Swiper
+          modules={[
+            Navigation,
+            Pagination,
+            Scrollbar,
+            A11y,
+            EffectFade,
+            Autoplay,
+          ]}
+          // spaceBetween={50}
+          slidesPerView={1}
+          // navigation
+          pagination={{ clickable: true }}
+          autoplay={{
+            delay: 4000,
+            disableOnInteraction: false,
+          }}
+          effect={"fade"}
+          style={{
+            "--swiper-pagination-color": "#0422627d",
+            "--swiper-pagination-bullet-inactive-color": "#9999998d",
+            "--swiper-pagination-bullet-inactive-opacity": "1",
+            "--swiper-pagination-bullet-size": "8px",
+            "--swiper-pagination-bullet-horizontal-gap": "5px",
+            paddingBottom: "30px",
+          }}
+        >
+          <SwiperSlide>
+            <img
+              src={"/mainbanner/mobile/1.png"}
+              alt="레디테크 캠퍼스"
               style={{
-                width: "1160px",
-                height: "450px",
-                display: "flex",
-                justifyContent: "center",
+                width: "100%",
               }}
-            >
-              <Image
-                src={"a.png"}
-                alt="레디테크 캠퍼스"
-                fill
-                sizes="100vw"
-                style={{
-                  objectFit: "cover",
-                }}
-              />
-            </SwiperSlide>
-            <SwiperSlide
+            />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img
+              src={"/mainbanner/mobile/2.png"}
+              alt="레디테크 캠퍼스"
               style={{
-                height: "450px",
-                width: "1160px",
+                width: "100%",
               }}
-            >
-              <Image
-                src={"b.png"}
-                alt="레디테크 캠퍼스"
-                fill
-                sizes="100vw"
-                style={{
-                  objectFit: "cover",
-                }}
-              />
-            </SwiperSlide>
-            <SwiperSlide
+            />
+          </SwiperSlide>
+        </Swiper>
+      )}
+
+      {!isMobile && (
+        <Swiper
+          modules={[
+            Navigation,
+            Pagination,
+            Scrollbar,
+            A11y,
+            EffectFade,
+            Autoplay,
+          ]}
+          // spaceBetween={50}
+          slidesPerView={1}
+          // navigation
+          pagination={{ clickable: true }}
+          autoplay={{
+            delay: 4000,
+            disableOnInteraction: false,
+          }}
+          effect={"fade"}
+          style={{
+            "--swiper-pagination-color": "#0422627d",
+            "--swiper-pagination-bullet-inactive-color": "#9999998d",
+            "--swiper-pagination-bullet-inactive-opacity": "1",
+            "--swiper-pagination-bullet-size": "15px",
+            "--swiper-pagination-bullet-horizontal-gap": "5px",
+            paddingBottom: "40px",
+            marginTop: "100px",
+          }}
+        >
+          <SwiperSlide
+            style={{
+              width: "1160px",
+              height: "450px",
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            <Image
+              src={"/mainbanner/pc/001.png"}
+              alt="레디테크 캠퍼스"
+              fill
+              sizes="100vw"
               style={{
-                height: "450px",
-                width: "1160px",
+                objectFit: "cover",
               }}
-            >
-              <Image
-                src={"c.png"}
-                alt="레디테크 캠퍼스"
-                fill
-                sizes="100vw"
-                style={{
-                  objectFit: "cover",
-                }}
-              />
-            </SwiperSlide>
-            <SwiperSlide
+            />
+          </SwiperSlide>
+          <SwiperSlide
+            style={{
+              height: "450px",
+              width: "1160px",
+            }}
+          >
+            <Image
+              src={"/mainbanner/pc/002.png"}
+              alt="레디테크 캠퍼스"
+              fill
+              sizes="100vw"
               style={{
-                height: "450px",
-                width: "1160px",
+                objectFit: "cover",
               }}
-            >
-              <Image
-                src={"d.png"}
-                alt="레디테크 캠퍼스"
-                fill
-                sizes="100vw"
-                style={{
-                  objectFit: "cover",
-                }}
-              />
-            </SwiperSlide>
-          </>
-        )}
-      </Swiper>
-      {/* {isMobile && (
-        <> */}
+            />
+          </SwiperSlide>
+        </Swiper>
+      )}
       <LectureListMobile
         mainTitle="big5 취업트레이닝 ✍️"
         classData={lectureData}
       />
       <div style={{ display: "flex", justifyContent: "center" }}>
         {isMobile ? (
-          <img src="/jobbanner.png" alt="line" style={{ width: "100%" }} />
+          <img
+            src="/mainbanner/mobile/main1.png"
+            alt="line"
+            style={{ width: "100%" }}
+          />
         ) : (
           <></>
           // <img src="/jobbanner.png" alt="line" style={{ width: "1160px" }} />
@@ -243,19 +231,17 @@ export default function Index() {
       />
       <div style={{ display: "flex", justifyContent: "center" }}>
         {isMobile ? (
-          <img src="/pass.png" alt="line" style={{ width: "100%" }} />
+          <img
+            src="/mainbanner/mobile/main2.png"
+            alt="line"
+            style={{ width: "100%" }}
+          />
         ) : (
           <></>
           // <img src="/pass.png" alt="line" style={{ width: "1160px" }} />
         )}
       </div>
-      <LectureListBox
-        category="자체 제작"
-        mainTitle="레디테크 모의고사 무료 제공중 ✨"
-        classData={data
-          ?.filter((li) => li.firstCat === "미니모의고사" && li.pay === "무료")
-          .sort((a, b) => (a.code > b.code ? 1 : -1))}
-      />
+      <LectureListBox mainTitle="레디테크 모의고사 무료 제공중 ✨" />
       {/* </>
       )} */}
 

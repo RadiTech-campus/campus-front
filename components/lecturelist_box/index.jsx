@@ -163,6 +163,7 @@ const ApplyButton = styled.div`
   justify-content: center;
   align-items: center;
   color: white;
+  cursor: pointer;
   @media (max-width: 650px) {
     font-size: 2.7vw;
     font-weight: 700;
@@ -188,7 +189,7 @@ const CardsContainer = styled.div`
   }
 `;
 
-export default function LectureListBox({ mainTitle, classData }) {
+export default function LectureListBox({ mainTitle }) {
   const isMobile = useIsMobile();
   return (
     <LectureListContainer>
@@ -206,18 +207,34 @@ export default function LectureListBox({ mainTitle, classData }) {
             <img src="/step.png" alt="image" style={{ width: "80%" }} />
           </DescriptionRight>
         </Description>
-        {classData?.map((li, i) => (
-          <CardsContainer key={i}>
-            <ClassCard>
-              <ClassCardCircle>2 교시</ClassCardCircle>
-              <ApplyButton>응시하기</ApplyButton>
-            </ClassCard>
-            <ClassCard>
-              <ClassCardCircle>3 교시</ClassCardCircle>
-              <ApplyButton>응시하기</ApplyButton>
-            </ClassCard>
-          </CardsContainer>
-        ))}
+        <CardsContainer>
+          <ClassCard>
+            <ClassCardCircle>2 교시</ClassCardCircle>
+            <ApplyButton
+              onClick={() => {
+                window.open(
+                  "https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/mo/mini2.pdf",
+                  "_blank",
+                );
+              }}
+            >
+              응시하기
+            </ApplyButton>
+          </ClassCard>
+          <ClassCard>
+            <ClassCardCircle>3 교시</ClassCardCircle>
+            <ApplyButton
+              onClick={() => {
+                window.open(
+                  "https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/mo/mini2.pdf",
+                  "_blank",
+                );
+              }}
+            >
+              응시하기
+            </ApplyButton>
+          </ClassCard>
+        </CardsContainer>
       </ClassCardsContainer>
     </LectureListContainer>
   );

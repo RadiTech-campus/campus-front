@@ -1,10 +1,11 @@
 import styled from "@emotion/styled";
-import React from "react";
+import React, { useState } from "react";
 import Phone from "../icons/Phone";
 import MyHome from "../icons/MyHome";
 import Gang from "../icons/Gang";
 import Logo from "../icons/Logo";
 import Kuk from "../icons/Kuk";
+import Modal from "../modal/Modal";
 import { useRouter } from "next/router";
 
 const BottomNavContainer = styled.div`
@@ -50,9 +51,31 @@ const NavButtonText = styled.div`
 export default function BottomNav() {
   const router = useRouter();
 
+  const [isOpen, setIsOpen] = useState(false);
+  const handleOpenModal = () => {
+    setIsOpen(true);
+  };
+
   return (
     <BottomNavContainer>
-      <NavButton>
+      {isOpen ? (
+        <Modal
+          open={isOpen}
+          onClose={() => {
+            setIsOpen(false);
+          }}
+        >
+          <div style={{ fontSize: "14px" }}>
+            결제, 환불, 서비스 이용 관련해서는 메일로 문의 주세요.​
+          </div>
+          <div style={{ fontSize: "14px" }}>
+            고객센터 : raditech.campus@gmail.com
+          </div>
+        </Modal>
+      ) : (
+        ""
+      )}
+      <NavButton onClick={() => handleOpenModal()}>
         <NavButtonIcon>
           <Phone />
         </NavButtonIcon>

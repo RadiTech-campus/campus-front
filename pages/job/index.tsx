@@ -1,6 +1,8 @@
-import React, { Fragment, useMemo } from "react";
+import React, { useMemo } from "react";
 import styled from "@emotion/styled";
 import Link from "next/link";
+import { useIsMobile } from "../../hooks/useIsMobile";
+
 import { useGetLecturesByContentId } from "../../query/new/queries";
 
 const LectureListContainer = styled.div`
@@ -43,9 +45,12 @@ const Tags = styled.div`
     color: #a2a2a2;
     font-size: 3.5vw;
   }
-  font-size: 16px;
+  display: flex;
+  font-size: 24px;
   margin-top: 10px;
   margin-left: 10px;
+  margin-bottom: 20px;
+  color: #a2a2a2;
 `;
 
 const Tag = styled.div`
@@ -56,6 +61,11 @@ const Tag = styled.div`
     padding: 3px 6px;
     font-weight: 400;
   }
+  border: 1px solid #a2a2a2;
+  border-radius: 60px;
+  margin-right: 10px;
+  padding: 5px 12px;
+  font-weight: 400;
 `;
 
 const ClassCardsContainer = styled.div`
@@ -74,9 +84,11 @@ const ClassCardsContainer = styled.div`
 `;
 const ClassCard = styled.div`
   margin: 10px;
-  width: 29%;
+  width: 31%;
   text-decoration: none;
   border-radius: 10px;
+  box-shadow: 0 0 10px 0 rgb(0 0 0 / 20%);
+  border-radius: 20px;
   @media (max-width: 650px) {
     box-shadow: 0 0 10px 0 rgb(0 0 0 / 20%);
     border-radius: 20px;
@@ -112,9 +124,9 @@ const ClassTitle = styled.div`
     /* line-height: 28.96px; */
     color: #0b0d0f;
   }
-  font-size: 20px;
+  font-size: 24px;
   font-weight: 600;
-  margin: 10px 0px 0px 0px;
+  margin: 10px 0px 0px 10px;
   padding: 10px 5px 0px;
   color: black;
 `;
@@ -128,18 +140,22 @@ const ClassDesc = styled.div`
     /* line-height: 26.06px; */
     color: #818181;
   }
-  font-size: 16px;
-  padding: 10px 5px 0px;
+  font-size: 20px;
+  padding: 10px 10px 0px;
   color: #888888c1;
-  margin: 5px 0px 0px 0px;
+  margin: 0px 0px 20px 10px;
 `;
 
 export default function Job() {
+  const isMobile = useIsMobile();
+
   const { data: lecturesData } = useGetLecturesByContentId(11);
   const lectureData = useMemo(() => lecturesData || [], [lecturesData]);
   return (
-    <div>
-      <img src="/gosi/gositop.png" alt="image" style={{ width: "100%" }} />
+    <div style={{ marginTop: "100px" }}>
+      {isMobile && (
+        <img src="/gosi/gositop.png" alt="image" style={{ width: "100%" }} />
+      )}
       <LectureListContainer>
         <TitleContainer>
           <MainTitle>자소서, 면접, 대학정보 ✍️</MainTitle>

@@ -181,7 +181,7 @@ export default function SignUp() {
     setIsOpen(true);
   };
 
-  const [Selected, setSelected] = useState(5);
+  const [Selected, setSelected] = useState(4);
   const handleSelect = (e) => {
     setSelected(Number(e.target.value));
   };

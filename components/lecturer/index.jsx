@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import React from "react";
 
 const LecturerContainer = styled.div`
-  padding: 10px 40px;
+  padding: 30px 140px;
   margin-bottom: 50px;
   @media (max-width: 650px) {
     padding: 10px 15px;
@@ -21,9 +21,16 @@ const InfoTitle = styled.div`
 `;
 
 const InfoRightTitle = styled.button`
-  font-size: 20px;
-  font-weight: bold;
-  margin: 10px 0px;
+  font-size: 22px;
+  background-color: #e96962;
+  font-weight: 700;
+  color: white;
+  text-align: center;
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin-top: 20px;
+  margin-bottom: 5px;
+  border: none;
   @media (max-width: 650px) {
     font-size: 3.5vw;
     background-color: #e96962;
@@ -36,8 +43,8 @@ const InfoRightTitle = styled.button`
   }
 `;
 const InfoRightContent = styled.div`
-  font-size: 18px;
-  margin-bottom: 3px;
+  font-size: 20px;
+  color: #666666;
   @media (max-width: 650px) {
     font-size: 3.5vw;
     color: #666666;

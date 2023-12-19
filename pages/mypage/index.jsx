@@ -9,7 +9,7 @@ import { AddDays, getDateDiff } from "../../libs/date";
 import { canclePayment } from "../../api/contents_api";
 
 const SignInContainer = styled.div`
-  margin: 15px auto;
+  margin: 100px auto 15px;
   width: 1160px;
   @media (max-width: 650px) {
     margin: 0px auto;

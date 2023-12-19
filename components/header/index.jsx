@@ -12,61 +12,27 @@ import { updatePayStatus } from "../../api/contents_api";
 const HeaderContainer = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 15px 20px;
-  margin: 0px auto;
-  width: 1160px;
-  position: "sticky";
+  justify-content: space-evenly;
+  padding: 20px 0px;
+  width: 100%;
+  position: fixed;
   top: 0;
   z-index: 10;
-  background-color: "white";
+  background-color: white;
   @media (max-width: 650px) {
     display: none;
-    width: 100%;
-    margin: 0 auto;
-    padding: 0px;
   }
 `;
 
-const MobileLogo = styled.img`
-  width: 195px;
-  @media (max-width: 650px) {
-    width: 150px;
-    padding: 10px 5px;
-  }
-`;
 const LogoContainer = styled.div`
   display: flex;
   align-items: center;
 `;
 
-const SearchContainer = styled.div`
-  margin-left: 10px;
-  background-color: #ededed74;
-  border: 1px solid #dbdbdb9b;
-  border-radius: 20px;
-  display: flex;
-  align-items: center;
-  > svg {
-    color: #d3d3d3;
-    height: 24px;
-    padding-left: 15px;
-  }
-`;
-
-const SearchInput = styled.input`
-  background-color: transparent;
-  border: none;
-  height: 34px;
-  width: 400px;
-  font-size: 20px;
-  border-radius: 20px;
-  outline: none;
-`;
-
 const AuthContainer = styled.div`
   font-size: 13px;
   display: flex;
+
   @media (max-width: 650px) {
     width: 100%;
     justify-content: end;
@@ -77,11 +43,9 @@ const AuthContainer = styled.div`
 
 const AuthButton = styled.div`
   margin-right: 20px;
+  font-size: 20px;
+  font-weight: 600;
   cursor: pointer;
-  @media (max-width: 650px) {
-    border-bottom: ${(props) => (props.selected ? "2px solid black;" : "")};
-    margin-right: 15px;
-  }
 `;
 export default function Header({ onMoveToForm }) {
   const router = useRouter();
@@ -104,14 +68,12 @@ export default function Header({ onMoveToForm }) {
       if (filtered.length > 0) {
         for (let index = 0; index < filtered.length; index++) {
           const element = filtered[index];
-          console.log("call 전");
           updatePayStatus({
             id: element.id,
             payStatus: "기간만료",
             endDate: element.endDate,
             applyedStatus: "사용종료",
           });
-          console.log("call 후");
         }
       }
     }
@@ -135,22 +97,47 @@ export default function Header({ onMoveToForm }) {
       <HeaderContainer>
         <LogoContainer>
           <Link href={"/"}>
-            {isMobile ? (
-              <MobileLogo src="/titlelogo.png" alt="레디테크 캠퍼스" />
-            ) : (
-              <Image
-                src="/titlelogo.png"
-                alt="레디테크 캠퍼스"
-                width={190}
-                height={35}
-                style={{ marginRight: "5px" }}
-              />
-            )}
+            <img
+              src="/mainlogo.png"
+              alt="레디테크 캠퍼스"
+              style={{ marginRight: "25px", height: "27px" }}
+            />
           </Link>
-          {/* <SearchContainer>
-            <Search />
-            <SearchInput disabled />
-          </SearchContainer> */}
+          <AuthButton
+            onClick={() => {
+              router.push("/");
+            }}
+          >
+            홈
+          </AuthButton>
+          <AuthButton
+            onClick={() => {
+              router.push("/gosi");
+            }}
+          >
+            국가고시
+          </AuthButton>
+          <AuthButton
+            onClick={() => {
+              router.push("/job");
+            }}
+          >
+            취업특강
+          </AuthButton>
+          <AuthButton
+            selected={router.pathname === "/mypage"}
+            onClick={() => router.push("/mypage")}
+          >
+            마이룸
+          </AuthButton>
+          <AuthButton
+            onClick={() => {
+              // onMoveToForm();
+              handleOpenModal();
+            }}
+          >
+            고객센터
+          </AuthButton>
         </LogoContainer>
         {auth.isAuthenticated ? (
           <AuthContainer isMobile={isMobile}>
@@ -163,12 +150,6 @@ export default function Header({ onMoveToForm }) {
             )}
 
             <AuthButton
-              selected={router.pathname === "/mypage"}
-              onClick={() => router.push("/mypage")}
-            >
-              마이페이지
-            </AuthButton>
-            <AuthButton
               onClick={() => {
                 auth.signOut();
                 router.push("/");
@@ -176,14 +157,6 @@ export default function Header({ onMoveToForm }) {
               }}
             >
               로그아웃
-            </AuthButton>
-            <AuthButton
-              onClick={() => {
-                // onMoveToForm();
-                handleOpenModal();
-              }}
-            >
-              고객센터
             </AuthButton>
           </AuthContainer>
         ) : (
