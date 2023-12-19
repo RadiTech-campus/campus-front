@@ -8,9 +8,12 @@ import Countdown from "../timer";
 const LectureListContainer = styled.div`
   @media (max-width: 650px) {
     width: 100%;
+    margin-bottom: 0px;
+    height: auto;
   }
   margin: 15px auto;
   width: 1160px;
+  margin-bottom: 120px;
 `;
 
 const MainTitle = styled.div`
@@ -35,6 +38,7 @@ const ClassCardsContainer = styled.div`
     margin: 0 10px 20px;
     padding: 0px 10px 20px 10px;
     border-radius: 20px;
+    height: auto;
   }
   background-color: #ecf2fd;
   margin: 10px 10px 40px;
@@ -42,6 +46,7 @@ const ClassCardsContainer = styled.div`
   border-radius: 20px;
   display: flex;
   flex-wrap: wrap;
+  height: 220px;
 `;
 const ClassCard = styled.div`
   box-shadow: 0 0 10px 0 rgb(0 0 0 / 20%);
@@ -123,7 +128,7 @@ const DescriptionLeft = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  line-height: 200%;
+  line-height: 240%;
   @media (max-width: 650px) {
     display: flex;
     flex-direction: column;
@@ -176,6 +181,7 @@ const ApplyButton = styled.div`
 const CardsContainer = styled.div`
   width: 50%;
   display: flex;
+  align-items: center;
   @media (max-width: 650px) {
     width: auto;
     display: flex;

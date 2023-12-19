@@ -227,7 +227,8 @@ export default function Index() {
         {isMobile ? (
           <img src="/jobbanner.png" alt="line" style={{ width: "100%" }} />
         ) : (
-          <img src="/jobbanner.png" alt="line" style={{ width: "1160px" }} />
+          <></>
+          // <img src="/jobbanner.png" alt="line" style={{ width: "1160px" }} />
         )}
       </div>
 
@@ -244,7 +245,8 @@ export default function Index() {
         {isMobile ? (
           <img src="/pass.png" alt="line" style={{ width: "100%" }} />
         ) : (
-          <img src="/pass.png" alt="line" style={{ width: "1160px" }} />
+          <></>
+          // <img src="/pass.png" alt="line" style={{ width: "1160px" }} />
         )}
       </div>
       <LectureListBox
