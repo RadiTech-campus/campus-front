@@ -3,14 +3,16 @@ import React, { useRef } from "react";
 import Header from "../header";
 import Footer from "../footer";
 import { useRouter } from "next/router";
+import FooterMobile from "../footer_mobile";
+import BottomNav from "../bottom_nav";
+import HeaderMobile from "../header_mobile";
+import GNB from "../gnb";
 
 const LayoutContainer = styled.div`
-  @media (max-width: 620px) {
-    /* width: 620px; */
+  @media (max-width: 650px) {
     width: 100%;
     margin: 0 auto;
   }
-  /* width: 1160px; */
 `;
 
 export default function Layout({ children }) {
@@ -23,11 +25,13 @@ export default function Layout({ children }) {
   const routes = ["/signin", "/signup", "/forgotpassword", "/regist"];
   return (
     <LayoutContainer>
-      {/* <LeftContainer></LeftContainer> */}
-      {/* <RightContainer></RightContainer> */}
       <Header onMoveToForm={onMoveToForm} />
+      {/* <GNB /> */}
+      <HeaderMobile />
       {children}
       {routes.includes(route) ? "" : <Footer footerRef={footerRef} />}
+      <FooterMobile footerRef={footerRef} />
+      <BottomNav />
     </LayoutContainer>
   );
 }

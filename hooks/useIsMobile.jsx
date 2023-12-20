@@ -18,7 +18,7 @@ export const useIsMobile = () => {
 
 export default function useProvideIsMobile() {
   const [isMobile, setIsMobile] = useState(false);
-  const mobile = useMediaQuery({ query: "(max-width: 620px)" });
+  const mobile = useMediaQuery({ query: "(max-width: 650px)" });
   useEffect(() => {
     setIsMobile(mobile);
   }, [mobile]);

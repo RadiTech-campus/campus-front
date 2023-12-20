@@ -15,10 +15,18 @@ const SignInBox = styled.div`
   border: 0.1rem solid #e6e8eb;
   border-radius: 5px;
   padding: 60px 40px;
+  @media (max-width: 650px) {
+    padding: 10px 40px;
+    margin: 10px auto;
+    border: none;
+  }
 `;
 const LogoContainer = styled.div`
   display: flex;
   align-items: center;
+  @media (max-width: 650px) {
+    display: none;
+  }
 `;
 
 const TitleContainer = styled.div`

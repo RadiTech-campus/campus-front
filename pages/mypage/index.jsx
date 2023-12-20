@@ -4,14 +4,17 @@ import { useRouter } from "next/navigation";
 import styled from "@emotion/styled";
 import Image from "next/image";
 import { useGetPayment } from "../../query/contents";
+import { useGetPaymentsList } from "../../query/new/queries";
 import { AddDays, getDateDiff } from "../../libs/date";
 import { canclePayment } from "../../api/contents_api";
 
 const SignInContainer = styled.div`
-  margin: 15px auto;
+  margin: 100px auto 15px;
   width: 1160px;
-  @media (max-width: 620px) {
-    width: 90%;
+  @media (max-width: 650px) {
+    margin: 0px auto;
+    padding: 15px;
+    width: 100%;
   }
 `;
 
@@ -19,7 +22,25 @@ const TitleContainer = styled.div`
   font-size: 16px;
   font-weight: bold;
   padding: 10px 0px;
+  @media (max-width: 650px) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 `;
+
+const LogoutButton = styled.button`
+  display: none;
+  @media (max-width: 650px) {
+    display: block;
+    background-color: transparent;
+    border: 1px solid #a2a2a2;
+    border-radius: 5px;
+    color: #a2a2a2;
+    padding: 3px 5px;
+  }
+`;
+
 const RegistLabel = styled.label`
   width: 100%;
   font-size: 12px;
@@ -29,9 +50,9 @@ const RegistInput = styled.input`
   border: none;
   height: 40px;
   outline: none;
-  margin-bottom: 20px;
+  padding-left: 10px;
   ::placeholder {
-    color: ${(props) => (props.finished ? "#a603a6" : "#898989")};
+    color: ${(props) => (props.finished ? "#E96962" : "#898989")};
     font-weight: ${(props) => (props.finished ? "700" : "#898989")};
     font-size: ${(props) => (props.finished ? "16px" : "")};
   }
@@ -49,16 +70,19 @@ const PriceContainer = styled.div`
   margin-top: 5px;
 `;
 const SignInInput = styled.input`
-  width: 20%;
-  @media (max-width: 620px) {
+  @media (max-width: 650px) {
     width: 50%;
   }
+  width: 100%;
   border: none;
-  border-bottom: 1px solid #cbcaca;
   height: 40px;
   outline: none;
-  margin-bottom: 40px;
-  font-size: 14px;
+  padding-left: 10px;
+  ::placeholder {
+    color: ${(props) => (props.finished ? "#E96962" : "#898989")};
+    font-weight: ${(props) => (props.finished ? "700" : "#898989")};
+    font-size: ${(props) => (props.finished ? "16px" : "")};
+  }
 `;
 
 const SignInLabel = styled.label`
@@ -116,14 +140,15 @@ export default function MyPage() {
   };
   // console.log("auth", auth);
 
-  const { data: paymentData } = useGetPayment(username);
-  const data = useMemo(
-    () =>
-      paymentData?.Items?.sort(
-        (a, b) => new Date(b.applyDate) - new Date(a.applyDate),
-      ) || [],
-    [username, paymentData],
-  );
+  const { data: paymentData } = useGetPaymentsList(auth?.username);
+  console.log("paymentData", paymentData);
+  // const data = useMemo(
+  //   () =>
+  //     paymentData?.Items?.sort(
+  //       (a, b) => new Date(b.applyDate) - new Date(a.applyDate),
+  //     ) || [],
+  //   [username, paymentData],
+  // );
 
   useEffect(() => {
     if (auth.isAuthenticated) {
@@ -147,159 +172,269 @@ export default function MyPage() {
     }
   };
 
+  const handleCopyClipBoard = async (e) => {
+    e.preventDefault();
+    await navigator.clipboard.writeText("124-233998-12-601");
+    alert("계좌번호가 복사 되었습니다");
+  };
+
   return (
     <SignInContainer>
       <div>My Page</div>
-      <TitleContainer>기본 정보</TitleContainer>
+      <TitleContainer>
+        기본 정보
+        <LogoutButton
+          onClick={() => {
+            auth.signOut();
+            router.push("/");
+          }}
+        >
+          로그아웃
+        </LogoutButton>
+      </TitleContainer>
       <InputsContainer>
-        {/* <LoginText>로그인</LoginText> */}
         <Divider />
         <SignInLabel>이름</SignInLabel>
-        <SignInInput
-          type="text"
-          placeholder={userName}
-          disabled
-          // value={username}
-          // onChange={(e) => setUsername(e.target.value)}
-        />
+        <div
+          style={{
+            width: "100%",
+            marginBottom: "20px",
+            backgroundColor: "#eeeeee",
+          }}
+        >
+          <SignInInput type="text" placeholder={userName} disabled />
+        </div>
         <SignInLabel>이메일</SignInLabel>
-        <SignInInput
-          type="text"
-          placeholder={email}
-          disabled
-          // value={email}
-          // onChange={(e) => setPassword(e.target.value)}
-        />
+        <div
+          style={{
+            width: "100%",
+            marginBottom: "20px",
+            backgroundColor: "#eeeeee",
+          }}
+        >
+          <SignInInput type="text" placeholder={email} disabled />
+        </div>
         <SignInLabel>휴대폰 번호</SignInLabel>
-        <SignInInput
-          type="text"
-          disabled
-          placeholder={phoneNumber}
-          // value={phoneNumber}
-          // onChange={(e) => setPassword(e.target.value)}
-        />
+        <div
+          style={{
+            width: "100%",
+            marginBottom: "20px",
+            backgroundColor: "#eeeeee",
+          }}
+        >
+          <SignInInput type="text" disabled placeholder={phoneNumber} />
+        </div>
       </InputsContainer>
       <TitleContainer>수강 신청 정보</TitleContainer>
       <InputsContainer>
-        {data.length < 1 ? (
+        {paymentData && paymentData < 1 && (
           <Fragment>
             <Divider />
 
             <RegistLabel>강의명</RegistLabel>
-            <RegistInput
-              type="text"
-              placeholder="수강 이력이 없습니다"
-              disabled
-            />
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-evenly",
+                alignItems: "center",
+                width: "100%",
+                marginBottom: "20px",
+                backgroundColor: "#eeeeee",
+              }}
+            >
+              <RegistInput
+                type="text"
+                placeholder="수강 이력이 없습니다"
+                disabled
+              />
+            </div>
 
             <RegistLabel>결제 방법</RegistLabel>
-            <RegistInput type="text" placeholder="" disabled />
-            <RegistLabel>결제 상태 </RegistLabel>
 
-            <RegistInput type="text" placeholder="" disabled />
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-evenly",
+                alignItems: "center",
+                width: "100%",
+                marginBottom: "20px",
+                backgroundColor: "#eeeeee",
+              }}
+            >
+              <RegistInput type="text" placeholder="" disabled />
+            </div>
+            <RegistLabel>결제 상태 </RegistLabel>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-evenly",
+                alignItems: "center",
+                width: "100%",
+                marginBottom: "20px",
+                backgroundColor: "#eeeeee",
+              }}
+            >
+              <RegistInput type="text" placeholder="" disabled />
+            </div>
           </Fragment>
-        ) : (
-          data.map((li, i) => (
+        )}
+        {paymentData &&
+          paymentData.length > 0 &&
+          paymentData.map((li, i) => (
             <Fragment key={i}>
               <Divider />
+              <RegistLabel>강의명</RegistLabel>
               <div
                 style={{
-                  width: "100%",
-                  // backgroundColor: "red",
-                  // height: "200px",
                   display: "flex",
-                  justifyContent: "space-between",
+                  justifyContent: "space-evenly",
+                  alignItems: "center",
+                  width: "100%",
+                  marginBottom: "20px",
+                  backgroundColor: "#eeeeee",
                 }}
               >
-                <div></div>
-                {li?.payStatus === "결제취소" ? (
-                  ""
-                ) : (li?.payStatus === "결제완료" && li?.watched === 0) ||
-                  li?.payStatus === "입금대기" ? (
-                  <div>
-                    <button
-                      style={{
-                        width: "80px",
-                        border: "none",
-                        backgroundColor: "#c100d7",
-                        color: "white",
-                        padding: "5px 0px",
-                        borderRadius: "5px",
-                        fontWeight: "700",
-                      }}
-                      onClick={() => cancelPay(li.id)}
-                    >
-                      수강취소
-                    </button>
-                  </div>
-                ) : (
-                  ""
-                )}
-                {/* {(li?.payStatus === "결제취소" ||
-                  li?.payStatus === "결제완료") &&
-                li?.watched === 0 ? (
-                  ""
-                ) : (
-                  <div>
-                    <button
-                      style={{
-                        width: "80px",
-                        border: "none",
-                        backgroundColor: "#c100d7",
-                        color: "white",
-                        padding: "5px 0px",
-                        borderRadius: "5px",
-                        fontWeight: "700",
-                      }}
-                      onClick={() => cancelPay(li.id)}
-                    >
-                      수강취소
-                    </button>
-                  </div>
-                )} */}
+                <RegistInput
+                  type="text"
+                  placeholder={li.product.productTitle}
+                  disabled
+                />
               </div>
-              <RegistLabel>강의명</RegistLabel>
-              <RegistInput type="text" placeholder={li.productTitle} disabled />
-              {/* <RegistLabel>기간</RegistLabel>
-            <RegistInput type="text" placeholder={li.period} disabled /> */}
               <RegistLabel>결제 금액</RegistLabel>
-              <RegistInput
-                type="text"
-                placeholder={`${li.price} 원`}
-                disabled
-              />
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-evenly",
+                  alignItems: "center",
+                  width: "100%",
+                  marginBottom: "20px",
+                  backgroundColor: "#eeeeee",
+                }}
+              >
+                <RegistInput
+                  type="text"
+                  placeholder={`${li.price} 원`}
+                  disabled
+                />
+              </div>
 
               <RegistLabel>결제 방법</RegistLabel>
-              <RegistInput type="text" placeholder="무통장입금" disabled />
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-evenly",
+                  alignItems: "center",
+                  width: "100%",
+                  marginBottom: "20px",
+                  backgroundColor: "#eeeeee",
+                }}
+              >
+                <RegistInput type="text" placeholder="무통장입금" disabled />
+              </div>
               <RegistLabel>결제 상태 </RegistLabel>
-              <RegistInput
-                type="text"
-                placeholder={`${li.payStatus}${
-                  li.payStatus === "입금대기"
-                    ? ": 우리은행 예금주 이광자 124-233998-12-601"
-                    : ""
-                }`}
-                disabled
-                finished
-              />
-              {li.payStatus === "입금대기" ? (
-                <>
-                  <span style={{ marginBottom: "20px" }}>
-                    {AddDays(
-                      new Date(li.applyDate).toISOString().substring(0, 10),
-                      7,
-                    )
-                      .toISOString()
-                      .substring(0, 10)}{" "}
-                    까지 입금이 확인 되지 않는 경우 자동 취소됩니다.
-                  </span>
-                </>
-              ) : (
-                ""
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-evenly",
+                  alignItems: "center",
+                  width: "100%",
+                  marginBottom: "20px",
+                  backgroundColor: "#eeeeee",
+                }}
+              >
+                <RegistInput
+                  type="text"
+                  placeholder={`${li.payStatus}`}
+                  disabled
+                  finished
+                />
+
+                {(li?.payStatus === "결제완료" && li?.watched === 0) ||
+                  (li?.payStatus === "결제대기" && (
+                    <button
+                      style={{
+                        width: "80px",
+                        border: "none",
+                        backgroundColor: "#E96962",
+                        color: "white",
+                        padding: "5px 0px",
+                        borderRadius: "5px",
+                        height: "30px",
+                        fontWeight: "700",
+                        marginRight: "5px",
+                      }}
+                      onClick={() => {
+                        cancelPay(li.id);
+                      }}
+                    >
+                      취소
+                    </button>
+                  ))}
+
+                {li?.payStatus === "결제완료" && (
+                  <button
+                    style={{
+                      width: "40%",
+                      border: "none",
+                      backgroundColor: "#E96962",
+                      color: "white",
+                      padding: "5px 0px",
+                      borderRadius: "5px",
+                      height: "30px",
+                      fontWeight: "700",
+                      marginRight: "5px",
+                    }}
+                    onClick={() => {
+                      router.push("/mypage/delivery");
+                    }}
+                  >
+                    교재 배송지 입력
+                  </button>
+                )}
+              </div>
+              {li?.payStatus === "결제대기" && (
+                <div
+                  style={{
+                    marginBottom: "20px",
+                    width: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    fontSize: "14px",
+                  }}
+                >
+                  우리은행 예금주 이광자 124-233998-12-601
+                  <button
+                    onClick={(e) => handleCopyClipBoard(e)}
+                    style={{
+                      width: "12%",
+                      border: "none",
+                      backgroundColor: "#E96962",
+                      color: "white",
+                      padding: "5px 0px",
+                      borderRadius: "5px",
+                      height: "30px",
+                      fontWeight: "700",
+                      fontSize: "14px",
+                    }}
+                  >
+                    복사
+                  </button>
+                </div>
+              )}
+
+              {li.payStatus === "결제대기" && (
+                <span style={{ marginBottom: "20px", fontSize: "14px" }}>
+                  {AddDays(
+                    new Date(li.createdAt).toISOString().substring(0, 10),
+                    7,
+                  )
+                    .toISOString()
+                    .substring(0, 10)}{" "}
+                  까지 입금이 확인 되지 않는 경우 자동 취소됩니다.
+                </span>
               )}
             </Fragment>
-          ))
-        )}
+          ))}
 
         <TitleContainer>문의 사항</TitleContainer>
         <Divider />
@@ -307,16 +442,6 @@ export default function MyPage() {
         <PriceContainer>
           <div>결제, 환불, 서비스 이용 관련해서는 메일로 문의 주세요.</div>
           <div>raditech.campus@gmail.com </div>
-          {/* <div
-            style={{
-              color: "red",
-              fontSize: "14px",
-              fontWeight: "bold",
-              marginTop: "20px",
-            }}
-          >
-            *유료서비스를 이용하지 않았을 경우 환불 가능합니다.
-          </div> */}
         </PriceContainer>
       </InputsContainer>
     </SignInContainer>

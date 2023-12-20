@@ -12,7 +12,7 @@ const TextContainer = styled.div`
   z-index: 10;
   color: white;
   font-weight: 600;
-  @media (max-width: 620px) {
+  @media (max-width: 650px) {
     width: 100px;
     font-size: 10px;
     padding: 2px;

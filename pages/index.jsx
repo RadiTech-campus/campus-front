@@ -23,14 +23,12 @@ import { useAuth } from "../hooks/useAuth";
 import { getDateDiff } from "../libs/date";
 import { canclePayment } from "../api/contents_api";
 import { useIsMobile } from "../hooks/useIsMobile";
+import LectureListBox from "../components/lecturelist_box";
+import LectureList4Box from "../components/lecturelist_4box";
+import LectureListMobile from "../components/lecturelist_mobile";
+import { useGetLecturesByContentId } from "../query/new/queries";
 
 const IndexContainer = styled.div``;
-// const SwiperPagiContainer = styled.div`
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   margin-top: 5px;
-// `;
 
 export default function Index() {
   const auth = useAuth();
@@ -73,189 +71,226 @@ export default function Index() {
       }
     }
   }, [data2]);
+
+  // 이하 개편 영역
   const isMobile = useIsMobile();
+
+  const { data: lecturesData } = useGetLecturesByContentId(11);
+  const lectureData = useMemo(() => lecturesData || [], [lecturesData]);
+
+  const { data: freeLecturesData } = useGetLecturesByContentId(12);
+  const freeLectureData = useMemo(
+    () => freeLecturesData || [],
+    [freeLecturesData],
+  );
+
+  const { data: hosData } = useGetLecturesByContentId(5);
+  const hospitalData = useMemo(() => hosData || [], [hosData]);
 
   return (
     <IndexContainer>
-      <Swiper
-        modules={[
-          Navigation,
-          Pagination,
-          Scrollbar,
-          A11y,
-          EffectFade,
-          Autoplay,
-        ]}
-        // spaceBetween={50}
-        slidesPerView={1}
-        // navigation
-        pagination={{ clickable: true }}
-        autoplay={{
-          delay: 4000,
-          disableOnInteraction: false,
-        }}
-        effect={"fade"}
-        style={{
-          "--swiper-pagination-color": "#0422627d",
-          "--swiper-pagination-bullet-inactive-color": "#9999998d",
-          "--swiper-pagination-bullet-inactive-opacity": "1",
-          "--swiper-pagination-bullet-size": "12px",
-          "--swiper-pagination-bullet-horizontal-gap": "10px",
-        }}
-        // scrollbar={{ draggable: true }}
-        // onSwiper={(swiper) => console.log(swiper)}
-        // onSlideChange={() => console.log("slide change")}
-      >
-        {isMobile ? (
+      {isMobile && (
+        <Swiper
+          modules={[
+            Navigation,
+            Pagination,
+            Scrollbar,
+            A11y,
+            EffectFade,
+            Autoplay,
+          ]}
+          // spaceBetween={50}
+          slidesPerView={1}
+          // navigation
+          pagination={{ clickable: true }}
+          autoplay={{
+            delay: 4000,
+            disableOnInteraction: false,
+          }}
+          effect={"fade"}
+          style={{
+            "--swiper-pagination-color": "#0422627d",
+            "--swiper-pagination-bullet-inactive-color": "#9999998d",
+            "--swiper-pagination-bullet-inactive-opacity": "1",
+            "--swiper-pagination-bullet-size": "8px",
+            "--swiper-pagination-bullet-horizontal-gap": "5px",
+            paddingBottom: "30px",
+          }}
+        >
           <SwiperSlide>
             <img
-              src={"1111.png"}
+              src={"/mainbanner/mobile/1.png"}
               alt="레디테크 캠퍼스"
               style={{
                 width: "100%",
               }}
             />
           </SwiperSlide>
-        ) : (
+          <SwiperSlide>
+            <img
+              src={"/mainbanner/mobile/2.png"}
+              alt="레디테크 캠퍼스"
+              style={{
+                width: "100%",
+              }}
+            />
+          </SwiperSlide>
+        </Swiper>
+      )}
+
+      {!isMobile && (
+        <Swiper
+          modules={[
+            Navigation,
+            Pagination,
+            Scrollbar,
+            A11y,
+            EffectFade,
+            Autoplay,
+          ]}
+          // spaceBetween={50}
+          slidesPerView={1}
+          // navigation
+          pagination={{ clickable: true }}
+          autoplay={{
+            delay: 4000,
+            disableOnInteraction: false,
+          }}
+          effect={"fade"}
+          style={{
+            "--swiper-pagination-color": "#0422627d",
+            "--swiper-pagination-bullet-inactive-color": "#9999998d",
+            "--swiper-pagination-bullet-inactive-opacity": "1",
+            "--swiper-pagination-bullet-size": "15px",
+            "--swiper-pagination-bullet-horizontal-gap": "5px",
+            paddingBottom: "40px",
+            marginTop: "100px",
+          }}
+        >
           <SwiperSlide
             style={{
               width: "1160px",
               height: "450px",
-              backgroundColor: "#030712",
+              display: "flex",
+              justifyContent: "center",
             }}
           >
             <Image
-              src={"1.png"}
+              src={"/mainbanner/pc/001.png"}
               alt="레디테크 캠퍼스"
-              style={{ objectFit: "contain" }}
               fill
+              sizes="100vw"
+              style={{
+                objectFit: "cover",
+              }}
             />
           </SwiperSlide>
+          <SwiperSlide
+            style={{
+              height: "450px",
+              width: "1160px",
+            }}
+          >
+            <Image
+              src={"/mainbanner/pc/002.png"}
+              alt="레디테크 캠퍼스"
+              fill
+              sizes="100vw"
+              style={{
+                objectFit: "cover",
+              }}
+            />
+          </SwiperSlide>
+        </Swiper>
+      )}
+      <LectureListMobile
+        mainTitle="big5 취업트레이닝 ✍️"
+        classData={lectureData}
+      />
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        {isMobile ? (
+          <img
+            src="/mainbanner/mobile/main1.png"
+            alt="line"
+            style={{ width: "100%" }}
+          />
+        ) : (
+          <></>
+          // <img src="/jobbanner.png" alt="line" style={{ width: "1160px" }} />
         )}
+      </div>
 
-        {/* <SwiperSlide
-          style={{
-            width: "1160px",
-            height: "450px",
-            backgroundColor: "#000F2A",
-          }}
-        >
-          <Image
-            src="/2.png"
-            alt="레디테크 캠퍼스"
-            style={{ objectFit: "contain" }}
-            fill
-          />
-        </SwiperSlide> */}
-        {/* <SwiperSlide style={{ width: "100%", height: "450px" }}>
-          <Image
-            src="/2.png"
-            alt="레디테크 캠퍼스"
-            style={{ objectFit: "fill" }}
-            fill
-          />
-        </SwiperSlide>
-        <SwiperSlide style={{ width: "100%", height: "450px" }}>
-          <Image
-            src="/3.png"
-            alt="레디테크 캠퍼스"
-            style={{ objectFit: "fill" }}
-            fill
-          />
-        </SwiperSlide>
-        <SwiperSlide style={{ width: "100%", height: "450px" }}>
-          <Image
-            src="/4.png"
-            alt="레디테크 캠퍼스"
-            style={{ objectFit: "fill" }}
-            fill
-          />
-        </SwiperSlide> */}
-        {/* <SwiperSlide style={{ width: "100%", height: "450px" }}>
-          <Image
-            src="/swi.png"
-            alt="레디테크 캠퍼스"
-            style={{ objectFit: "fill" }}
-            fill
-          />
-        </SwiperSlide>
-        <SwiperSlide style={{ width: "100%", height: "350px" }}>
-          <Image
-            src="/swi2.png"
-            alt="레디테크 캠퍼스"
-            style={{ objectFit: "contain" }}
-            fill
-          />
-        </SwiperSlide>
-        <SwiperSlide style={{ width: "100%", height: "350px" }}>
-          <Image
-            src="/swi3.png"
-            alt="레디테크 캠퍼스"
-            style={{ objectFit: "contain" }}
-            fill
-          />
-        </SwiperSlide>
-        <SwiperSlide style={{ width: "100%", height: "350px" }}>
-          <Image
-            src="/swi.png"
-            alt="레디테크 캠퍼스"
-            style={{ objectFit: "contain" }}
-            fill
-          />
-        </SwiperSlide> */}
-        {/* <SwiperSlide style={{ width: "100%", height: "350px" }}>
-          <Image
-            src="/swi.png"
-            alt="레디테크 캠퍼스"
-            style={{ objectFit: "contain" }}
-            fill
-          />
-        </SwiperSlide> */}
-      </Swiper>
-
-      <LectureList
-        category="자체 제작"
-        mainTitle="레디테크 모의고사"
-        classData={data
-          ?.filter((li) => li.firstCat === "미니모의고사" && li.pay === "무료")
-          .sort((a, b) => (a.code > b.code ? 1 : -1))}
-      />
-      <LectureList
-        category="무료 특강"
-        mainTitle="3개년 기출 풀이"
-        classData={[...periodData, ...nonPeriodData]}
-      />
-      <LectureList
-        category="기간 한정 이벤트"
-        mainTitle="무료 인강 & 요약 자료"
-        classData={data
-          ?.filter((li) => li.pay === "무료" && li.firstCat === "일반강의")
-          .sort((a, b) => (a.code > b.code ? 1 : -1))}
-      />
-      <LectureList
-        category="방사선사 국가고시"
-        mainTitle="촉박한 시간, 방대한 시험범위, 한번에 해결!"
-        // description="어려운 실기를 가장 효과적으로 공부하기 !"
-        classData={data
-          ?.filter((li) => li.firstCat === "일반강의" && li.pay === "유료")
-          .sort((a, b) => (a.code > b.code ? 1 : -1))}
-      />
-      <LectureList
-        category="Big5 자소서 및 면접"
-        mainTitle="Big5 취업까지 한번에 합격하기"
-        // description="취업 가즈아 !"
-        classData={data
-          ?.filter((li) => li.firstCat === "취업" && li.pay === "유료")
-          .sort((a, b) => (a.code > b.code ? 1 : -1))}
-      />
-      <LectureList
+      <LectureList4Box
         category="BIG5 대학병원 핵심 분석"
-        mainTitle="대학병원 핵심 정보 한번에 알아보기"
-        // description="취업 가즈아 !"
-        classData={data
-          ?.filter((li) => li.firstCat === "병원" && li.pay === "유료")
-          .sort((a, b) => (a.code > b.code ? 1 : -1))}
+        mainTitle="대학병원 핵심 정보 분석 🥇"
+        classData={hospitalData}
       />
+      <LectureListMobile
+        mainTitle="무료 요약 자료 및 해설 강의 ✍️"
+        classData={freeLectureData}
+      />
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        {isMobile ? (
+          <img
+            src="/mainbanner/mobile/main2.png"
+            alt="line"
+            style={{ width: "100%" }}
+          />
+        ) : (
+          <></>
+          // <img src="/pass.png" alt="line" style={{ width: "1160px" }} />
+        )}
+      </div>
+      <LectureListBox mainTitle="레디테크 모의고사 무료 제공중 ✨" />
+      {/* </>
+      )} */}
+
+      {/* {!isMobile && (
+        <>
+          <LectureList
+            category="자체 제작"
+            mainTitle="레디테크 모의고사 무료 제공중 ✨"
+            classData={data
+              ?.filter(
+                (li) => li.firstCat === "미니모의고사" && li.pay === "무료",
+              )
+              .sort((a, b) => (a.code > b.code ? 1 : -1))}
+          />
+          <LectureList
+            category="무료 특강"
+            mainTitle="3개년 기출 풀이"
+            classData={[...periodData, ...nonPeriodData]}
+          />
+          <LectureList
+            category="기간 한정 이벤트"
+            mainTitle="무료 요약 자료 및 해설 강의 ✍️"
+            classData={data
+              ?.filter((li) => li.pay === "무료" && li.firstCat === "일반강의")
+              .sort((a, b) => (a.code > b.code ? 1 : -1))}
+          />
+          <LectureList
+            category="방사선사 국가고시"
+            mainTitle="촉박한 시간, 방대한 시험범위, 한번에 해결!"
+            classData={data
+              ?.filter((li) => li.firstCat === "일반강의" && li.pay === "유료")
+              .sort((a, b) => (a.code > b.code ? 1 : -1))}
+          />
+          <LectureList
+            category="Big5 자소서 및 면접"
+            mainTitle="Big5 취업까지 한번에 합격하기"
+            classData={data
+              ?.filter((li) => li.firstCat === "취업" && li.pay === "유료")
+              .sort((a, b) => (a.code > b.code ? 1 : -1))}
+          />
+          <LectureList
+            category="BIG5 대학병원 핵심 분석"
+            mainTitle="대학병원 핵심 정보 분석 🥇"
+            classData={data
+              ?.filter((li) => li.firstCat === "병원" && li.pay === "유료")
+              .sort((a, b) => (a.code > b.code ? 1 : -1))}
+          />
+        </>
+      )} */}
     </IndexContainer>
   );
 }

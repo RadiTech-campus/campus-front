@@ -3,17 +3,9 @@ import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import Modal from "../../components/modal/Modal";
-import {
-  useCreatePayment,
-  useGetAUniv,
-  useGetPayment,
-  useGetPayments,
-  useGetProduct,
-  useGetProducts,
-} from "../../query/contents";
 import { AddDays } from "../../libs/date";
-import { canclePayment } from "../../api/contents_api";
-import { LineWave, ThreeDots } from "react-loader-spinner";
+import { useCreateAPayment, useGetAllProduct } from "../../query/new/queries";
+import { ThreeDots } from "react-loader-spinner";
 
 const ClassText = styled.div`
   position: absolute;
@@ -71,7 +63,7 @@ const TitleContainer = styled.div`
   padding: 20px 0px;
   width: 440px;
   margin: 0px auto;
-  @media (max-width: 620px) {
+  @media (max-width: 650px) {
     display: none;
   }
 `;
@@ -80,17 +72,6 @@ const InputsContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-`;
-const PeriodContainer = styled.div`
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  margin-bottom: 20px;
-  margin-top: 5px;
-`;
-const PeriodLabel = styled.label`
-  width: 40%;
-  margin: 3px 0px;
 `;
 
 const PriceContainer = styled.div`
@@ -171,58 +152,23 @@ const ModalContent = styled.div`
   margin-bottom: 10px;
 `;
 
-const periods = ["03", "06", "12"];
 export default function SignUp() {
   const auth = useAuth();
   const router = useRouter();
 
   const [inputs, setInputs] = useState({
-    userId: "",
-    password: "",
-    confirmPassword: "",
     email: "",
-    code: "",
     userName: "",
     phoneNumber: "",
   });
 
-  const {
-    userId,
-    password,
-    confirmPassword,
-    email,
-    code,
-    userName,
-    phoneNumber,
-  } = inputs;
+  const { email, userName, phoneNumber } = inputs;
 
-  const onChange = (e) => {
-    const { name, value } = e.target;
-    const nextInputs = {
-      ...inputs,
-      [name]: value,
-    };
-
-    setInputs(nextInputs);
-  };
-
-  const onReset = () => {
-    setInputs({
-      userId: "",
-      password: "",
-      confirmPassword: "",
-      email: "",
-      code: "",
-      userName: "",
-      phoneNumber: "",
-    });
-  };
   useEffect(() => {
     if (auth.isAuthenticated) {
       setInputs({
-        ...inputs,
-        userName: auth.userName,
         email: auth.useremail,
+        userName: auth.userName,
         phoneNumber: auth.userPhone,
       });
     } else {
@@ -235,96 +181,28 @@ export default function SignUp() {
     setIsOpen(true);
   };
 
-  const { data: aUnivData, isLoading: aUnivIsLoading } = useGetAUniv(
-    email.substring(email.indexOf("@") + 1),
-  );
-  const data = useMemo(() => aUnivData?.Item || [], [email, aUnivData, inputs]);
-  const { data: productsData, isLoading: productsIsLoading } = useGetProducts();
-  const data3 = useMemo(() => productsData?.Items || [], [productsData]);
-  const [Selected, setSelected] = useState("C_B11_06");
+  const [Selected, setSelected] = useState(4);
   const handleSelect = (e) => {
-    setSelected(e.target.value);
+    setSelected(Number(e.target.value));
   };
-  const { data: productData, isLoading: productIsLoading } =
-    useGetProduct(Selected);
-  const data2 = useMemo(() => productData?.Item || [], [Selected, productData]);
 
-  const { data: paymentDate, paymentsIsLoading } = useGetPayments();
-  const payCounts = useMemo(() => paymentDate?.Count || 0, [paymentDate]);
-
-  const { data: paymentData, paymentIsLoading } = useGetPayment(auth.username);
-  const data4 = useMemo(() => paymentData?.Items || [], [auth, paymentData]);
-  const mutate = useCreatePayment({
-    id: (10000 + payCounts).toString(),
-    applyDate: new Date(),
-    price:
-      data.length < 1
-        ? data2.price
-        : data2.price - data2.price * (data.discount / 100),
-    productCode: data2?.productCode,
-    productTitle: data2?.productTitle,
-    userId: auth.username,
-    watched: 0,
-  });
+  const { mutate: paymentMutate } = useCreateAPayment(auth.username, Selected);
   const onSubmit = (e) => {
     e.preventDefault();
-    // 개별과목 입금대기 상태일때 & 올패스 신청시
-    // if (
-    //   data4.filter(
-    //     (li) => li.productCode.includes("C") && li.payStatus === "입금대기",
-    //   ).length > 0 &&
-    //   Selected.includes("A")
-    // ) {
-    //   for (
-    //     let i = 0;
-    //     i <
-    //     data4.filter(
-    //       (li) => li.productCode.includes("C") && li.payStatus === "입금대기",
-    //     ).length;
-    //     i++
-    //   ) {
-    //     canclePayment({
-    //       id: data4.filter(
-    //         (li) => li.productCode.includes("C") && li.payStatus === "입금대기",
-    //       )[i].id,
-    //     });
-    //   }
-    //   mutate.mutateAsync();
-    //   handleOpenModal();
-    // } else if (
-    //   // "개별과목 입금대기 상태일때 & 개별과목 신청시 -> 같은과목 신청이면 중복 얼럿, 아니면 그냥 신청"
-    //   data4.filter(
-    //     (li) =>
-    //       li.productCode.includes("C") &&
-    //       (li.payStatus === "입금대기" || li.payStatus === "결제완료") &&
-    //       li.productCode.includes(Selected.substring(0, 5)),
-    //   ).length > 0 &&
-    //   !Selected.includes("A")
-    // ) {
-    //   alert("이미 수강신청된 강의 입니다.");
-    // } else if (
-    //   data4.filter(
-    //     (li) => li.productCode.includes("A") && li.payStatus === "입금대기",
-    //   ).length > 0
-    // ) {
-    //   alert("All Pass 강의를 취소후에 신청 가능합니다.");
-    //   router.push("/mypage");
-    // } else {
-    //   mutate.mutateAsync();
-    //   handleOpenModal();
-    // }
+    paymentMutate();
+    handleOpenModal();
   };
 
   const handleCopyClipBoard = async (e) => {
     e.preventDefault();
-    // try {
     await navigator.clipboard.writeText("124-233998-12-601");
     alert("계좌번호가 복사 되었습니다");
-    // } catch (error) {
-    // console.log("e", error);
-    // alert("복사를 실패했습니다!");
-    // }
   };
+
+  // 이하 개편
+  const { data: productDatas, isLoading: productDatasIsLoading } =
+    useGetAllProduct();
+
   return (
     <SignUpContainer>
       {isOpen && (
@@ -338,9 +216,8 @@ export default function SignUp() {
           <>
             <ModalTitle>주문 확정 안내</ModalTitle>
             <ModalContent>
-              {data2.price - data2.price * (data.discount / 100) === 0
-                ? "RadiTech-campus를 바로 사용하실 수 있습니다. 국시 합격을 기원합니다"
-                : "결제 확인 후 서비스 이용 가능합니다. 확인까지 영업일 3일 정도 소요되며 주문이 확정되면 문자/메일 안내가 갈 예정입니다"}
+              결제 확인 후 서비스 이용 가능합니다. 확인까지 영업일 3일 정도
+              소요되며 주문이 확정되면 문자/메일 안내가 갈 예정입니다
             </ModalContent>
           </>
         </Modal>
@@ -352,7 +229,7 @@ export default function SignUp() {
             <ClassText>수강정보</ClassText>
             <Divider />
             <RegistLabel>강의명</RegistLabel>
-            {productsIsLoading ? (
+            {productDatasIsLoading ? (
               <ThreeDots
                 height="28"
                 width="28"
@@ -365,16 +242,13 @@ export default function SignUp() {
               />
             ) : (
               <RegistSelect onChange={handleSelect} value={Selected}>
-                {/* {data3 &&
-                  data3.length > 0 &&
-                  data3
-                    .sort((a, b) => (a.productCode > b.productCode ? 1 : -1))
-                    .map((li, i) => (
-                      <option key={i} value={li.productCode}>
-                        {li.productTitle}
-                      </option>
-                    ))} */}
-                <option>2024 강의를 준비중입니다.</option>
+                {productDatas &&
+                  productDatas.length > 0 &&
+                  productDatas.map((li, i) => (
+                    <option key={i} value={li.id}>
+                      {li.productTitle}
+                    </option>
+                  ))}
               </RegistSelect>
             )}
             <UserText>구매자 정보</UserText>
@@ -390,79 +264,26 @@ export default function SignUp() {
             <RegistInput type="email" disabled value={email} />
             <RegistLabel>휴대번호</RegistLabel>
             <RegistInput type="number" disabled value={phoneNumber} />
-            <PriceText up={data.discount === 0}>가격 정보</PriceText>
+            <PriceText up>가격 정보</PriceText>
             <Divider />
-            {/* {data && data.discount > 0 ? (
-              <>
-                <PriceContainer>
-                  <PriceTitle>할인율</PriceTitle>
-                  <PriceDetail>
-                    <PriceContent>
-                      {aUnivIsLoading ? (
-                        <ThreeDots
-                          height="28"
-                          width="28"
-                          radius="9"
-                          color="#7100a6"
-                          ariaLabel="three-dots-loading"
-                          wrapperStyle={{}}
-                          wrapperClassName=""
-                          visible={true}
-                        />
-                      ) : (
-                        `${data?.discount} % ${data?.name} MOU 체결`
-                      )}
-                    </PriceContent>
-                  </PriceDetail>
-                </PriceContainer>
-                <PriceContainer>
-                  <PriceTitle>가격</PriceTitle>
-                  <PriceDetail>
-                    {aUnivIsLoading || productsIsLoading || productIsLoading ? (
-                      <ThreeDots
-                        height="28"
-                        width="28"
-                        radius="9"
-                        color="#7100a6"
-                        ariaLabel="three-dots-loading"
-                        wrapperStyle={{}}
-                        wrapperClassName=""
-                        visible={true}
-                      />
-                    ) : (
-                      <>
-                        <PriceContent canceled>{data2?.price} 원</PriceContent>
-                        <PriceContent>{"->"}</PriceContent>
-                        <PriceContent bolded finalPrice>
-                          {(data &&
-                            data2 &&
-                            data2.price -
-                              data2.price * (data.discount / 100)) === null
-                            ? 0
-                            : data2.price -
-                              data2.price * (data.discount / 100)}{" "}
-                          원
-                        </PriceContent>
-                      </>
-                    )}
-                  </PriceDetail>
-                </PriceContainer>
-              </>
-            ) : (
-              <PriceContainer>
-                <PriceTitle>가격</PriceTitle>
-                <PriceDetail>
-                  <PriceContent>{data2?.price} 원</PriceContent>
-                </PriceDetail>
-              </PriceContainer>
-            )} */}
-            2024 강의를 준비중 입니다.
-            <PayText discount={data.discount === 0}>결제 방법</PayText>
+
+            <PriceContainer>
+              <PriceTitle>가격</PriceTitle>
+              <PriceDetail>
+                <PriceContent>
+                  {productDatas &&
+                    productDatas.length > 0 &&
+                    productDatas.find((li) => li.id === Selected).price}
+                  원
+                </PriceContent>
+              </PriceDetail>
+            </PriceContainer>
+            <PayText discount>결제 방법</PayText>
+
             <Divider />
             <PriceContainer>
               <PriceTitle>결제기한</PriceTitle>
               <PriceDetail>
-                {/* <PriceContent>2023.2.2 까지</PriceContent> */}
                 <PriceContent>
                   {AddDays(new Date().toISOString().substring(0, 10), 7)
                     .toISOString()

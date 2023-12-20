@@ -73,6 +73,14 @@ export async function upWatchedPayment(idWatched) {
   return data;
 }
 
+export async function updatePayStatus(payStatus) {
+  const { data } = await axios.put(
+    `${process.env.NEXT_PUBLIC_REACT_APP_API_END_POINT}/payment/paystatus`,
+    payStatus,
+  );
+  return data;
+}
+
 // export async function CreateBulkProduct(
 //   companyId: any,
 //   productsdata: any,

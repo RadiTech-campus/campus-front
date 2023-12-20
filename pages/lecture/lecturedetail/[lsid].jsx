@@ -59,11 +59,6 @@ const ModalTitle = styled.div`
   text-align: center;
   margin-bottom: 10px;
 `;
-const ModalContent = styled.div`
-  font-size: 15px;
-  text-align: center;
-  margin-bottom: 10px;
-`;
 
 export default function LectureDetail() {
   const auth = useAuth();
@@ -141,7 +136,7 @@ export default function LectureDetail() {
           }}
         >
           <>
-            <ModalTitle>{"수강신청이 필요한 서비스 입니다.."}</ModalTitle>
+            <ModalTitle>{"수강신청이 필요한 서비스 입니다."}</ModalTitle>
           </>
         </Modal>
       )}

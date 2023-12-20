@@ -6,12 +6,10 @@ import { useIsMobile } from "../../hooks/useIsMobile";
 import Countdown from "../timer";
 
 const LectureListContainer = styled.div`
-  @media (max-width: 620px) {
-    /* width: 620px; */
+  @media (max-width: 650px) {
     width: 100%;
-    margin: 0 auto;
   }
-  margin: 15px auto;
+  margin: 0px auto;
   width: 1160px;
 `;
 
@@ -20,80 +18,95 @@ const TitleContainer = styled.div`
   flex-direction: column;
   padding: 10px 20px 0px;
   margin-top: 20px;
+  @media (max-width: 650px) {
+    padding: 5px 15px;
+    margin: 0;
+  }
 `;
 
 const Category = styled.div`
   font-size: 16px;
   font-weight: bold;
   color: rgb(237, 35, 75);
-  @media (max-width: 620px) {
-    font-size: 14px;
+  @media (max-width: 650px) {
+    display: none;
   }
 `;
 const MainTitle = styled.div`
   font-size: 24px;
   font-weight: bold;
   margin-top: 10px;
-  @media (max-width: 620px) {
-    font-size: 20px;
+  @media (max-width: 650px) {
+    font-size: 3.5vw;
+    color: #0b0d0f;
+    font-weight: 700;
+    letter-spacing: -3%;
+    margin-top: 0px;
   }
 `;
 const Description = styled.div`
+  @media (max-width: 650px) {
+    padding: 0;
+    margin: 0;
+  }
   font-size: 16px;
   margin-top: 10px;
   margin-left: 10px;
 `;
 
 const ClassCardsContainer = styled.div`
-  @media (max-width: 620px) {
-    justify-content: start;
+  @media (max-width: 650px) {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow: scroll;
+    ::-webkit-scrollbar {
+      display: none;
+    }
   }
   padding: 0px 0px 20px;
   display: flex;
   flex-wrap: wrap;
-  /* justify-content: space-evenly; */
+`;
+const ClassCard = styled.div`
+  margin: 10px;
+  width: 29%;
+  text-decoration: none;
+  border-radius: 10px;
+  @media (max-width: 650px) {
+    box-shadow: 0 0 10px 0 rgb(0 0 0 / 20%);
+    border-radius: 20px;
+    width: 35%;
+    flex: 0 0 auto;
+    margin: 0 0 0 10px;
+  }
   a {
-    @media (max-width: 620px) {
-      justify-content: space-around;
-      width: 45%;
-      margin: 10px 5px 5px 10px;
-      padding: 0px;
-      /* background-color: green; */
+    @media (max-width: 650px) {
     }
     text-decoration: none;
     border-radius: 10px;
-    padding: 10px;
-    margin: 10px;
-    width: 29%;
-  }
-`;
-const ClassCard = styled.div`
-  @media (max-width: 620px) {
-    width: 100%;
-    margin: 0 auto;
-    /* background-color: red; */
   }
 `;
 const ClassImage = styled.div`
-  @media (max-width: 620px) {
-    height: 100px;
+  @media (max-width: 650px) {
   }
   height: 180px;
   position: relative;
   > img {
-    @media (max-width: 620px) {
-      border-radius: 5px;
+    @media (max-width: 650px) {
+      border-radius: 20px 20px 0 0;
+      width: 100%;
     }
     border-radius: 10px;
   }
 `;
 const ClassTitle = styled.div`
-  /* text-align: center; */
-  @media (max-width: 620px) {
-    font-size: 18px;
-    margin: 0px 0px 0px 0px;
-    padding: 10px 5px 0px;
-    /* background-color: red; */
+  @media (max-width: 650px) {
+    font-size: 3.2vw;
+    font-weight: 700;
+    padding: 0 0 0 10px;
+    margin: 5px 0 3px 0;
+    /* line-height: 28.96px; */
+    color: #0b0d0f;
   }
   font-size: 20px;
   font-weight: 600;
@@ -103,26 +116,23 @@ const ClassTitle = styled.div`
 `;
 
 const ClassDesc = styled.div`
-  /* text-align: center; */
-  font-size: 16px;
-  @media (max-width: 620px) {
-    font-size: 14px;
-    /* display: none; */
-    width: 100%;
-    padding: 10px 5px;
-    line-height: 140%;
+  @media (max-width: 650px) {
+    font-size: 3vw;
+    font-weight: 700;
+    padding: 0 0 0 10px;
+    margin: 0 0 10px 0;
+    /* line-height: 26.06px; */
+    color: #818181;
   }
-  /* font-weight: bold; */
+  font-size: 16px;
   padding: 10px 5px 0px;
   color: #888888c1;
   margin: 5px 0px 0px 0px;
 `;
 
 const ClassTags = styled.div`
-  @media (max-width: 620px) {
-    /* display: none; */
-    padding: 0px 5px 0px;
-    margin-top: 0px;
+  @media (max-width: 650px) {
+    display: none;
   }
   font-size: 16px;
   margin-top: 10px;
@@ -132,7 +142,7 @@ const ClassTags = styled.div`
 `;
 
 const ClassTag = styled.span`
-  @media (max-width: 620px) {
+  @media (max-width: 650px) {
     font-size: 12px;
     margin-top: 10px;
   }
@@ -150,55 +160,49 @@ export default function LectureList({
   classData,
 }) {
   const isMobile = useIsMobile();
-
   return (
     <LectureListContainer>
-      {/* <UserContent> */}
       <TitleContainer>
         <Category>{category}</Category>
         <MainTitle>{mainTitle}</MainTitle>
         <Description>{description}</Description>
       </TitleContainer>
-
       <ClassCardsContainer>
         {classData?.map((li, i) => (
           <Fragment key={i}>
-            <Link
-              href={{
-                pathname: `/lecture/${li.code}`,
-                query: { classtype: "강의", title: li.secondCat },
-              }}
-            >
-              <ClassCard>
-                {li.pay === "기간" && (
-                  <Countdown targetDate={li.startDate} endDate={li.endDate} />
-                )}
-
-                <ClassImage>
-                  {isMobile ? (
-                    <img
-                      src={`https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/contents/${li.code}.jpeg`}
-                      alt={li.secondCat}
-                      style={{ width: "100%" }}
-                    />
-                  ) : (
+            <ClassCard>
+              {li.pay === "기간" && (
+                <Countdown targetDate={li.startDate} endDate={li.endDate} />
+              )}
+              <Link
+                href={{
+                  pathname: `/lecture/${li.code}`,
+                  query: { classtype: "강의", title: li.secondCat },
+                }}
+              >
+                {isMobile ? (
+                  <img
+                    src={`https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/contents/${li.code}.jpeg`}
+                    // src={`Rectangle.png`}
+                    alt={li.secondCat}
+                    style={{ width: "100%", borderRadius: "20px 20px 0 0" }}
+                  />
+                ) : (
+                  <ClassImage>
                     <Image
                       src={`https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/contents/${li.code}.jpeg`}
                       alt={li.secondCat}
-                      // width={30}
-                      // height={30}
                       style={{ objectFit: "cover" }}
                       fill
-                      //   style={{ borderRadius: "50%", marginRight: "5px" }}
                     />
-                  )}
-
-                  {/* {li.thumbnail} */}
-                </ClassImage>
+                  </ClassImage>
+                )}
                 <ClassTitle>
                   {isMobile ? (
                     <div key={i} style={{ marginBottom: "3px" }}>
+                      {/* <div key={i}> */}
                       {li.secondCat?.split("!")[0]}
+                      {/* 혈관조영 */}
                     </div>
                   ) : (
                     li.secondCat?.split("!").map((li, i) => (
@@ -210,6 +214,7 @@ export default function LectureList({
                   )}
                 </ClassTitle>
                 <ClassDesc>{li?.iDescription}</ClassDesc>
+                {/* <ClassDesc>비혈관계 중재적시술</ClassDesc> */}
                 <ClassTags>
                   {li?.iTags?.split(" ").map((li, i) =>
                     i === 0 || i === 1 ? (
@@ -227,9 +232,8 @@ export default function LectureList({
                     ),
                   )}
                 </ClassTags>
-                {/* <ClassContent>{li.content}</ClassContent> */}
-              </ClassCard>
-            </Link>
+              </Link>
+            </ClassCard>
             {li.code === "C_B01_P" ||
             li.code === "C_B02_P" ||
             li.code === "C_B03_P" ||
@@ -239,38 +243,35 @@ export default function LectureList({
             li.code === "C_B07_P" ||
             li.code === "C_B08_P" ||
             li.code === "C_B09_P" ? (
-              <Link
-                href={{
-                  pathname: `/lecture/${li.code}`,
-                  query: { classtype: "기출", title: li.secondCat },
-                }}
-              >
-                <ClassCard>
-                  <ClassImage>
-                    {isMobile ? (
-                      <img
-                        src={`https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/contents/${li.code}_G.jpeg`}
-                        alt="레디테크 캠퍼스"
-                        style={{ width: "100%" }}
-                      />
-                    ) : (
+              <ClassCard>
+                <Link
+                  href={{
+                    pathname: `/lecture/${li.code}`,
+                    query: { classtype: "기출", title: li.secondCat },
+                  }}
+                >
+                  {isMobile ? (
+                    <img
+                      src={`https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/contents/${li.code}_G.jpeg`}
+                      // src={`Rectangle.png`}
+                      alt="레디테크 캠퍼스"
+                      style={{ width: "100%", borderRadius: "20px 20px 0 0" }}
+                    />
+                  ) : (
+                    <ClassImage>
                       <Image
                         src={`https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/contents/${li.code}_G.jpeg`}
                         alt="레디테크 캠퍼스"
-                        // width={30}
-                        // height={30}
                         style={{ objectFit: "cover" }}
                         fill
-                        //   style={{ borderRadius: "50%", marginRight: "5px" }}
                       />
-                    )}
-
-                    {/* {li.thumbnail} */}
-                  </ClassImage>
+                    </ClassImage>
+                  )}
                   <ClassTitle>
                     {isMobile ? (
                       <div style={{ marginBottom: "3px" }}>
                         {li.gTitle?.split("!")[0]}
+                        {/* 혈관조영 */}
                       </div>
                     ) : (
                       li.gTitle?.split("!").map((li, i) => (
@@ -282,7 +283,8 @@ export default function LectureList({
                     )}
                   </ClassTitle>
                   <ClassDesc>{li.gDescription}</ClassDesc>
-                  {/* <ClassContent>{li.content}</ClassContent> */}
+                  {/* <ClassDesc>비혈관계 중재적시술</ClassDesc> */}
+
                   <ClassTags>
                     {li?.gTags?.split(" ").map((li, i) => (
                       <ClassTag
@@ -296,8 +298,8 @@ export default function LectureList({
                       </ClassTag>
                     ))}
                   </ClassTags>
-                </ClassCard>
-              </Link>
+                </Link>
+              </ClassCard>
             ) : null}
           </Fragment>
         ))}
