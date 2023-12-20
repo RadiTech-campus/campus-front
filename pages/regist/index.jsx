@@ -129,7 +129,7 @@ const RegistButton = styled.button`
   padding: 10px;
   font-size: 14px;
   font-weight: bold;
-  background-color: #a603a6;
+  background-color: #a2a2a2;
   color: white;
   cursor: pointer;
 `;
@@ -228,7 +228,6 @@ export default function SignUp() {
           <InputsContainer>
             <ClassText>수강정보</ClassText>
             <Divider />
-
             <RegistLabel>강의명</RegistLabel>
             {productDatasIsLoading ? (
               <ThreeDots
@@ -252,7 +251,6 @@ export default function SignUp() {
                   ))}
               </RegistSelect>
             )}
-
             <UserText>구매자 정보</UserText>
             <Divider />
             <RegistLabel>
@@ -262,13 +260,10 @@ export default function SignUp() {
               </span>{" "}
             </RegistLabel>
             <RegistInput type="text" disabled value={userName} />
-
             <RegistLabel>메일</RegistLabel>
             <RegistInput type="email" disabled value={email} />
-
             <RegistLabel>휴대번호</RegistLabel>
             <RegistInput type="number" disabled value={phoneNumber} />
-
             <PriceText up>가격 정보</PriceText>
             <Divider />
 
@@ -284,6 +279,7 @@ export default function SignUp() {
               </PriceDetail>
             </PriceContainer>
             <PayText discount>결제 방법</PayText>
+
             <Divider />
             <PriceContainer>
               <PriceTitle>결제기한</PriceTitle>
@@ -305,7 +301,6 @@ export default function SignUp() {
                 *기간내 미 결제시 수강신청이 취소됩니다
               </div>
             </PriceContainer>
-
             <PriceContainer>
               <PriceTitle>결제방법</PriceTitle>
               <div style={{ display: "flex", flexDirection: "column" }}>
@@ -338,7 +333,7 @@ export default function SignUp() {
               </div>
             </PriceContainer>
             {/* <RegistButton onClick={() => router.push("/verify")}> */}
-            <RegistButton>수강신청</RegistButton>
+            <RegistButton disabled>수강신청</RegistButton>
           </InputsContainer>
         </form>
       </RegistBox>
