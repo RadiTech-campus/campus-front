@@ -8,8 +8,9 @@ import { useGetLecturesByContentId } from "../../query/new/queries";
 const LectureListContainer = styled.div`
   @media (max-width: 650px) {
     width: 100%;
+    margin: 0px auto;
   }
-  margin: 0px auto;
+  margin: 100px auto 0px;
   width: 1160px;
 `;
 
@@ -152,39 +153,37 @@ export default function Job() {
   const { data: lecturesData } = useGetLecturesByContentId(11);
   const lectureData = useMemo(() => lecturesData || [], [lecturesData]);
   return (
-    <div style={{ marginTop: "100px" }}>
+    <LectureListContainer>
       {isMobile && (
         <img src="/gosi/gositop.png" alt="image" style={{ width: "100%" }} />
       )}
-      <LectureListContainer>
-        <TitleContainer>
-          <MainTitle>자소서, 면접, 대학정보 ✍️</MainTitle>
-          <Tags>
-            <Tag>전체강의</Tag>
-            <Tag>자소서/면접</Tag>
-            <Tag>대학정보</Tag>
-          </Tags>
-        </TitleContainer>
-        <ClassCardsContainer>
-          {lectureData?.map((li, i) => (
-            <ClassCard key={i}>
-              <Link
-                href={{
-                  pathname: `/lecture-new/${li.id}`,
-                }}
-              >
-                <img
-                  src={`${li.thumbnailURL}`}
-                  alt={li.description}
-                  style={{ width: "100%", borderRadius: "20px 20px 0 0" }}
-                />
-                <ClassTitle>{li.lectureTitle}</ClassTitle>
-                <ClassDesc>{li.description}</ClassDesc>
-              </Link>
-            </ClassCard>
-          ))}
-        </ClassCardsContainer>
-      </LectureListContainer>
-    </div>
+      <TitleContainer>
+        <MainTitle>자소서, 면접, 대학정보 ✍️</MainTitle>
+        <Tags>
+          <Tag>전체강의</Tag>
+          <Tag>자소서/면접</Tag>
+          <Tag>대학정보</Tag>
+        </Tags>
+      </TitleContainer>
+      <ClassCardsContainer>
+        {lectureData?.map((li, i) => (
+          <ClassCard key={i}>
+            <Link
+              href={{
+                pathname: `/lecture-new/${li.id}`,
+              }}
+            >
+              <img
+                src={`${li.thumbnailURL}`}
+                alt={li.description}
+                style={{ width: "100%", borderRadius: "20px 20px 0 0" }}
+              />
+              <ClassTitle>{li.lectureTitle}</ClassTitle>
+              <ClassDesc>{li.description}</ClassDesc>
+            </Link>
+          </ClassCard>
+        ))}
+      </ClassCardsContainer>
+    </LectureListContainer>
   );
 }

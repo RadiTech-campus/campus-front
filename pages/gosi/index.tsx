@@ -7,8 +7,9 @@ import { useGetLecturesByContentId } from "../../query/new/queries";
 const LectureListContainer = styled.div`
   @media (max-width: 650px) {
     width: 100%;
+    margin: 0px auto;
   }
-  margin: 0px auto;
+  margin: 100px auto 0px;
   width: 1160px;
 `;
 
@@ -146,44 +147,42 @@ export default function Gosi() {
       [],
     [lecturesData1, lecturesData2],
   );
-
   return (
-    <div style={{ marginTop: "100px" }}>
+    // <div style={{ marginTop: "100px" }}>
+    <LectureListContainer>
       {isMobile && (
         <img src="/job/job.png" alt="image" style={{ width: "100%" }} />
       )}
-
-      <LectureListContainer>
-        <TitleContainer>
-          <MainTitle>이론 & 3개년 기출 강의 ✍️</MainTitle>
-          <Tags>
-            <Tag>전체강의</Tag>
-            <Tag>이론강의</Tag>
-            <Tag>기출강의</Tag>
-          </Tags>
-        </TitleContainer>
-        <ClassCardsContainer>
-          {data
-            ?.sort((a, b) => (a.sorting > b.sorting ? 1 : -1))
-            .map((li, i) => (
-              <ClassCard key={i}>
-                <Link
-                  href={{
-                    pathname: `/lecture-new/${li.id}`,
-                  }}
-                >
-                  <img
-                    src={li.thumbnailURL}
-                    alt={li.secondCat}
-                    style={{ width: "100%", borderRadius: "20px 20px 0 0" }}
-                  />
-                  <ClassTitle>{li.lectureTitle}</ClassTitle>
-                  <ClassDesc>{li.description}</ClassDesc>
-                </Link>
-              </ClassCard>
-            ))}
-        </ClassCardsContainer>
-      </LectureListContainer>
-    </div>
+      <TitleContainer>
+        <MainTitle>이론 & 3개년 기출 강의 ✍️</MainTitle>
+        <Tags>
+          <Tag>전체강의</Tag>
+          <Tag>이론강의</Tag>
+          <Tag>기출강의</Tag>
+        </Tags>
+      </TitleContainer>
+      <ClassCardsContainer>
+        {data
+          ?.sort((a, b) => (a.sorting > b.sorting ? 1 : -1))
+          .map((li, i) => (
+            <ClassCard key={i}>
+              <Link
+                href={{
+                  pathname: `/lecture-new/${li.id}`,
+                }}
+              >
+                <img
+                  src={li.thumbnailURL}
+                  alt={li.secondCat}
+                  style={{ width: "100%", borderRadius: "20px 20px 0 0" }}
+                />
+                <ClassTitle>{li.lectureTitle}</ClassTitle>
+                <ClassDesc>{li.description}</ClassDesc>
+              </Link>
+            </ClassCard>
+          ))}
+      </ClassCardsContainer>
+    </LectureListContainer>
+    // </div>
   );
 }
