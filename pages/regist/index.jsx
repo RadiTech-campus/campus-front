@@ -129,7 +129,7 @@ const RegistButton = styled.button`
   padding: 10px;
   font-size: 14px;
   font-weight: bold;
-  background-color: #a2a2a2;
+  background-color: #7100a6;
   color: white;
   cursor: pointer;
 `;
@@ -193,9 +193,9 @@ export default function SignUp() {
     handleOpenModal();
   };
 
-  const handleCopyClipBoard = async (e) => {
+  const handleCopyClipBoard = (e) => {
     e.preventDefault();
-    await navigator.clipboard.writeText("124-233998-12-601");
+    navigator.clipboard.writeText("124-233998-12-601");
     alert("계좌번호가 복사 되었습니다");
   };
 
@@ -332,8 +332,7 @@ export default function SignUp() {
                 *유료서비스를 이용하지 않았을 경우 환불 가능합니다.
               </div>
             </PriceContainer>
-            {/* <RegistButton onClick={() => router.push("/verify")}> */}
-            <RegistButton disabled>수강신청</RegistButton>
+            <RegistButton>수강신청</RegistButton>
           </InputsContainer>
         </form>
       </RegistBox>

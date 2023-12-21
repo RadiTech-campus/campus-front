@@ -172,9 +172,9 @@ export default function MyPage() {
     }
   };
 
-  const handleCopyClipBoard = async (e) => {
+  const handleCopyClipBoard = (e) => {
     e.preventDefault();
-    await navigator.clipboard.writeText("124-233998-12-601");
+    navigator.clipboard.writeText("124-233998-12-601");
     alert("계좌번호가 복사 되었습니다");
   };
 
