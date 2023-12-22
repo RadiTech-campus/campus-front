@@ -7,6 +7,7 @@ import { useGetPayment } from "../../query/contents";
 import { useGetPaymentsList } from "../../query/new/queries";
 import { AddDays, getDateDiff } from "../../libs/date";
 import { canclePayment } from "../../api/contents_api";
+import Modal from "../../components/modal/Modal";
 
 const SignInContainer = styled.div`
   margin: 100px auto 15px;
@@ -16,6 +17,12 @@ const SignInContainer = styled.div`
     padding: 15px;
     width: 100%;
   }
+`;
+
+const ModalContent = styled.div`
+  font-size: 15px;
+  text-align: center;
+  margin-bottom: 10px;
 `;
 
 const TitleContainer = styled.div`
@@ -171,15 +178,32 @@ export default function MyPage() {
       }
     }
   };
+  const [isCopyOpen, setIsCopyOpen] = useState(false);
 
-  const handleCopyClipBoard = (e) => {
-    e.preventDefault();
-    navigator.clipboard.writeText("124-233998-12-601");
-    alert("계좌번호가 복사 되었습니다");
+  const handleCopyClipBoard = async (e) => {
+    try {
+      await window.navigator.clipboard.writeText("124-233998-12-601");
+      setIsCopyOpen(true);
+    } catch (err) {
+      console.error("error", err);
+      alert("복사가 실패했습니다.");
+    }
   };
 
   return (
     <SignInContainer>
+      {isCopyOpen && (
+        <Modal
+          open={isCopyOpen}
+          onClose={() => {
+            setIsCopyOpen(false);
+          }}
+        >
+          <>
+            <ModalContent>계좌번호가 복사되었습니다.</ModalContent>
+          </>
+        </Modal>
+      )}
       <div>My Page</div>
       <TitleContainer>
         기본 정보
