@@ -331,7 +331,7 @@ export default function SignUp() {
                       style={{ marginLeft: "20px" }}
                       onClick={(e) => handleCopyClipBoard(e)}
                     >
-                      계좌 복사
+                      복사
                     </button>
                   </div>
                 </label>
