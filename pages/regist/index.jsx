@@ -193,9 +193,10 @@ export default function SignUp() {
     handleOpenModal();
   };
 
-  const handleCopyClipBoard = async () => {
+  const handleCopyClipBoard = async (e) => {
+    e.preventDefault();
     try {
-      await navigator.clipboard.writeText("124-233998-12-601");
+      await window.navigator.clipboard.writeText("124-233998-12-601");
       alert("계좌번호가 복사 되었습니다.");
     } catch (err) {
       console.error("error", err);
@@ -315,7 +316,7 @@ export default function SignUp() {
                     이광자 124-233998-12-601
                     <button
                       style={{ marginLeft: "20px" }}
-                      onClick={() => handleCopyClipBoard()}
+                      onClick={(e) => handleCopyClipBoard(e)}
                     >
                       계좌 복사
                     </button>
