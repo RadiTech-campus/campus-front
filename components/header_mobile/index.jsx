@@ -45,7 +45,7 @@ export default function HeaderMobile() {
       </Link>
       <AuthButton
         // selected={router.pathname === "/mypage"}
-        onClick={() => router.push("/event")}
+        onClick={() => router.push("/events")}
       >
         이벤트
       </AuthButton>

@@ -9,7 +9,7 @@ const LectureListContainer = styled.div`
     margin: 0px auto;
   }
   margin: 100px auto 0px;
-  width: 1160px;
+  /* width: 1160px; */
 `;
 
 const TitleContainer = styled.div`
@@ -17,7 +17,6 @@ const TitleContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* width: 80%; */
 `;
 
 const ButtonContainer1 = styled.div`
@@ -77,7 +76,15 @@ export default function Events() {
           style={{ width: "100%", position: "relative" }}
         />
       )}
-      <TitleContainer>
+      {!isMobile && (
+        <img
+          src="/event/PC.png"
+          alt="image"
+          style={{ width: "100%", position: "relative" }}
+        />
+      )}
+
+      {/* <TitleContainer>
         <img src="/event/1.png" alt="image" style={{ width: "100%" }} />
         <img src="/event/2.png" alt="image" style={{ width: "80%" }} />
 
@@ -102,7 +109,7 @@ export default function Events() {
             구독하기
           </Link>
         </ButtonContainer2>
-      </TitleContainer>
+      </TitleContainer> */}
     </LectureListContainer>
   );
 }
