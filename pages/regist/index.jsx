@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import { useEffect, useMemo, useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import Modal from "../../components/modal/Modal";
@@ -181,7 +181,8 @@ export default function SignUp() {
     setIsOpen(true);
   };
 
-  const [Selected, setSelected] = useState(4);
+  const [Selected, setSelected] = useState(Number(router.query.id));
+
   const handleSelect = (e) => {
     setSelected(Number(e.target.value));
   };
@@ -202,6 +203,8 @@ export default function SignUp() {
   // 이하 개편
   const { data: productDatas, isLoading: productDatasIsLoading } =
     useGetAllProduct();
+
+  const data = useMemo(() => productDatas || [], [productDatas]);
 
   return (
     <SignUpContainer>
@@ -242,9 +245,9 @@ export default function SignUp() {
               />
             ) : (
               <RegistSelect onChange={handleSelect} value={Selected}>
-                {productDatas &&
-                  productDatas.length > 0 &&
-                  productDatas.map((li, i) => (
+                {data &&
+                  data.length > 0 &&
+                  data.map((li, i) => (
                     <option key={i} value={li.id}>
                       {li.productTitle}
                     </option>
@@ -271,9 +274,9 @@ export default function SignUp() {
               <PriceTitle>가격</PriceTitle>
               <PriceDetail>
                 <PriceContent>
-                  {productDatas &&
-                    productDatas.length > 0 &&
-                    productDatas.find((li) => li.id === Selected).price}
+                  {data &&
+                    data.length > 0 &&
+                    data.find((li) => li.id === Selected).price}
                   원
                 </PriceContent>
               </PriceDetail>
