@@ -78,7 +78,7 @@ export default function Events() {
       )}
       {!isMobile && (
         <img
-          src="/event/PC.png"
+          src="/event/pc2.png"
           alt="image"
           style={{ width: "100%", position: "relative" }}
         />
