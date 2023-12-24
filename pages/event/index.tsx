@@ -27,30 +27,31 @@ const ButtonContainer = styled.div`
   width: 80%;
   display: flex;
   justify-content: center;
-  margin-bottom: 60px;
-  padding-bottom: 60px;
   margin-top: -10px;
+  margin-bottom: 60px;
+  padding-top: 10px;
+  padding-bottom: 20px;
 `;
 
 const SubButton1 = styled.button`
   background-color: #6375ff;
-  width: 60%;
-  border-radius: 15px;
-  height: 120px;
+  width: 80%;
+  border-radius: 5px;
   border: none;
   color: white;
-  font-size: 50px;
+  font-size: 4vw;
   font-weight: 700;
+  padding: 10px 20px;
 `;
 const SubButton2 = styled.button`
   background-color: #83a446;
-  width: 60%;
-  border-radius: 15px;
-  height: 120px;
+  width: 80%;
+  border-radius: 5px;
   border: none;
   color: white;
-  font-size: 50px;
+  font-size: 4vw;
   font-weight: 700;
+  padding: 10px 20px;
 `;
 
 export default function Job() {
