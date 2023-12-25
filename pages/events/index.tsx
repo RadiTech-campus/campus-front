@@ -34,7 +34,7 @@ const ButtonContainer1 = styled.div`
   justify-content: space-between;
   margin: -10px 10px 60px;
   padding-top: 10px;
-  padding-bottom: 30px;
+  padding-bottom: 10px;
   > a {
     background-color: #6375ff;
     width: 75%;
@@ -44,7 +44,7 @@ const ButtonContainer1 = styled.div`
     font-size: 1.2vw;
     font-weight: 700;
     padding: 10px 20px;
-    margin-top: 35px;
+    margin-top: 20px;
     text-align: center;
     text-decoration: none;
   }
@@ -84,7 +84,7 @@ const ButtonContainer2 = styled.div`
   justify-content: space-between;
   margin: -10px 10px 60px;
   padding-top: 10px;
-  padding-bottom: 30px;
+  padding-bottom: 10px;
 
   > a {
     background-color: #83a446;
