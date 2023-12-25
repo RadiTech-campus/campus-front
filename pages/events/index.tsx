@@ -37,7 +37,7 @@ const ButtonContainer1 = styled.div`
   padding-bottom: 30px;
   > a {
     background-color: #6375ff;
-    width: 80%;
+    width: 75%;
     border-radius: 5px;
     border: none;
     color: white;
@@ -88,7 +88,7 @@ const ButtonContainer2 = styled.div`
 
   > a {
     background-color: #83a446;
-    width: 80%;
+    width: 75%;
     border-radius: 5px;
     border: none;
     color: white;
