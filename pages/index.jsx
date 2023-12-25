@@ -27,6 +27,7 @@ import LectureListBox from "../components/lecturelist_box";
 import LectureList4Box from "../components/lecturelist_4box";
 import LectureListMobile from "../components/lecturelist_mobile";
 import { useGetLecturesByContentId } from "../query/new/queries";
+import Link from "next/link";
 
 const IndexContainer = styled.div``;
 
@@ -135,6 +136,17 @@ export default function Index() {
               }}
             />
           </SwiperSlide>
+          <SwiperSlide>
+            <Link href={{ pathname: `/events` }}>
+              <img
+                src={"/mainbanner/mobile/3.png"}
+                alt="레디테크 캠퍼스"
+                style={{
+                  width: "100%",
+                }}
+              />
+            </Link>
+          </SwiperSlide>
         </Swiper>
       )}
 
@@ -200,6 +212,28 @@ export default function Index() {
                 objectFit: "cover",
               }}
             />
+          </SwiperSlide>
+          <SwiperSlide
+            style={{
+              height: "450px",
+              width: "1160px",
+            }}
+          >
+            <Link
+              href={{
+                pathname: "/events",
+              }}
+            >
+              <Image
+                src={"/mainbanner/pc/003.png"}
+                alt="레디테크 캠퍼스"
+                fill
+                sizes="100vw"
+                style={{
+                  objectFit: "cover",
+                }}
+              />
+            </Link>
           </SwiperSlide>
         </Swiper>
       )}
