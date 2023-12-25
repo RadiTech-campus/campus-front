@@ -27,7 +27,7 @@ const TitleContainer = styled.div`
 
 const ButtonContainer1 = styled.div`
   background-color: white;
-  width: 40%;
+  width: 20%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -41,7 +41,7 @@ const ButtonContainer1 = styled.div`
     border-radius: 5px;
     border: none;
     color: white;
-    font-size: 1.5vw;
+    font-size: 1.2vw;
     font-weight: 700;
     padding: 10px 20px;
     margin-top: 35px;
@@ -77,7 +77,7 @@ const ButtonContainer1 = styled.div`
 
 const ButtonContainer2 = styled.div`
   background-color: white;
-  width: 40%;
+  width: 20%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -92,7 +92,7 @@ const ButtonContainer2 = styled.div`
     border-radius: 5px;
     border: none;
     color: white;
-    font-size: 1.5vw;
+    font-size: 1.2vw;
     font-weight: 700;
     padding: 10px 20px;
     text-align: center;
