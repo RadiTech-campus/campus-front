@@ -137,14 +137,9 @@ export default function Gosi() {
   const data = useMemo(
     () =>
       (lecturesData1 &&
-        lecturesData2 &&
-        lecturesData3 && [
-          ...lecturesData1,
-          ...lecturesData2,
-          ...lecturesData3,
-        ]) ||
+        lecturesData2 && [...lecturesData1, ...lecturesData2]) ||
       [],
-    [lecturesData1, lecturesData2, lecturesData3],
+    [lecturesData1, lecturesData2],
   );
   return (
     <LectureListContainer>
@@ -161,6 +156,25 @@ export default function Gosi() {
       </TitleContainer>
       <ClassCardsContainer>
         {data
+          ?.sort((a, b) => (a.sorting > b.sorting ? 1 : -1))
+          .map((li, i) => (
+            <ClassCard key={i}>
+              <Link
+                href={{
+                  pathname: `/lecture-new/${li.id}`,
+                }}
+              >
+                <img
+                  src={li.thumbnailURL}
+                  alt={li.secondCat}
+                  style={{ width: "100%", borderRadius: "20px 20px 0 0" }}
+                />
+                <ClassTitle>{li.lectureTitle}</ClassTitle>
+                <ClassDesc>{li.description}</ClassDesc>
+              </Link>
+            </ClassCard>
+          ))}
+        {lecturesData3
           ?.sort((a, b) => (a.sorting > b.sorting ? 1 : -1))
           .map((li, i) => (
             <ClassCard key={i}>

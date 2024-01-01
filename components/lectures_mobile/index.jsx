@@ -115,40 +115,40 @@ export default function LecturesMobile({
           </>
         </Modal>
       )}
-      <ChapterButtonContainer>
-        <ChapterContainer>
-          {aLectureData?.cnoteURL && aLectureData?.vnoteURL && (
+      {aLectureData?.cnoteURL && aLectureData?.vnoteURL && (
+        <ChapterButtonContainer>
+          <ChapterContainer>
             <ChapterTitle># 요약</ChapterTitle>
-          )}
 
-          {aLectureData?.cnoteURL && (
-            <ChapterButton
-              onClick={() => {
-                if (payment) {
-                  window.open(aLectureData?.cnoteURL, "_blank");
-                } else {
-                  setIsOpen(true);
-                }
-              }}
-            >
-              이론
-            </ChapterButton>
-          )}
-          {aLectureData?.vnoteURL && (
-            <ChapterButton
-              onClick={() => {
-                if (payment) {
-                  window.open(aLectureData?.vnoteURL, "_blank");
-                } else {
-                  setIsOpen(true);
-                }
-              }}
-            >
-              요약
-            </ChapterButton>
-          )}
-        </ChapterContainer>
-      </ChapterButtonContainer>
+            {aLectureData?.cnoteURL && (
+              <ChapterButton
+                onClick={() => {
+                  if (payment) {
+                    window.open(aLectureData?.cnoteURL, "_blank");
+                  } else {
+                    setIsOpen(true);
+                  }
+                }}
+              >
+                이론
+              </ChapterButton>
+            )}
+            {aLectureData?.vnoteURL && (
+              <ChapterButton
+                onClick={() => {
+                  if (payment) {
+                    window.open(aLectureData?.vnoteURL, "_blank");
+                  } else {
+                    setIsOpen(true);
+                  }
+                }}
+              >
+                요약
+              </ChapterButton>
+            )}
+          </ChapterContainer>
+        </ChapterButtonContainer>
+      )}
       {lectureDetailsData.length > 0
         ? lectureDetailsData.map((li, i) => (
             <ChapterContainer key={i}>
