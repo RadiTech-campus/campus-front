@@ -129,7 +129,7 @@ const RegistButton = styled.button`
   padding: 10px;
   font-size: 14px;
   font-weight: bold;
-  background-color: #a2a2a2;
+  background-color: #7100a6;
   color: white;
   cursor: pointer;
 `;
@@ -177,11 +177,14 @@ export default function SignUp() {
   }, [auth]);
 
   const [isOpen, setIsOpen] = useState(false);
+  const [isCopyOpen, setIsCopyOpen] = useState(false);
   const handleOpenModal = () => {
     setIsOpen(true);
   };
 
+
   const [Selected, setSelected] = useState(2);
+
 
   const handleSelect = (e) => {
     setSelected(Number(e.target.value));
@@ -196,8 +199,13 @@ export default function SignUp() {
 
   const handleCopyClipBoard = async (e) => {
     e.preventDefault();
-    await navigator.clipboard.writeText("124-233998-12-601");
-    alert("계좌번호가 복사 되었습니다");
+    try {
+      await window.navigator.clipboard.writeText("124-233998-12-601");
+      setIsCopyOpen(true);
+    } catch (err) {
+      console.error("error", err);
+      alert("복사가 실패했습니다.");
+    }
   };
 
   // 이하 개편
@@ -205,6 +213,7 @@ export default function SignUp() {
     useGetAllProduct();
 
   const data = useMemo(() => productDatas || [], [productDatas]);
+
   return (
     <SignUpContainer>
       {isOpen && (
@@ -221,6 +230,18 @@ export default function SignUp() {
               결제 확인 후 서비스 이용 가능합니다. 확인까지 영업일 3일 정도
               소요되며 주문이 확정되면 문자/메일 안내가 갈 예정입니다
             </ModalContent>
+          </>
+        </Modal>
+      )}
+      {isCopyOpen && (
+        <Modal
+          open={isCopyOpen}
+          onClose={() => {
+            setIsCopyOpen(false);
+          }}
+        >
+          <>
+            <ModalContent>계좌번호가 복사되었습니다.</ModalContent>
           </>
         </Modal>
       )}
@@ -315,7 +336,7 @@ export default function SignUp() {
                       style={{ marginLeft: "20px" }}
                       onClick={(e) => handleCopyClipBoard(e)}
                     >
-                      계좌 복사
+                      복사
                     </button>
                   </div>
                 </label>
@@ -334,8 +355,7 @@ export default function SignUp() {
                 *유료서비스를 이용하지 않았을 경우 환불 가능합니다.
               </div>
             </PriceContainer>
-            {/* <RegistButton onClick={() => router.push("/verify")}> */}
-            <RegistButton disabled>수강신청</RegistButton>
+            <RegistButton type="submit">수강신청</RegistButton>
           </InputsContainer>
         </form>
       </RegistBox>
