@@ -182,7 +182,9 @@ export default function SignUp() {
     setIsOpen(true);
   };
 
-  const [Selected, setSelected] = useState(Number(router.query.id));
+
+  const [Selected, setSelected] = useState(2);
+
 
   const handleSelect = (e) => {
     setSelected(Number(e.target.value));

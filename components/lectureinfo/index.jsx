@@ -72,9 +72,9 @@ export default function LectureInfo({ lid, classData, classtype, preview }) {
               ? classData.find((li) => li.code === lid)?.gPreview
               : classData.find((li) => li.code === lid)?.lPreview
           }`}
-          frameborder="0"
+          frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowfullscreen
+          allowFullScreen
         ></iframe>
       </PreviewContainer>
       <ClassImage3>
