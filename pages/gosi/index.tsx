@@ -71,11 +71,6 @@ const Tag = styled.div`
 const ClassCardsContainer = styled.div`
   @media (max-width: 650px) {
     display: flex;
-    /* flex-wrap: nowrap;
-    overflow: scroll;
-    ::-webkit-scrollbar {
-      display: none;
-    } */
     padding: 0px 5px;
   }
   padding: 0px 0px 20px;
@@ -110,7 +105,6 @@ const ClassTitle = styled.div`
     font-weight: 700;
     padding: 0 0 0 10px;
     margin: 5px 0 3px 0;
-    /* line-height: 28.96px; */
     color: #0b0d0f;
   }
   font-size: 24px;
@@ -126,7 +120,6 @@ const ClassDesc = styled.div`
     font-weight: 700;
     padding: 0 0 0 10px;
     margin: 0 0 10px 0;
-    /* line-height: 26.06px; */
     color: #818181;
   }
   font-size: 20px;
@@ -140,15 +133,20 @@ export default function Gosi() {
 
   const { data: lecturesData1 } = useGetLecturesByContentId(1);
   const { data: lecturesData2 } = useGetLecturesByContentId(2);
+  const { data: lecturesData3 } = useGetLecturesByContentId(3);
   const data = useMemo(
     () =>
       (lecturesData1 &&
-        lecturesData2 && [...lecturesData1, ...lecturesData2]) ||
+        lecturesData2 &&
+        lecturesData3 && [
+          ...lecturesData1,
+          ...lecturesData2,
+          ...lecturesData3,
+        ]) ||
       [],
     [lecturesData1, lecturesData2],
   );
   return (
-    // <div style={{ marginTop: "100px" }}>
     <LectureListContainer>
       {isMobile && (
         <img src="/job/job.png" alt="image" style={{ width: "100%" }} />
