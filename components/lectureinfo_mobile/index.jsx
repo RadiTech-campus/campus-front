@@ -68,9 +68,9 @@ export default function LectureInfoMobile({ aLectureData }) {
           width="840"
           height={isMobile ? "200" : "546"}
           src={`https://www.youtube.com/embed/${aLectureData?.previewURL}`}
-          frameborder="0"
+          frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowfullscreen
+          allowFullScreen
         ></iframe>
       </PreviewContainer>
       {/* <ClassImage3>

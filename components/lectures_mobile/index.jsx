@@ -96,7 +96,6 @@ export default function LecturesMobile({
     lid,
   );
   const payment = useMemo(() => paymentData || false, [paymentData]);
-
   return (
     <LecturesContainer>
       {isOpen && (
@@ -104,7 +103,7 @@ export default function LecturesMobile({
           open={isOpen}
           onClose={() => {
             setIsOpen(false);
-            router.push(`/regist?returnpath=${router.asPath}`);
+            router.push(`/regist`);
           }}
         >
           <>
