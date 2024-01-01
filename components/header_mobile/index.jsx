@@ -43,12 +43,11 @@ export default function HeaderMobile() {
       <Link href={"/"}>
         <MobileLogo src="/titlelogo.png" alt="레디테크 캠퍼스" />
       </Link>
-      <AuthButton
-        // selected={router.pathname === "/mypage"}
+      {/* <AuthButton
         onClick={() => router.push("/events")}
       >
         이벤트
-      </AuthButton>
+      </AuthButton> */}
     </HeaderContainer>
   );
 }
