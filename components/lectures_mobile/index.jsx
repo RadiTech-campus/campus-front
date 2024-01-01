@@ -54,6 +54,9 @@ const ChapterTitle = styled.div`
     font-size: 14px;
   }
 `;
+
+const ChapterButtonContainer = styled.div``;
+
 const ChapterButton = styled.button`
   width: 20%;
   background-color: transparent;
@@ -83,6 +86,7 @@ const ChapterButton = styled.button`
 
 export default function LecturesMobile({
   lectureDetailsData,
+  aLectureData,
   setSelectedLectureDetail,
   onMoveToForm,
 }) {
@@ -111,6 +115,37 @@ export default function LecturesMobile({
           </>
         </Modal>
       )}
+      <ChapterButtonContainer>
+        <ChapterContainer>
+          <ChapterTitle># 요약</ChapterTitle>
+          {aLectureData?.cnoteURL && (
+            <ChapterButton
+              onClick={() => {
+                if (payment) {
+                  window.open(aLectureData?.cnoteURL, "_blank");
+                } else {
+                  setIsOpen(true);
+                }
+              }}
+            >
+              이론
+            </ChapterButton>
+          )}
+          {aLectureData?.vnoteURL && (
+            <ChapterButton
+              onClick={() => {
+                if (payment) {
+                  window.open(aLectureData?.vnoteURL, "_blank");
+                } else {
+                  setIsOpen(true);
+                }
+              }}
+            >
+              요약
+            </ChapterButton>
+          )}
+        </ChapterContainer>
+      </ChapterButtonContainer>
       {lectureDetailsData.length > 0
         ? lectureDetailsData.map((li, i) => (
             <ChapterContainer key={i}>

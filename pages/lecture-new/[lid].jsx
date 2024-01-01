@@ -213,6 +213,7 @@ export default function Lecture() {
       {selectedTab === "커리큘럼" && (
         <LecturesMobile
           lectureDetailsData={lectureDetailsData}
+          aLectureData={aLectureData}
           setSelectedLectureDetail={setSelectedLectureDetail}
           onMoveToForm={onMoveToForm}
         />
