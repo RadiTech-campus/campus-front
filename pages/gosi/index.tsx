@@ -144,7 +144,7 @@ export default function Gosi() {
           ...lecturesData3,
         ]) ||
       [],
-    [lecturesData1, lecturesData2],
+    [lecturesData1, lecturesData2, lecturesData3],
   );
   return (
     <LectureListContainer>
@@ -181,6 +181,5 @@ export default function Gosi() {
           ))}
       </ClassCardsContainer>
     </LectureListContainer>
-    // </div>
   );
 }

@@ -117,7 +117,10 @@ export default function LecturesMobile({
       )}
       <ChapterButtonContainer>
         <ChapterContainer>
-          <ChapterTitle># 요약</ChapterTitle>
+          {aLectureData?.cnoteURL && aLectureData?.vnoteURL && (
+            <ChapterTitle># 요약</ChapterTitle>
+          )}
+
           {aLectureData?.cnoteURL && (
             <ChapterButton
               onClick={() => {
