@@ -139,7 +139,7 @@ export default function Index() {
           <SwiperSlide>
             <Link href={{ pathname: `/events` }}>
               <img
-                src={"/mainbanner/mobile/3.png"}
+                src={"/mainbanner/mobile/4.png"}
                 alt="레디테크 캠퍼스"
                 style={{
                   width: "100%",
@@ -150,7 +150,7 @@ export default function Index() {
           <SwiperSlide>
             <Link href={{ pathname: `/events` }}>
               <img
-                src={"/mainbanner/mobile/4.png"}
+                src={"/mainbanner/mobile/3.png"}
                 alt="레디테크 캠퍼스"
                 style={{
                   width: "100%",
