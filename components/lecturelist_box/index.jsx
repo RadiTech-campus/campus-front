@@ -145,7 +145,7 @@ const DescriptionText = styled.div`
   @media (max-width: 650px) {
     font-weight: 400;
     font-size: 3.2vw;
-    line-height: 24px;
+    line-height: 22px;
   }
 `;
 
