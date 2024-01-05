@@ -161,10 +161,19 @@ export default function Lecture() {
         </Modal>
       )}
       {selectedLectureDetail ? (
-        <div ref={preview}>
+        <div
+          style={{
+            position: "relative",
+            width: "100%",
+            paddingBottom: "56.26%",
+          }}
+          ref={preview}
+        >
           <iframe
             src={`https://player.vimeo.com/video/${selectedLectureDetail}`}
             width="100%"
+            height="100%"
+            style={{ position: "absolute" }}
             frameBorder="0"
             allow="autoplay; fullscreen"
             allowFullScreen
