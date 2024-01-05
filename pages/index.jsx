@@ -254,11 +254,13 @@ export default function Index() {
       />
       <div style={{ display: "flex", justifyContent: "center" }}>
         {isMobile ? (
-          <img
-            src="/mainbanner/mobile/main1.png"
-            alt="line"
-            style={{ width: "100%" }}
-          />
+          <Link href={{ pathname: `/events2` }}>
+            <img
+              src="/mainbanner/mobile/main1.png"
+              alt="line"
+              style={{ width: "100%" }}
+            />
+          </Link>
         ) : (
           <></>
           // <img src="/jobbanner.png" alt="line" style={{ width: "1160px" }} />

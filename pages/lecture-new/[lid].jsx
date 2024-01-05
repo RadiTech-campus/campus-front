@@ -11,6 +11,7 @@ import {
 import LecturesMobile from "../../components/lectures_mobile";
 import Lecturer from "../../components/lecturer";
 import LectureWarn from "../../components/lecturewarn";
+import Link from "next/link";
 
 const LectureDetailContainer = styled.div`
   margin: 0px auto;
@@ -202,24 +203,30 @@ export default function Lecture() {
         <ClassSubTitle>{aLectureData?.description}</ClassSubTitle>
       </TopDetail>
       <div style={{ display: "flex", justifyContent: "center" }}>
-        {isMobile ? (
-          <img
-            src={`/mainbanner/mobile/main2.png`}
-            alt="레디테크 캠퍼스"
-            style={{
-              width: "100%",
-            }}
-          />
-        ) : (
-          <img
-            src={`/mainbanner/mobile/main2.png`}
-            alt="레디테크 캠퍼스"
-            style={{
-              width: "80%",
-              marginBottom: "20px",
-              marginTop: "20px",
-            }}
-          />
+        {isMobile && (
+          <Link href={{ pathname: `/events` }}>
+            <img
+              src={`/mainbanner/mobile/main2.png`}
+              alt="레디테크 캠퍼스"
+              style={{
+                width: "100%",
+              }}
+            />
+          </Link>
+        )}
+
+        {!isMobile && (
+          <Link href={{ pathname: `/events` }}>
+            <img
+              src={`/mainbanner/mobile/main2.png`}
+              alt="레디테크 캠퍼스"
+              style={{
+                width: "80%",
+                marginBottom: "20px",
+                marginTop: "20px",
+              }}
+            />
+          </Link>
         )}
       </div>
       <ClassTapContainer>
