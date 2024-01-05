@@ -49,19 +49,28 @@ const ChapterContainer = styled.div`
   }
 `;
 const ChapterTitle = styled.div`
+  width: 70%;
   @media (max-width: 650px) {
     width: 70%;
     font-size: 14px;
   }
 `;
 
-const ChapterButtonContainer = styled.div``;
+const ChapterButtonContainer = styled.div`
+  width: 30%;
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+  @media (max-width: 650px) {
+    width: 30%;
+    font-size: 14px;
+  }
+`;
 
 const ChapterButton = styled.button`
-  width: 20%;
   background-color: transparent;
   border: 1px solid #bec1c6;
-  padding: 7px 10px;
+  padding: 7px 30px;
   text-decoration: none;
   color: #bec1c6;
   margin-left: 5px;
@@ -70,7 +79,7 @@ const ChapterButton = styled.button`
     color: #bec1c6;
   }
   @media (max-width: 650px) {
-    width: 20%;
+    /* width: 20%; */
     background-color: transparent;
     border: 1px solid #bec1c6;
     padding: 7px 10px;
@@ -115,70 +124,76 @@ export default function LecturesMobile({
           </>
         </Modal>
       )}
-      {aLectureData?.cnoteURL && aLectureData?.vnoteURL && (
-        <ChapterButtonContainer>
-          <ChapterContainer>
-            <ChapterTitle># 요약</ChapterTitle>
+      {aLectureData?.cnoteURL && (
+        <ChapterContainer>
+          <ChapterTitle># 요약</ChapterTitle>
 
-            {aLectureData?.cnoteURL && (
-              <ChapterButton
-                onClick={() => {
-                  if (payment) {
-                    window.open(aLectureData?.cnoteURL, "_blank");
-                  } else {
-                    setIsOpen(true);
-                  }
-                }}
-              >
-                이론
-              </ChapterButton>
-            )}
-            {aLectureData?.vnoteURL && (
-              <ChapterButton
-                onClick={() => {
-                  if (payment) {
-                    window.open(aLectureData?.vnoteURL, "_blank");
-                  } else {
-                    setIsOpen(true);
-                  }
-                }}
-              >
-                요약
-              </ChapterButton>
-            )}
-          </ChapterContainer>
-        </ChapterButtonContainer>
+          {aLectureData?.cnoteURL && (
+            <ChapterButton
+              onClick={() => {
+                if (payment) {
+                  window.open(aLectureData?.cnoteURL, "_blank");
+                } else {
+                  setIsOpen(true);
+                }
+              }}
+            >
+              이론
+            </ChapterButton>
+          )}
+        </ChapterContainer>
+      )}
+      {aLectureData?.vnoteURL && (
+        <ChapterContainer>
+          <ChapterTitle># 요약</ChapterTitle>
+
+          {aLectureData?.vnoteURL && (
+            <ChapterButton
+              onClick={() => {
+                if (payment) {
+                  window.open(aLectureData?.vnoteURL, "_blank");
+                } else {
+                  setIsOpen(true);
+                }
+              }}
+            >
+              이론
+            </ChapterButton>
+          )}
+        </ChapterContainer>
       )}
       {lectureDetailsData.length > 0
         ? lectureDetailsData.map((li, i) => (
             <ChapterContainer key={i}>
               <ChapterTitle># {li.lectureDetailTitle}</ChapterTitle>
-              {li?.noteURL && (
+              <ChapterButtonContainer>
+                {li?.noteURL && (
+                  <ChapterButton
+                    onClick={() => {
+                      if (payment) {
+                        window.open(li.noteURL, "_blank");
+                      } else {
+                        setIsOpen(true);
+                      }
+                    }}
+                  >
+                    자료
+                  </ChapterButton>
+                )}
+
                 <ChapterButton
                   onClick={() => {
                     if (payment) {
-                      window.open(li.noteURL, "_blank");
+                      onMoveToForm();
+                      setSelectedLectureDetail(li.videoURL);
                     } else {
                       setIsOpen(true);
                     }
                   }}
                 >
-                  자료
+                  해설
                 </ChapterButton>
-              )}
-
-              <ChapterButton
-                onClick={() => {
-                  if (payment) {
-                    onMoveToForm();
-                    setSelectedLectureDetail(li.videoURL);
-                  } else {
-                    setIsOpen(true);
-                  }
-                }}
-              >
-                해설
-              </ChapterButton>
+              </ChapterButtonContainer>
             </ChapterContainer>
           ))
         : "강의가 준비중 입니다"}
