@@ -21,7 +21,8 @@ const TitleContainer = styled.div`
   margin-top: 20px;
   @media (max-width: 650px) {
     padding: 5px 15px;
-    margin: 0;
+
+    margin: 10px 0 0 0;
   }
 `;
 
@@ -136,7 +137,7 @@ const ClassDesc = styled.div`
   @media (max-width: 650px) {
     font-size: 3vw;
     font-weight: 700;
-    padding: 0 0 0 10px;
+    padding: 0 10px 0 10px;
     margin: 0 0 10px 0;
     /* line-height: 26.06px; */
     color: #818181;

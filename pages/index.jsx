@@ -137,6 +137,17 @@ export default function Index() {
             />
           </SwiperSlide> */}
           <SwiperSlide>
+            <Link href={{ pathname: `/events2` }}>
+              <img
+                src={"/mainbanner/mobile/4.png"}
+                alt="레디테크 캠퍼스"
+                style={{
+                  width: "100%",
+                }}
+              />
+            </Link>
+          </SwiperSlide>
+          <SwiperSlide>
             <Link href={{ pathname: `/events` }}>
               <img
                 src={"/mainbanner/mobile/3.png"}
@@ -243,11 +254,13 @@ export default function Index() {
       />
       <div style={{ display: "flex", justifyContent: "center" }}>
         {isMobile ? (
-          <img
-            src="/mainbanner/mobile/main1.png"
-            alt="line"
-            style={{ width: "100%" }}
-          />
+          <Link href={{ pathname: `/events2` }}>
+            <img
+              src="/mainbanner/mobile/main1.png"
+              alt="line"
+              style={{ width: "100%" }}
+            />
+          </Link>
         ) : (
           <></>
           // <img src="/jobbanner.png" alt="line" style={{ width: "1160px" }} />
@@ -265,11 +278,13 @@ export default function Index() {
       />
       <div style={{ display: "flex", justifyContent: "center" }}>
         {isMobile ? (
-          <img
-            src="/mainbanner/mobile/main2.png"
-            alt="line"
-            style={{ width: "100%" }}
-          />
+          <Link href={{ pathname: `/events` }}>
+            <img
+              src="/mainbanner/mobile/main2.png"
+              alt="line"
+              style={{ width: "100%" }}
+            />
+          </Link>
         ) : (
           <></>
           // <img src="/pass.png" alt="line" style={{ width: "1160px" }} />

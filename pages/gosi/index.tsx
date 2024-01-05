@@ -118,7 +118,7 @@ const ClassDesc = styled.div`
   @media (max-width: 650px) {
     font-size: 3vw;
     font-weight: 700;
-    padding: 0 0 0 10px;
+    padding: 0 10px 0 10px;
     margin: 0 0 10px 0;
     color: #818181;
   }
@@ -152,6 +152,7 @@ export default function Gosi() {
           <Tag>전체강의</Tag>
           <Tag>이론강의</Tag>
           <Tag>기출강의</Tag>
+          <Tag>모의고사</Tag>
         </Tags>
       </TitleContainer>
       <ClassCardsContainer>

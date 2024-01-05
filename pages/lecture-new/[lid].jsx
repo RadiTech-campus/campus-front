@@ -11,6 +11,7 @@ import {
 import LecturesMobile from "../../components/lectures_mobile";
 import Lecturer from "../../components/lecturer";
 import LectureWarn from "../../components/lecturewarn";
+import Link from "next/link";
 
 const LectureDetailContainer = styled.div`
   margin: 0px auto;
@@ -44,7 +45,7 @@ const ClassMainTitle = styled.div`
     font-weight: 700;
     width: 100%;
     text-align: left;
-    margin-left: 10px;
+    margin: 5px 0 0 10px;
   }
 `;
 const ClassSubTitle = styled.div`
@@ -57,8 +58,9 @@ const ClassSubTitle = styled.div`
     font-size: 4.2vw;
     color: #818181;
     font-weight: 500;
-    margin-top: 5px;
-    margin-left: 10px;
+    /* margin-top: 5px; */
+    /* margin-left: 10px; */
+    margin: 5px 0 5px 10px;
     width: 100%;
     text-align: left;
   }
@@ -160,10 +162,19 @@ export default function Lecture() {
         </Modal>
       )}
       {selectedLectureDetail ? (
-        <div ref={preview}>
+        <div
+          style={{
+            position: "relative",
+            width: "100%",
+            paddingBottom: "56.26%",
+          }}
+          ref={preview}
+        >
           <iframe
             src={`https://player.vimeo.com/video/${selectedLectureDetail}`}
             width="100%"
+            height="100%"
+            style={{ position: "absolute" }}
             frameBorder="0"
             allow="autoplay; fullscreen"
             allowFullScreen
@@ -191,7 +202,33 @@ export default function Lecture() {
         <ClassMainTitle>{aLectureData?.lectureTitle}</ClassMainTitle>
         <ClassSubTitle>{aLectureData?.description}</ClassSubTitle>
       </TopDetail>
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        {isMobile && (
+          <Link href={{ pathname: `/events` }}>
+            <img
+              src={`/mainbanner/mobile/main2.png`}
+              alt="레디테크 캠퍼스"
+              style={{
+                width: "100%",
+              }}
+            />
+          </Link>
+        )}
 
+        {!isMobile && (
+          <Link href={{ pathname: `/events` }}>
+            <img
+              src={`/mainbanner/mobile/main2.png`}
+              alt="레디테크 캠퍼스"
+              style={{
+                width: "80%",
+                marginBottom: "20px",
+                marginTop: "20px",
+              }}
+            />
+          </Link>
+        )}
+      </div>
       <ClassTapContainer>
         {tabs.map((tab, i) => (
           <ClassTap
@@ -220,27 +257,6 @@ export default function Lecture() {
       )}
       {selectedTab === "강사소개" && <Lecturer />}
       {selectedTab === "주의사항" && <LectureWarn />}
-      <div style={{ display: "flex", justifyContent: "center" }}>
-        {isMobile ? (
-          <img
-            src={`/mainbanner/mobile/main2.png`}
-            alt="레디테크 캠퍼스"
-            style={{
-              width: "100%",
-            }}
-          />
-        ) : (
-          <img
-            src={`/mainbanner/mobile/main2.png`}
-            alt="레디테크 캠퍼스"
-            style={{
-              width: "80%",
-              marginBottom: "20px",
-              marginTop: "20px",
-            }}
-          />
-        )}
-      </div>
     </LectureDetailContainer>
   );
 }
