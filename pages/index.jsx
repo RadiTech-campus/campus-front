@@ -147,6 +147,17 @@ export default function Index() {
               />
             </Link>
           </SwiperSlide>
+          <SwiperSlide>
+            <Link href={{ pathname: `/events` }}>
+              <img
+                src={"/mainbanner/mobile/4.png"}
+                alt="레디테크 캠퍼스"
+                style={{
+                  width: "100%",
+                }}
+              />
+            </Link>
+          </SwiperSlide>
         </Swiper>
       )}
 
