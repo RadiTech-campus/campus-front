@@ -1,9 +1,12 @@
 import styled from "@emotion/styled";
 import Image from "next/image";
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import Link from "next/link";
 import { useIsMobile } from "../../hooks/useIsMobile";
 import Countdown from "../timer";
+import { useAuth } from "../../hooks/useAuth";
+import Modal from "../modal/Modal";
+import { useRouter } from "next/router";
 
 const LectureListContainer = styled.div`
   @media (max-width: 650px) {
@@ -189,10 +192,48 @@ const CardsContainer = styled.div`
   }
 `;
 
+const ModalTitle = styled.div`
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 10px;
+`;
+const ModalContent = styled.div`
+  font-size: 15px;
+  text-align: center;
+  margin-bottom: 10px;
+`;
+
 export default function LectureListBox({ mainTitle }) {
-  const isMobile = useIsMobile();
+  const auth = useAuth();
+  const router = useRouter();
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  // useEffect(() => {
+  //   if (!auth.isLoading) {
+  //     if (!auth.isAuthenticated) {
+  //       setIsOpen(true);
+  //     }
+  //   }
+  // }, [auth]);
+
   return (
     <LectureListContainer>
+      {isOpen && (
+        <Modal
+          open={isOpen}
+          onClose={() => {
+            setIsOpen(false);
+            router.push(`/signin?returnpath=${router.asPath}`);
+          }}
+        >
+          <>
+            <ModalTitle>무료 수강</ModalTitle>
+            <ModalContent>{"로그인이 필요한 서비스 입니다."}</ModalContent>
+          </>
+        </Modal>
+      )}
       <MainTitle>{mainTitle}</MainTitle>
 
       <ClassCardsContainer>
@@ -212,10 +253,14 @@ export default function LectureListBox({ mainTitle }) {
             <ClassCardCircle>2 교시</ClassCardCircle>
             <ApplyButton
               onClick={() => {
-                window.open(
-                  "https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/mo/mini2.pdf",
-                  "_blank",
-                );
+                if (auth.isAuthenticated) {
+                  window.open(
+                    "https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/mo/mini2.pdf",
+                    "_blank",
+                  );
+                } else if (!auth.isAuthenticated) {
+                  setIsOpen(true);
+                }
               }}
             >
               응시하기
@@ -225,10 +270,14 @@ export default function LectureListBox({ mainTitle }) {
             <ClassCardCircle>3 교시</ClassCardCircle>
             <ApplyButton
               onClick={() => {
-                window.open(
-                  "https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/mo/mini2.pdf",
-                  "_blank",
-                );
+                if (auth.isAuthenticated) {
+                  window.open(
+                    "https://radi-tech-static.s3.ap-northeast-2.amazonaws.com/mo/mini2.pdf",
+                    "_blank",
+                  );
+                } else if (!auth.isAuthenticated) {
+                  setIsOpen(true);
+                }
               }}
             >
               응시하기
