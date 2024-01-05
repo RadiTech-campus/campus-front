@@ -16,7 +16,7 @@ const TitleContainer = styled.div`
   padding: 10px 20px 0px;
   margin-top: 20px;
   @media (max-width: 650px) {
-    padding: 5px 15px;
+    padding: 10px 15px;
     margin: 0;
   }
 `;

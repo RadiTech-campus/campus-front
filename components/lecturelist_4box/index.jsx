@@ -27,10 +27,12 @@ const MainTitle = styled.div`
   font-size: 24px;
   font-weight: bold;
   margin-top: 10px;
+
   @media (max-width: 650px) {
     font-size: 3.7vw;
     color: #0b0d0f;
     font-weight: 700;
+    margin-bottom: 5px;
   }
 `;
 
@@ -53,7 +55,7 @@ const ClassCard = styled.div`
   @media (max-width: 650px) {
     box-shadow: 0 0 10px 0 rgb(0 0 0 / 20%);
     border-radius: 20px;
-    margin-bottom: 20px;
+    margin: 0px 0px 10px 0px;
     width: 44%;
     /* height: 223px; */
   }
