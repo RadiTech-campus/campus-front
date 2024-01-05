@@ -33,7 +33,7 @@ const AuthButton = styled.button`
   @media (max-width: 650px) {
     margin-right: 15px;
     font-size: 2.5vw;
-    padding: 3px 6px;
+    padding: 6px 6px;
     font-weight: 600;
     border-radius: 20px;
     border: none;

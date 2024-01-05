@@ -51,19 +51,20 @@ const ChapterContainer = styled.div`
 const ChapterTitle = styled.div`
   width: 70%;
   @media (max-width: 650px) {
-    width: 70%;
+    width: 60%;
     font-size: 14px;
   }
 `;
 
 const ChapterButtonContainer = styled.div`
-  width: 30%;
+  width: 40%;
   font-size: 14px;
   display: flex;
   justify-content: center;
   @media (max-width: 650px) {
-    width: 30%;
+    width: 40%;
     font-size: 14px;
+    justify-content: end;
   }
 `;
 
@@ -79,13 +80,12 @@ const ChapterButton = styled.button`
     color: #bec1c6;
   }
   @media (max-width: 650px) {
-    /* width: 20%; */
     background-color: transparent;
     border: 1px solid #bec1c6;
-    padding: 7px 10px;
+    padding: 2px 7px;
     text-decoration: none;
     color: #bec1c6;
-    margin-left: 5px;
+    margin-left: 10px;
     > a {
       text-decoration: none;
       color: #bec1c6;
