@@ -25,7 +25,7 @@ const HeaderContainer = styled.div`
 
 const MobileLogo = styled.img`
   @media (max-width: 650px) {
-    width: 65%;
+    width: 75%;
     padding: 0px 5px;
   }
 `;
@@ -35,7 +35,6 @@ const AuthButton = styled.button`
     font-size: 2.5vw;
     padding: 3px 6px;
     font-weight: 600;
-    /* cursor: pointer; */
     border-radius: 20px;
     border: none;
     background-color: black;
@@ -47,18 +46,13 @@ const AuthButton = styled.button`
 export default function HeaderMobile() {
   const router = useRouter();
   const auth = useAuth();
-  auth.isAuthenticated;
-  console.log("router", router.pathname);
+
   return (
     <HeaderContainer>
       <Link href={"/"}>
         <MobileLogo src="/titlelogo.png" alt="레디테크 캠퍼스" />
       </Link>
-      {/* {router.pathname === "/signin" ? (
-        ""
-      ) : (
-        <AuthButton onClick={() => router.push("/signin")}>로그인</AuthButton>
-      )} */}
+
       {!auth.isAuthenticated && router.pathname !== "/signin" && (
         <AuthButton
           onClick={() => {
