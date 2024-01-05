@@ -18,7 +18,7 @@ const FooterContainer = styled.div`
 `;
 
 const FooterContent = styled.div`
-  font-size: 2vw;
+  font-size: 2.5vw;
   line-height: 24px;
   color: #666666;
 `;
