@@ -25,7 +25,7 @@ const MainTitle = styled.div`
     color: #0b0d0f;
     font-weight: 700;
     letter-spacing: -3%;
-    padding: 5px 15px;
+    padding: 5px 15px 10px;
     margin: 0;
   }
 `;

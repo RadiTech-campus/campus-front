@@ -7,6 +7,7 @@ import { useIsMobile } from "../../hooks/useIsMobile";
 const LectureListContainer = styled.div`
   @media (max-width: 650px) {
     width: 100%;
+    margin: 15px auto 12px;
   }
   width: 1160px;
   margin: 15px auto;
@@ -40,6 +41,7 @@ const ClassCardsContainer = styled.div`
   @media (max-width: 650px) {
     display: flex;
     justify-content: space-evenly;
+    padding: 0px;
   }
   padding: 0px 0px 20px;
   display: flex;
