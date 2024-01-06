@@ -59,8 +59,6 @@ const ClassSubTitle = styled.div`
     font-size: 4.2vw;
     color: #818181;
     font-weight: 500;
-    /* margin-top: 5px; */
-    /* margin-left: 10px; */
     margin: 5px 0 5px 10px;
     width: 100%;
     text-align: left;
@@ -200,16 +198,41 @@ export default function Lecture() {
         <ClassSubTitle>{aLectureData?.description}</ClassSubTitle>
       </TopDetail>
       <div style={{ display: "flex", justifyContent: "center" }}>
-        {isMobile &&
-        (aLectureData?.subCategory === "컨설팅" ||
+        {isMobile ? (
+          aLectureData?.subCategory === "컨설팅" ||
           aLectureData?.subCategory === "병원" ||
-          aLectureData?.subCategory === "자소서") ? (
+          aLectureData?.subCategory === "자소서" ? (
+            <Link href={{ pathname: `/events2` }}>
+              <img
+                src={`/mainbanner/mobile/main1.png`}
+                alt="레디테크 캠퍼스"
+                style={{
+                  width: "100%",
+                }}
+              />
+            </Link>
+          ) : (
+            <Link href={{ pathname: `/events` }}>
+              <img
+                src={`/mainbanner/mobile/main2.png`}
+                alt="레디테크 캠퍼스"
+                style={{
+                  width: "100%",
+                }}
+              />
+            </Link>
+          )
+        ) : aLectureData?.subCategory === "컨설팅" ||
+          aLectureData?.subCategory === "병원" ||
+          aLectureData?.subCategory === "자소서" ? (
           <Link href={{ pathname: `/events2` }}>
             <img
               src={`/mainbanner/mobile/main1.png`}
               alt="레디테크 캠퍼스"
               style={{
                 width: "100%",
+                marginBottom: "20px",
+                marginTop: "20px",
               }}
             />
           </Link>
@@ -220,24 +243,15 @@ export default function Lecture() {
               alt="레디테크 캠퍼스"
               style={{
                 width: "100%",
-              }}
-            />
-          </Link>
-        )}
-
-        {!isMobile && (
-          <Link href={{ pathname: `/events2` }}>
-            <img
-              src={`/mainbanner/mobile/main1.png`}
-              alt="레디테크 캠퍼스"
-              style={{
-                width: "80%",
                 marginBottom: "20px",
                 marginTop: "20px",
               }}
             />
           </Link>
         )}
+
+        {/* {!isMobile &&
+        } */}
       </div>
 
       <ClassTapContainer>

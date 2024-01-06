@@ -15,6 +15,15 @@ const ConsultingContent = styled.div`
     border-radius: 10px;
     color: #666666;
   }
+  border: 1px solid #b5b5b5;
+  margin: 20px;
+  padding: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  color: #666666;
 `;
 
 const ConsultingContentText = styled.div`
@@ -22,6 +31,8 @@ const ConsultingContentText = styled.div`
     margin-bottom: 2px;
     font-size: 4vw;
   }
+  margin-bottom: 2px;
+  font-size: 1.5vw;
 `;
 
 const UploadButton = styled.button`
@@ -34,6 +45,13 @@ const UploadButton = styled.button`
     font-weight: 600;
     font-size: 3.5vw;
   }
+  background-color: #e96962;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-weight: 600;
+  font-size: 1.5vw;
 `;
 const DownloadButton = styled.button`
   @media (max-width: 650px) {
@@ -45,6 +63,13 @@ const DownloadButton = styled.button`
     font-weight: 600;
     font-size: 3.5vw;
   }
+  background-color: #b5b5b5;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-weight: 600;
+  font-size: 1.5vw;
 `;
 
 export default function Consulting() {
