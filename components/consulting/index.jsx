@@ -7,7 +7,7 @@ const ConsultingContent = styled.div`
   @media (max-width: 650px) {
     border: 1px solid #b5b5b5;
     margin: 20px;
-    padding: 80px;
+    padding: 80px 0px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -17,7 +17,7 @@ const ConsultingContent = styled.div`
   }
   border: 1px solid #b5b5b5;
   margin: 20px;
-  padding: 80px;
+  padding: 80px 0px;
   display: flex;
   flex-direction: column;
   align-items: center;
