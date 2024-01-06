@@ -182,9 +182,14 @@ export default function SignUp() {
     setIsOpen(true);
   };
 
-
   const [Selected, setSelected] = useState(2);
+  const { query } = router;
 
+  useEffect(() => {
+    if (query.id) {
+      setSelected(Number(query.id));
+    }
+  }, [router]);
 
   const handleSelect = (e) => {
     setSelected(Number(e.target.value));
@@ -211,7 +216,6 @@ export default function SignUp() {
   // 이하 개편
   const { data: productDatas, isLoading: productDatasIsLoading } =
     useGetAllProduct();
-
   const data = useMemo(() => productDatas || [], [productDatas]);
 
   return (
@@ -265,7 +269,8 @@ export default function SignUp() {
               />
             ) : (
               <RegistSelect onChange={handleSelect} value={Selected}>
-                {data &&
+                {!productDatasIsLoading &&
+                  data &&
                   data.length > 0 &&
                   data.map((li, i) => (
                     <option key={i} value={li.id}>
@@ -294,7 +299,8 @@ export default function SignUp() {
               <PriceTitle>가격</PriceTitle>
               <PriceDetail>
                 <PriceContent>
-                  {data &&
+                  {!productDatasIsLoading &&
+                    data &&
                     data.length > 0 &&
                     data.find((li) => li.id === Selected).price}
                   원

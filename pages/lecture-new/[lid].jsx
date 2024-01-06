@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import styled from "@emotion/styled";
 import { useIsMobile } from "../../hooks/useIsMobile";
@@ -12,6 +12,7 @@ import LecturesMobile from "../../components/lectures_mobile";
 import Lecturer from "../../components/lecturer";
 import LectureWarn from "../../components/lecturewarn";
 import Link from "next/link";
+import Consulting from "../../components/consulting";
 
 const LectureDetailContainer = styled.div`
   margin: 0px auto;
@@ -72,7 +73,7 @@ const ClassTapContainer = styled.div`
   border-bottom: 1px solid #a2a2a2;
   margin: 20px 0px;
   @media (max-width: 650px) {
-    /* padding: 10px 20px; */
+    justify-content: space-evenly;
     margin: 0px 0px;
     padding: 0 10px;
     color: #666666;
@@ -104,8 +105,6 @@ const ModalContent = styled.div`
   margin-bottom: 10px;
 `;
 
-const tabs = ["강의소개", "커리큘럼", "강사소개", "주의사항"];
-
 export default function Lecture() {
   const router = useRouter();
   const auth = useAuth();
@@ -115,25 +114,14 @@ export default function Lecture() {
   const [selectedTab, setSelectedTab] = useState("강의소개");
 
   const [isOpen, setIsOpen] = useState(false);
-  const handleOpenModal = () => {
-    auth.isAuthenticated ? router.push("/regist") : setIsOpen(true);
-  };
-  // const { data: contentDetailData } = useGetContentDetails(lid);
-  // const data = useMemo(
-  //   () => contentDetailData?.Items || [],
-  //   [contentDetailData, lid],
-  // );
-  //
-  // const { data: contentData } = useGetContents();
-  // const data2 = useMemo(() => contentData?.Items || [], [contentData]);
-  const preview = useRef(); //특정 DOM을 가리킬 때 사용하는 Hook함수, SecondDiv에 적용
+
+  const preview = useRef();
   const onMoveToForm = () => {
-    // setSelectedTab("강의소개");
     setTimeout(() => {
       preview.current.scrollIntoView({ behavior: "smooth", block: "center" });
     }, 200);
   };
-  // const { data: lectureDetailData } = useGetLectureDetailByLecturetId(lid);
+
   const { data: lectureDetailData } = useGetLectureDetailByLecturetId(lid);
   const lectureDetailsData = useMemo(
     () => lectureDetailData || [],
@@ -144,6 +132,15 @@ export default function Lecture() {
   const aLectureData = useMemo(() => lectureData || null, [lectureData]);
 
   const [selectedLectureDetail, setSelectedLectureDetail] = useState();
+
+  useEffect(() => {
+    if (aLectureData?.subCategory === "컨설팅") setSelectedTab("컨설팅");
+  }, [aLectureData]);
+
+  const tabs =
+    aLectureData?.subCategory === "컨설팅"
+      ? ["컨설팅", "강사소개"]
+      : ["강의소개", "커리큘럼", "강사소개", "주의사항"];
 
   return (
     <LectureDetailContainer>
@@ -203,7 +200,20 @@ export default function Lecture() {
         <ClassSubTitle>{aLectureData?.description}</ClassSubTitle>
       </TopDetail>
       <div style={{ display: "flex", justifyContent: "center" }}>
-        {isMobile && (
+        {isMobile &&
+        (aLectureData?.subCategory === "컨설팅" ||
+          aLectureData?.subCategory === "병원" ||
+          aLectureData?.subCategory === "자소서") ? (
+          <Link href={{ pathname: `/events2` }}>
+            <img
+              src={`/mainbanner/mobile/main1.png`}
+              alt="레디테크 캠퍼스"
+              style={{
+                width: "100%",
+              }}
+            />
+          </Link>
+        ) : (
           <Link href={{ pathname: `/events` }}>
             <img
               src={`/mainbanner/mobile/main2.png`}
@@ -216,9 +226,9 @@ export default function Lecture() {
         )}
 
         {!isMobile && (
-          <Link href={{ pathname: `/events` }}>
+          <Link href={{ pathname: `/events2` }}>
             <img
-              src={`/mainbanner/mobile/main2.png`}
+              src={`/mainbanner/mobile/main1.png`}
               alt="레디테크 캠퍼스"
               style={{
                 width: "80%",
@@ -229,6 +239,7 @@ export default function Lecture() {
           </Link>
         )}
       </div>
+
       <ClassTapContainer>
         {tabs.map((tab, i) => (
           <ClassTap
@@ -257,6 +268,7 @@ export default function Lecture() {
       )}
       {selectedTab === "강사소개" && <Lecturer />}
       {selectedTab === "주의사항" && <LectureWarn />}
+      {selectedTab === "컨설팅" && <Consulting />}
     </LectureDetailContainer>
   );
 }

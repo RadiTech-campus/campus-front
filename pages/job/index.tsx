@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import styled from "@emotion/styled";
 import Link from "next/link";
 import { useIsMobile } from "../../hooks/useIsMobile";
@@ -55,13 +55,14 @@ const Tags = styled.div`
   color: #a2a2a2;
 `;
 
-const Tag = styled.div`
+const Tag = styled.div<any>`
   @media (max-width: 650px) {
     border: 1px solid #a2a2a2;
     border-radius: 60px;
     margin-right: 10px;
     padding: 3px 6px;
     font-weight: 400;
+    background-color: ${(props) => (props.selected ? "#cacaca" : "")};
   }
   border: 1px solid #a2a2a2;
   border-radius: 60px;
@@ -95,6 +96,27 @@ const ClassCard = styled.div`
     box-shadow: 0 0 10px 0 rgb(0 0 0 / 20%);
     border-radius: 20px;
     width: 45%;
+    margin: 10px auto;
+  }
+  a {
+    @media (max-width: 650px) {
+    }
+    text-decoration: none;
+    border-radius: 10px;
+  }
+`;
+
+const BigClassCard = styled.div`
+  margin: 10px;
+  width: 31%;
+  text-decoration: none;
+  border-radius: 10px;
+  box-shadow: 0 0 10px 0 rgb(0 0 0 / 20%);
+  border-radius: 20px;
+  @media (max-width: 650px) {
+    box-shadow: 0 0 10px 0 rgb(0 0 0 / 20%);
+    border-radius: 20px;
+    width: 95%;
     margin: 10px auto;
   }
   a {
@@ -151,8 +173,34 @@ const ClassDesc = styled.div`
 export default function Job() {
   const isMobile = useIsMobile();
 
-  const { data: lecturesData } = useGetLecturesByContentId(11);
-  const lectureData = useMemo(() => lecturesData || [], [lecturesData]);
+  const [activeTag, setActiveTag] = useState("");
+
+  const { data: lecturesData1 } = useGetLecturesByContentId(4);
+  const { data: lecturesData2 } = useGetLecturesByContentId(5);
+  const { data: lecturesData3 } = useGetLecturesByContentId(10);
+  const data = useMemo(() => {
+    if (activeTag === "자소서") {
+      return [...lecturesData1];
+    }
+    if (activeTag === "병원") {
+      return [...lecturesData2];
+    }
+    if (activeTag === "컨설팅") {
+      return [...lecturesData3];
+    }
+    if (activeTag === "") {
+      return (
+        (lecturesData1 &&
+          lecturesData2 &&
+          lecturesData3 && [
+            ...lecturesData1,
+            ...lecturesData2,
+            ...lecturesData3,
+          ]) ||
+        []
+      );
+    }
+  }, [lecturesData1, lecturesData2, lecturesData3, activeTag]);
   return (
     <LectureListContainer>
       {isMobile && (
@@ -161,29 +209,67 @@ export default function Job() {
       <TitleContainer>
         <MainTitle>자소서, 면접, 대학정보 ✍️</MainTitle>
         <Tags>
-          <Tag>전체강의</Tag>
-          <Tag>자소서/면접</Tag>
-          <Tag>대학정보</Tag>
+          <Tag selected={activeTag === ""} onClick={() => setActiveTag("")}>
+            전체강의
+          </Tag>
+          <Tag
+            selected={activeTag === "자소서"}
+            onClick={() => setActiveTag("자소서")}
+          >
+            자소서/면접
+          </Tag>
+          <Tag
+            selected={activeTag === "병원"}
+            onClick={() => setActiveTag("병원")}
+          >
+            병원정보
+          </Tag>
+          <Tag
+            selected={activeTag === "컨설팅"}
+            onClick={() => setActiveTag("컨설팅")}
+          >
+            컨설팅
+          </Tag>
         </Tags>
       </TitleContainer>
       <ClassCardsContainer>
-        {lectureData?.map((li, i) => (
-          <ClassCard key={i}>
-            <Link
-              href={{
-                pathname: `/lecture-new/${li.id}`,
-              }}
-            >
-              <img
-                src={`${li.thumbnailURL}`}
-                alt={li.description}
-                style={{ width: "100%", borderRadius: "20px 20px 0 0" }}
-              />
-              <ClassTitle>{li.lectureTitle}</ClassTitle>
-              <ClassDesc>{li.description}</ClassDesc>
-            </Link>
-          </ClassCard>
-        ))}
+        {data
+          ?.filter((li) => li.subCategory.includes(activeTag))
+          .map((li, i) =>
+            li.subCategory === "컨설팅" ? (
+              <BigClassCard key={i}>
+                <Link
+                  href={{
+                    pathname: `/lecture-new/${li.id}`,
+                  }}
+                >
+                  <img
+                    src={`${li.thumbnailURL}`}
+                    alt={li.description}
+                    style={{ width: "100%", borderRadius: "20px 20px 0 0" }}
+                  />
+                  <ClassTitle>{li.lectureTitle}</ClassTitle>
+                  <ClassDesc>{li.description}</ClassDesc>
+                </Link>
+              </BigClassCard>
+            ) : (
+              <ClassCard key={i}>
+                <Link
+                  href={{
+                    pathname: `/lecture-new/${li.id}`,
+                  }}
+                >
+                  <img
+                    src={`${li.thumbnailURL}`}
+                    alt={li.description}
+                    style={{ width: "100%", borderRadius: "20px 20px 0 0" }}
+                  />
+                  <ClassTitle>{li.lectureTitle}</ClassTitle>
+                  <ClassDesc>{li.description}</ClassDesc>
+                </Link>
+              </ClassCard>
+            ),
+          )}
       </ClassCardsContainer>
     </LectureListContainer>
   );

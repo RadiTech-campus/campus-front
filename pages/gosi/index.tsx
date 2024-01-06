@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import styled from "@emotion/styled";
 import Link from "next/link";
 import { useIsMobile } from "../../hooks/useIsMobile";
@@ -53,13 +53,14 @@ const Tags = styled.div`
   color: #a2a2a2;
 `;
 
-const Tag = styled.div`
+const Tag = styled.div<any>`
   @media (max-width: 650px) {
-    border: 1px solid #a2a2a2;
+    border: 1px solid #cacaca;
     border-radius: 60px;
     margin-right: 10px;
     padding: 3px 6px;
     font-weight: 400;
+    background-color: ${(props) => (props.selected ? "#cacaca" : "")};
   }
   border: 1px solid #a2a2a2;
   border-radius: 60px;
@@ -134,13 +135,33 @@ export default function Gosi() {
   const { data: lecturesData1 } = useGetLecturesByContentId(1);
   const { data: lecturesData2 } = useGetLecturesByContentId(2);
   const { data: lecturesData3 } = useGetLecturesByContentId(3);
-  const data = useMemo(
-    () =>
-      (lecturesData1 &&
-        lecturesData2 && [...lecturesData1, ...lecturesData2]) ||
-      [],
-    [lecturesData1, lecturesData2],
-  );
+
+  const [activeTag, setActiveTag] = useState("전체강의");
+
+  const data = useMemo(() => {
+    if (activeTag === "이론강의") {
+      return [...lecturesData1];
+    }
+    if (activeTag === "기출강의") {
+      return [...lecturesData2];
+    }
+    if (activeTag === "모의고사") {
+      return [...lecturesData3];
+    }
+    if (activeTag === "전체강의") {
+      return (
+        (lecturesData1 &&
+          lecturesData2 &&
+          lecturesData3 && [
+            ...lecturesData1,
+            ...lecturesData2,
+            ...lecturesData3,
+          ]) ||
+        []
+      );
+    }
+  }, [lecturesData1, lecturesData2, lecturesData3, activeTag]);
+
   return (
     <LectureListContainer>
       {isMobile && (
@@ -149,33 +170,34 @@ export default function Gosi() {
       <TitleContainer>
         <MainTitle>이론 & 3개년 기출 강의 ✍️</MainTitle>
         <Tags>
-          <Tag>전체강의</Tag>
-          <Tag>이론강의</Tag>
-          <Tag>기출강의</Tag>
-          <Tag>모의고사</Tag>
+          <Tag
+            selected={activeTag === "전체강의"}
+            onClick={() => setActiveTag("전체강의")}
+          >
+            전체강의
+          </Tag>
+          <Tag
+            selected={activeTag === "이론강의"}
+            onClick={() => setActiveTag("이론강의")}
+          >
+            이론강의
+          </Tag>
+          <Tag
+            selected={activeTag === "기출강의"}
+            onClick={() => setActiveTag("기출강의")}
+          >
+            기출강의
+          </Tag>
+          <Tag
+            selected={activeTag === "모의고사"}
+            onClick={() => setActiveTag("모의고사")}
+          >
+            모의고사
+          </Tag>
         </Tags>
       </TitleContainer>
       <ClassCardsContainer>
         {data
-          ?.sort((a, b) => (a.sorting > b.sorting ? 1 : -1))
-          .map((li, i) => (
-            <ClassCard key={i}>
-              <Link
-                href={{
-                  pathname: `/lecture-new/${li.id}`,
-                }}
-              >
-                <img
-                  src={li.thumbnailURL}
-                  alt={li.secondCat}
-                  style={{ width: "100%", borderRadius: "20px 20px 0 0" }}
-                />
-                <ClassTitle>{li.lectureTitle}</ClassTitle>
-                <ClassDesc>{li.description}</ClassDesc>
-              </Link>
-            </ClassCard>
-          ))}
-        {lecturesData3
           ?.sort((a, b) => (a.sorting > b.sorting ? 1 : -1))
           .map((li, i) => (
             <ClassCard key={i}>

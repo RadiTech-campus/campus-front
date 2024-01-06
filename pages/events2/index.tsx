@@ -206,6 +206,7 @@ export default function Events() {
           <Link
             href={{
               pathname: `/regist`,
+              query: { id: 4 },
             }}
           >
             구독하기
@@ -217,6 +218,7 @@ export default function Events() {
           <Link
             href={{
               pathname: `/regist`,
+              query: { id: 5 },
             }}
           >
             구독하기
@@ -228,6 +230,7 @@ export default function Events() {
           <Link
             href={{
               pathname: `/regist`,
+              query: { id: 6 },
             }}
           >
             구독하기
